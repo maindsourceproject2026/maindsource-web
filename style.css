@@ -109,6 +109,12 @@ body:has(button:hover) .cursor-ring { width: 52px; height: 52px; opacity: 0.4; }
   opacity: 0;
   animation: fadeInUp 0.8s ease 0.3s forwards;
 }
+.preloader-img {
+  max-width: 150px; 
+  height: auto; 
+  margin-bottom: 20px; 
+  object-fit: contain;
+}
 .preloader-line-wrap {
   width: 200px;
   height: 2px;
