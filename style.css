@@ -1,0 +1,59 @@
+/* * PROJECT: MAINDSOURCE LLP Official Website
+ * VERSION: 1.0.0
+ * DESIGN SYSTEM: Corporate Navy & Gold
+ */
+
+:root {
+    /* Color Palette */
+    --midnight-navy: #0A0F2C;
+    --prestige-gold: #F5A623;
+    --gold-hover: #E8920A;
+    --rich-navy: #1E2761;
+    --warm-cream: #F8F6F1;
+    --pure-white: #FFFFFF;
+    
+    /* Typography */
+    --font-primary: 'Syne', sans-serif;
+    --font-secondary: 'DM Sans', sans-serif;
+}
+
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--midnight-navy);
+    color: var(--pure-white);
+    font-family: var(--font-secondary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, .gold-text {
+    font-family: var(--font-primary);
+    color: var(--prestige-gold);
+}
+
+/* Common Components */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.btn-primary {
+    background-color: var(--prestige-gold);
+    color: var(--midnight-navy);
+    padding: 12px 28px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--gold-hover);
+}
