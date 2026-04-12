@@ -7,67 +7,191 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
 
     <div class="container">
         <nav>
             <div class="logo-text">MAINDSOURCE</div>
-            <a href="#" class="btn-primary" style="padding: 10px 20px;">Contact</a>
+            <a href="#" class="btn-primary" style="padding: 10px 20px;">Start Hiring &rarr;</a>
         </nav>
     </div>
 
     <header class="hero">
         <div class="container">
-            <h1 class="reveal">Powering <span class="highlight">Industry</span><br>With Elite Talent</h1>
-            <p style="max-width: 700px; margin: 0 auto; color: var(--warm-cream);">
-                Specialized workforce solutions for the world's leading brands. 
-                From Gig Workforce to Executive Staffing.
+            <h1 class="gsap-up">Right Talent. Right Place.<br><span class="highlight">Right Time.</span></h1>
+            <p class="gsap-up" style="max-width: 700px; margin: 0 auto; color: var(--warm-cream);">
+                Tech-enabled manpower supply connecting human potential with global opportunities.
             </p>
             
-            <div class="stats-grid">
-                <div class="stat-card"><h3>8000+</h3><p>Candidates</p></div>
-                <div class="stat-card"><h3>10+</h3><p>Industries</p></div>
-                <div class="stat-card"><h3>15+</h3><p>Global Clients</p></div>
+            <div class="dual-path gsap-up">
+                <a href="#" class="btn-primary">Looking to Hire?</a>
+                <a href="#" class="btn-secondary">Looking for Work?</a>
+            </div>
+            
+            <div class="lottie-box" id="lottie-hero-placeholder">
+                [Lottie Animation Space: Character Parachuting Down]
             </div>
         </div>
     </header>
 
-    <section class="container" style="padding: 80px 0;">
+    <section class="container grid-2" style="padding-top: 20px;">
+        <div>
+            <div class="section-title" style="text-align: left;">
+                <span>Who We Are</span>
+                <h2>Finding, Connecting, Building Success</h2>
+            </div>
+            <p style="margin-bottom: 20px;">Established in 2025 and incorporated in January 2026, MAINDSOURCE LLP is a premier tech-based staffing solution provider. We bridge the gap between elite talent and industry leaders across South India.</p>
+            <a href="#" class="btn-secondary">Learn More About Us</a>
+        </div>
+        <div class="lottie-box">
+            [Lottie Animation Space: Character Reading Book]
+        </div>
+    </section>
+
+    <div class="stats-wrapper">
+        <div class="container grid-3">
+            <div class="stat-item gsap-up"><h3>8,000+</h3><p>Candidates Interacted</p></div>
+            <div class="stat-item gsap-up"><h3>10+</h3><p>Industries Served</p></div>
+            <div class="stat-item gsap-up"><h3>15+</h3><p>Global Clients</p></div>
+        </div>
+    </div>
+
+    <section class="container">
         <div class="section-title">
-            <p style="color: var(--prestige-gold);">OUR EXPERTISE</p>
+            <span>Our Expertise</span>
             <h2>Strategic Services</h2>
         </div>
-        
-        <div class="services-grid">
-            <div class="service-card">
+        <div class="grid-3">
+            <div class="card gsap-up">
                 <h3>Gig Workforce</h3>
-                <p>On-demand flexible labor for rapid scaling in logistics and manufacturing.</p>
+                <p>On-demand flexible labor for rapid scaling in logistics, warehousing, and manufacturing.</p>
             </div>
-            <div class="service-card">
-                <h3>Staffing & Apprenticeship</h3>
-                <p>Long-term talent pipelines focused on skill development and retention.</p>
+            <div class="card gsap-up">
+                <h3>Hire & Manage</h3>
+                <p>Comprehensive staffing pipelines focused on skill development, deployment, and retention.</p>
             </div>
-            <div class="service-card">
-                <h3>Executive Search</h3>
-                <p>Connecting leadership talent with specialized aerospace and tech roles.</p>
+            <div class="card gsap-up">
+                <h3>Contractual Staffing</h3>
+                <p>Reliable blue-collar to white-collar recruitment tailored exactly to your operational needs.</p>
             </div>
         </div>
     </section>
 
-    <section style="background: rgba(255,255,255,0.02); padding: 50px 0;">
-        <div class="container">
-            <p style="text-align: center; opacity: 0.5; font-size: 0.8rem; margin-bottom: 30px;">PARTNERING WITH GLOBAL GIANTS</p>
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; font-weight: 700; opacity: 0.6;">
-                <span>TOYOTA</span> <span>FOXCONN</span> <span>TATA</span> <span>VOLVO</span> <span>SCHNEIDER</span>
+    <div class="marquee-wrapper">
+        <div class="marquee-content">
+            <span>MANUFACTURING</span> <span>AUTOMOBILE</span> <span>TELECOM</span> <span>PACKAGING</span> <span>WAREHOUSING</span> <span>AEROSPACE</span> <span>HEALTHCARE</span> <span>LOGISTICS</span>
+            <span>MANUFACTURING</span> <span>AUTOMOBILE</span> <span>TELECOM</span> <span>PACKAGING</span> <span>WAREHOUSING</span> <span>AEROSPACE</span> <span>HEALTHCARE</span> <span>LOGISTICS</span>
+        </div>
+    </div>
+
+    <section class="container">
+        <div class="section-title">
+            <span>Differentiators</span>
+            <h2>Why Choose MAINDSOURCE</h2>
+        </div>
+        <div class="grid-3">
+            <div class="card">
+                <h3>Tech-Integrated</h3>
+                <p>Advanced tracking, fast deployment, and digital payroll transparency.</p>
+            </div>
+            <div class="card" style="border-color: var(--prestige-gold);">
+                <h3>Women Empowerment</h3>
+                <p>Dedicated focus on equal opportunity placement and inclusive workforce advocacy.</p>
+            </div>
+            <div class="card">
+                <h3>South India Specialists</h3>
+                <p>Deep regional networks across Karnataka, Andhra Pradesh, and Telangana.</p>
             </div>
         </div>
     </section>
+
+    <section style="background: rgba(255,255,255,0.02); padding: 50px 0; text-align: center;">
+        <div class="container">
+            <p style="color: var(--prestige-gold); font-size: 0.9rem; font-weight: 700; letter-spacing: 2px; margin-bottom: 30px;">TRUSTED BY INDUSTRY LEADERS</p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; opacity: 0.8;">
+                <div style="padding: 10px 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-weight: 700;">FOXCONN</div>
+                <div style="padding: 10px 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-weight: 700;">TOYOTA</div>
+                <div style="padding: 10px 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-weight: 700;">TATA ELECTRONICS</div>
+                <div style="padding: 10px 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-weight: 700;">WISTRON</div>
+                <div style="padding: 10px 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-weight: 700;">TVS</div>
+                <div style="padding: 10px 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-weight: 700;">VOLVO</div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: linear-gradient(135deg, var(--rich-navy), var(--midnight-navy)); text-align: center; border-top: 1px solid var(--prestige-gold);">
+        <div class="container">
+            <h2 style="font-size: 3rem; margin-bottom: 20px;">Ready to Build Your Dream Workforce?</h2>
+            <a href="#" class="btn-primary" style="font-size: 1.2rem; padding: 20px 40px;">Contact Us Today</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3 class="logo-text" style="margin-bottom: 15px; font-size: 1.5rem;">MAINDSOURCE</h3>
+                    <p>Right Talent. Right Place. Right Time. Providing enterprise-grade staffing solutions across industries.</p>
+                </div>
+                <div>
+                    <div class="footer-title">Quick Links</div>
+                    <div class="footer-links">
+                        <p>About Us</p>
+                        <p>Services</p>
+                        <p>Sectors</p>
+                        <p>Women Empowerment</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="footer-title">Contact</div>
+                    <div class="footer-links">
+                        <p>+91 9071329231</p>
+                        <p>maindsource@gmail.com</p>
+                        <p>Bangalore | Ballari</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="footer-title">Credentials</div>
+                    <div class="footer-links">
+                        <p>LLPIN: ACU-2305</p>
+                        <p>GST: 29ACGFM2072C1ZE</p>
+                        <p>UDYAM Reg: KR-05-0060017</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-bar">
+                &copy; 2026 MAINDSOURCE LLP. All rights reserved. Designed for excellence.
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // Simple GSAP entrance animation
-        gsap.from(".reveal", {duration: 1, y: 50, opacity: 0, ease: "power4.out"});
-        gsap.from(".service-card", {duration: 1, y: 30, opacity: 0, stagger: 0.2, delay: 0.5});
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Hero Reveal
+        gsap.from(".gsap-up", {
+            y: 40,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+
+        // Cards Scroll Reveal
+        gsap.utils.toArray('.card').forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+        });
     </script>
 </body>
 </html>

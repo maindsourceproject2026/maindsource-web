@@ -1,5 +1,5 @@
 /* * PROJECT: MAINDSOURCE LLP 
- * VERSION: 1.2.0 (Full Home Page)
+ * VERSION: 1.5.0 (Complete Home Page System)
  */
 
 :root {
@@ -24,71 +24,61 @@ body {
     overflow-x: hidden;
 }
 
-h1, h2, h3 { font-family: var(--font-primary); line-height: 1.2; }
+h1, h2, h3, h4 { font-family: var(--font-primary); line-height: 1.2; }
 
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-/* Navigation */
-nav {
-    padding: 20px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(245, 166, 35, 0.1);
-}
-
-.logo-text { font-family: var(--font-primary); font-size: 1.5rem; font-weight: 800; color: var(--prestige-gold); }
-
-/* Hero Section */
-.hero { padding: 100px 0 60px; text-align: center; }
-.hero h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); margin-bottom: 20px; line-height: 1.1; }
-.highlight { color: var(--prestige-gold); }
-
-/* Stats */
-.stats-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-    gap: 30px; 
-    margin-top: 50px; 
-}
-.stat-card { padding: 20px; border-left: 2px solid var(--prestige-gold); }
-.stat-card h3 { font-size: 2.5rem; color: var(--prestige-gold); }
-
-/* Services Section */
-.section-title { text-align: center; margin-bottom: 50px; }
-.section-title h2 { font-size: 2.5rem; margin-bottom: 10px; }
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-    padding: 60px 0;
-}
-.service-card {
-    background: var(--card-bg);
-    padding: 40px;
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.05);
-    transition: 0.3s;
-}
-.service-card:hover {
-    border-color: var(--prestige-gold);
-    transform: translateY(-10px);
-}
-.service-card h3 { color: var(--prestige-gold); margin-bottom: 15px; }
-
 /* Buttons */
-.btn-primary {
-    background: var(--prestige-gold);
-    color: var(--midnight-navy);
-    padding: 15px 30px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 700;
-    display: inline-block;
-}
+.btn-primary { background: var(--prestige-gold); color: var(--midnight-navy); padding: 15px 30px; border-radius: 4px; text-decoration: none; font-weight: 700; display: inline-block; transition: 0.3s; border: none; cursor: pointer; }
+.btn-primary:hover { background: var(--gold-hover); transform: translateY(-2px); }
+.btn-secondary { background: transparent; color: var(--prestige-gold); padding: 15px 30px; border-radius: 4px; text-decoration: none; font-weight: 700; display: inline-block; border: 2px solid var(--prestige-gold); transition: 0.3s; }
+.btn-secondary:hover { background: rgba(245, 166, 35, 0.1); }
 
-/* Mobile Adjustments */
+/* Navbar */
+nav { padding: 20px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(245, 166, 35, 0.1); }
+.logo-text { font-family: var(--font-primary); font-size: 1.8rem; font-weight: 800; color: var(--prestige-gold); }
+
+/* Hero */
+.hero { padding: 80px 0; text-align: center; }
+.hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 20px; line-height: 1.1; }
+.highlight { color: var(--prestige-gold); }
+.dual-path { display: flex; justify-content: center; gap: 20px; margin-top: 40px; }
+
+/* Grids */
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; align-items: center; }
+
+/* Sections & Cards */
+section { padding: 80px 0; }
+.section-title { text-align: center; margin-bottom: 50px; }
+.section-title span { color: var(--prestige-gold); font-size: 0.9rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+.section-title h2 { font-size: 2.5rem; margin-top: 10px; }
+
+.card { background: var(--card-bg); padding: 40px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; height: 100%; }
+.card:hover { border-color: var(--prestige-gold); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.card h3 { color: var(--prestige-gold); margin-bottom: 15px; font-size: 1.5rem; }
+
+/* Stats Grid */
+.stats-wrapper { background: var(--rich-navy); padding: 60px 0; border-top: 1px solid var(--prestige-gold); border-bottom: 1px solid var(--prestige-gold); text-align: center; }
+.stat-item h3 { font-size: 3.5rem; color: var(--prestige-gold); margin-bottom: 5px; }
+
+/* Marquee Auto-Scroll */
+.marquee-wrapper { overflow: hidden; white-space: nowrap; padding: 30px 0; background: rgba(0,0,0,0.2); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
+.marquee-content { display: inline-block; animation: marquee 30s linear infinite; }
+.marquee-content span { display: inline-block; font-family: var(--font-primary); font-size: 1.2rem; font-weight: 700; color: var(--warm-cream); margin: 0 40px; letter-spacing: 1px; }
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* Footer */
+footer { background: #050814; padding: 60px 0 20px; border-top: 1px solid rgba(245, 166, 35, 0.2); font-size: 0.9rem; color: var(--warm-cream); }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+.footer-title { color: var(--prestige-gold); font-family: var(--font-primary); font-weight: 700; margin-bottom: 20px; font-size: 1.1rem; }
+.footer-links p { margin-bottom: 10px; }
+.bottom-bar { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; opacity: 0.6; }
+
+/* Lottie Placeholder Box */
+.lottie-box { min-height: 200px; border: 1px dashed rgba(245, 166, 35, 0.3); border-radius: 8px; display: flex; justify-content: center; align-items: center; color: rgba(245, 166, 35, 0.5); font-size: 0.8rem; margin: 20px 0; }
+
 @media (max-width: 768px) {
-    .hero { padding: 60px 0; }
-    .stats-grid { grid-template-columns: 1fr; }
+    .dual-path { flex-direction: column; }
+    .footer-grid { grid-template-columns: 1fr; }
 }
