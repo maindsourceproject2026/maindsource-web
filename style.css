@@ -1,5 +1,5 @@
-/* * PROJECT: MAINDSOURCE LLP
- * COMPONENT: Global Design System v1.1
+/* * PROJECT: MAINDSOURCE LLP 
+ * VERSION: 1.2.0 (Full Home Page)
  */
 
 :root {
@@ -9,116 +9,86 @@
     --gold-hover: #E8920A;
     --pure-white: #FFFFFF;
     --warm-cream: #F8F6F1;
+    --card-bg: rgba(255, 255, 255, 0.05);
     --font-primary: 'Syne', sans-serif;
     --font-secondary: 'DM Sans', sans-serif;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     background-color: var(--midnight-navy);
     color: var(--pure-white);
     font-family: var(--font-secondary);
-    line-height: 1.6; /* Fixed the cropping issue */
+    line-height: 1.6;
     overflow-x: hidden;
 }
 
-h1, h2, h3 {
-    font-family: var(--font-primary);
-    line-height: 1.2; /* Better spacing for headings */
-}
+h1, h2, h3 { font-family: var(--font-primary); line-height: 1.2; }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
 /* Navigation */
 nav {
-    padding: 25px 0;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid rgba(245, 166, 35, 0.1);
 }
 
-.logo-text {
-    font-family: var(--font-primary);
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--prestige-gold);
-    letter-spacing: 1px;
+.logo-text { font-family: var(--font-primary); font-size: 1.5rem; font-weight: 800; color: var(--prestige-gold); }
+
+/* Hero Section */
+.hero { padding: 100px 0 60px; text-align: center; }
+.hero h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); margin-bottom: 20px; line-height: 1.1; }
+.highlight { color: var(--prestige-gold); }
+
+/* Stats */
+.stats-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 30px; 
+    margin-top: 50px; 
 }
+.stat-card { padding: 20px; border-left: 2px solid var(--prestige-gold); }
+.stat-card h3 { font-size: 2.5rem; color: var(--prestige-gold); }
+
+/* Services Section */
+.section-title { text-align: center; margin-bottom: 50px; }
+.section-title h2 { font-size: 2.5rem; margin-bottom: 10px; }
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 60px 0;
+}
+.service-card {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: 0.3s;
+}
+.service-card:hover {
+    border-color: var(--prestige-gold);
+    transform: translateY(-10px);
+}
+.service-card h3 { color: var(--prestige-gold); margin-bottom: 15px; }
 
 /* Buttons */
-.btn-group {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 30px;
-}
-
 .btn-primary {
     background: var(--prestige-gold);
     color: var(--midnight-navy);
-    padding: 15px 35px;
+    padding: 15px 30px;
     border-radius: 4px;
     text-decoration: none;
     font-weight: 700;
-    font-family: var(--font-primary);
-    transition: 0.3s;
+    display: inline-block;
 }
 
-.btn-secondary {
-    border: 2px solid var(--prestige-gold);
-    color: var(--prestige-gold);
-    padding: 13px 35px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 700;
-    font-family: var(--font-primary);
-    transition: 0.3s;
-}
-
-.btn-primary:hover { background: var(--gold-hover); }
-.btn-secondary:hover { background: rgba(245, 166, 35, 0.1); }
-
-/* Hero Section */
-.hero {
-    padding: 120px 0 80px;
-    text-align: center;
-}
-
-/* Updated Hero Heading with Descender Fix */
-.hero h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    margin-bottom: 25px;
-    line-height: 1.3; /* Increased from 1.2 to prevent letter clipping */
-    padding-bottom: 10px; /* Extra space for letter tails like g, y, p */
-}
-
-.highlight {
-    color: var(--prestige-gold);
-}
-
-/* Stats Section */
-.stats-container {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    margin-top: 60px;
-}
-
-.stat-item h3 {
-    font-size: 3rem;
-    color: var(--prestige-gold);
-}
-
-.stat-item p {
-    color: var(--warm-cream);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .hero { padding: 60px 0; }
+    .stats-grid { grid-template-columns: 1fr; }
 }
