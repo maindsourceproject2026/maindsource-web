@@ -3,133 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="MAINDSOURCE LLP — Tech-enabled manpower supply, staffing and recruitment solutions across India. Contractual staffing, permanent placement, payroll management." />
-  <meta name="keywords" content="manpower supply Bangalore, staffing Karnataka, contractual staffing, recruitment solutions India, MAINDSOURCE LLP" />
-  <title>MAINDSOURCE — Connecting Talent With Opportunities</title>
-
-  <!-- Favicon placeholder — replace with real favicon.ico from favicon.io -->
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-
-  <!-- Stylesheet -->
+  <title>About Us | MAINDSOURCE LLP</title>
   <link rel="stylesheet" href="style.css" />
-
-  <!-- GSAP CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
-
-  <!-- Lottie Player CDN — for Phase 2 animations -->
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 </head>
-<body>
+<body style="background: var(--hero-start); color: white; overflow-x: hidden;">
 
-  <!-- ═══════════════════════════════════
-       CUSTOM CURSOR
-  ════════════════════════════════════ -->
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="custom-cursor"></div>
 
-  <!-- ═══════════════════════════════════
-       WHATSAPP FLOAT BUTTON
-  ════════════════════════════════════ -->
-  <a id="whatsapp-float" href="https://wa.me/919071329231" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
-  </a>
+  <div class="hero-bg-glow"></div>
+  <div class="hero-stars" id="starContainer"></div>
 
-  <!-- ═══════════════════════════════════
-       NAVBAR
-  ════════════════════════════════════ -->
-  <nav id="navbar">
-    <a href="index.html" class="nav-logo">MAIND<span>SOURCE</span></a>
-
-    <ul class="nav-menu">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li> to <a href="about.html">About</a>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="sectors.html">Sectors</a></li>
-      <li><a href="impact.html">Our Impact</a></li>
-      <li><a href="women.html">Women Empowerment</a></li>
-      <li><a href="jobseekers.html">For Job Seekers</a></li>
-      <li><a href="careers.html">Careers</a></li>
-      <li><a href="contact.html" class="nav-cta">Start Hiring →</a></li>
-    </ul>
-
-    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
-      <span></span><span></span><span></span>
-    </button>
+  <nav class="sticky">
+    <div class="container nav-container">
+      <a href="index.html" class="logo" style="text-decoration:none;"><span style="color:var(--gold)">MAIND</span>SOURCE</a>
+      <div class="nav-menu">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
   </nav>
 
-  <!-- Mobile Menu -->
-  <div class="mobile-overlay" id="mobileOverlay"></div>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">Home</a>
-    <a href="about.html">About Us</a> to <a href="about.html">About</a>
-    <a href="services.html">Services</a>
-    <a href="sectors.html">Sectors We Serve</a>
-    <a href="impact.html">Our Impact</a>
-    <a href="women.html">Women Empowerment</a>
-    <a href="jobseekers.html">For Job Seekers</a>
-    <a href="careers.html">Careers</a>
-    <a href="credentials.html">Credentials</a>
-    <a href="contact.html">Contact Us</a>
-  </div>
-
-  <header style="padding: 150px 0 80px; text-align: center; background: linear-gradient(to bottom, var(--hero-start), var(--hero-end));">
+  <header style="padding: 180px 0 100px; text-align: center; position: relative; z-index: 2;">
     <div class="container">
-      <h1 style="font-family: 'Playfair Display'; font-size: 4rem; color: var(--text-white); margin-bottom: 20px;">Our <span style="color:var(--gold)">Story</span></h1>
-      <p style="color: var(--text-muted); max-width: 700px; margin: 0 auto; font-size: 1.2rem;">Founded in 2025, MAINDSOURCE LLP is more than a staffing firm. We are the bridge between human potential and industrial excellence.</p>
+      <h1 class="reveal visible" style="font-family: 'Playfair Display'; font-size: clamp(3rem, 8vw, 5rem); margin-bottom: 20px;">
+        Our <span style="color:var(--gold)">Legacy</span>
+      </h1>
+      <p class="reveal visible" style="color: var(--text-muted); max-width: 750px; margin: 0 auto; font-size: 1.2rem; line-height: 1.8;">
+        Incorporated in early 2026, MAINDSOURCE LLP is the culmination of years of expertise in the Indian staffing landscape. We don't just supply manpower; we engineer success for industries that move the world.
+      </p>
     </div>
   </header>
 
-  <section style="padding: 100px 0;">
+  <section style="padding: 80px 0; position: relative; z-index: 2;">
     <div class="container">
+      <div class="services-header" style="text-align: center; margin-bottom: 60px;">
+          <h2 style="font-family: 'Playfair Display'; font-size: 3rem;">The <span style="color:var(--gold)">Partners</span></h2>
+      </div>
       <div class="dual-path-grid">
-        <div class="path-card">
-          <div class="path-icon">🎯</div>
-          <h3 style="color:var(--gold); font-family:'Syne'; font-size: 1.8rem; margin-bottom: 15px;">Our Mission</h3>
-          <p style="color:var(--text-muted)">To empower businesses with tech-enabled workforce solutions while providing career-defining opportunities to the talent across South India.</p>
+        <div class="path-card reveal">
+          <div style="width: 60px; height: 60px; background: var(--gold); border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: var(--hero-start); font-weight: 800;">TP</div>
+          <h3 style="font-family: 'Syne'; margin-bottom: 10px;">Teja Prasad K U</h3>
+          <p style="color: var(--gold); font-size: 0.9rem; margin-bottom: 15px; font-weight: 600; letter-spacing: 1px;">FOUNDER & PARTNER</p>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Architect of the MAINDSOURCE vision and tech-enabled staffing framework.</p>
         </div>
-        <div class="path-card" style="border-color: rgba(255,255,255,0.1)">
-          <div class="path-icon">👁️</div>
-          <h3 style="color:var(--gold); font-family:'Syne'; font-size: 1.8rem; margin-bottom: 15px;">Our Vision</h3>
-          <p style="color:var(--text-muted)">To become the most trusted regional leader in manpower supply, known for integrity, speed, and inclusive growth by 2030.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section style="background: rgba(255,255,255,0.02); padding: 100px 0;">
-    <div class="container">
-      <h2 style="text-align:center; font-family:'Playfair Display'; color:white; font-size:3rem; margin-bottom:60px;">The Pillars of MAINDSOURCE</h2>
-      <div class="services-grid">
-        <div class="service-card">
-          <h4 style="color:var(--gold)">Reliability</h4>
-          <p>We deliver what we promise, on time, every time.</p>
-        </div>
-        <div class="service-card">
-          <h4 style="color:var(--gold)">Inclusion</h4>
-          <p>Advocating for women and diverse talent in the industrial workforce.</p>
-        </div>
-        <div class="service-card">
-          <h4 style="color:var(--gold)">Innovation</h4>
-          <p>Using technology to track, manage, and scale talent pipelines.</p>
+        <div class="path-card reveal">
+          <div style="width: 60px; height: 60px; background: var(--gold); border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: var(--hero-start); font-weight: 800;">S</div>
+          <h3 style="font-family: 'Syne'; margin-bottom: 10px;">Mr. Surya</h3>
+          <p style="color: var(--gold); font-size: 0.9rem; margin-bottom: 15px; font-weight: 600; letter-spacing: 1px;">MANAGING PARTNER</p>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Driving enterprise partnerships and large-scale industrial deployments.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <footer style="padding: 60px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);">
+  <footer style="background: rgba(10,15,44,0.5); padding: 80px 0 40px; border-top: 1px solid rgba(255,255,255,0.05);">
     <div class="container">
-      <p style="color:var(--text-muted); margin-bottom: 20px;">Ready to learn more about our specific services?</p>
-      <a href="services.html" class="btn-gold">View Services &rarr;</a>
+        <div style="text-align: center;">
+            <div class="logo" style="margin-bottom: 20px;"><span style="color:var(--gold)">MAIND</span>SOURCE</div>
+            <p style="color:var(--text-muted); font-size: 0.9rem;">&copy; 2026 MAINDSOURCE LLP. All rights reserved.</p>
+        </div>
     </div>
   </footer>
 
+  <script>
+    // Star Generation
+    const container = document.getElementById('starContainer');
+    for (let i = 0; i < 100; i++) {
+      const span = document.createElement('span');
+      span.style.left = Math.random() * 100 + '%';
+      span.style.top = Math.random() * 100 + '%';
+      span.style.animationDelay = Math.random() * 5 + 's';
+      container.appendChild(span);
+    }
+
+    // Cursor Logic
+    const cursor = document.querySelector('.custom-cursor');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    // Reveal Logic
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
