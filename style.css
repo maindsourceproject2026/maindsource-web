@@ -1,23 +1,18 @@
-/* * PROJECT: MAINDSOURCE LLP Official Website
- * VERSION: 1.0.0
- * DESIGN SYSTEM: Corporate Navy & Gold
+/* * PROJECT: MAINDSOURCE LLP
+ * COMPONENT: Global Design System v1.1
  */
 
 :root {
-    /* Color Palette */
     --midnight-navy: #0A0F2C;
+    --rich-navy: #1E2761;
     --prestige-gold: #F5A623;
     --gold-hover: #E8920A;
-    --rich-navy: #1E2761;
-    --warm-cream: #F8F6F1;
     --pure-white: #FFFFFF;
-    
-    /* Typography */
+    --warm-cream: #F8F6F1;
     --font-primary: 'Syne', sans-serif;
     --font-secondary: 'DM Sans', sans-serif;
 }
 
-/* Global Reset */
 * {
     margin: 0;
     padding: 0;
@@ -28,32 +23,99 @@ body {
     background-color: var(--midnight-navy);
     color: var(--pure-white);
     font-family: var(--font-secondary);
-    line-height: 1.6;
+    line-height: 1.6; /* Fixed the cropping issue */
     overflow-x: hidden;
 }
 
-h1, h2, h3, .gold-text {
+h1, h2, h3 {
     font-family: var(--font-primary);
-    color: var(--prestige-gold);
+    line-height: 1.2; /* Better spacing for headings */
 }
 
-/* Common Components */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-.btn-primary {
-    background-color: var(--prestige-gold);
-    color: var(--midnight-navy);
-    padding: 12px 28px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: background 0.3s ease;
+/* Navigation */
+nav {
+    padding: 25px 0;
+    border-bottom: 1px solid rgba(245, 166, 35, 0.1);
 }
 
-.btn-primary:hover {
-    background-color: var(--gold-hover);
+.logo-text {
+    font-family: var(--font-primary);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--prestige-gold);
+    letter-spacing: 1px;
+}
+
+/* Buttons */
+.btn-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.btn-primary {
+    background: var(--prestige-gold);
+    color: var(--midnight-navy);
+    padding: 15px 35px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 700;
+    font-family: var(--font-primary);
+    transition: 0.3s;
+}
+
+.btn-secondary {
+    border: 2px solid var(--prestige-gold);
+    color: var(--prestige-gold);
+    padding: 13px 35px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 700;
+    font-family: var(--font-primary);
+    transition: 0.3s;
+}
+
+.btn-primary:hover { background: var(--gold-hover); }
+.btn-secondary:hover { background: rgba(245, 166, 35, 0.1); }
+
+/* Hero Section */
+.hero {
+    padding: 120px 0 80px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 25px;
+}
+
+.highlight {
+    color: var(--prestige-gold);
+}
+
+/* Stats Section */
+.stats-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 60px;
+}
+
+.stat-item h3 {
+    font-size: 3rem;
+    color: var(--prestige-gold);
+}
+
+.stat-item p {
+    color: var(--warm-cream);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
