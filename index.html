@@ -1,197 +1,692 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAINDSOURCE LLP | Corporate Staffing Solutions</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MAINDSOURCE LLP — Tech-enabled manpower supply, staffing and recruitment solutions across India. Contractual staffing, permanent placement, payroll management." />
+  <meta name="keywords" content="manpower supply Bangalore, staffing Karnataka, contractual staffing, recruitment solutions India, MAINDSOURCE LLP" />
+  <title>MAINDSOURCE LLP — Connecting Talent With Opportunities</title>
+
+  <!-- Favicon placeholder — replace with real favicon.ico from favicon.io -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+  <!-- Lottie Player CDN — for Phase 2 animations -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" defer></script>
 </head>
 <body>
 
+  <!-- ═══════════════════════════════════
+       PRELOADER
+  ════════════════════════════════════ -->
+  <div id="preloader">
+    <div class="preloader-logo">MAINDSOURCE LLP</div>
+    <div class="preloader-line-wrap">
+      <div class="preloader-line"></div>
+    </div>
+    <div class="preloader-sub">Connecting Talent With Opportunities</div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SCROLL PROGRESS BAR
+  ════════════════════════════════════ -->
+  <div id="scroll-progress"></div>
+
+  <!-- ═══════════════════════════════════
+       CUSTOM CURSOR
+  ════════════════════════════════════ -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ═══════════════════════════════════
+       WHATSAPP FLOAT BUTTON
+  ════════════════════════════════════ -->
+  <a id="whatsapp-float" href="https://wa.me/919071329231" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- ═══════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════ -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">MINDS<span>OURCE</span> LLP</a>
+
+    <ul class="nav-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="sectors.html">Sectors</a></li>
+      <li><a href="impact.html">Our Impact</a></li>
+      <li><a href="women.html">Women Empowerment</a></li>
+      <li><a href="jobseekers.html">For Job Seekers</a></li>
+      <li><a href="careers.html">Careers</a></li>
+      <li><a href="contact.html" class="nav-cta">Start Hiring →</a></li>
+    </ul>
+
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="services.html">Services</a>
+    <a href="sectors.html">Sectors We Serve</a>
+    <a href="impact.html">Our Impact</a>
+    <a href="women.html">Women Empowerment</a>
+    <a href="jobseekers.html">For Job Seekers</a>
+    <a href="careers.html">Careers</a>
+    <a href="credentials.html">Credentials</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       HERO
+  ════════════════════════════════════ -->
+  <section id="hero">
+    <!-- Floating particles — generated by JS -->
+    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-glow"></div>
+
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <div class="hero-badge-dot"></div>
+          <span>Established 2025 · Incorporated Jan 2026</span>
+        </div>
+
+        <h1 class="hero-headline">
+          Right Talent.<br>
+          <span class="highlight">Right Place.</span><br>
+          Right Time.
+        </h1>
+
+        <p class="hero-sub">
+          Tech-enabled manpower supply and staffing solutions across India.
+          We don't just fill positions — we scout leaders who can sustain and thrive.
+        </p>
+
+        <div class="hero-btns">
+          <a href="contact.html" class="btn-primary">
+            Request Manpower
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="jobseekers.html" class="btn-secondary">
+            Find Work
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-num">8,000+</div>
+            <div class="hero-stat-label">Candidates Interacted</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">50+</div>
+            <div class="hero-stat-label">Satisfied Clients</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">10+</div>
+            <div class="hero-stat-label">Industries Served</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lottie placeholder — Phase 2: replace with lottie-player -->
+      <div class="hero-visual">
+        <div class="hero-lottie-box" id="heroLottie">
+          <!-- LOTTIE ANIMATION HERE: character parachutes down, waves -->
+          <span>Animation Coming Soon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       DUAL PATH
+  ════════════════════════════════════ -->
+  <section id="dual-path">
     <div class="container">
-        <nav>
-            <div class="logo-text">MAINDSOURCE</div>
-            <a href="#" class="btn-primary" style="padding: 10px 20px;">Start Hiring &rarr;</a>
-        </nav>
-    </div>
-
-    <header class="hero">
-        <div class="container">
-            <h1 class="gsap-up">Right Talent. Right Place.<br><span class="highlight">Right Time.</span></h1>
-            <p class="gsap-up" style="max-width: 700px; margin: 0 auto; color: var(--warm-cream);">
-                Tech-enabled manpower supply connecting human potential with global opportunities.
-            </p>
-            
-            <div class="dual-path gsap-up">
-                <a href="#" class="btn-primary">Looking to Hire?</a>
-                <a href="#" class="btn-secondary">Looking for Work?</a>
-            </div>
-            
-            <div class="lottie-box" id="lottie-hero-placeholder">
-                [Lottie Animation Space: Character Parachuting Down]
-            </div>
+      <div class="dual-path-grid">
+        <div class="path-card reveal">
+          <div class="path-icon">🏢</div>
+          <h3>Looking to Hire?</h3>
+          <p>Build your ideal workforce with our tech-enabled recruitment solutions. From blue-collar to white-collar — we deliver screened, qualified professionals who fit your company culture.</p>
+          <a href="services.html" class="btn-path">
+            View Employer Services
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
-    </header>
+        <div class="path-card reveal">
+          <div class="path-icon">💼</div>
+          <h3>Looking for Work?</h3>
+          <p>Your next opportunity is waiting. We connect job seekers across Karnataka, Andhra Pradesh and Telangana with top companies in Bangalore — free placement service.</p>
+          <a href="jobseekers.html" class="btn-path">
+            Find Opportunities
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <section class="container grid-2" style="padding-top: 20px;">
+  <!-- ═══════════════════════════════════
+       ABOUT SNAPSHOT
+  ════════════════════════════════════ -->
+  <section id="about-snap">
+    <div class="container">
+      <div class="about-snap-grid">
+        <div class="about-snap-content">
+          <p class="section-label reveal-left">About MAINDSOURCE LLP</p>
+          <h2 class="section-title reveal-left">We Don't Just Fill Positions — We Scout Leaders</h2>
+          <p class="section-sub reveal-left">
+            MAINDSOURCE LLP is a tech-enabled recruitment company established in 2025 and incorporated in January 2026. Built on the ideology of matching human potential and talent through integrated tech-based solutions — we scout for talent that has the ability to lead, sustain and thrive.
+          </p>
+          <div class="about-pills reveal-left">
+            <span class="pill"><span class="pill-dot"></span>Est. 2025</span>
+            <span class="pill"><span class="pill-dot"></span>Inc. January 2026</span>
+            <span class="pill"><span class="pill-dot"></span>Bangalore & Ballari</span>
+            <span class="pill"><span class="pill-dot"></span>Pan-India Reach</span>
+          </div>
+          <a href="about.html" class="btn-primary" style="width:fit-content;">
+            Learn More About Us
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Lottie placeholder -->
+        <div class="about-snap-visual reveal">
+          <div class="about-lottie-box" id="aboutLottie">
+            <!-- LOTTIE ANIMATION HERE: character reads book, looks up smiling -->
+            <span>Animation Coming Soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       IMPACT NUMBERS
+  ════════════════════════════════════ -->
+  <section id="impact">
+    <div class="container">
+      <div class="impact-header">
+        <p class="section-label">Our Impact</p>
+        <h2 class="section-title" style="color:var(--text-white);">Proven Results. Trusted Partners.</h2>
+        <p class="section-sub">Numbers that reflect our commitment to connecting talent with opportunity across India.</p>
+      </div>
+
+      <div class="impact-grid">
+        <div class="impact-card reveal">
+          <span class="impact-icon">👥</span>
+          <div class="impact-num" data-target="8000">0</div>
+          <div class="impact-label">Candidates Interacted</div>
+          <div class="impact-sub">Across 10+ industries</div>
+        </div>
+        <div class="impact-card reveal">
+          <span class="impact-icon">🤝</span>
+          <div class="impact-num" data-target="50">0</div>
+          <div class="impact-label">Satisfied Clients</div>
+          <div class="impact-sub">Long-term corporate partnerships</div>
+        </div>
+        <div class="impact-card reveal">
+          <span class="impact-icon">🏢</span>
+          <div class="impact-num" data-target="2">0</div>
+          <div class="impact-label">Office Branches</div>
+          <div class="impact-sub">Bangalore & Ballari</div>
+        </div>
+        <div class="impact-card reveal">
+          <span class="impact-icon">🏆</span>
+          <div class="impact-num" data-target="1">0</div>
+          <div class="impact-label">Year of Excellence</div>
+          <div class="impact-sub">Est. 2025 | Inc. Jan 2026</div>
+        </div>
+      </div>
+
+      <!-- Lottie placeholder -->
+      <div class="impact-celebrate-box" id="impactLottie">
+        <!-- LOTTIE ANIMATION HERE: character celebrates -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       SERVICES PREVIEW
+  ════════════════════════════════════ -->
+  <section id="services-prev">
+    <div class="container">
+      <div class="services-header">
         <div>
-            <div class="section-title" style="text-align: left;">
-                <span>Who We Are</span>
-                <h2>Finding, Connecting, Building Success</h2>
-            </div>
-            <p style="margin-bottom: 20px;">Established in 2025 and incorporated in January 2026, MAINDSOURCE LLP is a premier tech-based staffing solution provider. We bridge the gap between elite talent and industry leaders across South India.</p>
-            <a href="#" class="btn-secondary">Learn More About Us</a>
+          <p class="section-label reveal-left">What We Offer</p>
+          <h2 class="section-title reveal-left">Comprehensive Workforce Solutions</h2>
+          <p style="font-family:var(--font-syne);font-size:13px;font-weight:700;color:var(--gold);letter-spacing:1px;">HIRE BETTER. HIRE FASTER. GROW BIGGER.</p>
         </div>
-        <div class="lottie-box">
-            [Lottie Animation Space: Character Reading Book]
-        </div>
-    </section>
+        <a href="services.html" class="btn-primary" style="white-space:nowrap;flex-shrink:0;">
+          View All Services →
+        </a>
+      </div>
 
-    <div class="stats-wrapper">
-        <div class="container grid-3">
-            <div class="stat-item gsap-up"><h3>8,000+</h3><p>Candidates Interacted</p></div>
-            <div class="stat-item gsap-up"><h3>10+</h3><p>Industries Served</p></div>
-            <div class="stat-item gsap-up"><h3>15+</h3><p>Global Clients</p></div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-num">01</div>
+          <div class="service-icon-wrap">🤝</div>
+          <h3>Contractual Staffing</h3>
+          <p>Flexible contract-based staffing solutions designed for short-term projects and dynamic workforce needs. We ensure rapid deployment of skilled personnel to keep your operations running smoothly.</p>
+          <a href="services.html" class="service-link">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
+
+        <div class="service-card reveal">
+          <div class="service-num">02</div>
+          <div class="service-icon-wrap">🎯</div>
+          <h3>One-Time Placement</h3>
+          <p>Permanent recruitment services for both blue-collar and white-collar roles across diverse industries. We connect you with candidates who are not just qualified, but the perfect cultural fit.</p>
+          <a href="services.html" class="service-link">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-num">03</div>
+          <div class="service-icon-wrap">💰</div>
+          <h3>Payroll Management</h3>
+          <p>End-to-end payroll processing, statutory compliance, and employee cost management. We handle the complexities of compensation so you can focus on core business growth.</p>
+          <a href="services.html" class="service-link">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-num">04</div>
+          <div class="service-icon-wrap">📚</div>
+          <h3>Training & Development</h3>
+          <p>Comprehensive skill enhancement, onboarding support, and professional growth programs. We upskill talent to ensure they are ready to contribute from day one.</p>
+          <a href="services.html" class="service-link">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+      <!-- Additional services strip -->
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;justify-content:center;">
+        <span class="pill"><span class="pill-dot"></span>Gig Workforce</span>
+        <span class="pill"><span class="pill-dot"></span>Hire & Manage</span>
+        <span class="pill"><span class="pill-dot"></span>CSR Solutions</span>
+        <span class="pill"><span class="pill-dot"></span>Workforce Consulting</span>
+        <span class="pill"><span class="pill-dot"></span>Blue-Collar to White-Collar</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       SECTORS MARQUEE
+  ════════════════════════════════════ -->
+  <section id="sectors">
+    <div class="container">
+      <div class="sectors-header">
+        <p class="section-label">Industries We Serve</p>
+        <h2 class="section-title" style="color:var(--text-white);">Diverse Industry Expertise Across India</h2>
+      </div>
     </div>
 
-    <section class="container">
-        <div class="section-title">
-            <span>Our Expertise</span>
-            <h2>Strategic Services</h2>
-        </div>
-        <div class="grid-3">
-            <div class="card gsap-up">
-                <h3>Gig Workforce</h3>
-                <p>On-demand flexible labor for rapid scaling in logistics, warehousing, and manufacturing.</p>
-            </div>
-            <div class="card gsap-up">
-                <h3>Hire & Manage</h3>
-                <p>Comprehensive staffing pipelines focused on skill development, deployment, and retention.</p>
-            </div>
-            <div class="card gsap-up">
-                <h3>Contractual Staffing</h3>
-                <p>Reliable blue-collar to white-collar recruitment tailored exactly to your operational needs.</p>
-            </div>
-        </div>
-    </section>
-
-    <div class="marquee-wrapper">
-        <div class="marquee-content">
-            <span>MANUFACTURING</span> <span>AUTOMOBILE</span> <span>TELECOM</span> <span>PACKAGING</span> <span>WAREHOUSING</span> <span>AEROSPACE</span> <span>HEALTHCARE</span> <span>LOGISTICS</span>
-            <span>MANUFACTURING</span> <span>AUTOMOBILE</span> <span>TELECOM</span> <span>PACKAGING</span> <span>WAREHOUSING</span> <span>AEROSPACE</span> <span>HEALTHCARE</span> <span>LOGISTICS</span>
-        </div>
+    <!-- Marquee — two strips for infinite loop -->
+    <div class="marquee-track">
+      <div class="marquee-strip" id="strip1">
+        <div class="sector-chip"><span class="sector-chip-icon">🏭</span><span class="sector-chip-name">Manufacturing</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🚗</span><span class="sector-chip-name">Automobile</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🛒</span><span class="sector-chip-name">Retail</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">💻</span><span class="sector-chip-name">IT & ITeS</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">⚡</span><span class="sector-chip-name">Electronics</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🎧</span><span class="sector-chip-name">BPO & KPO</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">✈️</span><span class="sector-chip-name">Aerospace & Defense</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🚚</span><span class="sector-chip-name">Logistics</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🧺</span><span class="sector-chip-name">FMCG</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">👕</span><span class="sector-chip-name">Apparel & Textile</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🏥</span><span class="sector-chip-name">Healthcare</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">⚙️</span><span class="sector-chip-name">Rubber & Industrial</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">📡</span><span class="sector-chip-name">Telecom</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">📦</span><span class="sector-chip-name">Packaging</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🏬</span><span class="sector-chip-name">Warehousing</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🔧</span><span class="sector-chip-name">Machinery & Equipment</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">💼</span><span class="sector-chip-name">Business Services</span></div>
+      </div>
+      <!-- Clone strip for seamless loop -->
+      <div class="marquee-strip" aria-hidden="true">
+        <div class="sector-chip"><span class="sector-chip-icon">🏭</span><span class="sector-chip-name">Manufacturing</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🚗</span><span class="sector-chip-name">Automobile</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🛒</span><span class="sector-chip-name">Retail</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">💻</span><span class="sector-chip-name">IT & ITeS</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">⚡</span><span class="sector-chip-name">Electronics</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🎧</span><span class="sector-chip-name">BPO & KPO</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">✈️</span><span class="sector-chip-name">Aerospace & Defense</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🚚</span><span class="sector-chip-name">Logistics</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🧺</span><span class="sector-chip-name">FMCG</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">👕</span><span class="sector-chip-name">Apparel & Textile</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🏥</span><span class="sector-chip-name">Healthcare</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">⚙️</span><span class="sector-chip-name">Rubber & Industrial</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">📡</span><span class="sector-chip-name">Telecom</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">📦</span><span class="sector-chip-name">Packaging</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🏬</span><span class="sector-chip-name">Warehousing</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">🔧</span><span class="sector-chip-name">Machinery & Equipment</span></div>
+        <div class="sector-chip"><span class="sector-chip-icon">💼</span><span class="sector-chip-name">Business Services</span></div>
+      </div>
     </div>
 
-    <section class="container">
-        <div class="section-title">
-            <span>Differentiators</span>
-            <h2>Why Choose MAINDSOURCE</h2>
-        </div>
-        <div class="grid-3">
-            <div class="card">
-                <h3>Tech-Integrated</h3>
-                <p>Advanced tracking, fast deployment, and digital payroll transparency.</p>
-            </div>
-            <div class="card" style="border-color: var(--prestige-gold);">
-                <h3>Women Empowerment</h3>
-                <p>Dedicated focus on equal opportunity placement and inclusive workforce advocacy.</p>
-            </div>
-            <div class="card">
-                <h3>South India Specialists</h3>
-                <p>Deep regional networks across Karnataka, Andhra Pradesh, and Telangana.</p>
-            </div>
-        </div>
-    </section>
+    <p class="sectors-tagline">From <strong>blue-collar operators</strong> to <strong>white-collar professionals</strong> — we cover it all.</p>
+  </section>
 
-    <section style="background: rgba(255,255,255,0.02); padding: 50px 0; text-align: center;">
-        <div class="container">
-            <p style="color: var(--prestige-gold); font-size: 0.9rem; font-weight: 700; letter-spacing: 2px; margin-bottom: 30px;">TRUSTED BY INDUSTRY LEADERS</p>
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; opacity: 0.8;">
-                <div style="padding: 10px 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-weight: 700;">FOXCONN</div>
-                <div style="padding: 10px 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-weight: 700;">TOYOTA</div>
-                <div style="padding: 10px 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-weight: 700;">TATA ELECTRONICS</div>
-                <div style="padding: 10px 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-weight: 700;">WISTRON</div>
-                <div style="padding: 10px 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-weight: 700;">TVS</div>
-                <div style="padding: 10px 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-weight: 700;">VOLVO</div>
-            </div>
+  <!-- ═══════════════════════════════════
+       WHY CHOOSE US
+  ════════════════════════════════════ -->
+  <section id="why-us">
+    <div class="container">
+      <div style="text-align:center;">
+        <p class="section-label reveal">Why MAINDSOURCE LLP</p>
+        <h2 class="section-title reveal">What Sets Us Apart</h2>
+        <p class="section-sub reveal" style="margin:0 auto 0;">Our unique approach to workforce solutions makes us the preferred partner for companies across India.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal">
+          <div class="why-icon">🖥️</div>
+          <h3>Tech-Integrated Screening</h3>
+          <p>Our proprietary tech-driven screening methodology ensures we filter the right talent for the right job — every single time. Perfect candidate-role alignment guaranteed.</p>
         </div>
-    </section>
-
-    <section style="background: linear-gradient(135deg, var(--rich-navy), var(--midnight-navy)); text-align: center; border-top: 1px solid var(--prestige-gold);">
-        <div class="container">
-            <h2 style="font-size: 3rem; margin-bottom: 20px;">Ready to Build Your Dream Workforce?</h2>
-            <a href="#" class="btn-primary" style="font-size: 1.2rem; padding: 20px 40px;">Contact Us Today</a>
+        <div class="why-card reveal">
+          <div class="why-icon">👩‍💼</div>
+          <h3>Women Empowerment Focus</h3>
+          <p>Women Empowerment is not just a value — it is the central pillar of everything MAINDSOURCE LLP stands for. Every placement reflects this commitment.</p>
         </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <h3 class="logo-text" style="margin-bottom: 15px; font-size: 1.5rem;">MAINDSOURCE</h3>
-                    <p>Right Talent. Right Place. Right Time. Providing enterprise-grade staffing solutions across industries.</p>
-                </div>
-                <div>
-                    <div class="footer-title">Quick Links</div>
-                    <div class="footer-links">
-                        <p>About Us</p>
-                        <p>Services</p>
-                        <p>Sectors</p>
-                        <p>Women Empowerment</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="footer-title">Contact</div>
-                    <div class="footer-links">
-                        <p>+91 9071329231</p>
-                        <p>maindsource@gmail.com</p>
-                        <p>Bangalore | Ballari</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="footer-title">Credentials</div>
-                    <div class="footer-links">
-                        <p>LLPIN: ACU-2305</p>
-                        <p>GST: 29ACGFM2072C1ZE</p>
-                        <p>UDYAM Reg: KR-05-0060017</p>
-                    </div>
-                </div>
-            </div>
-            <div class="bottom-bar">
-                &copy; 2026 MAINDSOURCE LLP. All rights reserved. Designed for excellence.
-            </div>
+        <div class="why-card reveal">
+          <div class="why-icon">📍</div>
+          <h3>South India Specialists</h3>
+          <p>Deep expertise across Karnataka, Andhra Pradesh and Telangana — with growing Pan-India reach. We understand local talent markets better than anyone.</p>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
-        
-        // Hero Reveal
-        gsap.from(".gsap-up", {
-            y: 40,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: "power3.out"
+  <!-- ═══════════════════════════════════
+       CLIENT LOGOS
+  ════════════════════════════════════ -->
+  <section id="clients">
+    <div class="container">
+      <div class="clients-header">
+        <p class="section-label reveal">Trusted By Leading Companies</p>
+        <h2 class="section-title reveal">Our Expanding Clients Across Diverse Segments</h2>
+      </div>
+      <div class="clients-grid">
+        <div class="client-logo-box reveal"><span>Foxconn</span></div>
+        <div class="client-logo-box reveal"><span>Toyota</span></div>
+        <div class="client-logo-box reveal"><span>Tata Electronics</span></div>
+        <div class="client-logo-box reveal"><span>Wistron</span></div>
+        <div class="client-logo-box reveal"><span>Schneider Electric</span></div>
+        <div class="client-logo-box reveal"><span>Motherson</span></div>
+        <div class="client-logo-box reveal"><span>TVS</span></div>
+        <div class="client-logo-box reveal"><span>Volvo</span></div>
+        <div class="client-logo-box reveal"><span>Ola Electric</span></div>
+        <div class="client-logo-box reveal"><span>Otis</span></div>
+        <div class="client-logo-box reveal"><span>Molex</span></div>
+        <div class="client-logo-box reveal"><span>INDO-MIM</span></div>
+        <div class="client-logo-box reveal"><span>CIE Automotive</span></div>
+        <div class="client-logo-box reveal"><span>Avirata Defence</span></div>
+        <div class="client-logo-box reveal"><span>Emmvee Group</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       TESTIMONIALS
+  ════════════════════════════════════ -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="testimonials-header">
+        <p class="section-label reveal">What Our Clients Say</p>
+        <h2 class="section-title reveal" style="color:var(--text-white);">Trusted. Proven. Recommended.</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">MAINDSOURCE LLP delivered exactly the workforce we needed — screened, trained, and ready from day one. Their understanding of our industry requirements is exceptional.</p>
+          <div class="testimonial-person">
+            <div class="testimonial-avatar">H</div>
+            <div>
+              <div class="testimonial-name">HR Manager</div>
+              <div class="testimonial-role">Leading Manufacturing Company, Bangalore</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">What impressed us most was their speed and accuracy. Within 72 hours of raising the requirement, we had the right candidates in our facility. Highly reliable partners.</p>
+          <div class="testimonial-person">
+            <div class="testimonial-avatar">P</div>
+            <div>
+              <div class="testimonial-name">Plant Head</div>
+              <div class="testimonial-role">Electronics Manufacturing, Karnataka</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">The team at MAINDSOURCE truly understands the blue-collar workforce market in South India. They have been our go-to partner for manpower across all our facilities.</p>
+          <div class="testimonial-person">
+            <div class="testimonial-avatar">V</div>
+            <div>
+              <div class="testimonial-name">Operations Director</div>
+              <div class="testimonial-role">Logistics & Supply Chain, Bangalore</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       CTA BANNER
+  ════════════════════════════════════ -->
+  <section id="cta-banner">
+    <div class="container">
+      <div class="cta-banner-content">
+        <p class="section-label reveal">Let's Work Together</p>
+        <h2 class="section-title reveal">Ready to Build Your Dream Workforce?</h2>
+        <p class="reveal">Join 50+ satisfied companies who trust MAINDSOURCE LLP for their manpower needs. First batch of candidates delivered within 72 hours.</p>
+        <div class="cta-banner-btns reveal">
+          <a href="contact.html" class="btn-primary">Start Your Hiring Journey →</a>
+          <a href="tel:+919071329231" class="btn-secondary">📞 Call Us Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       FOOTER
+  ════════════════════════════════════ -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <div class="footer-logo">MINDS<span>OURCE</span> LLP</div>
+          <p>Tech-enabled manpower supply and staffing solutions across India. Connecting talent with opportunities since 2025.</p>
+          <div class="footer-socials">
+            <a href="#" class="footer-social" aria-label="LinkedIn">in</a>
+            <a href="#" class="footer-social" aria-label="Instagram">📸</a>
+            <a href="#" class="footer-social" aria-label="Facebook">f</a>
+            <a href="https://wa.me/919071329231" class="footer-social" aria-label="WhatsApp">💬</a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="women.html">Women Empowerment</a></li>
+            <li><a href="credentials.html">Credentials</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html">Contractual Staffing</a></li>
+            <li><a href="services.html">One-Time Placement</a></li>
+            <li><a href="services.html">Payroll Management</a></li>
+            <li><a href="services.html">Training & Development</a></li>
+            <li><a href="services.html">Gig Workforce</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div class="footer-contact">
+            <div class="footer-contact-item">
+              <span class="footer-contact-icon">📞</span>
+              <div class="footer-contact-text"><strong>Phone</strong>+91 9071329231</div>
+            </div>
+            <div class="footer-contact-item">
+              <span class="footer-contact-icon">✉️</span>
+              <div class="footer-contact-text"><strong>Email</strong>maindsource@gmail.com</div>
+            </div>
+            <div class="footer-contact-item">
+              <span class="footer-contact-icon">📍</span>
+              <div class="footer-contact-text"><strong>Bangalore</strong>Electronic City (P), Bangalore — 560100</div>
+            </div>
+            <div class="footer-contact-item">
+              <span class="footer-contact-icon">📍</span>
+              <div class="footer-contact-text"><strong>Ballari</strong>M V Nagar 10th Cross, Ballari — 583103</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 MAINDSOURCE LLP. All rights reserved. LLPIN: ACU-2305 | GST: 29ACGFM2072C1ZE</p>
+        <p class="footer-legal">Registered. Compliant. Trustworthy.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════ -->
+  <script>
+  // ── Preloader ──────────────────────────────
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const loader = document.getElementById('preloader');
+      loader.style.opacity = '0';
+      loader.style.transition = 'opacity 0.6s ease';
+      setTimeout(() => { loader.style.display = 'none'; }, 600);
+    }, 2000);
+  });
+
+  // ── Custom Cursor ──────────────────────────
+  const dot  = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    dot.style.left  = mouseX + 'px';
+    dot.style.top   = mouseY + 'px';
+  });
+
+  (function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX + 'px';
+    ring.style.top  = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  })();
+
+  // ── Scroll Progress Bar ────────────────────
+  window.addEventListener('scroll', () => {
+    const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    document.getElementById('scroll-progress').style.width = scrolled + '%';
+  });
+
+  // ── Navbar Scroll ──────────────────────────
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ── Mobile Menu ────────────────────────────
+  const hamburger     = document.getElementById('hamburger');
+  const mobileMenu    = document.getElementById('mobileMenu');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+
+  function toggleMenu() {
+    mobileMenu.classList.toggle('open');
+    mobileOverlay.classList.toggle('open');
+  }
+  hamburger.addEventListener('click', toggleMenu);
+  mobileOverlay.addEventListener('click', toggleMenu);
+
+  // ── Hero Particles ─────────────────────────
+  const container = document.getElementById('heroParticles');
+  for (let i = 0; i < 25; i++) {
+    const span = document.createElement('span');
+    span.style.left     = Math.random() * 100 + '%';
+    span.style.top      = Math.random() * 100 + '%';
+    span.style.animationDuration  = (Math.random() * 8 + 6) + 's';
+    span.style.animationDelay     = (Math.random() * 6) + 's';
+    span.style.width = span.style.height = (Math.random() * 3 + 2) + 'px';
+    container.appendChild(span);
+  }
+
+  // ── Scroll Reveal ──────────────────────────
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // ── Stats Count-Up ─────────────────────────
+  function countUp(el, target, duration = 2000) {
+    let start = 0;
+    const suffix = el.textContent.replace(/[0-9]/g,'').trim() || '+';
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { el.textContent = target.toLocaleString() + '+'; clearInterval(timer); }
+      else { el.textContent = Math.floor(start).toLocaleString() + '+'; }
+    }, 16);
+  }
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        document.querySelectorAll('.impact-num[data-target]').forEach(el => {
+          countUp(el, parseInt(el.dataset.target));
         });
+        statsObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  const impactSection = document.getElementById('impact');
+  if (impactSection) statsObserver.observe(impactSection);
+  </script>
 
-        // Cards Scroll Reveal
-        gsap.utils.toArray('.card').forEach(card => {
-            gsap.from(card, {
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 85%"
-                },
-                y: 50,
-                opacity: 0,
-                duration: 0.8,
-                ease: "power3.out"
-            });
-        });
-    </script>
 </body>
 </html>
