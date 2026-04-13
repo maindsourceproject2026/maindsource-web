@@ -2,10 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta name="description" content="Contact MAINDSOURCE — Get in touch for manpower solutions in Bangalore and Ballari."/>
+  <meta name="description" content="Contact MAINDSOURCE — Get in touch with our Bangalore and Ballari offices for manpower and staffing requirements."/>
   <title>Contact Us — MAINDSOURCE</title>
   <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
+  <!-- apple-touch-icon: place at assets/img/apple-touch-icon.png -->
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png"/>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── Contact page extras ── */
+    .contact-wrap { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:flex-start; }
+    .contact-details { display:flex; flex-direction:column; gap:0; }
+    .cd-item { display:flex; gap:16px; align-items:flex-start; padding:22px 0; border-bottom:1px solid var(--border); }
+    .cd-item:last-child { border-bottom:none; }
+    .cd-icon-wrap { width:46px; height:46px; border-radius:12px; background:rgba(245,166,35,.10); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+    .cd-label { font-family:var(--font-s); font-size:11px; font-weight:700; color:var(--gold); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+    .cd-value { font-size:15px; color:var(--text-dark); font-weight:500; line-height:1.6; }
+    .cd-sub { font-size:13px; color:var(--text-gray); margin-top:2px; }
+    .map-placeholder { width:100%; height:280px; background:linear-gradient(135deg,var(--cream-2),#e8eaf4); border:1.5px dashed rgba(30,39,97,.18); border-radius:var(--r); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; margin-top:24px; }
+    .map-placeholder span { font-family:var(--font-s); font-size:11px; font-weight:600; color:rgba(30,39,97,.35); letter-spacing:1px; text-transform:uppercase; }
+    .offices-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:40px; }
+    .office-box { background:var(--white); border:1px solid var(--border); border-radius:var(--r); padding:22px 20px; transition:var(--ease); }
+    .office-box:hover { border-color:var(--gold); box-shadow:0 4px 16px rgba(245,166,35,.09); }
+    .office-tag { display:inline-block; font-family:var(--font-s); font-size:10px; font-weight:700; color:var(--gold); background:rgba(245,166,35,.09); border-radius:50px; padding:2px 10px; letter-spacing:.8px; margin-bottom:10px; }
+    .office-box h4 { font-family:var(--font-s); font-size:14px; font-weight:700; color:var(--text-dark); margin-bottom:6px; }
+    .office-box p { font-size:13px; color:var(--text-gray); line-height:1.6; }
+    .contact-form-placeholder { background:var(--white); border:1px solid var(--border); border-radius:var(--rl); padding:36px; }
+    .cfp-label { font-family:var(--font-s); font-size:11px; font-weight:700; color:var(--text-dark); margin-bottom:6px; display:block; letter-spacing:.2px; }
+    .cfp-input { width:100%; border:1.5px solid var(--border); border-radius:8px; padding:11px 13px; font-family:var(--font-b); font-size:14px; color:var(--text-body); background:var(--cream); margin-bottom:14px; outline:none; transition:border .25s; }
+    .cfp-input:focus { border-color:var(--gold); background:var(--white); }
+    .cfp-select { width:100%; border:1.5px solid var(--border); border-radius:8px; padding:11px 13px; font-family:var(--font-b); font-size:14px; color:var(--text-body); background:var(--cream); margin-bottom:14px; outline:none; appearance:none; }
+    .cfp-textarea { width:100%; border:1.5px solid var(--border); border-radius:8px; padding:11px 13px; font-family:var(--font-b); font-size:14px; color:var(--text-body); background:var(--cream); margin-bottom:14px; outline:none; resize:vertical; min-height:100px; transition:border .25s; }
+    .cfp-textarea:focus { border-color:var(--gold); background:var(--white); }
+    .form-note { font-size:12px; color:var(--text-gray); margin-top:12px; }
+    .contact-cta-strip { background:var(--navy); border-radius:var(--rl); padding:36px 32px; display:flex; justify-content:space-between; align-items:center; gap:24px; margin-top:48px; flex-wrap:wrap; }
+    .contact-cta-strip h3 { font-family:var(--font-d); font-size:clamp(18px,2.5vw,26px); font-weight:700; color:var(--white); }
+    .contact-cta-strip p { font-size:14px; color:var(--text-muted); margin-top:4px; }
+    @media(max-width:900px){.contact-wrap{grid-template-columns:1fr;gap:36px;}.offices-grid{grid-template-columns:1fr;}.contact-cta-strip{flex-direction:column;align-items:flex-start;}}
+  </style>
 </head>
 <body>
 
@@ -13,65 +46,238 @@
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<nav id="navbar">
-  <div class="container nav-wrap">
-    <a href="index.html" class="nav-brand">
-      <img src="assets/img/logo.png" alt="Logo" class="nav-logo" onerror="this.style.display='none'">
-      <div class="nav-brand-text"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
-    </a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="services.html">Services</a>
-      <a href="sectors.html">Sectors</a>
-      <a href="contact.html" class="active">Contact</a>
-    </div>
-    <a href="contact.html" class="nav-cta">Start Hiring →</a>
-  </div>
-</nav>
+<!-- WhatsApp Float -->
+<a id="wa-float" href="https://wa.me/919071329231" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
 
+<!-- NAVBAR — simplified: Home, About, Services, Sectors, Contact -->
+<nav id="navbar">
+  <a href="index.html" class="nav-brand">
+    <!-- Logo: place file at assets/img/logo.png -->
+    <img src="assets/img/logo.png" alt="" class="nav-brand-img" onerror="this.style.display='none'"/>
+    <div class="nav-brand-text"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="sectors.html">Sectors</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Start Hiring →</a>
+  <button class="nav-ham" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mob-overlay" id="mobOverlay"></div>
+<div class="mob-menu" id="mobMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About Us</a>
+  <a href="services.html">Services</a>
+  <a href="sectors.html">Sectors</a>
+  <a href="jobseekers.html">For Job Seekers</a>
+  <a href="impact.html">Our Impact</a>
+  <a href="women.html">Women Empowerment</a>
+  <a href="credentials.html">Credentials</a>
+  <a href="careers.html">Careers</a>
+  <a href="contact.html" class="mob-cta">Start Hiring →</a>
+</div>
+
+<!-- PAGE HERO -->
 <section class="page-hero">
-  <div class="page-hero-inner">
-    <h1>Get in <em>Touch</em></h1>
-    <p>Connecting you with excellence across India.</p>
+  <div class="ph-particles" id="phpP"></div>
+  <div class="ph-glow"></div>
+  <div class="container ph-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span style="color:var(--white)">Contact Us</span></div>
+    <h1>Let's Build Your<br><em>Workforce</em><br>Together</h1>
+    <p>Reach out to our team in Bangalore or Ballari. First batch of candidates delivered within 72 hours of your requirement.</p>
   </div>
 </section>
 
-<section class="section-pad">
+<!-- QUICK CONNECT STRIP -->
+<div style="background:var(--navy);padding:0;">
+  <div class="container" style="display:grid;grid-template-columns:repeat(3,1fr);border-left:1px solid rgba(255,255,255,.06);">
+    <a href="tel:+919071329231" style="display:flex;align-items:center;gap:14px;padding:22px 24px;border-right:1px solid rgba(255,255,255,.06);transition:var(--ease);" onmouseover="this.style.background='rgba(245,166,35,.07)'" onmouseout="this.style.background='none'">
+      <span style="font-size:24px">📞</span>
+      <div><div style="font-family:var(--font-s);font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px">Call Us</div><div style="font-family:var(--font-s);font-size:15px;font-weight:700;color:var(--white)">+91 9071329231</div></div>
+    </a>
+    <a href="mailto:maindsource@gmail.com" style="display:flex;align-items:center;gap:14px;padding:22px 24px;border-right:1px solid rgba(255,255,255,.06);transition:var(--ease);" onmouseover="this.style.background='rgba(245,166,35,.07)'" onmouseout="this.style.background='none'">
+      <span style="font-size:24px">✉️</span>
+      <div><div style="font-family:var(--font-s);font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px">Email Us</div><div style="font-family:var(--font-s);font-size:15px;font-weight:700;color:var(--white)">maindsource@gmail.com</div></div>
+    </a>
+    <a href="https://wa.me/919071329231" target="_blank" style="display:flex;align-items:center;gap:14px;padding:22px 24px;transition:var(--ease);" onmouseover="this.style.background='rgba(245,166,35,.07)'" onmouseout="this.style.background='none'">
+      <span style="font-size:24px">💬</span>
+      <div><div style="font-family:var(--font-s);font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px">WhatsApp</div><div style="font-family:var(--font-s);font-size:15px;font-weight:700;color:var(--white)">Chat Directly</div></div>
+    </a>
+  </div>
+</div>
+
+<!-- MAIN CONTACT SECTION -->
+<section class="section-pad" style="background:var(--cream)">
   <div class="container">
-    <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px;">
-      <div class="contact-info">
-        <div class="contact-card" style="background: var(--navy); color: white; padding: 40px; border-radius: var(--rl);">
-          <h2 style="font-family: var(--font-s); margin-bottom: 20px;">Corporate Office</h2>
-          <p style="color: var(--gold); font-weight: bold;">Bangalore</p>
-          <p style="margin-bottom: 20px; opacity: 0.8;">#42, 2nd Floor, Residency Road,<br>Bangalore, Karnataka - 560025</p>
-          
-          <h2 style="font-family: var(--font-s); margin-bottom: 20px;">Regional Office</h2>
-          <p style="color: var(--gold); font-weight: bold;">Ballari</p>
-          <p style="opacity: 0.8;">Beside Royal Circle, Main Road,<br>Ballari, Karnataka - 583101</p>
+    <div class="contact-wrap">
+
+      <!-- Left: Details -->
+      <div>
+        <span class="section-label reveal-left">Get in Touch</span>
+        <h2 class="section-title reveal-left">We're Here to Help You<br>Find the Right Talent</h2>
+        <p class="section-sub reveal-left" style="margin-bottom:0">Share your workforce requirement and our team will respond within 2 business hours.</p>
+
+        <div class="contact-details" style="margin-top:32px;">
+          <div class="cd-item reveal">
+            <div class="cd-icon-wrap">📞</div>
+            <div>
+              <div class="cd-label">Phone</div>
+              <div class="cd-value">+91 9071329231</div>
+              <div class="cd-sub">Available Mon–Sat, 9 AM to 7 PM</div>
+            </div>
+          </div>
+          <div class="cd-item reveal">
+            <div class="cd-icon-wrap">✉️</div>
+            <div>
+              <div class="cd-label">Email</div>
+              <div class="cd-value">maindsource@gmail.com</div>
+              <div class="cd-sub">We respond within 2 business hours</div>
+            </div>
+          </div>
+          <div class="cd-item reveal">
+            <div class="cd-icon-wrap">💬</div>
+            <div>
+              <div class="cd-label">WhatsApp</div>
+              <div class="cd-value">+91 9071329231</div>
+              <div class="cd-sub">Fastest way to reach us — share your JD directly</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map placeholder -->
+        <div class="map-placeholder reveal" style="margin-top:32px;">
+          <span style="font-size:32px">🗺️</span>
+          <span>Bangalore Office Map</span>
+          <span style="font-size:11px;color:rgba(30,39,97,.25)">Electronic City (P), Bangalore — 560100</span>
+          <!-- To embed Google Maps: replace this div with iframe -->
+          <!-- <iframe src="https://maps.google.com/maps?q=Electronic+City+Bangalore&output=embed" width="100%" height="280" frameborder="0" style="border:0;border-radius:12px;"></iframe> -->
         </div>
       </div>
-      
-      <div class="contact-form-wrap">
-        <form class="contact-form" action="#" style="display: flex; flex-direction: column; gap: 20px;">
-          <input type="text" placeholder="Your Name" required style="padding: 15px; border: 1px solid var(--border); border-radius: var(--r);">
-          <input type="email" placeholder="Email Address" required style="padding: 15px; border: 1px solid var(--border); border-radius: var(--r);">
-          <select style="padding: 15px; border: 1px solid var(--border); border-radius: var(--r);">
-            <option>Service Required</option>
+
+      <!-- Right: Enquiry form placeholder -->
+      <div class="reveal">
+        <div class="contact-form-placeholder">
+          <h3 style="font-family:var(--font-d);font-size:22px;font-weight:700;color:var(--text-dark);margin-bottom:6px;">Send Us a Requirement</h3>
+          <p style="font-size:13.5px;color:var(--text-gray);margin-bottom:24px;">Fill the form and our team will get back to you within 2 hours.</p>
+
+          <label class="cfp-label">Your Name *</label>
+          <input class="cfp-input" type="text" placeholder="Full name"/>
+
+          <label class="cfp-label">Company Name *</label>
+          <input class="cfp-input" type="text" placeholder="Company or organisation"/>
+
+          <label class="cfp-label">Phone Number *</label>
+          <input class="cfp-input" type="tel" placeholder="+91 XXXXXXXXXX"/>
+
+          <label class="cfp-label">Email Address</label>
+          <input class="cfp-input" type="email" placeholder="your@email.com"/>
+
+          <label class="cfp-label">Requirement Type</label>
+          <select class="cfp-select">
+            <option>Select requirement type</option>
             <option>Contractual Staffing</option>
-            <option>Payroll Management</option>
+            <option>One-Time Placement</option>
             <option>Gig Workforce</option>
+            <option>Payroll Management</option>
+            <option>Training & Development</option>
+            <option>Other</option>
           </select>
-          <textarea placeholder="Your Message" rows="5" style="padding: 15px; border: 1px solid var(--border); border-radius: var(--r);"></textarea>
-          <button type="submit" class="btn-primary" style="width: fit-content; cursor: none;">Send Message →</button>
-        </form>
+
+          <label class="cfp-label">Tell Us More</label>
+          <textarea class="cfp-textarea" placeholder="Briefly describe your workforce requirement — number of people, location, job type..."></textarea>
+
+          <!-- Form submission: integrate Web3Forms on Day 3 -->
+          <!-- <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY"/> -->
+          <a href="https://wa.me/919071329231" target="_blank" class="btn btn-gold" style="width:100%;justify-content:center;">Send via WhatsApp Instead →</a>
+          <p class="form-note">Form integration coming soon. For immediate response, use WhatsApp or call directly.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Office Cards -->
+    <div style="margin-top:56px;">
+      <div class="text-center" style="margin-bottom:32px;">
+        <span class="section-label reveal">Our Offices</span>
+        <h2 class="section-title reveal">Find Us Here</h2>
+      </div>
+      <div class="offices-grid">
+        <div class="office-box reveal">
+          <div class="office-tag">PRIMARY OFFICE</div>
+          <h4>Bangalore</h4>
+          <p>Near NR Fitness Unisex Gym, Bettadasanapura,<br>Electronic City (P), Bangalore — 560100<br>Karnataka, India</p>
+          <a href="https://maps.google.com/?q=Electronic+City+Bangalore" target="_blank" class="btn btn-ghost" style="margin-top:16px;font-size:12px;padding:8px 16px;">View on Maps →</a>
+        </div>
+        <div class="office-box reveal">
+          <div class="office-tag" style="background:rgba(30,39,97,.07);color:var(--navy)">BRANCH OFFICE</div>
+          <h4>Ballari</h4>
+          <p>Plot No 05, Ward No 21,<br>M V Nagar 10th Cross, Ballari — 583103<br>Karnataka, India</p>
+          <a href="https://maps.google.com/?q=MV+Nagar+Ballari" target="_blank" class="btn btn-ghost" style="margin-top:16px;font-size:12px;padding:8px 16px;">View on Maps →</a>
+        </div>
       </div>
     </div>
+
+    <!-- CTA strip -->
+    <div class="contact-cta-strip reveal">
+      <div>
+        <h3>Need candidates fast?</h3>
+        <p>First batch delivered within 72 hours of requirement submission.</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="tel:+919071329231" class="btn btn-gold">📞 Call Now</a>
+        <a href="https://wa.me/919071329231" target="_blank" class="btn btn-outline" style="border-color:rgba(255,255,255,.3)">💬 WhatsApp</a>
+      </div>
+    </div>
+
   </div>
 </section>
 
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="f-logo"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
+        <p>Tech-enabled manpower supply and staffing solutions across India. Connecting talent with opportunities since 2025.</p>
+        <div class="f-socials">
+          <a href="#" class="f-soc" aria-label="LinkedIn">in</a>
+          <a href="#" class="f-soc" aria-label="Instagram">📸</a>
+          <a href="#" class="f-soc" aria-label="Facebook">f</a>
+          <a href="https://wa.me/919071329231" class="f-soc" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div class="f-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="women.html">Women Empowerment</a></li><li><a href="credentials.html">Credentials</a></li><li><a href="careers.html">Careers</a></li></ul></div>
+      <div class="f-col"><h4>Services</h4><ul><li><a href="services.html">Contractual Staffing</a></li><li><a href="services.html">One-Time Placement</a></li><li><a href="services.html">Payroll Management</a></li><li><a href="services.html">Gig Workforce</a></li></ul></div>
+      <div class="f-col">
+        <h4>Contact</h4>
+        <div class="f-contact-item"><span class="f-ci">📞</span><div class="f-ct"><strong>Phone</strong>+91 9071329231</div></div>
+        <div class="f-contact-item"><span class="f-ci">✉️</span><div class="f-ct"><strong>Email</strong>maindsource@gmail.com</div></div>
+        <div class="f-contact-item"><span class="f-ci">📍</span><div class="f-ct"><strong>Bangalore (Primary)</strong>Electronic City (P), 560100, Karnataka</div></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 MAINDSOURCE LLP. All rights reserved. LLPIN: ACU-2305 | GST: 29ACGFM2072C1ZE</p>
+      <p class="f-legal">Registered · Compliant · Trustworthy</p>
+    </div>
+  </div>
+</footer>
+
 <script>
-  // Insert your standard cursor and scroll scripts here to maintain behavior
+const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(dot){dot.style.left=mx+'px';dot.style.top=my+'px';}});
+(function ar(){if(!ring)return;rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar);})();
+window.addEventListener('scroll',()=>{const p=document.getElementById('scroll-progress');if(p)p.style.width=((window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100)+'%';document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);});
+const ham=document.getElementById('hamburger'),mm=document.getElementById('mobMenu'),mo=document.getElementById('mobOverlay');
+if(ham){function tm(){mm.classList.toggle('open');mo.classList.toggle('open');}ham.addEventListener('click',tm);mo.addEventListener('click',tm);}
+(function(){const c=document.getElementById('phpP');if(!c)return;for(let i=0;i<14;i++){const s=document.createElement('span');s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${Math.random()*8+6}s;animation-delay:${Math.random()*6}s;width:2px;height:2px;`;c.appendChild(s);}})();
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);}});},{threshold:.13});
+document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>

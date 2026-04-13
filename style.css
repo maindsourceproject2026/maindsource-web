@@ -439,13 +439,7 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 .nav-cta, .btn, .sector-card {
     cursor: none !important; /* Forces the browser to use our custom dot only */
 }
-
 #cursorDot, #cursorRing {
     pointer-events: none !important; /* Ensures the cursor doesn't 'block' the button click */
     z-index: 9999;
-}
-/* Force the text area to fill the entire card height */
-.sector-card {
-    display: flex;
-    flex-direction: column;
 }
