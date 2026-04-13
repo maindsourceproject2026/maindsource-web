@@ -449,13 +449,6 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
     display: flex;
     flex-direction: column;
 }
-
-.sc-body {
-    flex-grow: 1; /* This forces the navy box to stretch to the bottom */
-    display: flex;
-    flex-direction: column;
-}
-
 /* Ensure the background color covers the WHOLE stretched area */
 .sector-card:hover .sc-body {
     background-color: var(--navy) !important;
