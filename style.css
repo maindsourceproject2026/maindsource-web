@@ -435,3 +435,24 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
   .js-cats{grid-template-columns:1fr 1fr;}
   .add-svc-grid{grid-template-columns:1fr;}
 }
+/* Fix Cursor Stutter on Buttons */
+.nav-cta, .btn, .sector-card {
+    cursor: none !important; /* Forces the browser to use our custom dot only */
+}
+
+#cursorDot, #cursorRing {
+    pointer-events: none !important; /* Ensures the cursor doesn't 'block' the button click */
+    z-index: 9999;
+}
+/* Fix for specific sector cards hover background */
+.sector-card, .sector-card * {
+    transition: var(--ease);
+}
+
+.sector-card:hover, 
+.sector-card:hover .sector-icon, 
+.sector-card:hover i, 
+.sector-card:hover span {
+    background-color: var(--gold) !important;
+    color: var(--text-dark) !important;
+}
