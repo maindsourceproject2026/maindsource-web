@@ -450,9 +450,8 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 }
 
 .sector-card:hover, 
-.sector-card:hover .sector-icon, 
 .sector-card:hover i, 
 .sector-card:hover span {
-    background-color: var(--gold) !important;
+    background-color: var(--navy) !important;
     color: var(--text-dark) !important;
 }
