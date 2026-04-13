@@ -444,11 +444,3 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
     pointer-events: none !important; /* Ensures the cursor doesn't 'block' the button click */
     z-index: 9999;
 }
-/* Force internal parts of the card to turn Navy/Gold properly */
-.sector-card:hover .sc-body,
-.sector-card:hover .sc-body *,
-.sector-card:hover i,
-.sector-card:hover span {
-    background-color: var(--navy) !important;
-    color: var(--white) !important;
-}
