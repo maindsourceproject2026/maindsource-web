@@ -444,10 +444,6 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
     pointer-events: none !important; /* Ensures the cursor doesn't 'block' the button click */
     z-index: 9999;
 }
-/* Optimization for smooth scrolling and fast grid */
-.sectors-grid, .sector-card {
-    will-change: transform;
-}
 /* Force internal parts of the card to turn Navy/Gold properly */
 .sector-card:hover .sc-body,
 .sector-card:hover .sc-body *,
