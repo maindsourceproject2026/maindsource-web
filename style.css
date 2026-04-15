@@ -435,14 +435,21 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
   .js-cats{grid-template-columns:1fr 1fr;}
   .add-svc-grid{grid-template-columns:1fr;}
 }
-/* Fix Cursor Stutter on Buttons */
-.nav-cta, .btn, .sector-card {
-    cursor: none !important; /* Forces the browser to use our custom dot only */
+/* ============================================================
+   🔧 CURSOR FIX — Paste this ANYWHERE in style.css
+   Stops the system cursor from appearing on navbar & buttons
+   ============================================================ */
+ 
+*, *::before, *::after { cursor: none !important; }
+a, button, input, select, textarea,
+.nav-links a, .nav-cta, .nav-drop-trigger,
+.nav-drop-menu a, .mob-menu a, .btn { cursor: none !important; }
+ 
+@media(hover:none){
+  *, *::before, *::after { cursor: auto !important; }
+  a, button { cursor: pointer !important; }
 }
-#cursorDot, #cursorRing {
-    pointer-events: none !important; /* Ensures the cursor doesn't 'block' the button click */
-    z-index: 9999;
-}/* ============================================
+/* ============================================
    NAVBAR DROPDOWN — Paste this block at the
    bottom of your style.css file (before the
    Responsive section ideally, or at very end)
