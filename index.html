@@ -19,6 +19,7 @@
 
   #hero {
     min-height: 100vh;
+    height: 100vh; /* Locking it to exactly the screen height */
     background: #0A0F2C;
     display: flex;
     flex-direction: column;
@@ -80,7 +81,7 @@
 
   /* Video layer — hidden until client provides file */
   .hero-video-bg {
-    position:absolute; inset:0; z-index:0; display:none;
+    position:absolute; top: 0; left: 0; width: 100%; height: 100%; inset:0; z-index:0; display:none;
   }
   .hero-video-bg video {
     width:100%; height:100%; object-fit:cover; opacity: 0.7; /* increased to 70% visibility */
