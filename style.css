@@ -6,10 +6,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
 :root {
-  --hero-start:#0A0F2C; --hero-end:#1a1040;
+  --hero-start:#3dd68c; --hero-end:#1a1040;
   --navy:#3dd68c; --cream:#F8F6F1; --cream-2:#F0F2F8;
   --gold:#F5A623; --gold-h:#E8920A;
-  --white:#FFFFFF; --text-dark:#0A0F2C;
+  --white:#FFFFFF; --text-dark:#3dd68c;
   --text-body:#374151; --text-gray:#6B7280; --text-muted:#A8B8D8;
   --border:#E5E9F0; --shadow:0 4px 24px rgba(10,15,44,.08);
   --shadow-h:0 12px 40px rgba(10,15,44,.16);
