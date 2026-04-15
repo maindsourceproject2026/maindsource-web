@@ -18,6 +18,9 @@
   ===================================================== */
 
   #hero {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    top: 0; /* remove white gap : this esures the container starts at the absolute 0 point */
     min-height: 100vh;
     height: 100vh; /* Locking it to exactly the screen height */
     background: #0A0F2C;
@@ -84,7 +87,7 @@
     position:absolute; top: 0; left: 0; width: 100%; height: 100%; inset:0; z-index:0; display:none;
   }
   .hero-video-bg video {
-    width:100%; height:100%; object-fit:cover; opacity: 0.7; /* increased to 70% visibility */
+    width:100%; height:100%; object-fit:cover; /* keeps aspect ratio*/ opacity: 0.7; /* increased to 70% visibility */ transform: scale(1.3); object-position: center 30%; /* focuses on the area 30% from the top */ z-index: 0;
   }
   .hero-video-bg::after {
     content:''; position:absolute; inset:0; background: rgba(10,15,44,.72);
@@ -374,7 +377,6 @@
           <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
-
     </div>
   </div>
 
@@ -402,24 +404,6 @@
 
 
 <!-- ════════ DUAL PATH ════════ -->
-   <div class="hero-divider"></div>
-  <div class="hero-stats-bar">
-    <div class="hero-stats-inner">
-      <div class="hero-stat-item">
-        <div class="hero-stat-num">8,000+</div>
-        <div class="hero-stat-label">Candidates Placed</div>
-      </div>
-      <div class="hero-stat-item">
-        <div class="hero-stat-num">50+</div>
-        <div class="hero-stat-label">Client Companies</div>
-      </div>
-      <div class="hero-stat-item">
-        <div class="hero-stat-num">72 hrs</div>
-        <div class="hero-stat-label">Avg. Delivery Time</div>
-      </div>
-    </div>
-  </div>
-
 </section>
 <section id="dual-path">
   <div class="container">
