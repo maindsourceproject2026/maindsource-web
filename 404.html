@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Page Not Found — MAINDSOURCE</title>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    html, body { height:100%; }
+    body { display:flex; flex-direction:column; min-height:100vh; }
+    .notfound-wrap {
+      flex:1; display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(135deg,var(--hero-start),var(--hero-end));
+      padding:40px 5%; text-align:center; position:relative; overflow:hidden;
+    }
+    .notfound-wrap::before {
+      content:''; position:absolute; top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      width:560px; height:560px; border-radius:50%;
+      background:radial-gradient(circle,rgba(245,166,35,.06),transparent);
+      pointer-events:none;
+    }
+    .notfound-inner { position:relative; z-index:1; max-width:560px; margin:0 auto; }
+    .notfound-code {
+      font-family:var(--font-s); font-size:clamp(96px,18vw,160px); font-weight:800;
+      line-height:1; color:rgba(255,255,255,.06); letter-spacing:-4px;
+      user-select:none; margin-bottom:-20px;
+    }
+    .notfound-icon { font-size:56px; margin-bottom:20px; display:block; }
+    .notfound-inner h1 {
+      font-family:var(--font-d); font-size:clamp(28px,4vw,44px); font-weight:700;
+      color:var(--white); margin-bottom:14px; line-height:1.2;
+    }
+    .notfound-inner h1 em { color:var(--gold); font-style:normal; }
+    .notfound-inner p { font-size:16px; color:var(--text-muted); line-height:1.8; margin-bottom:36px; }
+    .notfound-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .notfound-links {
+      margin-top:44px; padding-top:32px;
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+    .notfound-links p { font-family:var(--font-s); font-size:12px; font-weight:600; color:var(--text-muted); letter-spacing:1px; text-transform:uppercase; margin-bottom:16px; }
+    .notfound-links-row { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; }
+    .notfound-links-row a { font-family:var(--font-s); font-size:13px; font-weight:600; color:rgba(255,255,255,.55); transition:color .25s; }
+    .notfound-links-row a:hover { color:var(--gold); }
+
+    /* minimal footer for 404 */
+    .notfound-footer { background:#070b18; padding:18px 5%; text-align:center; border-top:1px solid rgba(255,255,255,.05); }
+    .notfound-footer p { font-size:12px; color:rgba(168,184,216,.45); }
+  </style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Minimal navbar -->
+<nav id="navbar" style="position:absolute;">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/img/logo.png" alt="MAINDSOURCE" class="nav-brand-img" onerror="this.style.display='none'"/>
+    <div class="nav-brand-text"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="sectors.html">Sectors</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-drop-trigger">More <span class="nav-drop-arrow">&#9660;</span></a>
+      <div class="nav-drop-menu">
+        <a href="women.html" class="drop-featured">
+          <span class="drop-icon">&#9994;</span> Women Empowerment
+        </a>
+        <div class="nav-drop-divider"></div>
+        <a href="jobseekers.html"><span class="drop-icon">&#128188;</span> Job Seekers</a>
+        <a href="careers.html"><span class="drop-icon">&#128640;</span> Careers</a>
+        <a href="impact.html"><span class="drop-icon">&#128202;</span> Our Impact</a>
+        <a href="credentials.html"><span class="drop-icon">&#128203;</span> Credentials</a>
+        <a href="methodology.html"><span class="drop-icon">&#9881;</span> Methodology</a>
+      </div>
+    </li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Start Hiring &#8594;</a>
+  <button class="nav-ham" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mob-overlay" id="mobOverlay"></div>
+<div class="mob-menu" id="mobMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About Us</a>
+  <a href="services.html">Services</a>
+  <a href="sectors.html">Sectors</a>
+  <a href="women.html" class="mob-women">&#9994; Women Empowerment</a>
+  <a href="jobseekers.html">Job Seekers</a>
+  <a href="careers.html">Careers</a>
+  <a href="impact.html">Our Impact</a>
+  <a href="credentials.html">Credentials</a>
+  <a href="methodology.html">Methodology</a>
+  <a href="contact.html" class="mob-cta">Start Hiring &#8594;</a>
+</div>
+
+<!-- 404 CONTENT -->
+<div class="notfound-wrap">
+  <div class="notfound-inner">
+    <div class="notfound-code">404</div>
+    <span class="notfound-icon">🔍</span>
+    <h1>Page <em>Not Found</em></h1>
+    <p>The page you are looking for may have been moved, renamed, or does not exist. Let us help you find what you need.</p>
+    <div class="notfound-btns">
+      <a href="index.html" class="btn btn-gold">← Back to Home</a>
+      <a href="contact.html" class="btn btn-outline">Contact Us</a>
+    </div>
+    <div class="notfound-links">
+      <p>You might be looking for</p>
+      <div class="notfound-links-row">
+        <a href="services.html">Services</a>
+        <a href="sectors.html">Sectors</a>
+        <a href="jobseekers.html">Find Work</a>
+        <a href="about.html">About Us</a>
+        <a href="credentials.html">Credentials</a>
+        <a href="careers.html">Careers</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="notfound-footer">
+  <p>© 2026 MAINDSOURCE LLP · LLPIN: ACU-2305 · maindsource@gmail.com · +91 9071329231</p>
+</div>
+
+<script>
+const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(dot){dot.style.left=mx+'px';dot.style.top=my+'px';}});
+(function ar(){if(!ring)return;rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar);})();
+const ham=document.getElementById('hamburger'),mm=document.getElementById('mobMenu'),mo=document.getElementById('mobOverlay');
+if(ham){function tm(){mm.classList.toggle('open');mo.classList.toggle('open');}ham.addEventListener('click',tm);mo.addEventListener('click',tm);}
+</script>
+</body>
+</html>

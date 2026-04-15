@@ -442,4 +442,86 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 #cursorDot, #cursorRing {
     pointer-events: none !important; /* Ensures the cursor doesn't 'block' the button click */
     z-index: 9999;
+}/* ============================================
+   NAVBAR DROPDOWN — Paste this block at the
+   bottom of your style.css file (before the
+   Responsive section ideally, or at very end)
+   ============================================ */
+
+/* Dropdown wrapper */
+.nav-dropdown{position:relative;}
+
+/* The "More ▾" trigger link */
+.nav-drop-trigger{display:flex!important;align-items:center;gap:5px;cursor:pointer;}
+.nav-drop-arrow{font-size:9px;transition:transform .25s ease;display:inline-block;}
+.nav-dropdown:hover .nav-drop-arrow{transform:rotate(180deg);}
+
+/* Dropdown panel */
+.nav-drop-menu{
+  position:absolute;
+  top:calc(100% + 16px);
+  left:50%;
+  transform:translateX(-50%) translateY(-8px);
+  background:rgba(10,15,44,.98);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:14px;
+  padding:8px;
+  min-width:230px;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .25s ease, transform .25s ease, visibility .25s;
+  box-shadow:0 20px 48px rgba(0,0,0,.45);
+  z-index:2000;
 }
+
+/* Show on hover */
+.nav-dropdown:hover .nav-drop-menu{
+  opacity:1;
+  visibility:visible;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* Each link inside dropdown */
+.nav-drop-menu a{
+  display:flex!important;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  border-radius:8px;
+  font-family:var(--font-s);
+  font-size:13px;
+  font-weight:600;
+  color:rgba(255,255,255,.78)!important;
+  transition:var(--ease);
+  white-space:nowrap;
+  width:100%;
+}
+/* Remove the underline slide effect inside dropdown */
+.nav-drop-menu a::after{display:none!important;}
+.nav-drop-menu a:hover{background:rgba(245,166,35,.12);color:var(--gold)!important;}
+
+/* Women Empowerment — featured top slot */
+.drop-featured{
+  background:rgba(245,166,35,.09)!important;
+  border:1px solid rgba(245,166,35,.20)!important;
+  color:var(--gold)!important;
+  font-weight:700!important;
+  margin-bottom:2px;
+}
+.drop-featured:hover{background:rgba(245,166,35,.18)!important;}
+
+/* Thin divider line */
+.nav-drop-divider{
+  height:1px;
+  background:rgba(255,255,255,.07);
+  margin:5px 0;
+}
+
+/* Small icon in dropdown links */
+.drop-icon{font-size:14px;width:18px;text-align:center;flex-shrink:0;}
+
+/* Mobile: Women link highlighted gold */
+.mob-menu .mob-women{color:var(--gold)!important;font-weight:700!important;}
+.mob-menu .mob-women:hover{color:var(--gold-h)!important;}
