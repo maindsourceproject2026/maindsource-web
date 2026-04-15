@@ -6,8 +6,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
 :root {
-  --hero-start:#0A0F2C; --hero-end:#3dd68c;
-  --navy:#3dd68c; --cream:#F8F6F1; --cream-2:#F0F2F8;
+  --hero-start:#0A0F2C; --hero-end:#1a1040;
+  --navy:#1E2761; --cream:#F8F6F1; --cream-2:#F0F2F8;
   --gold:#F5A623; --gold-h:#E8920A;
   --white:#FFFFFF; --text-dark:#0A0F2C;
   --text-body:#374151; --text-gray:#6B7280; --text-muted:#A8B8D8;
@@ -103,11 +103,11 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 .arr{width:14px;height:14px;flex-shrink:0;}
 
 /* Pills */
-.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(61,214,140,.08);border:1px solid rgba(61,214,140,.12);border-radius:50px;padding:5px 13px;font-family:var(--font-s);font-size:12px;font-weight:600;color:var(--navy);}
+.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(30,39,97,.08);border:1px solid rgba(30,39,97,.12);border-radius:50px;padding:5px 13px;font-family:var(--font-s);font-size:12px;font-weight:600;color:var(--navy);}
 .pill-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;flex-shrink:0;}
 
 /* Lottie box */
-.lottie-box{width:100%;max-width:380px;min-height:280px;border:1.5px dashed rgba(61,214,140,.16);border-radius:16px;display:flex;align-items:center;justify-content:center;background:rgba(61,214,140,.03);font-family:var(--font-s);font-size:10px;font-weight:600;color:rgba(61,214,140,.28);letter-spacing:1.5px;text-transform:uppercase;}
+.lottie-box{width:100%;max-width:380px;min-height:280px;border:1.5px dashed rgba(30,39,97,.16);border-radius:16px;display:flex;align-items:center;justify-content:center;background:rgba(30,39,97,.03);font-family:var(--font-s);font-size:10px;font-weight:600;color:rgba(30,39,97,.28);letter-spacing:1.5px;text-transform:uppercase;}
 .lottie-box.dark{border-color:rgba(255,255,255,.11);background:rgba(255,255,255,.03);color:rgba(255,255,255,.2);}
 .lottie-box.sm{min-height:150px;}
 
@@ -381,14 +381,14 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 .cth h3{font-family:var(--font-s);font-size:12px;font-weight:700;color:var(--white);}
 .cred-row{display:flex;justify-content:space-between;align-items:center;padding:11px 18px;border-bottom:1px solid var(--border);}
 .cred-row:last-child{border-bottom:none;}
-.cred-row:nth-child(odd){background:rgba(61,214,140,.02);}
+.cred-row:nth-child(odd){background:rgba(30,39,97,.02);}
 .cr-key{font-size:12.5px;color:var(--text-gray);}
 .cr-val{font-family:var(--font-s);font-size:12.5px;font-weight:700;color:var(--text-dark);}
 .office-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:12px;}
 .office-card h4{font-family:var(--font-s);font-size:12px;font-weight:700;color:var(--navy);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
 .office-card p{font-size:13px;color:var(--text-gray);line-height:1.6;}
 .comp-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
-.comp-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(61,214,140,.07);border:1px solid rgba(61,214,140,.12);border-radius:50px;padding:5px 13px;font-family:var(--font-s);font-size:11px;font-weight:700;color:var(--navy);}
+.comp-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(30,39,97,.07);border:1px solid rgba(30,39,97,.12);border-radius:50px;padding:5px 13px;font-family:var(--font-s);font-size:11px;font-weight:700;color:var(--navy);}
 /* Careers */
 .job-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:12px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;transition:var(--ease);}
 .job-card:hover{border-color:var(--gold);box-shadow:0 4px 18px rgba(245,166,35,.09);}
@@ -435,13 +435,19 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
   .js-cats{grid-template-columns:1fr 1fr;}
   .add-svc-grid{grid-template-columns:1fr;}
 }
-/* Fix Cursor Stutter on Buttons */
-.nav-cta, .btn, .sector-card {
-    cursor: none !important; /* Forces the browser to use our custom dot only */
-}
-#cursorDot, #cursorRing {
-    pointer-events: none !important; /* Ensures the cursor doesn't 'block' the button click */
-    z-index: 9999;
+/* ============================================================
+   🔧 CURSOR FIX — Paste this ANYWHERE in style.css
+   Stops the system cursor from appearing on navbar & buttons
+   ============================================================ */
+ 
+*, *::before, *::after { cursor: none !important; }
+a, button, input, select, textarea,
+.nav-links a, .nav-cta, .nav-drop-trigger,
+.nav-drop-menu a, .mob-menu a, .btn { cursor: none !important; }
+ 
+@media(hover:none){
+  *, *::before, *::after { cursor: auto !important; }
+  a, button { cursor: pointer !important; }
 }
 /* ============================================
    NAVBAR DROPDOWN — Paste this block at the
