@@ -5,20 +5,257 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <meta name="description" content="MAINDSOURCE — Tech-enabled manpower supply, staffing and recruitment across India. Contractual staffing, permanent placement, payroll management."/>
   <title>MAINDSOURCE — Connecting Talent With Opportunities</title>
-  <!-- Favicon: place files in assets/img/ -->
   <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png"/>
   <link rel="stylesheet" href="style.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+  <style>
+  /* =====================================================
+     CINEMATIC HERO UPGRADE v2.0
+     Scope: #hero only. style.css untouched.
+  ===================================================== */
+
+  #hero {
+    min-height: 100vh;
+    background: #0A0F2C;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    padding-top: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Layer 1 — animated gradient mesh */
+  .hero-bg-mesh {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 90% 70% at 50% -10%, rgba(245,166,35,.09) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 90% at 95% 50%,  rgba(30,39,97,.55)   0%, transparent 65%),
+      radial-gradient(ellipse 70% 70% at 5%  90%,  rgba(26,16,64,.75)   0%, transparent 55%),
+      linear-gradient(160deg, #0A0F2C 0%, #0e1338 45%, #1a1040 100%);
+    animation: meshBreath 9s ease-in-out infinite alternate;
+  }
+  @keyframes meshBreath { 0%{opacity:1} 100%{opacity:.88} }
+
+  /* Layer 2 — subtle drifting grid */
+  .hero-grid-lines {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(245,166,35,.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,166,35,.028) 1px, transparent 1px);
+    background-size: 72px 72px;
+    animation: gridDrift 22s linear infinite;
+  }
+  @keyframes gridDrift { from{transform:translateY(0)} to{transform:translateY(72px)} }
+
+  /* Layer 3 — gold aurora orb */
+  .hero-aurora {
+    position: absolute; border-radius: 50%; pointer-events: none;
+    width: 860px; height: 860px;
+    background: radial-gradient(circle, rgba(245,166,35,.07) 0%, rgba(245,166,35,.02) 45%, transparent 70%);
+    top: -320px; left: 50%; transform: translateX(-50%);
+    animation: auroraPulse 7s ease-in-out infinite alternate;
+  }
+  @keyframes auroraPulse {
+    0%   { transform:translateX(-50%) scale(1);    opacity:.7; }
+    100% { transform:translateX(-50%) scale(1.18); opacity:1; }
+  }
+
+  /* Layer 4 — left gold stripe accent */
+  .hero-stripe {
+    position: absolute; left:0; top:0; bottom:0; width:3px; pointer-events:none;
+    background: linear-gradient(to bottom,
+      transparent 0%, rgba(245,166,35,.55) 30%, rgba(245,166,35,.55) 70%, transparent 100%);
+  }
+
+  /* Layer 5 — particles (defined in style.css, enhanced in JS) */
+  .hero-particles { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+  .hero-particles span {
+    position:absolute; background:var(--gold); border-radius:50%;
+    opacity:0; animation:floatP linear infinite;
+  }
+
+  /* Video layer — hidden until client provides file */
+  .hero-video-bg {
+    position:absolute; inset:0; z-index:0; display:none;
+  }
+  .hero-video-bg video {
+    width:100%; height:100%; object-fit:cover; opacity:.18;
+  }
+  .hero-video-bg::after {
+    content:''; position:absolute; inset:0; background:rgba(10,15,44,.72);
+  }
+
+  /* Main content area */
+  .hero-main {
+    position: relative; z-index: 2; flex: 1;
+    display: flex; align-items: center;
+    padding: 148px var(--px) 64px;
+    max-width: var(--max); margin: 0 auto; width: 100%;
+  }
+  .hero-content-wrap { width:100%; max-width:820px; }
+
+  /* Badge */
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,166,35,.10); border: 1px solid rgba(245,166,35,.24);
+    border-radius: 50px; padding: 6px 16px; margin-bottom: 32px;
+    opacity: 0; animation: fadeUpHero .7s ease .3s forwards;
+  }
+  .hero-badge-dot {
+    width:7px; height:7px; background:var(--gold); border-radius:50%;
+    animation:bdgP 2s infinite; flex-shrink:0;
+  }
+  @keyframes bdgP { 0%,100%{opacity:1} 50%{opacity:.3} }
+  .hero-badge span {
+    font-family:var(--font-s); font-size:11px; font-weight:700;
+    color:var(--gold); letter-spacing:2px; text-transform:uppercase;
+  }
+
+  /* HEADLINE — the centrepiece */
+  .hero-hl {
+    font-family: var(--font-d);
+    font-size: clamp(52px, 7.6vw, 96px);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.06;
+    letter-spacing: -1.5px;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUpHero .85s ease .5s forwards;
+  }
+  .hero-hl em {
+    color: var(--gold); font-style: italic;
+    position: relative; display: inline-block;
+  }
+  .hero-hl em::after {
+    content: ''; position:absolute; left:0; right:0; bottom:-5px;
+    height: 3px; background: var(--gold); border-radius: 2px;
+    transform: scaleX(0); transform-origin: left;
+    animation: lineReveal .65s ease 1.4s forwards;
+  }
+  @keyframes lineReveal { to { transform:scaleX(1); } }
+
+  /* Sub — one punchy sentence */
+  .hero-sub-new {
+    font-family: var(--font-s);
+    font-size: clamp(14px, 1.55vw, 17px);
+    font-weight: 500;
+    color: rgba(168,184,216,.85);
+    line-height: 1.75;
+    max-width: 500px;
+    margin-bottom: 42px;
+    letter-spacing: .15px;
+    opacity: 0;
+    animation: fadeUpHero .7s ease .75s forwards;
+  }
+
+  /* Buttons */
+  .hero-btns {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUpHero .7s ease .95s forwards;
+  }
+
+  /* Gold divider line between content and stats bar */
+  .hero-divider {
+    position:relative; z-index:2;
+    width:100%; height:1px;
+    background: linear-gradient(to right,
+      transparent, rgba(245,166,35,.3) 40%, rgba(245,166,35,.3) 60%, transparent);
+  }
+
+  /* Stats bar — full-width bottom strip */
+  .hero-stats-bar {
+    position: relative; z-index: 2;
+    background: rgba(255,255,255,.025);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: none;
+    padding: 0 var(--px);
+  }
+  .hero-stats-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3,1fr);
+  }
+  .hero-stat-item {
+    padding: 26px 20px; text-align: center;
+    border-right: 1px solid rgba(255,255,255,.06);
+    opacity: 0; animation: fadeUpHero .6s ease 1.2s forwards;
+  }
+  .hero-stat-item:last-child  { border-right: none; }
+  .hero-stat-item:nth-child(2){ animation-delay: 1.35s; }
+  .hero-stat-item:nth-child(3){ animation-delay: 1.5s; }
+  .hero-stat-num {
+    font-family: var(--font-s);
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 800; color: var(--gold);
+    line-height: 1; margin-bottom: 5px;
+  }
+  .hero-stat-label {
+    font-family: var(--font-s); font-size: 11px; font-weight: 600;
+    color: rgba(168,184,216,.7); letter-spacing: 1.5px; text-transform: uppercase;
+  }
+
+  /* Scroll cue (right side, desktop only) */
+  .hero-scroll-cue {
+    position: absolute; bottom: 96px; right: var(--px);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    z-index: 2; opacity: 0; animation: fadeInHero .8s ease 1.8s forwards;
+  }
+  .hero-scroll-cue span {
+    font-family: var(--font-s); font-size: 9px; font-weight: 700;
+    color: rgba(168,184,216,.4); letter-spacing: 2.5px; text-transform: uppercase;
+    writing-mode: vertical-rl;
+  }
+  .hero-scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, rgba(245,166,35,.6), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%,100% { transform:scaleY(1);   opacity:.7; }
+    50%      { transform:scaleY(.5); opacity:.3; }
+  }
+
+  /* Entrance keyframes */
+  @keyframes fadeUpHero {
+    from { opacity:0; transform:translateY(26px); }
+    to   { opacity:1; transform:none; }
+  }
+  @keyframes fadeInHero {
+    from { opacity:0; }
+    to   { opacity:1; }
+  }
+
+  /* ── MOBILE ── */
+  @media(max-width:768px) {
+    .hero-main { padding: 120px 5% 52px; }
+    .hero-hl { letter-spacing: -.5px; }
+    .hero-sub-new { font-size:14px; max-width:100%; }
+    .hero-stat-item { padding:18px 8px; }
+    .hero-stat-num { font-size:22px; }
+    .hero-stat-label { font-size:9px; letter-spacing:.6px; }
+    .hero-scroll-cue { display:none; }
+    .hero-stripe { display:none; }
+  }
+  @media(max-width:480px) {
+    .hero-hl { font-size:44px; letter-spacing:-.5px; }
+    .hero-btns { flex-direction:column; align-items:flex-start; }
+    .hero-btns .btn { width:100%; justify-content:center; }
+    .hero-stats-inner { grid-template-columns:repeat(3,1fr); }
+  }
+  </style>
 </head>
 <body>
 
-<!-- ── PRELOADER (homepage only) ── -->
+<!-- PRELOADER (homepage only) -->
 <div id="preloader">
   <div class="pre-wrap">
-    <!-- Logo: place file at assets/img/logo.png -->
-    <img src="assets/logo.png" alt="MAINDSOURCE Logo" class="pre-img" onerror="this.style.display='none'"/>
+    <img src="assets/img/logo.png" alt="MAINDSOURCE Logo" class="pre-img" onerror="this.style.display='none'"/>
     <div class="pre-text"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
   </div>
   <div class="pre-bar-wrap"><div class="pre-bar"></div></div>
@@ -48,9 +285,7 @@
     <li class="nav-dropdown">
       <a href="#" class="nav-drop-trigger">More <span class="nav-drop-arrow">&#9660;</span></a>
       <div class="nav-drop-menu">
-        <a href="women.html" class="drop-featured">
-          <span class="drop-icon">&#9994;</span> Women Empowerment
-        </a>
+        <a href="women.html" class="drop-featured"><span class="drop-icon">&#9994;</span> Women Empowerment</a>
         <div class="nav-drop-divider"></div>
         <a href="jobseekers.html"><span class="drop-icon">&#128188;</span> Job Seekers</a>
         <a href="careers.html"><span class="drop-icon">&#128640;</span> Careers</a>
@@ -79,51 +314,104 @@
   <a href="contact.html" class="mob-cta">Start Hiring &#8594;</a>
 </div>
 
-<!-- ════════ HERO ════════ -->
+<!-- ════════════════════════════════════════
+     CINEMATIC HERO
+════════════════════════════════════════ -->
 <section id="hero">
+
+  <!-- VIDEO BG — Enable when client provides video file
+       1. Upload to: assets/video/hero-bg.mp4
+       2. Change style="display:none" to style="display:block"
+  -->
+  <div class="hero-video-bg" style="display:none;">
+    <video autoplay muted loop playsinline>
+      <source src="assets/video/hero-bg.mp4" type="video/mp4"/>
+    </video>
+  </div>
+
+  <!-- CSS cinematic layers -->
+  <div class="hero-bg-mesh"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-aurora"></div>
+  <div class="hero-stripe"></div>
   <div class="hero-particles" id="heroP"></div>
-  <div class="hero-glow"></div>
-  <div class="container">
-    <div class="hero-inner">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <div class="hero-badge-dot"></div>
-          <span>Est. 2025 · Incorporated Jan 2026</span>
-          <div class="hero-badge-dot"></div>
-        </div>
-        <h1 class="hero-headline">Right Talent.<br><em>Right Place.</em><br>Right Time.</h1>
-        <p class="hero-sub">Tech-enabled manpower supply and staffing solutions across India. We scout leaders who can sustain and thrive — not just fill positions.</p>
-        <div class="hero-btns">
-          <a href="contact.html" class="btn btn-gold">Request Manpower <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-          <a href="jobseekers.html" class="btn btn-outline">Find Work <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-        </div>
-        <div class="hero-stats">
-          <div><div class="h-stat-num">8,000+</div><div class="h-stat-label">Candidates Interacted</div></div>
-          <div><div class="h-stat-num">50+</div><div class="h-stat-label">Satisfied Clients</div></div>
-          <div><div class="h-stat-num">10+</div><div class="h-stat-label">Industries Served</div></div>
-        </div>
+
+  <!-- Scroll cue (desktop right side) -->
+  <div class="hero-scroll-cue">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+
+  <!-- Hero content -->
+  <div class="hero-main">
+    <div class="hero-content-wrap">
+
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        <span>Bangalore &middot; Ballari &middot; Pan-India</span>
       </div>
-      <div class="hero-visual">
-        <div class="lottie-box dark" style="min-height:320px;">Lottie · Hero Character</div>
+
+      <h1 class="hero-hl">
+        Right Talent.<br>
+        <em>Right Place.</em><br>
+        Right Time.
+      </h1>
+
+      <p class="hero-sub-new">
+        India's most trusted tech-enabled manpower partner &mdash; delivering screened, job-ready talent within 72 hours.
+      </p>
+
+      <div class="hero-btns">
+        <a href="contact.html" class="btn btn-gold">
+          Request Manpower
+          <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="jobseekers.html" class="btn btn-outline">
+          Find Work
+          <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Stats bar pinned to bottom -->
+  <div class="hero-divider"></div>
+  <div class="hero-stats-bar">
+    <div class="hero-stats-inner">
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">8,000+</div>
+        <div class="hero-stat-label">Candidates Placed</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">50+</div>
+        <div class="hero-stat-label">Client Companies</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">72 hrs</div>
+        <div class="hero-stat-label">Avg. Delivery Time</div>
       </div>
     </div>
   </div>
+
 </section>
+<!-- ════════ HERO END ════════ -->
+
 
 <!-- ════════ DUAL PATH ════════ -->
 <section id="dual-path">
   <div class="container">
     <div class="dual-grid">
       <div class="path-card reveal">
-        <div class="path-icon">🏢</div>
+        <div class="path-icon">&#127970;</div>
         <h3>Looking to Hire?</h3>
-        <p>Build your ideal workforce with our tech-enabled recruitment solutions. From blue-collar to white-collar — we deliver screened, qualified professionals.</p>
+        <p>Build your ideal workforce with our tech-enabled recruitment solutions. From blue-collar to white-collar &mdash; we deliver screened, qualified professionals.</p>
         <a href="services.html" class="path-link">View Employer Services <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
       <div class="path-card reveal">
-        <div class="path-icon">💼</div>
+        <div class="path-icon">&#128188;</div>
         <h3>Looking for Work?</h3>
-        <p>Your next opportunity is waiting. We connect job seekers across South India with top companies in Bangalore — free placement service.</p>
+        <p>Your next opportunity is waiting. We connect job seekers across South India with top companies in Bangalore &mdash; free placement service.</p>
         <a href="jobseekers.html" class="path-link">Find Opportunities <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
     </div>
@@ -136,18 +424,18 @@
     <div class="about-snap-grid">
       <div>
         <span class="section-label reveal-left">About MAINDSOURCE</span>
-        <h2 class="section-title reveal-left">We Don't Just Fill Positions — We Scout Leaders</h2>
+        <h2 class="section-title reveal-left">We Don&rsquo;t Just Fill Positions &mdash; We Scout Leaders</h2>
         <p class="section-sub reveal-left">Established in 2025 and incorporated in January 2026. Built on the ideology of matching human potential with the right opportunity through integrated tech-based solutions.</p>
         <div class="about-pills reveal-left">
           <span class="pill"><span class="pill-dot"></span>Est. 2025</span>
           <span class="pill"><span class="pill-dot"></span>Inc. Jan 2026</span>
-          <span class="pill"><span class="pill-dot"></span>Bangalore · Ballari</span>
+          <span class="pill"><span class="pill-dot"></span>Bangalore &middot; Ballari</span>
           <span class="pill"><span class="pill-dot"></span>Pan-India Reach</span>
         </div>
         <a href="about.html" class="btn btn-gold reveal-left" style="width:fit-content;">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
       <div style="display:flex;justify-content:center;" class="reveal">
-        <div class="lottie-box">Lottie · Reading / Thinking</div>
+        <div class="lottie-box">Lottie &middot; Reading / Thinking</div>
       </div>
     </div>
   </div>
@@ -162,13 +450,13 @@
       <p class="section-sub light reveal">Numbers that reflect our commitment to connecting talent with opportunity.</p>
     </div>
     <div class="impact-grid">
-      <div class="impact-card reveal"><span class="impact-icon">👥</span><div class="impact-num" data-target="8000">0</div><div class="impact-label">Candidates Interacted</div><div class="impact-sub">Across 10+ industries</div></div>
-      <div class="impact-card reveal"><span class="impact-icon">🤝</span><div class="impact-num" data-target="50">0</div><div class="impact-label">Satisfied Clients</div><div class="impact-sub">Long-term partnerships</div></div>
-      <div class="impact-card reveal"><span class="impact-icon">🏢</span><div class="impact-num" data-target="2">0</div><div class="impact-label">Office Branches</div><div class="impact-sub">Bangalore · Ballari</div></div>
-      <div class="impact-card reveal"><span class="impact-icon">🏆</span><div class="impact-num" data-target="1">0</div><div class="impact-label">Year of Excellence</div><div class="impact-sub">Est. 2025 | Inc. 2026</div></div>
+      <div class="impact-card reveal"><span class="impact-icon">&#128101;</span><div class="impact-num" data-target="8000">0</div><div class="impact-label">Candidates Interacted</div><div class="impact-sub">Across 10+ industries</div></div>
+      <div class="impact-card reveal"><span class="impact-icon">&#129309;</span><div class="impact-num" data-target="50">0</div><div class="impact-label">Satisfied Clients</div><div class="impact-sub">Long-term partnerships</div></div>
+      <div class="impact-card reveal"><span class="impact-icon">&#127970;</span><div class="impact-num" data-target="2">0</div><div class="impact-label">Office Branches</div><div class="impact-sub">Bangalore &middot; Ballari</div></div>
+      <div class="impact-card reveal"><span class="impact-icon">&#127942;</span><div class="impact-num" data-target="1">0</div><div class="impact-label">Year of Excellence</div><div class="impact-sub">Est. 2025 | Inc. 2026</div></div>
     </div>
     <div style="display:flex;justify-content:center;margin-top:44px;" class="reveal">
-      <div class="lottie-box dark" style="min-height:150px;max-width:280px;">Lottie · Celebrate</div>
+      <div class="lottie-box dark" style="min-height:150px;max-width:280px;">Lottie &middot; Celebrate</div>
     </div>
   </div>
 </section>
@@ -180,19 +468,19 @@
       <div>
         <span class="section-label reveal-left">What We Offer</span>
         <h2 class="section-title reveal-left">Comprehensive Workforce Solutions</h2>
-        <p style="font-family:var(--font-s);font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1px;" class="reveal-left">HIRE BETTER · HIRE FASTER · GROW BIGGER</p>
+        <p style="font-family:var(--font-s);font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1px;" class="reveal-left">HIRE BETTER &middot; HIRE FASTER &middot; GROW BIGGER</p>
       </div>
       <a href="services.html" class="btn btn-gold reveal" style="flex-shrink:0;">View All Services</a>
     </div>
     <div class="svc-grid">
-      <div class="svc-card reveal"><div class="svc-num">01</div><div class="svc-icon">🤝</div><h3>Contractual Staffing</h3><p>Flexible contract-based staffing for short-term projects. Rapid deployment of skilled personnel.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
-      <div class="svc-card reveal"><div class="svc-num">02</div><div class="svc-icon">🎯</div><h3>One-Time Placement</h3><p>Permanent recruitment for blue-collar and white-collar roles. Perfect cultural fit guaranteed.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
-      <div class="svc-card reveal"><div class="svc-num">03</div><div class="svc-icon">💰</div><h3>Payroll Management</h3><p>End-to-end payroll processing and statutory compliance. We handle complexities so you focus on growth.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
-      <div class="svc-card reveal"><div class="svc-num">04</div><div class="svc-icon">🎓</div><h3>Training & Development</h3><p>Skill enhancement and onboarding programs. Talent ready to contribute from day one.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+      <div class="svc-card reveal"><div class="svc-num">01</div><div class="svc-icon">&#129309;</div><h3>Contractual Staffing</h3><p>Flexible contract-based staffing for short-term projects. Rapid deployment of skilled personnel.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+      <div class="svc-card reveal"><div class="svc-num">02</div><div class="svc-icon">&#127919;</div><h3>One-Time Placement</h3><p>Permanent recruitment for blue-collar and white-collar roles. Perfect cultural fit guaranteed.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+      <div class="svc-card reveal"><div class="svc-num">03</div><div class="svc-icon">&#128176;</div><h3>Payroll Management</h3><p>End-to-end payroll processing and statutory compliance. We handle complexities so you focus on growth.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+      <div class="svc-card reveal"><div class="svc-num">04</div><div class="svc-icon">&#127891;</div><h3>Training &amp; Development</h3><p>Skill enhancement and onboarding programs. Talent ready to contribute from day one.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;">
       <span class="pill"><span class="pill-dot"></span>Gig Workforce</span>
-      <span class="pill"><span class="pill-dot"></span>Hire & Manage</span>
+      <span class="pill"><span class="pill-dot"></span>Hire &amp; Manage</span>
       <span class="pill"><span class="pill-dot"></span>CSR Solutions</span>
       <span class="pill"><span class="pill-dot"></span>Workforce Consulting</span>
     </div>
@@ -207,41 +495,41 @@
   </div>
   <div class="marquee-wrap">
     <div class="marquee-row" id="mRow1">
-      <div class="s-chip"><span class="s-chip-icon">🏭</span><span class="s-chip-name">Manufacturing</span></div>
-      <div class="s-chip"><span class="s-chip-icon">🚗</span><span class="s-chip-name">Automobile</span></div>
-      <div class="s-chip"><span class="s-chip-icon">🛒</span><span class="s-chip-name">Retail</span></div>
-      <div class="s-chip"><span class="s-chip-icon">💻</span><span class="s-chip-name">IT & ITeS</span></div>
-      <div class="s-chip"><span class="s-chip-icon">⚡</span><span class="s-chip-name">Electronics</span></div>
-      <div class="s-chip"><span class="s-chip-icon">🎧</span><span class="s-chip-name">BPO & KPO</span></div>
-      <div class="s-chip"><span class="s-chip-icon">✈️</span><span class="s-chip-name">Aerospace</span></div>
-      <div class="s-chip"><span class="s-chip-icon">🚚</span><span class="s-chip-name">Logistics</span></div>
-      <div class="s-chip"><span class="s-chip-icon">🧴</span><span class="s-chip-name">FMCG</span></div>
-      <div class="s-chip"><span class="s-chip-icon">👕</span><span class="s-chip-name">Apparel & Textile</span></div>
-      <div class="s-chip"><span class="s-chip-icon">🏥</span><span class="s-chip-name">Healthcare</span></div>
-      <div class="s-chip"><span class="s-chip-icon">⚙️</span><span class="s-chip-name">Rubber & Industrial</span></div>
-      <div class="s-chip"><span class="s-chip-icon">📡</span><span class="s-chip-name">Telecom</span></div>
-      <div class="s-chip"><span class="s-chip-icon">📦</span><span class="s-chip-name">Packaging</span></div>
-      <div class="s-chip"><span class="s-chip-icon">🏬</span><span class="s-chip-name">Warehousing</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#127981;</span><span class="s-chip-name">Manufacturing</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#128663;</span><span class="s-chip-name">Automobile</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#128717;</span><span class="s-chip-name">Retail</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#128187;</span><span class="s-chip-name">IT &amp; ITeS</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#9889;</span><span class="s-chip-name">Electronics</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#127911;</span><span class="s-chip-name">BPO &amp; KPO</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#9992;&#65039;</span><span class="s-chip-name">Aerospace</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#128666;</span><span class="s-chip-name">Logistics</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#129398;</span><span class="s-chip-name">FMCG</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#128085;</span><span class="s-chip-name">Apparel &amp; Textile</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#127973;</span><span class="s-chip-name">Healthcare</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#9881;&#65039;</span><span class="s-chip-name">Rubber &amp; Industrial</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#128225;</span><span class="s-chip-name">Telecom</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#128230;</span><span class="s-chip-name">Packaging</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#127978;</span><span class="s-chip-name">Warehousing</span></div>
     </div>
     <div class="marquee-row" aria-hidden="true">
-      <div class="s-chip"><span class="s-chip-icon">🏭</span><span class="s-chip-name">Manufacturing</span></div>
-      <div class="s-chip"><span class="s-chip-icon">🚗</span><span class="s-chip-name">Automobile</span></div>
-      <div class="s-chip"><span class="s-chip-icon">🛒</span><span class="s-chip-name">Retail</span></div>
-      <div class="s-chip"><span class="s-chip-icon">💻</span><span class="s-chip-name">IT & ITeS</span></div>
-      <div class="s-chip"><span class="s-chip-icon">⚡</span><span class="s-chip-name">Electronics</span></div>
-      <div class="s-chip"><span class="s-chip-icon">🎧</span><span class="s-chip-name">BPO & KPO</span></div>
-      <div class="s-chip"><span class="s-chip-icon">✈️</span><span class="s-chip-name">Aerospace</span></div>
-      <div class="s-chip"><span class="s-chip-icon">🚚</span><span class="s-chip-name">Logistics</span></div>
-      <div class="s-chip"><span class="s-chip-icon">🧴</span><span class="s-chip-name">FMCG</span></div>
-      <div class="s-chip"><span class="s-chip-icon">👕</span><span class="s-chip-name">Apparel & Textile</span></div>
-      <div class="s-chip"><span class="s-chip-icon">🏥</span><span class="s-chip-name">Healthcare</span></div>
-      <div class="s-chip"><span class="s-chip-icon">⚙️</span><span class="s-chip-name">Rubber & Industrial</span></div>
-      <div class="s-chip"><span class="s-chip-icon">📡</span><span class="s-chip-name">Telecom</span></div>
-      <div class="s-chip"><span class="s-chip-icon">📦</span><span class="s-chip-name">Packaging</span></div>
-      <div class="s-chip"><span class="s-chip-icon">🏬</span><span class="s-chip-name">Warehousing</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#127981;</span><span class="s-chip-name">Manufacturing</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#128663;</span><span class="s-chip-name">Automobile</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#128717;</span><span class="s-chip-name">Retail</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#128187;</span><span class="s-chip-name">IT &amp; ITeS</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#9889;</span><span class="s-chip-name">Electronics</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#127911;</span><span class="s-chip-name">BPO &amp; KPO</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#9992;&#65039;</span><span class="s-chip-name">Aerospace</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#128666;</span><span class="s-chip-name">Logistics</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#129398;</span><span class="s-chip-name">FMCG</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#128085;</span><span class="s-chip-name">Apparel &amp; Textile</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#127973;</span><span class="s-chip-name">Healthcare</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#9881;&#65039;</span><span class="s-chip-name">Rubber &amp; Industrial</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#128225;</span><span class="s-chip-name">Telecom</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#128230;</span><span class="s-chip-name">Packaging</span></div>
+      <div class="s-chip"><span class="s-chip-icon">&#127978;</span><span class="s-chip-name">Warehousing</span></div>
     </div>
   </div>
-  <p class="strip-tagline container">From <strong>blue-collar operators</strong> to <strong>white-collar professionals</strong> — we cover it all.</p>
+  <p class="strip-tagline container">From <strong>blue-collar operators</strong> to <strong>white-collar professionals</strong> &mdash; we cover it all.</p>
 </section>
 
 <!-- ════════ WHY US ════════ -->
@@ -253,9 +541,9 @@
       <p class="section-sub reveal">Our unique approach makes us the preferred workforce partner across India.</p>
     </div>
     <div class="why-grid">
-      <div class="why-card reveal"><div class="why-icon">🖥️</div><h3>Tech-Integrated Screening</h3><p>Our proprietary screening methodology ensures perfect candidate-role alignment every single time.</p></div>
-      <div class="why-card reveal"><div class="why-icon">👩‍💼</div><h3>Women Empowerment Focus</h3><p>Central pillar of everything we stand for — every placement and partnership reflects this commitment.</p></div>
-      <div class="why-card reveal"><div class="why-icon">📍</div><h3>South India Specialists</h3><p>Deep expertise across Karnataka, Andhra Pradesh and Telangana with growing Pan-India reach.</p></div>
+      <div class="why-card reveal"><div class="why-icon">&#128421;&#65039;</div><h3>Tech-Integrated Screening</h3><p>Our proprietary screening methodology ensures perfect candidate-role alignment every single time.</p></div>
+      <div class="why-card reveal"><div class="why-icon">&#128105;&#8205;&#128188;</div><h3>Women Empowerment Focus</h3><p>Central pillar of everything we stand for &mdash; every placement and partnership reflects this commitment.</p></div>
+      <div class="why-card reveal"><div class="why-icon">&#128205;</div><h3>South India Specialists</h3><p>Deep expertise across Karnataka, Andhra Pradesh and Telangana with growing Pan-India reach.</p></div>
     </div>
   </div>
 </section>
@@ -271,24 +559,24 @@
     <div class="founders-grid">
       <div class="founder-card reveal">
         <div class="founder-photo">
-          <!-- To add photo: <img src="assets/img/surya-kiran.jpg" alt="Surya Kiran"/> -->
+          <!-- Add photo: <img src="assets/img/surya-kiran.jpg" alt="Surya Kiran"/> -->
           <div class="founder-initials">SK</div>
         </div>
         <div class="founder-info">
           <h3>Mr. Surya Kiran</h3>
-          <div class="founder-role">Founder & Managing Partner</div>
-          <p>Visionary leader driving MAINDSOURCE's mission to connect talent with opportunity across India through tech-enabled solutions.</p>
+          <div class="founder-role">Founder &amp; Managing Partner</div>
+          <p>Visionary leader driving MAINDSOURCE&rsquo;s mission to connect talent with opportunity across India through tech-enabled solutions.</p>
         </div>
       </div>
       <div class="founder-card reveal">
         <div class="founder-photo">
-          <!-- To add photo: <img src="assets/img/partner.jpg" alt="Co-Founder"/> -->
+          <!-- Add photo: <img src="assets/img/partner.jpg" alt="Co-Founder"/> -->
           <div class="founder-initials">P</div>
         </div>
         <div class="founder-info">
           <h3>Partner (Name TBC)</h3>
-          <div class="founder-role">Co-Founder & Partner</div>
-          <p>Instrumental in shaping MAINDSOURCE's Women Empowerment agenda and driving inclusive hiring across all partnerships.</p>
+          <div class="founder-role">Co-Founder &amp; Partner</div>
+          <p>Instrumental in shaping MAINDSOURCE&rsquo;s Women Empowerment agenda and driving inclusive hiring across all partnerships.</p>
         </div>
       </div>
     </div>
@@ -301,10 +589,9 @@
     <div class="text-center">
       <span class="section-label reveal">Trusted By</span>
       <h2 class="section-title reveal">Companies That Trust MAINDSOURCE</h2>
-      <p class="section-sub reveal">From global giants to growing enterprises — our clients span every major industry.</p>
+      <p class="section-sub reveal">From global giants to growing enterprises &mdash; our clients span every major industry.</p>
     </div>
     <div class="clients-grid">
-      <!-- To add logos: <img src="assets/logos/foxconn.png" alt="Foxconn"/> inside each .client-box -->
       <div class="client-box reveal"><span>Foxconn</span></div>
       <div class="client-box reveal"><span>Toyota</span></div>
       <div class="client-box reveal"><span>Tata Electronics</span></div>
@@ -332,9 +619,9 @@
       <h2 class="section-title light reveal">Trusted. Proven. Recommended.</h2>
     </div>
     <div class="testi-grid">
-      <div class="testi-card reveal"><div class="testi-q">"</div><p class="testi-text">MAINDSOURCE delivered exactly the workforce we needed — screened, trained, and ready from day one. Their industry understanding is exceptional.</p><div class="testi-person"><div class="testi-avatar">H</div><div><div class="testi-name">HR Manager</div><div class="testi-role">Leading Manufacturing, Bangalore</div></div></div></div>
-      <div class="testi-card reveal"><div class="testi-q">"</div><p class="testi-text">Within 72 hours of raising the requirement, we had the right candidates in our facility. Highly reliable partners.</p><div class="testi-person"><div class="testi-avatar">P</div><div><div class="testi-name">Plant Head</div><div class="testi-role">Electronics Manufacturing, Karnataka</div></div></div></div>
-      <div class="testi-card reveal"><div class="testi-q">"</div><p class="testi-text">MAINDSOURCE truly understands the blue-collar workforce market in South India. They have been our go-to partner for manpower.</p><div class="testi-person"><div class="testi-avatar">V</div><div><div class="testi-name">Operations Director</div><div class="testi-role">Logistics & Supply Chain</div></div></div></div>
+      <div class="testi-card reveal"><div class="testi-q">&ldquo;</div><p class="testi-text">MAINDSOURCE delivered exactly the workforce we needed &mdash; screened, trained, and ready from day one. Their industry understanding is exceptional.</p><div class="testi-person"><div class="testi-avatar">H</div><div><div class="testi-name">HR Manager</div><div class="testi-role">Leading Manufacturing, Bangalore</div></div></div></div>
+      <div class="testi-card reveal"><div class="testi-q">&ldquo;</div><p class="testi-text">Within 72 hours of raising the requirement, we had the right candidates in our facility. Highly reliable partners.</p><div class="testi-person"><div class="testi-avatar">P</div><div><div class="testi-name">Plant Head</div><div class="testi-role">Electronics Manufacturing, Karnataka</div></div></div></div>
+      <div class="testi-card reveal"><div class="testi-q">&ldquo;</div><p class="testi-text">MAINDSOURCE truly understands the blue-collar workforce market in South India. They have been our go-to partner for manpower.</p><div class="testi-person"><div class="testi-avatar">V</div><div><div class="testi-name">Operations Director</div><div class="testi-role">Logistics &amp; Supply Chain</div></div></div></div>
     </div>
   </div>
 </section>
@@ -342,12 +629,12 @@
 <!-- ════════ CTA ════════ -->
 <section id="cta-banner">
   <div class="container cta-inner">
-    <span class="section-label reveal" style="color:rgba(245,166,35,.8);">Let's Work Together</span>
+    <span class="section-label reveal" style="color:rgba(245,166,35,.8);">Let&rsquo;s Work Together</span>
     <h2 class="section-title light reveal">Ready to Build Your Dream Workforce?</h2>
     <p class="reveal">Join 50+ companies that trust MAINDSOURCE. First batch of candidates delivered within 72 hours.</p>
     <div class="cta-btns reveal">
-      <a href="contact.html" class="btn btn-gold">Start Your Hiring Journey →</a>
-      <a href="tel:+919071329231" class="btn btn-outline">📞 Call Us Now</a>
+      <a href="contact.html" class="btn btn-gold">Start Your Hiring Journey &#8594;</a>
+      <a href="tel:+919071329231" class="btn btn-outline">&#128222; Call Us Now</a>
     </div>
   </div>
 </section>
@@ -361,9 +648,9 @@
         <p>Tech-enabled manpower supply and staffing solutions across India. Connecting talent with opportunities since 2025.</p>
         <div class="f-socials">
           <a href="#" class="f-soc" aria-label="LinkedIn">in</a>
-          <a href="#" class="f-soc" aria-label="Instagram">📸</a>
+          <a href="#" class="f-soc" aria-label="Instagram">&#128247;</a>
           <a href="#" class="f-soc" aria-label="Facebook">f</a>
-          <a href="https://wa.me/919071329231" class="f-soc" aria-label="WhatsApp">💬</a>
+          <a href="https://wa.me/919071329231" class="f-soc" aria-label="WhatsApp">&#128172;</a>
         </div>
       </div>
       <div class="f-col">
@@ -382,20 +669,20 @@
           <li><a href="services.html">One-Time Placement</a></li>
           <li><a href="services.html">Payroll Management</a></li>
           <li><a href="services.html">Gig Workforce</a></li>
-          <li><a href="services.html">Training & Development</a></li>
+          <li><a href="services.html">Training &amp; Development</a></li>
         </ul>
       </div>
       <div class="f-col">
         <h4>Contact</h4>
-        <div class="f-contact-item"><span class="f-ci">📞</span><div class="f-ct"><strong>Phone</strong>+91 9071329231</div></div>
-        <div class="f-contact-item"><span class="f-ci">✉️</span><div class="f-ct"><strong>Email</strong>maindsource@gmail.com</div></div>
-        <div class="f-contact-item"><span class="f-ci">📍</span><div class="f-ct"><strong>Bangalore (Primary)</strong>Electronic City (P), 560100, Karnataka</div></div>
-        <div class="f-contact-item"><span class="f-ci">📍</span><div class="f-ct"><strong>Ballari</strong>M V Nagar 10th Cross, 583103</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#128222;</span><div class="f-ct"><strong>Phone</strong>+91 9071329231</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#9993;&#65039;</span><div class="f-ct"><strong>Email</strong>maindsource@gmail.com</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#128205;</span><div class="f-ct"><strong>Bangalore (Primary)</strong>Electronic City (P), 560100, Karnataka</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#128205;</span><div class="f-ct"><strong>Ballari</strong>M V Nagar 10th Cross, 583103</div></div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 MAINDSOURCE LLP. All rights reserved. LLPIN: ACU-2305 | GST: 29ACGFM2072C1ZE</p>
-      <p class="f-legal">Registered · Compliant · Trustworthy</p>
+      <p>&#169; 2026 MAINDSOURCE LLP. All rights reserved. LLPIN: ACU-2305 | GST: 29ACGFM2072C1ZE</p>
+      <p class="f-legal">Registered &middot; Compliant &middot; Trustworthy</p>
     </div>
   </div>
 </footer>
@@ -403,21 +690,39 @@
 <script>
 // Preloader
 window.addEventListener('load',()=>{setTimeout(()=>{const l=document.getElementById('preloader');if(!l)return;l.style.opacity='0';l.style.transition='opacity .6s ease';setTimeout(()=>{l.style.display='none';},600);},2000);});
+
 // Cursor
 const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(dot){dot.style.left=mx+'px';dot.style.top=my+'px';}});
 (function ar(){if(!ring)return;rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar);})();
+
 // Scroll progress + navbar
-window.addEventListener('scroll',()=>{const s=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;const p=document.getElementById('scroll-progress');if(p)p.style.width=s+'%';const nav=document.getElementById('navbar');if(nav)nav.classList.toggle('scrolled',window.scrollY>60);});
+window.addEventListener('scroll',()=>{
+  const s=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
+  const p=document.getElementById('scroll-progress');if(p)p.style.width=s+'%';
+  const nav=document.getElementById('navbar');if(nav)nav.classList.toggle('scrolled',window.scrollY>60);
+});
+
 // Mobile menu
 const ham=document.getElementById('hamburger'),mm=document.getElementById('mobMenu'),mo=document.getElementById('mobOverlay');
 if(ham){function tm(){mm.classList.toggle('open');mo.classList.toggle('open');}ham.addEventListener('click',tm);mo.addEventListener('click',tm);}
-// Particles
-(function(){const c=document.getElementById('heroP');if(!c)return;for(let i=0;i<22;i++){const s=document.createElement('span');s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${Math.random()*8+6}s;animation-delay:${Math.random()*6}s;width:${Math.random()*3+2}px;height:${Math.random()*3+2}px;`;c.appendChild(s);}})();
-// Reveal
+
+// Hero particles — enhanced (38 particles, varied sizes)
+(function(){
+  const c=document.getElementById('heroP');if(!c)return;
+  for(let i=0;i<38;i++){
+    const s=document.createElement('span');
+    const sz=Math.random()*2.4+1;
+    s.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+7)+'s;animation-delay:'+(Math.random()*8)+'s;width:'+sz+'px;height:'+sz+'px;';
+    c.appendChild(s);
+  }
+})();
+
+// Reveal on scroll
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.14});
 document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
+
 // Count-up
 const cObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.impact-num[data-target]').forEach(el=>{const t=parseInt(el.dataset.target),d=2000,step=t/(d/16);let n=0;const id=setInterval(()=>{n+=step;if(n>=t){el.textContent=t.toLocaleString()+'+';clearInterval(id);}else{el.textContent=Math.floor(n).toLocaleString()+'+';}},16);});cObs.disconnect();}});},{threshold:.3});
 const imp=document.getElementById('impact');if(imp)cObs.observe(imp);
