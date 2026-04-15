@@ -83,7 +83,7 @@
     position:absolute; inset:0; z-index:0; display:none;
   }
   .hero-video-bg video {
-    width:100%; height:100%; object-fit:cover; opacity: 0.5; /* increased to 50% visibility
+    width:100%; height:100%; object-fit:cover; opacity: 0.5; /* increased to 50% visibility */
   }
   .hero-video-bg::after {
     content:''; position:absolute; inset:0; background:rgba(10,15,44,.72);
@@ -118,13 +118,14 @@
   /* HEADLINE — the centrepiece */
   .hero-hl {
     font-family: var(--font-d);
-    font-size: clamp(52px, 7.6vw, 96px);
+    font-size: clamp(52px, 8vw, 90px);
     font-weight: 800;
     color: var(--white);
-    line-height: 1.06;
+    line-height: 1.1;
     letter-spacing: -1.5px;
-    margin-bottom: 28px;
-    opacity: 0;
+    margin-bottom: 24px;
+    z-index: 5; /*keeps it above the video*/
+    opacity: 1 !important; /* restores brightness*/
     animation: fadeUpHero .85s ease .5s forwards;
   }
   .hero-hl em {
