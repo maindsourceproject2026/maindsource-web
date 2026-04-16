@@ -18,8 +18,6 @@
   ===================================================== */
 
   #hero {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
     top: 0; /* remove white gap : this esures the container starts at the absolute 0 point */
     min-height: 100vh;
     height: 100vh; /* Locking it to exactly the screen height */
@@ -28,7 +26,7 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: space-between;
-    padding-top: 0;
+    padding: 0 5%;
     position: relative;
     overflow: hidden;
   }
@@ -40,8 +38,9 @@
       radial-gradient(ellipse 90% 70% at 50% -10%, rgba(245,166,35,.09) 0%, transparent 55%),
       radial-gradient(ellipse 55% 90% at 95% 50%,  rgba(30,39,97,.55)   0%, transparent 65%),
       radial-gradient(ellipse 70% 70% at 5%  90%,  rgba(26,16,64,.75)   0%, transparent 55%),
-    animation: meshBreath 9s ease-in-out infinite alternate;
+    animation; meshBreath: 9s ease-in-out infinite alternate;
   }
+
   @keyframes meshBreath { 0%{opacity:1} 100%{opacity:.88} }
 
   /* Layer 2 — subtle drifting grid */
@@ -87,7 +86,7 @@
     position:absolute; top: 0; left: 0; width: 100%; height: 100%; inset:0; z-index:0; display:none;
   }
   .hero-video-bg video {
-    width:100%; height:100%; object-fit:cover; /* keeps aspect ratio*/ opacity: 0.7; /* increased to 70% visibility */ transform: scale(1.3); object-position: center 30%; /* focuses on the area 30% from the top */ z-index: 0;
+    width:100%; height:100%; object-fit:cover; /* keeps aspect ratio*/ opacity: 0.7; /* increased to 70% visibility */ transform: none; object-position: center 20%; /* focuses on the area 30% from the top */ z-index: 0;
   }
   .hero-video-bg::after {
     content:''; position:absolute; inset:0; background: rgba(10,15,44,.72);
@@ -378,10 +377,14 @@
         </a>
       </div>
     </div>
-  </div>
+  </div
 
-  <!-- Stats bar pinned to bottom -->
-  <div class="hero-divider"></div>
+<!-- ════════ HERO END ════════ -->
+
+
+<!-- Stats bar pinned to bottom -->
+<section>
+<div class="hero-divider"></div>
   <div class="hero-stats-bar">
     <div class="hero-stats-inner">
       <div class="hero-stat-item">
@@ -398,10 +401,7 @@
       </div>
     </div>
   </div>
-
 </section>
-<!-- ════════ HERO END ════════ -->
-
 
 <!-- ════════ DUAL PATH ════════ -->
 </section>

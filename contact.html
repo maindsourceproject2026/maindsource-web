@@ -2,42 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta name="description" content="Contact MAINDSOURCE — Get in touch with our Bangalore and Ballari offices for manpower and staffing requirements."/>
+  <meta name="description" content="Contact MAINDSOURCE — Get in touch for manpower staffing, recruitment and workforce solutions across India."/>
   <title>Contact Us — MAINDSOURCE</title>
   <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
-  <!-- apple-touch-icon: place at assets/img/apple-touch-icon.png -->
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png"/>
   <link rel="stylesheet" href="style.css"/>
   <style>
-    /* ── Contact page extras ── */
-    .contact-wrap { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:flex-start; }
-    .contact-details { display:flex; flex-direction:column; gap:0; }
-    .cd-item { display:flex; gap:16px; align-items:flex-start; padding:22px 0; border-bottom:1px solid var(--border); }
-    .cd-item:last-child { border-bottom:none; }
-    .cd-icon-wrap { width:46px; height:46px; border-radius:12px; background:rgba(245,166,35,.10); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
-    .cd-label { font-family:var(--font-s); font-size:11px; font-weight:700; color:var(--gold); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
-    .cd-value { font-size:15px; color:var(--text-dark); font-weight:500; line-height:1.6; }
-    .cd-sub { font-size:13px; color:var(--text-gray); margin-top:2px; }
-    .map-placeholder { width:100%; height:280px; background:linear-gradient(135deg,var(--cream-2),#e8eaf4); border:1.5px dashed rgba(30,39,97,.18); border-radius:var(--r); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; margin-top:24px; }
-    .map-placeholder span { font-family:var(--font-s); font-size:11px; font-weight:600; color:rgba(30,39,97,.35); letter-spacing:1px; text-transform:uppercase; }
-    .offices-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:40px; }
-    .office-box { background:var(--white); border:1px solid var(--border); border-radius:var(--r); padding:22px 20px; transition:var(--ease); }
-    .office-box:hover { border-color:var(--gold); box-shadow:0 4px 16px rgba(245,166,35,.09); }
-    .office-tag { display:inline-block; font-family:var(--font-s); font-size:10px; font-weight:700; color:var(--gold); background:rgba(245,166,35,.09); border-radius:50px; padding:2px 10px; letter-spacing:.8px; margin-bottom:10px; }
-    .office-box h4 { font-family:var(--font-s); font-size:14px; font-weight:700; color:var(--text-dark); margin-bottom:6px; }
-    .office-box p { font-size:13px; color:var(--text-gray); line-height:1.6; }
-    .contact-form-placeholder { background:var(--white); border:1px solid var(--border); border-radius:var(--rl); padding:36px; }
-    .cfp-label { font-family:var(--font-s); font-size:11px; font-weight:700; color:var(--text-dark); margin-bottom:6px; display:block; letter-spacing:.2px; }
-    .cfp-input { width:100%; border:1.5px solid var(--border); border-radius:8px; padding:11px 13px; font-family:var(--font-b); font-size:14px; color:var(--text-body); background:var(--cream); margin-bottom:14px; outline:none; transition:border .25s; }
-    .cfp-input:focus { border-color:var(--gold); background:var(--white); }
-    .cfp-select { width:100%; border:1.5px solid var(--border); border-radius:8px; padding:11px 13px; font-family:var(--font-b); font-size:14px; color:var(--text-body); background:var(--cream); margin-bottom:14px; outline:none; appearance:none; }
-    .cfp-textarea { width:100%; border:1.5px solid var(--border); border-radius:8px; padding:11px 13px; font-family:var(--font-b); font-size:14px; color:var(--text-body); background:var(--cream); margin-bottom:14px; outline:none; resize:vertical; min-height:100px; transition:border .25s; }
-    .cfp-textarea:focus { border-color:var(--gold); background:var(--white); }
-    .form-note { font-size:12px; color:var(--text-gray); margin-top:12px; }
-    .contact-cta-strip { background:var(--navy); border-radius:var(--rl); padding:36px 32px; display:flex; justify-content:space-between; align-items:center; gap:24px; margin-top:48px; flex-wrap:wrap; }
-    .contact-cta-strip h3 { font-family:var(--font-d); font-size:clamp(18px,2.5vw,26px); font-weight:700; color:var(--white); }
-    .contact-cta-strip p { font-size:14px; color:var(--text-muted); margin-top:4px; }
-    @media(max-width:900px){.contact-wrap{grid-template-columns:1fr;gap:36px;}.offices-grid{grid-template-columns:1fr;}.contact-cta-strip{flex-direction:column;align-items:flex-start;}}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:flex-start;}
+    .contact-form{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);padding:36px;}
+    .form-group{margin-bottom:18px;}
+    .form-group label{display:block;font-family:var(--font-s);font-size:11.5px;font-weight:700;color:var(--text-dark);margin-bottom:6px;letter-spacing:.2px;}
+    .form-group input,.form-group select,.form-group textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;font-family:var(--font-b);font-size:14px;color:var(--text-body);background:var(--cream);transition:border .25s,background .25s;outline:none;}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);background:var(--white);}
+    .form-group textarea{resize:vertical;min-height:110px;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .form-title{font-family:var(--font-d);font-size:22px;font-weight:700;color:var(--text-dark);margin-bottom:6px;}
+    .form-sub{font-size:13px;color:var(--text-gray);margin-bottom:24px;line-height:1.6;}
+    .form-submit{width:100%;padding:14px;font-size:15px;font-weight:700;}
+
+    /* Success / Error states */
+    .form-msg{display:none;border-radius:10px;padding:14px 18px;font-family:var(--font-s);font-size:13px;font-weight:600;margin-top:16px;align-items:center;gap:10px;}
+    .form-msg.show{display:flex;}
+    .form-msg.success{background:rgba(52,168,83,.08);border:1px solid rgba(52,168,83,.22);color:#1e7e34;}
+    .form-msg.error{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.20);color:#b91c1c;}
+    .form-spinner{display:none;width:18px;height:18px;border:2px solid rgba(10,15,44,.15);border-top-color:var(--text-dark);border-radius:50%;animation:spin .7s linear infinite;margin-left:8px;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .btn-gold.loading{opacity:.75;pointer-events:none;}
+    .btn-gold.loading .form-spinner{display:inline-block;}
+    .btn-gold.loading .btn-label{display:none;}
+
+    /* Contact info cards */
+    .cinfo-block{margin-bottom:40px;}
+    .cinfo-title{font-family:var(--font-s);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+    .cinfo-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:10px;display:flex;gap:14px;align-items:flex-start;transition:var(--ease);}
+    .cinfo-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(245,166,35,.09);}
+    .cinfo-icon{width:40px;height:40px;border-radius:10px;background:rgba(245,166,35,.10);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+    .cinfo-label{font-family:var(--font-s);font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
+    .cinfo-val{font-size:13.5px;color:var(--text-dark);font-weight:500;line-height:1.6;}
+    .cinfo-val a{color:var(--text-dark);transition:color .2s;}
+    .cinfo-val a:hover{color:var(--gold);}
+
+    /* Map embed placeholder */
+    .map-wrap{border-radius:var(--r);overflow:hidden;border:1px solid var(--border);margin-top:24px;}
+    .map-wrap iframe{width:100%;height:220px;display:block;border:none;}
+
+    /* Quick actions */
+    .quick-actions{display:flex;flex-direction:column;gap:10px;margin-top:28px;}
+    .qa-btn{display:flex;align-items:center;gap:12px;background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;transition:var(--ease);text-decoration:none;}
+    .qa-btn:hover{border-color:var(--gold);transform:translateX(4px);box-shadow:0 4px 14px rgba(245,166,35,.09);}
+    .qa-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+    .qa-icon.wa{background:rgba(37,211,102,.12);}
+    .qa-icon.mail{background:rgba(30,39,97,.08);}
+    .qa-icon.call{background:rgba(245,166,35,.12);}
+    .qa-text strong{display:block;font-family:var(--font-s);font-size:13px;font-weight:700;color:var(--text-dark);}
+    .qa-text span{font-size:12px;color:var(--text-gray);}
+
+    @media(max-width:768px){
+      .contact-grid{grid-template-columns:1fr;}
+      .form-row{grid-template-columns:1fr;}
+    }
   </style>
 </head>
 <body>
@@ -46,15 +69,13 @@
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- WhatsApp Float -->
 <a id="wa-float" href="https://wa.me/919071329231" target="_blank" rel="noopener" aria-label="WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<!-- NAVBAR — simplified: Home, About, Services, Sectors, Contact -->
 <nav id="navbar">
   <a href="index.html" class="nav-brand">
-    <img src="assets/logo.png" alt="MAINDSOURCE" class="nav-brand-img" onerror="this.style.display='none'"/>
+    <img src="assets/img/logo.png" alt="MAINDSOURCE" class="nav-brand-img" onerror="this.style.display='none'"/>
     <div class="nav-brand-text"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
   </a>
   <ul class="nav-links">
@@ -63,22 +84,20 @@
     <li><a href="services.html">Services</a></li>
     <li><a href="sectors.html">Sectors</a></li>
     <li class="nav-dropdown">
-      <a href="#" class="nav-drop-trigger">More <span class="nav-drop-arrow">▾</span></a>
+      <a href="#" class="nav-drop-trigger">More <span class="nav-drop-arrow">&#9660;</span></a>
       <div class="nav-drop-menu">
-        <a href="women.html" class="drop-featured">
-          <span class="drop-icon">✊</span> Women Empowerment
-        </a>
+        <a href="women.html" class="drop-featured"><span class="drop-icon">&#9994;</span> Women Empowerment</a>
         <div class="nav-drop-divider"></div>
-        <a href="jobseekers.html"><span class="drop-icon">💼</span> Job Seekers</a>
-        <a href="careers.html"><span class="drop-icon">🚀</span> Careers</a>
-        <a href="impact.html"><span class="drop-icon">📊</span> Our Impact</a>
-        <a href="credentials.html"><span class="drop-icon">📋</span> Credentials</a>
-        <a href="methodology.html"><span class="drop-icon">⚙️</span> Methodology</a>
+        <a href="jobseekers.html"><span class="drop-icon">&#128188;</span> Job Seekers</a>
+        <a href="careers.html"><span class="drop-icon">&#128640;</span> Careers</a>
+        <a href="impact.html"><span class="drop-icon">&#128202;</span> Our Impact</a>
+        <a href="credentials.html"><span class="drop-icon">&#128203;</span> Credentials</a>
+        <a href="methodology.html"><span class="drop-icon">&#9881;</span> Methodology</a>
       </div>
     </li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
   </ul>
-  <a href="contact.html" class="nav-cta">Start Hiring →</a>
+  <a href="contact.html" class="nav-cta">Start Hiring &#8594;</a>
   <button class="nav-ham" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 <div class="mob-overlay" id="mobOverlay"></div>
@@ -87,13 +106,13 @@
   <a href="about.html">About Us</a>
   <a href="services.html">Services</a>
   <a href="sectors.html">Sectors</a>
-  <a href="women.html" class="mob-women">✊ Women Empowerment</a>
+  <a href="women.html" class="mob-women">&#9994; Women Empowerment</a>
   <a href="jobseekers.html">Job Seekers</a>
   <a href="careers.html">Careers</a>
   <a href="impact.html">Our Impact</a>
   <a href="credentials.html">Credentials</a>
   <a href="methodology.html">Methodology</a>
-  <a href="contact.html" class="mob-cta">Start Hiring →</a>
+  <a href="contact.html" class="mob-cta">Start Hiring &#8594;</a>
 </div>
 
 <!-- PAGE HERO -->
@@ -101,152 +120,196 @@
   <div class="ph-particles" id="phpP"></div>
   <div class="ph-glow"></div>
   <div class="container ph-inner">
-    <h1>Let's Build Your<br><em>Workforce</em><br>Together</h1>
-    <p>Reach out to our team in Bangalore or Ballari. First batch of candidates delivered within 72 hours of your requirement.</p>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a><span>›</span>
+      <span style="color:var(--white)">Contact</span>
+    </div>
+    <h1>Let&rsquo;s Build Your<br><em>Dream Workforce</em></h1>
+    <p>Whether you need 5 workers or 500 &mdash; we respond within 24 hours. No long wait times. No middlemen. Just results.</p>
   </div>
 </section>
 
-<!-- QUICK CONNECT STRIP -->
-<div style="background:var(--navy);padding:0;">
-  <div class="container" style="display:grid;grid-template-columns:repeat(3,1fr);border-left:1px solid rgba(255,255,255,.06);">
-    <a href="tel:+919071329231" style="display:flex;align-items:center;gap:14px;padding:22px 24px;border-right:1px solid rgba(255,255,255,.06);transition:var(--ease);" onmouseover="this.style.background='rgba(245,166,35,.07)'" onmouseout="this.style.background='none'">
-      <span style="font-size:24px">📞</span>
-      <div><div style="font-family:var(--font-s);font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px">Call Us</div><div style="font-family:var(--font-s);font-size:15px;font-weight:700;color:var(--white)">+91 9071329231</div></div>
-    </a>
-    <a href="mailto:maindsource@gmail.com" style="display:flex;align-items:center;gap:14px;padding:22px 24px;border-right:1px solid rgba(255,255,255,.06);transition:var(--ease);" onmouseover="this.style.background='rgba(245,166,35,.07)'" onmouseout="this.style.background='none'">
-      <span style="font-size:24px">✉️</span>
-      <div><div style="font-family:var(--font-s);font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px">Email Us</div><div style="font-family:var(--font-s);font-size:15px;font-weight:700;color:var(--white)">maindsource@gmail.com</div></div>
-    </a>
-    <a href="https://wa.me/919071329231" target="_blank" style="display:flex;align-items:center;gap:14px;padding:22px 24px;transition:var(--ease);" onmouseover="this.style.background='rgba(245,166,35,.07)'" onmouseout="this.style.background='none'">
-      <span style="font-size:24px">💬</span>
-      <div><div style="font-family:var(--font-s);font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px">WhatsApp</div><div style="font-family:var(--font-s);font-size:15px;font-weight:700;color:var(--white)">Chat Directly</div></div>
-    </a>
-  </div>
-</div>
-
-<!-- MAIN CONTACT SECTION -->
-<section class="section-pad" style="background:var(--cream)">
+<!-- CONTACT SECTION -->
+<section class="section-pad" style="background:var(--cream);">
   <div class="container">
-    <div class="contact-wrap">
+    <div class="contact-grid">
 
-      <!-- Left: Details -->
-      <div>
-        <span class="section-label reveal-left">Get in Touch</span>
-        <h2 class="section-title reveal-left">We're Here to Help You<br>Find the Right Talent</h2>
-        <p class="section-sub reveal-left" style="margin-bottom:0">Share your workforce requirement and our team will respond within 2 business hours.</p>
-
-        <div class="contact-details" style="margin-top:32px;">
-          <div class="cd-item reveal">
-            <div class="cd-icon-wrap">📞</div>
-            <div>
-              <div class="cd-label">Phone</div>
-              <div class="cd-value">+91 9071329231</div>
-              <div class="cd-sub">Available Mon–Sat, 9 AM to 7 PM</div>
-            </div>
-          </div>
-          <div class="cd-item reveal">
-            <div class="cd-icon-wrap">✉️</div>
-            <div>
-              <div class="cd-label">Email</div>
-              <div class="cd-value">maindsource@gmail.com</div>
-              <div class="cd-sub">We respond within 2 business hours</div>
-            </div>
-          </div>
-          <div class="cd-item reveal">
-            <div class="cd-icon-wrap">💬</div>
-            <div>
-              <div class="cd-label">WhatsApp</div>
-              <div class="cd-value">+91 9071329231</div>
-              <div class="cd-sub">Fastest way to reach us — share your JD directly</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Map placeholder -->
-        <div class="map-placeholder reveal" style="margin-top:32px;">
-          <span style="font-size:32px">🗺️</span>
-          <span>Bangalore Office Map</span>
-          <span style="font-size:11px;color:rgba(30,39,97,.25)">Electronic City (P), Bangalore — 560100</span>
-          <!-- To embed Google Maps: replace this div with iframe -->
-          <!-- <iframe src="https://maps.google.com/maps?q=Electronic+City+Bangalore&output=embed" width="100%" height="280" frameborder="0" style="border:0;border-radius:12px;"></iframe> -->
-        </div>
-      </div>
-
-      <!-- Right: Enquiry form placeholder -->
+      <!-- ── LEFT: FORM ── -->
       <div class="reveal">
-        <div class="contact-form-placeholder">
-          <h3 style="font-family:var(--font-d);font-size:22px;font-weight:700;color:var(--text-dark);margin-bottom:6px;">Send Us a Requirement</h3>
-          <p style="font-size:13.5px;color:var(--text-gray);margin-bottom:24px;">Fill the form and our team will get back to you within 2 hours.</p>
+        <div class="contact-form">
+          <div class="form-title">Send Us an Enquiry</div>
+          <div class="form-sub">Fill the form below and our team will contact you within 24 hours.</div>
 
-          <label class="cfp-label">Your Name *</label>
-          <input class="cfp-input" type="text" placeholder="Full name"/>
+          <!-- WEB3FORMS — action and access_key are all you need to change -->
+          <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
 
-          <label class="cfp-label">Company Name *</label>
-          <input class="cfp-input" type="text" placeholder="Company or organisation"/>
+            <!-- Web3Forms required hidden fields -->
+            <input type="hidden" name="access_key" value="bda4472c-960d-4910-b4c7-3ff737417c23"/>
+            <input type="hidden" name="subject" value="New Hiring Enquiry — MAINDSOURCE Website"/>
+            <input type="hidden" name="from_name" value="MAINDSOURCE Website"/>
+            <input type="hidden" name="redirect" value="false"/>
+            <!-- Honeypot spam trap -->
+            <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off"/>
 
-          <label class="cfp-label">Phone Number *</label>
-          <input class="cfp-input" type="tel" placeholder="+91 XXXXXXXXXX"/>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">Your Name *</label>
+                <input type="text" id="fname" name="name" placeholder="e.g. Rajesh Kumar" required/>
+              </div>
+              <div class="form-group">
+                <label for="fphone">Phone Number *</label>
+                <input type="tel" id="fphone" name="phone" placeholder="+91 9XXXXXXXXX" required/>
+              </div>
+            </div>
 
-          <label class="cfp-label">Email Address</label>
-          <input class="cfp-input" type="email" placeholder="your@email.com"/>
+            <div class="form-group">
+              <label for="femail">Email Address *</label>
+              <input type="email" id="femail" name="email" placeholder="you@company.com" required/>
+            </div>
 
-          <label class="cfp-label">Requirement Type</label>
-          <select class="cfp-select">
-            <option>Select requirement type</option>
-            <option>Contractual Staffing</option>
-            <option>One-Time Placement</option>
-            <option>Gig Workforce</option>
-            <option>Payroll Management</option>
-            <option>Training & Development</option>
-            <option>Other</option>
-          </select>
+            <div class="form-group">
+              <label for="fcompany">Company Name</label>
+              <input type="text" id="fcompany" name="company" placeholder="Your company / organisation"/>
+            </div>
 
-          <label class="cfp-label">Tell Us More</label>
-          <textarea class="cfp-textarea" placeholder="Briefly describe your workforce requirement — number of people, location, job type..."></textarea>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fservice">Service Required *</label>
+                <select id="fservice" name="service" required>
+                  <option value="" disabled selected>Select a service</option>
+                  <option>Contractual Staffing</option>
+                  <option>One-Time Placement</option>
+                  <option>Payroll Management</option>
+                  <option>Gig Workforce</option>
+                  <option>Training &amp; Development</option>
+                  <option>Workforce Consulting</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="fcount">Approx. Headcount</label>
+                <select id="fcount" name="headcount">
+                  <option value="" disabled selected>Select range</option>
+                  <option>1 – 10</option>
+                  <option>10 – 50</option>
+                  <option>50 – 200</option>
+                  <option>200 – 500</option>
+                  <option>500+</option>
+                </select>
+              </div>
+            </div>
 
-          <!-- Form submission: integrate Web3Forms on Day 3 -->
-          <!-- <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY"/> -->
-          <a href="https://wa.me/919071329231" target="_blank" class="btn btn-gold" style="width:100%;justify-content:center;">Send via WhatsApp Instead →</a>
-          <p class="form-note">Form integration coming soon. For immediate response, use WhatsApp or call directly.</p>
+            <div class="form-group">
+              <label for="fmsg">Message</label>
+              <textarea id="fmsg" name="message" placeholder="Tell us about your requirement, industry, location, timeline..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-gold form-submit" id="submitBtn">
+              <span class="btn-label">Send Enquiry &#8594;</span>
+              <span class="form-spinner"></span>
+            </button>
+
+            <div class="form-msg success" id="formSuccess">
+              &#10003;&nbsp; Message sent! We will contact you within 24 hours.
+            </div>
+            <div class="form-msg error" id="formError">
+              &#9888;&nbsp; Something went wrong. Please try WhatsApp or call us directly.
+            </div>
+
+          </form>
         </div>
       </div>
 
-    </div>
-
-    <!-- Office Cards -->
-    <div style="margin-top:56px;">
-      <div class="text-center" style="margin-bottom:32px;">
-        <span class="section-label reveal">Our Offices</span>
-        <h2 class="section-title reveal">Find Us Here</h2>
-      </div>
-      <div class="offices-grid">
-        <div class="office-box reveal">
-          <div class="office-tag">PRIMARY OFFICE</div>
-          <h4>Bangalore</h4>
-          <p>Near NR Fitness Unisex Gym, Bettadasanapura,<br>Electronic City (P), Bangalore — 560100<br>Karnataka, India</p>
-          <a href="https://maps.google.com/?q=Electronic+City+Bangalore" target="_blank" class="btn btn-ghost" style="margin-top:16px;font-size:12px;padding:8px 16px;">View on Maps →</a>
-        </div>
-        <div class="office-box reveal">
-          <div class="office-tag" style="background:rgba(30,39,97,.07);color:var(--navy)">BRANCH OFFICE</div>
-          <h4>Ballari</h4>
-          <p>Plot No 05, Ward No 21,<br>M V Nagar 10th Cross, Ballari — 583103<br>Karnataka, India</p>
-          <a href="https://maps.google.com/?q=MV+Nagar+Ballari" target="_blank" class="btn btn-ghost" style="margin-top:16px;font-size:12px;padding:8px 16px;">View on Maps →</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- CTA strip -->
-    <div class="contact-cta-strip reveal">
+      <!-- ── RIGHT: INFO ── -->
       <div>
-        <h3>Need candidates fast?</h3>
-        <p>First batch delivered within 72 hours of requirement submission.</p>
-      </div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <a href="tel:+919071329231" class="btn btn-gold">📞 Call Now</a>
-        <a href="https://wa.me/919071329231" target="_blank" class="btn btn-outline" style="border-color:rgba(255,255,255,.3)">💬 WhatsApp</a>
+        <div class="cinfo-block reveal-left">
+          <div class="cinfo-title">Get In Touch</div>
+
+          <div class="cinfo-card">
+            <div class="cinfo-icon">&#128222;</div>
+            <div>
+              <div class="cinfo-label">Phone</div>
+              <div class="cinfo-val"><a href="tel:+919071329231">+91 9071329231</a></div>
+            </div>
+          </div>
+
+          <div class="cinfo-card">
+            <div class="cinfo-icon">&#9993;&#65039;</div>
+            <div>
+              <div class="cinfo-label">Email</div>
+              <div class="cinfo-val"><a href="mailto:maindsource@gmail.com">maindsource@gmail.com</a></div>
+            </div>
+          </div>
+
+          <div class="cinfo-card">
+            <div class="cinfo-icon">&#128205;</div>
+            <div>
+              <div class="cinfo-label">Bangalore Office (Primary)</div>
+              <div class="cinfo-val">Near NR Fitness Unisex Gym,<br>Bettadasanapura, Electronic City (P),<br>Bangalore &mdash; 560100, Karnataka</div>
+            </div>
+          </div>
+
+          <div class="cinfo-card">
+            <div class="cinfo-icon">&#128205;</div>
+            <div>
+              <div class="cinfo-label">Ballari Office</div>
+              <div class="cinfo-val">Plot No 05, Ward No 21,<br>M V Nagar 10th Cross,<br>Ballari &mdash; 583103, Karnataka</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick action buttons -->
+        <div class="reveal">
+          <div class="cinfo-title">Reach Us Instantly</div>
+          <div class="quick-actions">
+            <a href="https://wa.me/919071329231?text=Hi%20MAINDSOURCE%2C%20I%20need%20manpower%20assistance." target="_blank" rel="noopener" class="qa-btn">
+              <div class="qa-icon wa">&#128172;</div>
+              <div class="qa-text">
+                <strong>Chat on WhatsApp</strong>
+                <span>Fastest response &mdash; usually within minutes</span>
+              </div>
+            </a>
+            <a href="tel:+919071329231" class="qa-btn">
+              <div class="qa-icon call">&#128222;</div>
+              <div class="qa-text">
+                <strong>Call Directly</strong>
+                <span>+91 9071329231 &mdash; Mon to Sat, 9AM&ndash;7PM</span>
+              </div>
+            </a>
+            <a href="mailto:maindsource@gmail.com" class="qa-btn">
+              <div class="qa-icon mail">&#9993;&#65039;</div>
+              <div class="qa-text">
+                <strong>Send an Email</strong>
+                <span>maindsource@gmail.com</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Google Maps embed -->
+        <div class="map-wrap reveal" style="margin-top:28px;">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.4!2d77.6741!3d12.8406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDUwJzI2LjIiTiA3N8KwNDAnMjYuOCJF!5e0!3m2!1sen!2sin!4v1234567890"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            title="MAINDSOURCE Bangalore Office">
+          </iframe>
+        </div>
+
       </div>
     </div>
+  </div>
+</section>
 
+<!-- CTA -->
+<section id="cta-banner">
+  <div class="container cta-inner">
+    <span class="section-label reveal" style="color:rgba(245,166,35,.8);">72-Hour Guarantee</span>
+    <h2 class="section-title light reveal">First Batch of Candidates in 72 Hours</h2>
+    <p class="reveal">Raise your requirement today. Our team screens, shortlists and delivers job-ready talent faster than anyone else in the region.</p>
+    <div class="cta-btns reveal">
+      <a href="https://wa.me/919071329231?text=Hi%20MAINDSOURCE%2C%20I%20need%20to%20start%20hiring." target="_blank" class="btn btn-gold">&#128172; WhatsApp Us Now</a>
+      <a href="tel:+919071329231" class="btn btn-outline">&#128222; Call +91 9071329231</a>
+    </div>
   </div>
 </section>
 
@@ -259,28 +322,30 @@
         <p>Tech-enabled manpower supply and staffing solutions across India. Connecting talent with opportunities since 2025.</p>
         <div class="f-socials">
           <a href="#" class="f-soc" aria-label="LinkedIn">in</a>
-          <a href="#" class="f-soc" aria-label="Instagram">📸</a>
+          <a href="#" class="f-soc" aria-label="Instagram">&#128247;</a>
           <a href="#" class="f-soc" aria-label="Facebook">f</a>
-          <a href="https://wa.me/919071329231" class="f-soc" aria-label="WhatsApp">💬</a>
+          <a href="https://wa.me/919071329231" class="f-soc" aria-label="WhatsApp">&#128172;</a>
         </div>
       </div>
       <div class="f-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="women.html">Women Empowerment</a></li><li><a href="credentials.html">Credentials</a></li><li><a href="careers.html">Careers</a></li></ul></div>
-      <div class="f-col"><h4>Services</h4><ul><li><a href="services.html">Contractual Staffing</a></li><li><a href="services.html">One-Time Placement</a></li><li><a href="services.html">Payroll Management</a></li><li><a href="services.html">Gig Workforce</a></li></ul></div>
+      <div class="f-col"><h4>Services</h4><ul><li><a href="services.html">Contractual Staffing</a></li><li><a href="services.html">One-Time Placement</a></li><li><a href="services.html">Payroll Management</a></li><li><a href="services.html">Gig Workforce</a></li><li><a href="services.html">Training &amp; Development</a></li></ul></div>
       <div class="f-col">
         <h4>Contact</h4>
-        <div class="f-contact-item"><span class="f-ci">📞</span><div class="f-ct"><strong>Phone</strong>+91 9071329231</div></div>
-        <div class="f-contact-item"><span class="f-ci">✉️</span><div class="f-ct"><strong>Email</strong>maindsource@gmail.com</div></div>
-        <div class="f-contact-item"><span class="f-ci">📍</span><div class="f-ct"><strong>Bangalore (Primary)</strong>Electronic City (P), 560100, Karnataka</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#128222;</span><div class="f-ct"><strong>Phone</strong>+91 9071329231</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#9993;&#65039;</span><div class="f-ct"><strong>Email</strong>maindsource@gmail.com</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#128205;</span><div class="f-ct"><strong>Bangalore (Primary)</strong>Electronic City (P), 560100, Karnataka</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#128205;</span><div class="f-ct"><strong>Ballari</strong>M V Nagar 10th Cross, 583103</div></div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 MAINDSOURCE LLP. All rights reserved. LLPIN: ACU-2305 | GST: 29ACGFM2072C1ZE</p>
-      <p class="f-legal">Registered · Compliant · Trustworthy</p>
+      <p>&#169; 2026 MAINDSOURCE LLP. All rights reserved. LLPIN: ACU-2305 | GST: 29ACGFM2072C1ZE</p>
+      <p class="f-legal">Registered &middot; Compliant &middot; Trustworthy</p>
     </div>
   </div>
 </footer>
 
 <script>
+// Cursor
 const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(dot){dot.style.left=mx+'px';dot.style.top=my+'px';}});
@@ -289,8 +354,62 @@ window.addEventListener('scroll',()=>{const p=document.getElementById('scroll-pr
 const ham=document.getElementById('hamburger'),mm=document.getElementById('mobMenu'),mo=document.getElementById('mobOverlay');
 if(ham){function tm(){mm.classList.toggle('open');mo.classList.toggle('open');}ham.addEventListener('click',tm);mo.addEventListener('click',tm);}
 (function(){const c=document.getElementById('phpP');if(!c)return;for(let i=0;i<14;i++){const s=document.createElement('span');s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${Math.random()*8+6}s;animation-delay:${Math.random()*6}s;width:2px;height:2px;`;c.appendChild(s);}})();
-const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);}});},{threshold:.13});
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);}});},{threshold:.12});
 document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
+
+// ══════════════════════════════════════
+// WEB3FORMS — Contact Form Handler
+// ══════════════════════════════════════
+const form = document.getElementById('contactForm');
+const btn  = document.getElementById('submitBtn');
+const successMsg = document.getElementById('formSuccess');
+const errorMsg   = document.getElementById('formError');
+
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  // Hide previous messages
+  successMsg.classList.remove('show');
+  errorMsg.classList.remove('show');
+
+  // Show loading state
+  btn.classList.add('loading');
+
+  const formData = new FormData(form);
+  const object   = Object.fromEntries(formData);
+  const json     = JSON.stringify(object);
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: json
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      // SUCCESS
+      form.reset();
+      successMsg.classList.add('show');
+      // Scroll to message
+      successMsg.scrollIntoView({behavior:'smooth', block:'nearest'});
+    } else {
+      // API returned error
+      errorMsg.classList.add('show');
+      console.error('Web3Forms error:', data);
+    }
+  } catch (err) {
+    // Network error
+    errorMsg.classList.add('show');
+    console.error('Network error:', err);
+  } finally {
+    btn.classList.remove('loading');
+  }
+});
 </script>
 </body>
 </html>
