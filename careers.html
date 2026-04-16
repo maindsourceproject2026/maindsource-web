@@ -180,10 +180,6 @@
   <div class="ph-particles" id="phpP"></div>
   <div class="ph-glow"></div>
   <div class="container ph-inner">
-    <div class="breadcrumb">
-      <a href="index.html">Home</a><span>&#8250;</span>
-      <span style="color:var(--white)">Careers</span>
-    </div>
     <h1>Build Your Career<br>With <em>MAINDSOURCE</em></h1>
     <p>Jobs in Manufacturing, Logistics, BPO, Staffing &amp; more across Bangalore, Ballari and Karnataka. Browse 20 open positions below.</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
@@ -541,7 +537,10 @@ function openDrawer(id){
   document.getElementById('applyForm').reset();
   document.getElementById('afSuccess').classList.remove('show');
   document.getElementById('afError').classList.remove('show');
-  // Set content
+  // Reset apply button
+  const applyBtn = document.getElementById('drawerApplyBtn');
+  applyBtn.querySelector('.btn-label').textContent = 'Apply for This Job →';
+  applyBtn.style.background = '';
   document.getElementById('drawerDept').textContent=j.dept;
   document.getElementById('drawerTitle').textContent=j.title;
   document.getElementById('drawerSalary').textContent=j.salary;
