@@ -585,6 +585,17 @@ function toggleApplyForm(){
 // APPLY FORM — Web3Forms submit
 // ══════════════════════════════════════════════
 document.getElementById('applyForm').addEventListener('submit',async function(e){
+  // --- THE FIX: Force validation before anything else happens ---
+    if (!this.checkValidity()) {
+        e.preventDefault(); // Stop the form from breaking
+        this.reportValidity(); // Show the red "Please fill out this field" tooltip
+        return; // Stop the code right here, do not send to Web3Forms
+    }
+    // --------------------------------------------------------------
+
+    e.preventDefault(); // Original code preventing default reload
+    
+    // ... the rest of your Web3Forms submission code below ...
   e.preventDefault();
   const btn=document.getElementById('afSubmitBtn');
   const success=document.getElementById('afSuccess');
