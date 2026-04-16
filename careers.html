@@ -2,50 +2,124 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta name="description" content="Careers at MAINDSOURCE — Join our growing team in Bangalore and Ballari."/>
-  <title>Careers — MAINDSOURCE</title>
+  <meta name="description" content="Job Openings at MAINDSOURCE — Find full-time, contract and part-time jobs in Bangalore, Ballari, Hosur and across Karnataka. Manufacturing, Logistics, BPO, Staffing roles available now."/>
+  <title>Careers &amp; Job Openings — MAINDSOURCE | Bangalore</title>
   <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png"/>
   <link rel="stylesheet" href="style.css"/>
   <style>
-    .jobs-filter { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:36px; }
-    .filter-btn { font-family:var(--font-s); font-size:12px; font-weight:700; padding:8px 18px; border-radius:50px; border:1.5px solid var(--border); background:transparent; color:var(--text-gray); cursor:pointer; transition:var(--ease); }
-    .filter-btn:hover, .filter-btn.active { background:var(--navy); color:var(--white); border-color:var(--navy); }
+  /* ── Keep all original styles ── */
+  .jobs-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
+  .filter-btn{font-family:var(--font-s);font-size:12px;font-weight:700;padding:7px 16px;border-radius:50px;border:1.5px solid var(--border);background:transparent;color:var(--text-gray);transition:var(--ease);}
+  .filter-btn:hover,.filter-btn.active{background:var(--navy);color:var(--white);border-color:var(--navy);}
+  .filter-row{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:32px;align-items:flex-end;}
+  .filter-group{display:flex;flex-direction:column;gap:6px;}
+  .filter-group label{font-family:var(--font-s);font-size:10px;font-weight:700;color:var(--text-gray);letter-spacing:1.5px;text-transform:uppercase;}
+  .filter-select{font-family:var(--font-s);font-size:12px;font-weight:600;color:var(--text-dark);background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:8px 32px 8px 12px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B7280'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;cursor:pointer;transition:var(--ease);}
+  .filter-select:focus{border-color:var(--gold);outline:none;}
 
-    .job-grid { display:flex; flex-direction:column; gap:14px; }
-    .job-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r); padding:26px 28px; display:grid; grid-template-columns:1fr auto; gap:20px; align-items:center; transition:var(--ease); }
-    .job-card:hover { border-color:var(--gold); box-shadow:0 4px 20px rgba(245,166,35,.10); transform:translateX(4px); }
-    .job-card-left {}
-    .job-dept { font-family:var(--font-s); font-size:10px; font-weight:700; color:var(--gold); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px; }
-    .job-title { font-family:var(--font-s); font-size:17px; font-weight:700; color:var(--text-dark); margin-bottom:10px; }
-    .job-meta { display:flex; gap:16px; flex-wrap:wrap; }
-    .job-tag { display:inline-flex; align-items:center; gap:5px; font-size:12.5px; color:var(--text-gray); }
-    .job-tag-pill { display:inline-block; font-family:var(--font-s); font-size:11px; font-weight:700; padding:3px 10px; border-radius:50px; }
-    .tag-full { background:rgba(30,39,97,.08); color:var(--navy); }
-    .tag-contract { background:rgba(245,166,35,.10); color:#b87a00; }
-    .tag-part { background:rgba(52,168,83,.10); color:#1e7e34; }
-    .job-card-right { flex-shrink:0; }
+  .job-grid{display:flex;flex-direction:column;gap:12px;}
+  .job-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:22px 24px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;transition:var(--ease);cursor:pointer;}
+  .job-card:hover{border-color:var(--gold);box-shadow:0 4px 20px rgba(245,166,35,.10);transform:translateX(4px);}
+  .job-dept{font-family:var(--font-s);font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;}
+  .job-title{font-family:var(--font-s);font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:8px;}
+  .job-meta{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+  .job-tag{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text-gray);}
+  .job-tag-pill{display:inline-block;font-family:var(--font-s);font-size:10.5px;font-weight:700;padding:2px 10px;border-radius:50px;}
+  .tag-full{background:rgba(30,39,97,.08);color:var(--navy);}
+  .tag-contract{background:rgba(245,166,35,.10);color:#b87a00;}
+  .tag-part{background:rgba(52,168,83,.10);color:#1e7e34;}
+  .job-urgent{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-s);font-size:10px;font-weight:700;color:#dc2626;background:rgba(220,38,38,.07);border-radius:50px;padding:2px 9px;letter-spacing:.5px;}
+  .job-salary{font-family:var(--font-s);font-size:12px;font-weight:700;color:var(--navy);}
+  .job-card-right{flex-shrink:0;}
 
-    .no-jobs { background:var(--cream-2); border:1.5px dashed var(--border); border-radius:var(--r); padding:52px 32px; text-align:center; }
-    .no-jobs h3 { font-family:var(--font-s); font-size:16px; font-weight:700; color:var(--text-dark); margin-bottom:8px; }
-    .no-jobs p { font-size:13.5px; color:var(--text-gray); }
+  .jobs-count{font-family:var(--font-s);font-size:12px;font-weight:600;color:var(--text-gray);margin-bottom:16px;}
+  .jobs-count span{color:var(--navy);font-weight:700;}
 
-    .why-work-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:40px; }
-    .ww-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r); padding:26px 20px; text-align:center; transition:var(--ease); }
-    .ww-card:hover { border-color:var(--gold); box-shadow:0 4px 14px rgba(245,166,35,.09); }
-    .ww-icon { font-size:30px; margin-bottom:12px; }
-    .ww-card h4 { font-family:var(--font-s); font-size:14px; font-weight:700; color:var(--text-dark); margin-bottom:6px; }
-    .ww-card p { font-size:13px; color:var(--text-gray); line-height:1.6; }
+  .no-jobs{background:var(--cream-2);border:1.5px dashed var(--border);border-radius:var(--r);padding:52px 32px;text-align:center;display:none;}
+  .no-jobs h3{font-family:var(--font-s);font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:8px;}
+  .no-jobs p{font-size:13.5px;color:var(--text-gray);}
 
-    .notion-note { background:rgba(30,39,97,.05); border:1px solid rgba(30,39,97,.10); border-radius:var(--r); padding:16px 20px; display:flex; gap:12px; align-items:flex-start; margin-bottom:28px; }
-    .notion-note span { font-size:18px; flex-shrink:0; margin-top:2px; }
-    .notion-note p { font-size:13px; color:var(--text-gray); line-height:1.6; }
-    .notion-note strong { color:var(--navy); }
+  .why-work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px;}
+  .ww-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:26px 20px;text-align:center;transition:var(--ease);}
+  .ww-card:hover{border-color:var(--gold);box-shadow:0 4px 14px rgba(245,166,35,.09);}
+  .ww-icon{font-size:30px;margin-bottom:12px;}
+  .ww-card h4{font-family:var(--font-s);font-size:14px;font-weight:700;color:var(--text-dark);margin-bottom:6px;}
+  .ww-card p{font-size:13px;color:var(--text-gray);line-height:1.6;}
 
-    @media(max-width:768px){
-      .job-card { grid-template-columns:1fr; gap:14px; }
-      .why-work-grid { grid-template-columns:1fr; }
-    }
+  /* ══════════════════════════════════════
+     JOB DRAWER — Desktop: right slide-in
+     Mobile: bottom sheet
+  ══════════════════════════════════════ */
+  .drawer-overlay{position:fixed;inset:0;background:rgba(10,15,44,.55);z-index:9000;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s;}
+  .drawer-overlay.open{opacity:1;visibility:visible;}
+
+  /* Desktop drawer */
+  .job-drawer{position:fixed;top:0;right:-100%;width:min(540px,95vw);height:100vh;background:var(--white);z-index:9001;overflow-y:auto;transition:right .35s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 48px rgba(10,15,44,.18);}
+  .job-drawer.open{right:0;}
+
+  .drawer-header{background:linear-gradient(135deg,var(--hero-start),#1a1040);padding:28px 28px 24px;position:sticky;top:0;z-index:2;}
+  .drawer-close{position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:white;font-size:18px;cursor:pointer;transition:var(--ease);}
+  .drawer-close:hover{background:rgba(255,255,255,.20);}
+  .drawer-dept{font-family:var(--font-s);font-size:10px;font-weight:700;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+  .drawer-title{font-family:var(--font-d);font-size:clamp(20px,3vw,26px);font-weight:700;color:var(--white);line-height:1.2;margin-bottom:14px;}
+  .drawer-tags{display:flex;gap:8px;flex-wrap:wrap;}
+  .drawer-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);border-radius:50px;padding:4px 12px;font-family:var(--font-s);font-size:11px;color:rgba(255,255,255,.82);}
+
+  .drawer-body{padding:24px 28px;}
+  .drawer-section{margin-bottom:24px;}
+  .drawer-section-title{font-family:var(--font-s);font-size:11px;font-weight:700;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .drawer-salary-box{background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.18);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:10px;}
+  .drawer-salary-num{font-family:var(--font-s);font-size:20px;font-weight:800;color:var(--navy);}
+  .drawer-salary-label{font-size:12px;color:var(--text-gray);}
+  .drawer-desc{font-size:14px;color:var(--text-body);line-height:1.85;}
+  .drawer-list{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;}
+  .drawer-list li{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;color:var(--text-body);line-height:1.6;}
+  .drawer-list li::before{content:'✓';width:18px;height:18px;background:rgba(245,166,35,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gold);font-weight:700;flex-shrink:0;margin-top:2px;}
+  .drawer-benefit{display:inline-flex;align-items:center;gap:5px;background:rgba(30,39,97,.06);border:1px solid rgba(30,39,97,.10);border-radius:50px;padding:4px 12px;font-family:var(--font-s);font-size:11.5px;color:var(--navy);font-weight:600;}
+  .drawer-benefits-wrap{display:flex;flex-wrap:wrap;gap:8px;}
+
+  /* Apply toggle inside drawer */
+  .drawer-apply-btn{width:100%;padding:14px;font-size:15px;margin-top:8px;}
+
+  /* Apply form inside drawer */
+  .apply-form-wrap{display:none;margin-top:20px;border-top:1px solid var(--border);padding-top:20px;}
+  .apply-form-wrap.show{display:block;}
+  .af-title{font-family:var(--font-s);font-size:14px;font-weight:700;color:var(--text-dark);margin-bottom:16px;}
+  .af-group{margin-bottom:14px;}
+  .af-group label{display:block;font-family:var(--font-s);font-size:10.5px;font-weight:700;color:var(--text-dark);margin-bottom:5px;letter-spacing:.2px;}
+  .af-group input,.af-group select,.af-group textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-family:var(--font-b);font-size:13.5px;color:var(--text-body);background:var(--cream);outline:none;transition:border .2s;}
+  .af-group input:focus,.af-group select:focus,.af-group textarea:focus{border-color:var(--gold);background:var(--white);}
+  .af-group textarea{resize:vertical;min-height:80px;}
+  .af-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .af-submit{width:100%;padding:13px;font-size:14px;margin-top:4px;}
+  .af-msg{display:none;border-radius:8px;padding:12px 16px;font-family:var(--font-s);font-size:12.5px;font-weight:600;margin-top:12px;align-items:center;gap:8px;}
+  .af-msg.show{display:flex;}
+  .af-msg.success{background:rgba(52,168,83,.08);border:1px solid rgba(52,168,83,.22);color:#1e7e34;}
+  .af-msg.error{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.20);color:#b91c1c;}
+  .af-spinner{display:none;width:16px;height:16px;border:2px solid rgba(10,15,44,.15);border-top-color:var(--text-dark);border-radius:50%;animation:spin .7s linear infinite;margin-left:6px;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .btn-gold.loading{opacity:.75;pointer-events:none;}
+  .btn-gold.loading .af-spinner,.btn-gold.loading .form-spinner{display:inline-block;}
+  .btn-gold.loading .btn-label{display:none;}
+
+  /* Mobile: bottom sheet */
+  @media(max-width:768px){
+    .job-drawer{top:auto;bottom:-100%;right:0;width:100%;max-width:100%;height:92vh;border-radius:20px 20px 0 0;transition:bottom .35s cubic-bezier(.4,0,.2,1);}
+    .job-drawer.open{bottom:0;right:0;}
+    .drawer-header{border-radius:20px 20px 0 0;}
+    .why-work-grid{grid-template-columns:1fr;}
+    .job-card{grid-template-columns:1fr;gap:12px;}
+    .filter-row{flex-direction:column;gap:12px;}
+    .filter-group{width:100%;}
+    .filter-select{width:100%;}
+    .af-row{grid-template-columns:1fr;}
+    /* Bottom sheet drag handle */
+    .drawer-handle{width:40px;height:4px;background:rgba(10,15,44,.15);border-radius:2px;margin:10px auto 0;display:block;}
+  }
+  @media(min-width:769px){
+    .drawer-handle{display:none;}
+  }
   </style>
 </head>
 <body>
@@ -58,9 +132,10 @@
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
+<!-- NAVBAR -->
 <nav id="navbar">
   <a href="index.html" class="nav-brand">
-    <img src="assets/logo.png" alt="MAINDSOURCE" class="nav-brand-img" onerror="this.style.display='none'"/>
+    <img src="assets/img/logo.png" alt="MAINDSOURCE" class="nav-brand-img" onerror="this.style.display='none'"/>
     <div class="nav-brand-text"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
   </a>
   <ul class="nav-links">
@@ -71,9 +146,7 @@
     <li class="nav-dropdown">
       <a href="#" class="nav-drop-trigger">More <span class="nav-drop-arrow">&#9660;</span></a>
       <div class="nav-drop-menu">
-        <a href="women.html" class="drop-featured">
-          <span class="drop-icon">&#9994;</span> Women Empowerment
-        </a>
+        <a href="women.html" class="drop-featured"><span class="drop-icon">&#9994;</span> Women Empowerment</a>
         <div class="nav-drop-divider"></div>
         <a href="jobseekers.html"><span class="drop-icon">&#128188;</span> Job Seekers</a>
         <a href="careers.html"><span class="drop-icon">&#128640;</span> Careers</a>
@@ -107,11 +180,15 @@
   <div class="ph-particles" id="phpP"></div>
   <div class="ph-glow"></div>
   <div class="container ph-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a><span>&#8250;</span>
+      <span style="color:var(--white)">Careers</span>
+    </div>
     <h1>Build Your Career<br>With <em>MAINDSOURCE</em></h1>
-    <p>Join a growing team that is redefining how talent meets opportunity across India. We are always looking for driven, passionate people.</p>
+    <p>Jobs in Manufacturing, Logistics, BPO, Staffing &amp; more across Bangalore, Ballari and Karnataka. Browse 20 open positions below.</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
-      <a href="https://wa.me/919071329231?text=Hi%2C%20I%20am%20interested%20in%20a%20career%20at%20MAINDSOURCE" target="_blank" class="btn btn-gold">📱 Send Your Resume on WhatsApp</a>
-      <a href="mailto:maindsource@gmail.com" class="btn btn-outline">✉️ Email Us</a>
+      <a href="https://wa.me/919071329231?text=Hi%2C%20I%20am%20looking%20for%20a%20job%20through%20MAINDSOURCE" target="_blank" class="btn btn-gold">&#128241; Send Resume on WhatsApp</a>
+      <a href="mailto:maindsource@gmail.com" class="btn btn-outline">&#9993;&#65039; Email Us</a>
     </div>
   </div>
 </section>
@@ -122,140 +199,87 @@
     <div class="text-center">
       <span class="section-label reveal">Why MAINDSOURCE</span>
       <h2 class="section-title reveal">Why Work With Us</h2>
-      <p class="section-sub reveal">A place where your work creates real impact — for thousands of job seekers and companies across India.</p>
+      <p class="section-sub reveal">A place where your work creates real impact &mdash; for thousands of job seekers and companies across India.</p>
     </div>
     <div class="why-work-grid">
-      <div class="ww-card reveal">
-        <div class="ww-icon">🚀</div>
-        <h4>High Growth Environment</h4>
-        <p>We are a young, fast-growing company. Your contributions are visible and your growth is fast.</p>
-      </div>
-      <div class="ww-card reveal">
-        <div class="ww-icon">🎯</div>
-        <h4>Mission-Driven Work</h4>
-        <p>Every placement you enable changes a life. Your work has direct social and economic impact.</p>
-      </div>
-      <div class="ww-card reveal">
-        <div class="ww-icon">🤝</div>
-        <h4>Close-Knit Team</h4>
-        <p>Small team, big ambitions. Everyone has a voice, and ideas from all levels are heard and acted on.</p>
-      </div>
-      <div class="ww-card reveal">
-        <div class="ww-icon">📍</div>
-        <h4>Bangalore Based</h4>
-        <p>Primary office in Electronic City, Bangalore — at the heart of South India's industrial and tech hub.</p>
-      </div>
-      <div class="ww-card reveal">
-        <div class="ww-icon">💡</div>
-        <h4>Learn on the Job</h4>
-        <p>Exposure to HR, operations, sales, and technology — all in one role. No two days are the same.</p>
-      </div>
-      <div class="ww-card reveal">
-        <div class="ww-icon">👩‍💼</div>
-        <h4>Women-Forward Culture</h4>
-        <p>Women Empowerment is central to who we are — in our placements and in our own team culture.</p>
-      </div>
+      <div class="ww-card reveal"><div class="ww-icon">&#128640;</div><h4>High Growth Environment</h4><p>Young, fast-growing company. Your contributions are visible and your growth is fast.</p></div>
+      <div class="ww-card reveal"><div class="ww-icon">&#127919;</div><h4>Mission-Driven Work</h4><p>Every placement you enable changes a life. Your work has direct social and economic impact.</p></div>
+      <div class="ww-card reveal"><div class="ww-icon">&#129309;</div><h4>Close-Knit Team</h4><p>Small team, big ambitions. Everyone has a voice and ideas are heard and acted on.</p></div>
+      <div class="ww-card reveal"><div class="ww-icon">&#128205;</div><h4>Bangalore Based</h4><p>Primary office in Electronic City &mdash; heart of South India&rsquo;s industrial and tech hub.</p></div>
+      <div class="ww-card reveal"><div class="ww-icon">&#128161;</div><h4>Learn on the Job</h4><p>HR, operations, sales and technology exposure &mdash; all in one role. No two days are the same.</p></div>
+      <div class="ww-card reveal"><div class="ww-icon">&#128105;&#8205;&#128188;</div><h4>Women-Forward Culture</h4><p>Women Empowerment is central to who we are &mdash; in our placements and in our own team.</p></div>
     </div>
   </div>
 </section>
 
-<!-- JOB LISTINGS -->
-<section class="section-pad" style="background:var(--cream)">
+<!-- ════════════════════════════════════════
+     JOB LISTINGS
+════════════════════════════════════════ -->
+<section class="section-pad" style="background:var(--cream)" id="jobs">
   <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;flex-wrap:wrap;gap:16px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px;flex-wrap:wrap;gap:16px;">
       <div>
         <span class="section-label reveal-left">Open Positions</span>
         <h2 class="section-title reveal-left">Current Openings</h2>
       </div>
-      <div class="jobs-filter reveal">
-        <button class="filter-btn active">All</button>
-        <button class="filter-btn">Operations</button>
-        <button class="filter-btn">Sales</button>
-        <button class="filter-btn">Recruiting</button>
+    </div>
+
+    <!-- 3 Filters -->
+    <div class="filter-row reveal">
+      <div class="filter-group">
+        <label>Category</label>
+        <select class="filter-select" id="fDept">
+          <option value="All">All Categories</option>
+          <option>Manufacturing</option>
+          <option>Logistics &amp; Warehousing</option>
+          <option>BPO &amp; Office</option>
+          <option>Staffing &amp; HR</option>
+          <option>Technical</option>
+          <option>Retail &amp; Sales</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Job Type</label>
+        <select class="filter-select" id="fType">
+          <option value="All">All Types</option>
+          <option>Full Time</option>
+          <option>Contract</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Location</label>
+        <select class="filter-select" id="fLoc">
+          <option value="All">All Locations</option>
+          <option>Bangalore</option>
+          <option>Ballari / Raichur</option>
+          <option>Hosur, Tamil Nadu</option>
+          <option>Bidadi, Bangalore Rural</option>
+          <option>Tumkur</option>
+        </select>
       </div>
     </div>
 
-    <!-- Developer note: job cards will be populated via Notion API integration in Phase 2 -->
-    <div class="notion-note reveal">
-      <span>🔗</span>
-      <p><strong>Live job listings coming soon.</strong> This section will be connected to a Notion database — allowing the MAINDSOURCE team to add, edit and remove job listings without touching code.</p>
+    <div class="jobs-count reveal" id="jobsCount"><span id="jobsNum">20</span> positions found</div>
+
+    <div class="job-grid" id="jobGrid"></div>
+
+    <div class="no-jobs" id="noJobs">
+      <h3>No matching positions</h3>
+      <p>Try adjusting your filters. Or send your resume anyway &mdash; we hire for potential.</p>
     </div>
 
-    <div class="job-grid">
-
-      <div class="job-card reveal">
-        <div class="job-card-left">
-          <div class="job-dept">Operations</div>
-          <div class="job-title">Recruitment Executive</div>
-          <div class="job-meta">
-            <span class="job-tag">📍 Bangalore</span>
-            <span class="job-tag">🕐 Full Time</span>
-            <span class="job-tag-pill tag-full">Full Time</span>
-          </div>
-        </div>
-        <div class="job-card-right">
-          <a href="https://wa.me/919071329231?text=Hi%2C%20I%20am%20applying%20for%20Recruitment%20Executive" target="_blank" class="btn btn-gold" style="font-size:13px;padding:11px 22px;">Apply Now →</a>
-        </div>
-      </div>
-
-      <div class="job-card reveal">
-        <div class="job-card-left">
-          <div class="job-dept">Sales</div>
-          <div class="job-title">Business Development Executive</div>
-          <div class="job-meta">
-            <span class="job-tag">📍 Bangalore</span>
-            <span class="job-tag">🕐 Full Time</span>
-            <span class="job-tag-pill tag-full">Full Time</span>
-          </div>
-        </div>
-        <div class="job-card-right">
-          <a href="https://wa.me/919071329231?text=Hi%2C%20I%20am%20applying%20for%20Business%20Development%20Executive" target="_blank" class="btn btn-gold" style="font-size:13px;padding:11px 22px;">Apply Now →</a>
-        </div>
-      </div>
-
-      <div class="job-card reveal">
-        <div class="job-card-left">
-          <div class="job-dept">Recruiting</div>
-          <div class="job-title">Field Sourcing Coordinator</div>
-          <div class="job-meta">
-            <span class="job-tag">📍 Ballari / Raichur</span>
-            <span class="job-tag">🕐 Full Time</span>
-            <span class="job-tag-pill tag-full">Full Time</span>
-          </div>
-        </div>
-        <div class="job-card-right">
-          <a href="https://wa.me/919071329231?text=Hi%2C%20I%20am%20applying%20for%20Field%20Sourcing%20Coordinator" target="_blank" class="btn btn-gold" style="font-size:13px;padding:11px 22px;">Apply Now →</a>
-        </div>
-      </div>
-
-      <div class="job-card reveal">
-        <div class="job-card-left">
-          <div class="job-dept">Operations</div>
-          <div class="job-title">Candidate Relations Executive</div>
-          <div class="job-meta">
-            <span class="job-tag">📍 Bangalore</span>
-            <span class="job-tag">🕐 Contract</span>
-            <span class="job-tag-pill tag-contract">Contract</span>
-          </div>
-        </div>
-        <div class="job-card-right">
-          <a href="https://wa.me/919071329231?text=Hi%2C%20I%20am%20applying%20for%20Candidate%20Relations%20Executive" target="_blank" class="btn btn-gold" style="font-size:13px;padding:11px 22px;">Apply Now →</a>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- No match state (hidden by default, show via JS filter if needed) -->
-    <p style="font-size:13px;color:var(--text-gray);margin-top:20px;text-align:center;">Don't see a matching role? Send your resume anyway — we hire for potential, not just open positions.</p>
+    <p style="font-size:13px;color:var(--text-gray);margin-top:20px;text-align:center;">
+      Don&rsquo;t see a matching role? <a href="https://wa.me/919071329231?text=Hi%2C%20I%20am%20looking%20for%20a%20job%20at%20MAINDSOURCE" target="_blank" style="color:var(--gold);font-weight:700;">Send your resume on WhatsApp</a> &mdash; we hire for potential, not just open positions.
+    </p>
   </div>
 </section>
 
-<!-- LOTTIE PLACEHOLDER + HOW TO APPLY -->
+<!-- HOW TO APPLY -->
 <section class="section-pad" style="background:var(--cream-2)">
   <div class="container">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
       <div class="reveal">
-        <div class="lottie-box" style="min-height:260px;">Lottie · Walking Forward</div>
+        <div class="lottie-box" style="min-height:260px;">Lottie &middot; Walking Forward</div>
       </div>
       <div>
         <span class="section-label reveal-left">How to Apply</span>
@@ -263,15 +287,15 @@
         <div style="margin-top:28px;display:flex;flex-direction:column;gap:20px;">
           <div class="reveal" style="display:flex;gap:14px;align-items:flex-start;">
             <div style="width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--font-s);font-size:14px;font-weight:800;color:var(--text-dark);flex-shrink:0;">1</div>
-            <div><div style="font-family:var(--font-s);font-size:14px;font-weight:700;color:var(--text-dark);margin-bottom:3px;">Click Apply Now on any role</div><p style="font-size:13px;color:var(--text-gray);line-height:1.6">Each job card links directly to WhatsApp with the role pre-filled.</p></div>
+            <div><div style="font-family:var(--font-s);font-size:14px;font-weight:700;color:var(--text-dark);margin-bottom:3px;">Browse and click any job</div><p style="font-size:13px;color:var(--text-gray);line-height:1.6">Full job description, salary and requirements open instantly.</p></div>
           </div>
           <div class="reveal" style="display:flex;gap:14px;align-items:flex-start;">
             <div style="width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--font-s);font-size:14px;font-weight:800;color:var(--text-dark);flex-shrink:0;">2</div>
-            <div><div style="font-family:var(--font-s);font-size:14px;font-weight:700;color:var(--text-dark);margin-bottom:3px;">Share your resume and brief intro</div><p style="font-size:13px;color:var(--text-gray);line-height:1.6">Tell us who you are and why you are interested in this role.</p></div>
+            <div><div style="font-family:var(--font-s);font-size:14px;font-weight:700;color:var(--text-dark);margin-bottom:3px;">Fill the quick application form</div><p style="font-size:13px;color:var(--text-gray);line-height:1.6">Name, phone, experience &mdash; takes less than 2 minutes.</p></div>
           </div>
           <div class="reveal" style="display:flex;gap:14px;align-items:flex-start;">
             <div style="width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--font-s);font-size:14px;font-weight:800;color:var(--text-dark);flex-shrink:0;">3</div>
-            <div><div style="font-family:var(--font-s);font-size:14px;font-weight:700;color:var(--text-dark);margin-bottom:3px;">We respond within 24 hours</div><p style="font-size:13px;color:var(--text-gray);line-height:1.6">Our team will contact you to discuss the opportunity and next steps.</p></div>
+            <div><div style="font-family:var(--font-s);font-size:14px;font-weight:700;color:var(--text-dark);margin-bottom:3px;">We call you within 24 hours</div><p style="font-size:13px;color:var(--text-gray);line-height:1.6">Our team reviews your application and contacts you directly.</p></div>
           </div>
         </div>
       </div>
@@ -283,11 +307,11 @@
 <section id="cta-banner">
   <div class="container cta-inner">
     <span class="section-label reveal" style="color:rgba(245,166,35,.8)">Ready to Join?</span>
-    <h2 class="section-title light reveal">Didn't Find a Matching Role?</h2>
-    <p class="reveal">Send us your resume and a brief note about yourself. We hire for attitude and potential — not just open positions.</p>
+    <h2 class="section-title light reveal">Didn&rsquo;t Find a Matching Role?</h2>
+    <p class="reveal">Send us your resume. We hire for attitude and potential &mdash; not just open positions.</p>
     <div class="cta-btns reveal">
-      <a href="https://wa.me/919071329231?text=Hi%2C%20I%20would%20like%20to%20explore%20career%20opportunities%20at%20MAINDSOURCE" target="_blank" class="btn btn-gold">📱 Send Resume on WhatsApp →</a>
-      <a href="mailto:maindsource@gmail.com" class="btn btn-outline">✉️ Email Your Resume</a>
+      <a href="https://wa.me/919071329231?text=Hi%2C%20I%20would%20like%20to%20explore%20career%20opportunities%20at%20MAINDSOURCE" target="_blank" class="btn btn-gold">&#128241; Send Resume on WhatsApp &#8594;</a>
+      <a href="mailto:maindsource@gmail.com" class="btn btn-outline">&#9993;&#65039; Email Your Resume</a>
     </div>
   </div>
 </section>
@@ -300,27 +324,314 @@
         <div class="f-logo"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
         <p>Tech-enabled manpower supply and staffing solutions across India. Connecting talent with opportunities since 2025.</p>
         <div class="f-socials">
-          <a href="#" class="f-soc">in</a><a href="#" class="f-soc">📸</a>
-          <a href="#" class="f-soc">f</a><a href="https://wa.me/919071329231" class="f-soc">💬</a>
+          <a href="#" class="f-soc">in</a><a href="#" class="f-soc">&#128247;</a>
+          <a href="#" class="f-soc">f</a><a href="https://wa.me/919071329231" class="f-soc">&#128172;</a>
         </div>
       </div>
       <div class="f-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="women.html">Women Empowerment</a></li><li><a href="credentials.html">Credentials</a></li><li><a href="careers.html">Careers</a></li></ul></div>
       <div class="f-col"><h4>Services</h4><ul><li><a href="services.html">Contractual Staffing</a></li><li><a href="services.html">One-Time Placement</a></li><li><a href="services.html">Payroll Management</a></li><li><a href="services.html">Gig Workforce</a></li></ul></div>
       <div class="f-col">
         <h4>Contact</h4>
-        <div class="f-contact-item"><span class="f-ci">📞</span><div class="f-ct"><strong>Phone</strong>+91 9071329231</div></div>
-        <div class="f-contact-item"><span class="f-ci">✉️</span><div class="f-ct"><strong>Email</strong>maindsource@gmail.com</div></div>
-        <div class="f-contact-item"><span class="f-ci">📍</span><div class="f-ct"><strong>Bangalore</strong>Electronic City (P), 560100</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#128222;</span><div class="f-ct"><strong>Phone</strong>+91 9071329231</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#9993;&#65039;</span><div class="f-ct"><strong>Email</strong>maindsource@gmail.com</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#128205;</span><div class="f-ct"><strong>Bangalore</strong>Electronic City (P), 560100</div></div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 MAINDSOURCE LLP. All rights reserved. LLPIN: ACU-2305 | GST: 29ACGFM2072C1ZE</p>
-      <p class="f-legal">Registered · Compliant · Trustworthy</p>
+      <p>&#169; 2026 MAINDSOURCE LLP. All rights reserved. LLPIN: ACU-2305 | GST: 29ACGFM2072C1ZE</p>
+      <p class="f-legal">Registered &middot; Compliant &middot; Trustworthy</p>
     </div>
   </div>
 </footer>
 
+<!-- ════════════════════════════════════════
+     JOB DRAWER
+════════════════════════════════════════ -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="job-drawer" id="jobDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+  <div class="drawer-header">
+    <div class="drawer-handle"></div>
+    <button class="drawer-close" id="drawerClose" aria-label="Close">&#10005;</button>
+    <div class="drawer-dept" id="drawerDept"></div>
+    <div class="drawer-title" id="drawerTitle"></div>
+    <div class="drawer-tags" id="drawerTags"></div>
+  </div>
+  <div class="drawer-body">
+    <div class="drawer-section">
+      <div class="drawer-section-title">Salary</div>
+      <div class="drawer-salary-box">
+        <div>
+          <div class="drawer-salary-num" id="drawerSalary"></div>
+          <div class="drawer-salary-label">CTC + PF &amp; ESIC (where applicable)</div>
+        </div>
+      </div>
+    </div>
+    <div class="drawer-section">
+      <div class="drawer-section-title">About This Role</div>
+      <div class="drawer-desc" id="drawerDesc"></div>
+    </div>
+    <div class="drawer-section">
+      <div class="drawer-section-title">Requirements</div>
+      <ul class="drawer-list" id="drawerReqs"></ul>
+    </div>
+    <div class="drawer-section">
+      <div class="drawer-section-title">Skills Needed</div>
+      <ul class="drawer-list" id="drawerSkills"></ul>
+    </div>
+    <div class="drawer-section">
+      <div class="drawer-section-title">Benefits</div>
+      <div class="drawer-benefits-wrap" id="drawerBenefits"></div>
+    </div>
+
+    <!-- Apply button toggles the form -->
+    <button class="btn btn-gold drawer-apply-btn" id="drawerApplyBtn" onclick="toggleApplyForm()">
+      <span class="btn-label">Apply for This Job &#8594;</span>
+      <span class="af-spinner"></span>
+    </button>
+
+    <!-- Apply form -->
+    <div class="apply-form-wrap" id="applyFormWrap">
+      <div class="af-title">&#128203; Quick Application</div>
+      <form id="applyForm" novalidate>
+        <!-- Web3Forms key -->
+        <input type="hidden" name="access_key" value="da4472c-960d-4910-b4c7-3ff737417c23"/>
+        <input type="hidden" name="subject" id="afSubject" value="Job Application — MAINDSOURCE"/>
+        <input type="hidden" name="from_name" value="MAINDSOURCE Careers Page"/>
+        <input type="hidden" name="redirect" value="false"/>
+        <input type="hidden" name="applied_for" id="afJobTitle" value=""/>
+        <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off"/>
+
+        <div class="af-row">
+          <div class="af-group">
+            <label>Full Name *</label>
+            <input type="text" name="name" placeholder="Your name" required/>
+          </div>
+          <div class="af-group">
+            <label>Phone *</label>
+            <input type="tel" name="phone" placeholder="+91 9XXXXXXXXX" required/>
+          </div>
+        </div>
+        <div class="af-group">
+          <label>Email Address</label>
+          <input type="email" name="email" placeholder="you@email.com"/>
+        </div>
+        <div class="af-row">
+          <div class="af-group">
+            <label>Experience</label>
+            <select name="experience">
+              <option value="" disabled selected>Select</option>
+              <option>Fresher (0 years)</option>
+              <option>Less than 1 year</option>
+              <option>1 – 2 years</option>
+              <option>2 – 5 years</option>
+              <option>5+ years</option>
+            </select>
+          </div>
+          <div class="af-group">
+            <label>Current Location</label>
+            <input type="text" name="current_location" placeholder="City / District"/>
+          </div>
+        </div>
+        <div class="af-group">
+          <label>Anything else? (optional)</label>
+          <textarea name="message" placeholder="Tell us something about yourself..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-gold af-submit" id="afSubmitBtn">
+          <span class="btn-label">Submit Application &#8594;</span>
+          <span class="af-spinner"></span>
+        </button>
+        <div class="af-msg success" id="afSuccess">&#10003;&nbsp; Applied! We will call you within 24 hours.</div>
+        <div class="af-msg error" id="afError">&#9888;&nbsp; Something went wrong. Please WhatsApp us directly.</div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCHEMA.ORG — Job Posting (SEO)
+     Google reads this and shows jobs in search results
+════════════════════════════════════════ -->
+<script type="application/ld+json" id="jobSchema"></script>
+
 <script>
+// ══════════════════════════════════════════════
+// JOB DATA — 20 Positions
+// ══════════════════════════════════════════════
+const JOBS = [
+  {id:"j01",title:"Production Operator",dept:"Manufacturing",loc:"Bangalore",type:"Full Time",salary:"₹12,000 – ₹15,000/month",edu:"10th Pass / ITI",exp:"0–2 years (Freshers welcome)",skills:["Basic machine handling","Shift work ready","Team player","Physical fitness"],desc:"Work on the production line at a leading electronics manufacturing unit in Electronic City, Bangalore. Responsibilities include assembling components, quality checking at line level, and maintaining daily production targets. Training provided on the job.",benefits:["PF & ESIC covered","Weekly off","Free transport","OT pay"],urgent:true},
+  {id:"j02",title:"Quality Inspector",dept:"Manufacturing",loc:"Bangalore",type:"Full Time",salary:"₹15,000 – ₹20,000/month",edu:"ITI / Diploma",exp:"1–3 years",skills:["Vernier caliper & micrometer","Visual inspection","Rejection tagging","Inspection report writing"],desc:"Inspect finished goods and in-process components at a manufacturing plant in Peenya / Electronic City. Document inspection findings, coordinate with production team on rejections and maintain quality logs.",benefits:["PF & ESIC","Saturday half-day","Uniform provided"],urgent:false},
+  {id:"j03",title:"CNC Machine Operator",dept:"Manufacturing",loc:"Hosur, Tamil Nadu",type:"Full Time",salary:"₹18,000 – ₹25,000/month",edu:"ITI (Turner / Machinist trade)",exp:"2–4 years",skills:["CNC programming basics","G-code reading","Tool setting","Engineering drawing reading"],desc:"Operate CNC turning and milling machines for an automobile components manufacturer near Hosur. Set up cutting tools, read engineering drawings, maintain machine log books and report to the shift supervisor.",benefits:["PF & ESIC","Hosur accommodation support","Annual bonus"],urgent:false},
+  {id:"j04",title:"Welder – MIG / TIG",dept:"Manufacturing",loc:"Bidadi, Bangalore Rural",type:"Full Time",salary:"₹20,000 – ₹28,000/month",edu:"ITI (Welder Trade)",exp:"2–5 years",skills:["MIG welding","TIG welding on steel & aluminium","Blueprint reading","Safety compliance"],desc:"Join a structural fabrication unit near Bidadi on the Mysore highway. Perform MIG and TIG welding on steel and aluminium structures. Maintain weld quality standards, complete weld inspection reports and follow safety protocols.",benefits:["PF & ESIC","Safety gear provided","OT available"],urgent:true},
+  {id:"j05",title:"Packing & Labelling Helper",dept:"Manufacturing",loc:"Bangalore",type:"Contract",salary:"₹10,000 – ₹13,000/month",edu:"8th Pass and above",exp:"Freshers welcome",skills:["Good packing speed","Attention to detail","Physical fitness","Shift work"],desc:"Pack and label finished FMCG products at a consumer goods warehouse in Bangalore. Role involves stacking cartons, sealing, applying labels, and shift-based work in a clean, well-lit facility.",benefits:["ESI covered","Daily attendance bonus","Canteen facility"],urgent:false},
+  {id:"j06",title:"Warehouse Associate",dept:"Logistics & Warehousing",loc:"Bangalore",type:"Full Time",salary:"₹12,000 – ₹16,000/month",edu:"10th Pass",exp:"0–2 years",skills:["Inventory management basics","Loading & unloading","Barcode scanner operation","Team coordination"],desc:"Manage inbound and outbound stock at a large e-commerce or FMCG warehouse in Bangalore. Responsibilities include receiving goods, bin storage, order picking, packing and dispatch coordination.",benefits:["PF & ESIC","Shift allowance","Weekly off"],urgent:true},
+  {id:"j07",title:"Delivery Executive",dept:"Logistics & Warehousing",loc:"Bangalore",type:"Full Time",salary:"₹14,000 – ₹18,000/month",edu:"10th Pass + Valid 2-Wheeler Licence",exp:"0–2 years",skills:["Two-wheeler riding","Bangalore road & route knowledge","Customer service","Smartphone app usage"],desc:"Last-mile delivery of packages across assigned Bangalore zones. Must own a two-wheeler. Petrol reimbursement and per-delivery incentives provided on top of fixed salary.",benefits:["Petrol allowance","Delivery incentives","Flexible timings","ESI covered"],urgent:false},
+  {id:"j08",title:"Forklift Operator",dept:"Logistics & Warehousing",loc:"Bangalore",type:"Full Time",salary:"₹16,000 – ₹22,000/month",edu:"10th Pass + Valid Forklift Licence",exp:"1–3 years",skills:["Counterbalance forklift","Electric pallet jack","Material handling safety","Stock inventory"],desc:"Operate electric and counterbalance forklifts at a large warehousing facility near Hoskote or Whitefield. Load, unload and stack materials as per WMS system. Valid forklift operator licence mandatory.",benefits:["PF & ESIC","Transport facility","Uniform & safety gear"],urgent:false},
+  {id:"j09",title:"Data Entry Operator",dept:"BPO & Office",loc:"Bangalore",type:"Full Time",salary:"₹15,000 – ₹20,000/month",edu:"12th Pass / Any Graduate",exp:"0–2 years",skills:["Typing 30+ WPM","MS Excel & Word","Data accuracy","Basic English"],desc:"Enter and verify data in company ERP and Excel systems for a back-office process team. Ensure data accuracy, maintain entry logs and generate daily MIS reports for management. Day shift, Monday to Saturday.",benefits:["PF & ESIC","Saturday half day","AC office"],urgent:false},
+  {id:"j10",title:"Customer Support Executive",dept:"BPO & Office",loc:"Bangalore",type:"Full Time",salary:"₹18,000 – ₹22,000/month",edu:"Any Graduate",exp:"0–2 years",skills:["Good spoken communication","English + Kannada or Hindi","CRM tool basics","Patience & problem solving"],desc:"Handle inbound customer calls and chats for a leading brand's support team in Bangalore. Resolve queries, log complaints and ensure first-call resolution. Freshers with good communication welcome — full training provided.",benefits:["Night shift allowance","PF & ESIC","Performance bonus","5-day week"],urgent:false},
+  {id:"j11",title:"Accounts Assistant",dept:"BPO & Office",loc:"Bangalore",type:"Full Time",salary:"₹18,000 – ₹25,000/month",edu:"B.Com / M.Com",exp:"1–3 years",skills:["Tally ERP (mandatory)","GST & TDS filing","Bank reconciliation","Petty cash management","MS Excel"],desc:"Handle day-to-day accounting for a trading company in Electronic City. Responsibilities include vendor payments, GST reconciliation, bank entries, salary processing and monthly MIS reports.",benefits:["PF & ESIC","Flexible timing","Annual increment"],urgent:false},
+  {id:"j12",title:"HR Executive – Recruiter",dept:"Staffing & HR",loc:"Bangalore",type:"Full Time",salary:"₹20,000 – ₹28,000/month",edu:"Any Graduate / MBA HR",exp:"1–3 years",skills:["End-to-end recruitment","Sourcing via portals & WhatsApp","Bulk hiring drives","Candidate screening & interviewing","Excel MIS"],desc:"Handle end-to-end recruitment for manufacturing, logistics and BPO clients of MAINDSOURCE. Source candidates via job portals, field networks and WhatsApp groups. Conduct hiring drives and maintain placement records.",benefits:["PF & ESIC","Incentives on closures","Fast-growth environment","5 days + alternate Sat"],urgent:true},
+  {id:"j13",title:"Business Development Executive",dept:"Staffing & HR",loc:"Bangalore",type:"Full Time",salary:"₹22,000 – ₹35,000 + Incentives",edu:"Any Graduate",exp:"1–3 years",skills:["B2B sales","Cold calling & client visits","Proposal writing","CRM usage","Target-oriented mindset"],desc:"Acquire new manpower clients in manufacturing, logistics and FMCG sectors across Bangalore. Manage the full sales cycle from prospecting to contract closure. High incentive structure with no cap.",benefits:["High incentive structure","Travel allowance","Fast promotion track","PF & ESIC"],urgent:true},
+  {id:"j14",title:"Field Sourcing Coordinator",dept:"Staffing & HR",loc:"Ballari / Raichur",type:"Full Time",salary:"₹15,000 – ₹20,000/month",edu:"Any Graduate",exp:"0–2 years",skills:["Field work & travel","Fluent Kannada","Candidate engagement","Mobile-based tools","Community networking"],desc:"Travel across Ballari and Raichur districts to identify and register job seekers. Conduct awareness camps at villages and ITI colleges. Liaise with employment exchanges and maintain a daily candidate pipeline.",benefits:["TA/DA fully covered","Mobile allowance","PF & ESIC","Promotion to team lead"],urgent:false},
+  {id:"j15",title:"Electrician – Industrial",dept:"Technical",loc:"Tumkur",type:"Full Time",salary:"₹18,000 – ₹24,000/month",edu:"ITI (Electrician Trade)",exp:"2–4 years",skills:["Panel wiring","Motor maintenance","PLC basics","Electrical drawing reading","Safety procedures"],desc:"Maintain electrical systems and equipment at a medium-scale manufacturing plant near Tumkur. Troubleshoot electrical faults, conduct preventive maintenance schedules and ensure compliance with electrical safety standards.",benefits:["PF & ESIC","Annual bonus","Accommodation support"],urgent:false},
+  {id:"j16",title:"AC & Refrigeration Technician",dept:"Technical",loc:"Bangalore",type:"Contract",salary:"₹20,000 – ₹28,000/month",edu:"ITI / Diploma (Refrigeration & AC)",exp:"2–5 years",skills:["Split & cassette AC servicing","Chiller systems","Gas charging (R22/R410A)","Electrical fault finding"],desc:"Service and maintain split ACs, central AC systems and cold storage units for commercial clients across Bangalore. Contract role with potential for permanent conversion for top performers after 3 months.",benefits:["Tool kit provided","Transport allowance","ESI covered"],urgent:false},
+  {id:"j17",title:"Sales Executive – Retail",dept:"Retail & Sales",loc:"Bangalore",type:"Full Time",salary:"₹14,000 – ₹20,000 + Incentives",edu:"12th Pass / Any Graduate",exp:"0–2 years",skills:["Customer interaction","Product knowledge","Sales target mindset","Billing software","Kannada / Hindi speaking"],desc:"Assist customers, manage product display and achieve daily sales targets at a premium retail outlet in Bangalore. Freshers with good communication and a customer-first attitude are welcome.",benefits:["Sales incentives","PF & ESIC","Festival bonus","Uniform provided"],urgent:false},
+  {id:"j18",title:"Security Guard",dept:"BPO & Office",loc:"Bangalore",type:"Full Time",salary:"₹12,000 – ₹15,000/month",edu:"10th Pass (Ex-Army preferred)",exp:"0–3 years",skills:["Premises surveillance","Access control","Visitor management","Incident reporting","Discipline"],desc:"Guard the premises of a corporate office park in Whitefield or Electronic City. Responsibilities include visitor entry management, CCTV monitoring, vehicle log maintenance and daily security incident reports.",benefits:["PF & ESIC","Uniform & boots","Shift allowance","Weekly off"],urgent:false},
+  {id:"j19",title:"Housekeeping Supervisor",dept:"BPO & Office",loc:"Bangalore",type:"Full Time",salary:"₹13,000 – ₹17,000/month",edu:"8th Pass and above",exp:"1–3 years",skills:["Team supervision","Cleaning chemical usage","Shift scheduling","Supply inventory management"],desc:"Supervise a team of 8–12 housekeeping staff at a large corporate or IT campus in Bangalore. Manage daily cleaning schedules, inspect quality standards, handle material inventory and maintain staff attendance records.",benefits:["PF & ESIC","Canteen facility","Uniform provided","Annual bonus"],urgent:false},
+  {id:"j20",title:"Driver – LMV / HMV",dept:"Logistics & Warehousing",loc:"Bangalore",type:"Full Time",salary:"₹18,000 – ₹25,000/month",edu:"10th Pass + Valid LMV or HMV Licence",exp:"2–5 years",skills:["Safe & defensive driving","Bangalore & Karnataka route knowledge","Vehicle maintenance basics","Punctuality & reliability"],desc:"Drive company vehicles for material transport, client deliveries or executive commute across Bangalore and surrounding areas. Must hold a valid LMV or HMV driving licence. Route knowledge of Bangalore and nearby districts preferred.",benefits:["PF & ESIC","TA/DA","Overtime pay","Annual increment"],urgent:false},
+];
+
+// ══════════════════════════════════════════════
+// RENDER JOBS
+// ══════════════════════════════════════════════
+function typeClass(t){return t==='Full Time'?'tag-full':t==='Contract'?'tag-contract':'tag-part';}
+
+function renderJobs(list){
+  const grid=document.getElementById('jobGrid');
+  const none=document.getElementById('noJobs');
+  const cnt=document.getElementById('jobsNum');
+  cnt.textContent=list.length;
+  if(!list.length){grid.innerHTML='';none.style.display='block';return;}
+  none.style.display='none';
+  grid.innerHTML=list.map(j=>`
+    <div class="job-card reveal" onclick="openDrawer('${j.id}')">
+      <div class="job-card-left">
+        <div class="job-dept">${j.dept}${j.urgent?' &nbsp;<span class="job-urgent">&#128293; Urgent</span>':''}</div>
+        <div class="job-title">${j.title}</div>
+        <div class="job-meta">
+          <span class="job-tag">&#128205; ${j.loc}</span>
+          <span class="job-tag-pill ${typeClass(j.type)}">${j.type}</span>
+          <span class="job-salary">${j.salary}</span>
+        </div>
+      </div>
+      <div class="job-card-right">
+        <span class="btn btn-ghost" style="font-size:12.5px;padding:9px 18px;">View &amp; Apply &#8594;</span>
+      </div>
+    </div>`).join('');
+  // Re-observe new cards for reveal
+  document.querySelectorAll('#jobGrid .reveal').forEach(el=>{revObs.observe(el);});
+}
+
+// ══════════════════════════════════════════════
+// FILTER LOGIC
+// ══════════════════════════════════════════════
+function applyFilters(){
+  const dept=document.getElementById('fDept').value;
+  const type=document.getElementById('fType').value;
+  const loc=document.getElementById('fLoc').value;
+  const filtered=JOBS.filter(j=>{
+    const dOk=dept==='All'||j.dept===dept;
+    const tOk=type==='All'||j.type===type;
+    const lOk=loc==='All'||j.loc===loc;
+    return dOk&&tOk&&lOk;
+  });
+  renderJobs(filtered);
+}
+document.getElementById('fDept').addEventListener('change',applyFilters);
+document.getElementById('fType').addEventListener('change',applyFilters);
+document.getElementById('fLoc').addEventListener('change',applyFilters);
+
+// ══════════════════════════════════════════════
+// DRAWER OPEN / CLOSE
+// ══════════════════════════════════════════════
+function openDrawer(id){
+  const j=JOBS.find(x=>x.id===id);
+  if(!j)return;
+  // Reset apply form
+  document.getElementById('applyFormWrap').classList.remove('show');
+  document.getElementById('applyForm').reset();
+  document.getElementById('afSuccess').classList.remove('show');
+  document.getElementById('afError').classList.remove('show');
+  // Set content
+  document.getElementById('drawerDept').textContent=j.dept;
+  document.getElementById('drawerTitle').textContent=j.title;
+  document.getElementById('drawerSalary').textContent=j.salary;
+  document.getElementById('drawerDesc').textContent=j.desc;
+  document.getElementById('afJobTitle').value=j.title;
+  document.getElementById('afSubject').value='Job Application: '+j.title+' — MAINDSOURCE';
+  document.getElementById('drawerTags').innerHTML=
+    `<span class="drawer-tag">&#128205; ${j.loc}</span>
+     <span class="drawer-tag">${j.type}</span>
+     <span class="drawer-tag">&#127891; ${j.edu}</span>
+     <span class="drawer-tag">&#8987; ${j.exp}</span>`;
+  document.getElementById('drawerReqs').innerHTML=
+    `<li>${j.edu}</li><li>${j.exp}</li>`;
+  document.getElementById('drawerSkills').innerHTML=
+    j.skills.map(s=>`<li>${s}</li>`).join('');
+  document.getElementById('drawerBenefits').innerHTML=
+    j.benefits.map(b=>`<span class="drawer-benefit">&#10003; ${b}</span>`).join('');
+  // Open
+  document.getElementById('jobDrawer').classList.add('open');
+  document.getElementById('drawerOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeDrawer(){
+  document.getElementById('jobDrawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+document.getElementById('drawerClose').addEventListener('click',closeDrawer);
+document.getElementById('drawerOverlay').addEventListener('click',closeDrawer);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+
+function toggleApplyForm(){
+  const wrap=document.getElementById('applyFormWrap');
+  const isOpen=wrap.classList.contains('show');
+  if(isOpen){wrap.classList.remove('show');document.getElementById('drawerApplyBtn').querySelector('.btn-label').textContent='Apply for This Job →';}
+  else{wrap.classList.add('show');document.getElementById('drawerApplyBtn').querySelector('.btn-label').textContent='Hide Application Form';wrap.scrollIntoView({behavior:'smooth',block:'nearest'});}
+}
+
+// ══════════════════════════════════════════════
+// APPLY FORM — Web3Forms submit
+// ══════════════════════════════════════════════
+document.getElementById('applyForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const btn=document.getElementById('afSubmitBtn');
+  const success=document.getElementById('afSuccess');
+  const error=document.getElementById('afError');
+  success.classList.remove('show');
+  error.classList.remove('show');
+  btn.classList.add('loading');
+  try{
+    const res=await fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(Object.fromEntries(new FormData(this)))
+    });
+    const data=await res.json();
+    if(data.success){
+      this.reset();
+      success.classList.add('show');
+      document.getElementById('applyFormWrap').classList.remove('show');
+      document.getElementById('drawerApplyBtn').querySelector('.btn-label').textContent='Applied! ✓';
+      document.getElementById('drawerApplyBtn').style.background='#34a853';
+    } else {error.classList.add('show');}
+  } catch(err){error.classList.add('show');}
+  finally{btn.classList.remove('loading');}
+});
+
+// ══════════════════════════════════════════════
+// SEO — Schema.org JobPosting for Google
+// ══════════════════════════════════════════════
+const schemas=JOBS.map(j=>({
+  "@type":"JobPosting",
+  "title":j.title,
+  "description":j.desc,
+  "datePosted":"2026-04-01",
+  "validThrough":"2026-07-31",
+  "employmentType":j.type==='Full Time'?'FULL_TIME':'CONTRACTOR',
+  "hiringOrganization":{"@type":"Organization","name":"MAINDSOURCE","sameAs":"https://maindsource.in","logo":"https://maindsource.in/assets/img/logo.png"},
+  "jobLocation":{"@type":"Place","address":{"@type":"PostalAddress","addressLocality":j.loc,"addressRegion":"Karnataka","addressCountry":"IN"}},
+  "baseSalary":{"@type":"MonetaryAmount","currency":"INR","value":{"@type":"QuantitativeValue","unitText":"MONTH"}},
+  "educationRequirements":j.edu,
+  "experienceRequirements":j.exp
+}));
+document.getElementById('jobSchema').textContent=JSON.stringify({"@context":"https://schema.org","@graph":schemas});
+
+// ══════════════════════════════════════════════
+// Standard page scripts
+// ══════════════════════════════════════════════
 const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(dot){dot.style.left=mx+'px';dot.style.top=my+'px';}});
@@ -329,10 +640,11 @@ window.addEventListener('scroll',()=>{const p=document.getElementById('scroll-pr
 const ham=document.getElementById('hamburger'),mm=document.getElementById('mobMenu'),mo=document.getElementById('mobOverlay');
 if(ham){function tm(){mm.classList.toggle('open');mo.classList.toggle('open');}ham.addEventListener('click',tm);mo.addEventListener('click',tm);}
 (function(){const c=document.getElementById('phpP');if(!c)return;for(let i=0;i<14;i++){const s=document.createElement('span');s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${Math.random()*8+6}s;animation-delay:${Math.random()*6}s;width:2px;height:2px;`;c.appendChild(s);}})();
-const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);}});},{threshold:.12});
-document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
-// Filter buttons (visual only — Notion API will handle real filtering)
-document.querySelectorAll('.filter-btn').forEach(btn=>{btn.addEventListener('click',function(){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');});});
+const revObs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');revObs.unobserve(el.target);}});},{threshold:.1});
+document.querySelectorAll('.reveal,.reveal-left').forEach(el=>revObs.observe(el));
+
+// Initial render
+renderJobs(JOBS);
 </script>
 </body>
 </html>
