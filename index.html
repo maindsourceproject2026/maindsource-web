@@ -10,46 +10,42 @@
   <link rel="stylesheet" href="style.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
-  <!-- Three.js r128 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
   /* =====================================================
-     CINEMATIC HERO — style.css untouched
+     CINEMATIC HERO UPGRADE v2.0
+     Scope: #hero only. style.css untouched.
   ===================================================== */
+
   #hero {
+    top: 0; /* remove white gap : this esures the container starts at the absolute 0 point */
     min-height: 100vh;
+    height: 100vh; /* Locking it to exactly the screen height */
     background: #0A0F2C;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: space-between;
-    padding-top: 0;
+    padding: 0 5%;
     position: relative;
     overflow: hidden;
   }
 
-  /* Three.js canvas */
-  #hero-three-canvas {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-  }
-
+  /* Layer 1 — animated gradient mesh */
   .hero-bg-mesh {
-    position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    position: absolute; inset: 0; pointer-events: none;
     background:
       radial-gradient(ellipse 90% 70% at 50% -10%, rgba(245,166,35,.09) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 90% at 95% 50%,  rgba(30,39,97,.55) 0%, transparent 65%),
-      radial-gradient(ellipse 70% 70% at 5%  90%,  rgba(26,16,64,.75) 0%, transparent 55%),
-      linear-gradient(160deg, #0A0F2C 0%, #0e1338 45%, #1a1040 100%);
-    animation: meshBreath 9s ease-in-out infinite alternate;
+      radial-gradient(ellipse 55% 90% at 95% 50%,  rgba(30,39,97,.55)   0%, transparent 65%),
+      radial-gradient(ellipse 70% 70% at 5%  90%,  rgba(26,16,64,.75)   0%, transparent 55%),
+    animation; meshBreath: 9s ease-in-out infinite alternate;
   }
+
   @keyframes meshBreath { 0%{opacity:1} 100%{opacity:.88} }
 
+  /* Layer 2 — subtle drifting grid */
   .hero-grid-lines {
-    position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    position: absolute; inset: 0; pointer-events: none;
     background-image:
       linear-gradient(rgba(245,166,35,.028) 1px, transparent 1px),
       linear-gradient(90deg, rgba(245,166,35,.028) 1px, transparent 1px);
@@ -58,8 +54,9 @@
   }
   @keyframes gridDrift { from{transform:translateY(0)} to{transform:translateY(72px)} }
 
+  /* Layer 3 — gold aurora orb */
   .hero-aurora {
-    position: absolute; border-radius: 50%; pointer-events: none; z-index: 1;
+    position: absolute; border-radius: 50%; pointer-events: none;
     width: 860px; height: 860px;
     background: radial-gradient(circle, rgba(245,166,35,.07) 0%, rgba(245,166,35,.02) 45%, transparent 70%);
     top: -320px; left: 50%; transform: translateX(-50%);
@@ -70,23 +67,33 @@
     100% { transform:translateX(-50%) scale(1.18); opacity:1; }
   }
 
+  /* Layer 4 — left gold stripe accent */
   .hero-stripe {
-    position: absolute; left:0; top:0; bottom:0; width:3px; pointer-events:none; z-index: 2;
-    background: linear-gradient(to bottom, transparent 0%, rgba(245,166,35,.55) 30%, rgba(245,166,35,.55) 70%, transparent 100%);
+    position: absolute; left:0; top:0; bottom:0; width:3px; pointer-events:none;
+    background: linear-gradient(to bottom,
+      transparent 0%, rgba(245,166,35,.55) 30%, rgba(245,166,35,.55) 70%, transparent 100%);
   }
 
-  .hero-particles { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index: 1; }
+  /* Layer 5 — particles (defined in style.css, enhanced in JS) */
+  .hero-particles { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
   .hero-particles span {
     position:absolute; background:var(--gold); border-radius:50%;
     opacity:0; animation:floatP linear infinite;
   }
 
+  /* Video layer — hidden until client provides file */
   .hero-video-bg {
-    position:absolute; inset:0; z-index:0; display:none;
+    position:absolute; top: 0; left: 0; width: 100%; height: 100%; inset:0; z-index:0; display:none;
   }
-  .hero-video-bg video { width:100%; height:100%; object-fit:cover; opacity:.18; }
-  .hero-video-bg::after { content:''; position:absolute; inset:0; background:rgba(10,15,44,.72); }
+  .hero-video-bg video {
+    width:100%; height:100%; object-fit:cover; /* keeps aspect ratio*/ opacity: 0.7; /* increased to 70% visibility */ transform: none; object-position: center 20%; /* focuses on the area 30% from the top */ z-index: 0;
+  }
+  .hero-video-bg::after {
+    content:''; position:absolute; inset:0; background: rgba(10,15,44,.72);
+    z-index: 1;
+  }
 
+  /* Main content area */
   .hero-main {
     position: relative; z-index: 2; flex: 1;
     display: flex; align-items: center;
@@ -95,22 +102,35 @@
   }
   .hero-content-wrap { width:100%; max-width:820px; }
 
+  /* Badge */
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
     background: rgba(245,166,35,.10); border: 1px solid rgba(245,166,35,.24);
     border-radius: 50px; padding: 6px 16px; margin-bottom: 32px;
     opacity: 0; animation: fadeUpHero .7s ease .3s forwards;
   }
-  .hero-badge-dot { width:7px; height:7px; background:var(--gold); border-radius:50%; animation:bdgP 2s infinite; flex-shrink:0; }
+  .hero-badge-dot {
+    width:7px; height:7px; background:var(--gold); border-radius:50%;
+    animation:bdgP 2s infinite; flex-shrink:0;
+  }
   @keyframes bdgP { 0%,100%{opacity:1} 50%{opacity:.3} }
-  .hero-badge span { font-family:var(--font-s); font-size:11px; font-weight:700; color:var(--gold); letter-spacing:2px; text-transform:uppercase; }
+  .hero-badge span {
+    font-family:var(--font-s); font-size:11px; font-weight:700;
+    color:var(--gold); letter-spacing:2px; text-transform:uppercase;
+  }
 
+  /* HEADLINE — the centrepiece */
   .hero-hl {
     font-family: var(--font-d);
-    font-size: clamp(52px, 7.6vw, 96px);
-    font-weight: 800; color: var(--white);
-    line-height: 1.06; letter-spacing: -1.5px; margin-bottom: 28px;
-    opacity: 0; animation: fadeUpHero .85s ease .5s forwards;
+    font-size: clamp(52px, 8vw, 90px);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 24px;
+    z-index: 5; /*keeps it above the video*/
+    opacity: 1 !important; /* restores brightness*/
+    animation: fadeUpHero .85s ease .5s forwards;
   }
   .hero-hl em {
     color: var(--gold); font-style: italic;
@@ -124,50 +144,98 @@
   }
   @keyframes lineReveal { to { transform:scaleX(1); } }
 
+  /* Sub — one punchy sentence */
   .hero-sub-new {
-    font-family: var(--font-s); font-size: clamp(14px, 1.55vw, 17px); font-weight: 500;
-    color: rgba(168,184,216,.85); line-height: 1.75; max-width: 500px;
-    margin-bottom: 42px; letter-spacing: .15px;
-    opacity: 0; animation: fadeUpHero .7s ease .75s forwards;
+    font-family: var(--font-s);
+    font-size: clamp(14px, 1.55vw, 17px);
+    font-weight: 500;
+    color: rgba(168,184,216,.85);
+    line-height: 1.75;
+    max-width: 500px;
+    margin-bottom: 42px;
+    letter-spacing: .15px;
+    opacity: 0;
+    animation: fadeUpHero .7s ease .75s forwards;
   }
 
-  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; opacity: 0; animation: fadeUpHero .7s ease .95s forwards; }
+  /* Buttons */
+  .hero-btns {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUpHero .7s ease .95s forwards;
+  }
 
+  /* Gold divider line between content and stats bar */
   .hero-divider {
-    position:relative; z-index:2; width:100%; height:1px;
-    background: linear-gradient(to right, transparent, rgba(245,166,35,.3) 40%, rgba(245,166,35,.3) 60%, transparent);
+    position:relative; z-index:2;
+    width:100%; height:1px;
+    background: linear-gradient(to right,
+      transparent, rgba(245,166,35,.3) 40%, rgba(245,166,35,.3) 60%, transparent);
   }
 
+  /* Stats bar — full-width bottom strip */
   .hero-stats-bar {
     position: relative; z-index: 2;
     background: rgba(255,255,255,.025);
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: none;
     padding: 0 var(--px);
   }
-  .hero-stats-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); }
+  .hero-stats-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3,1fr);
+  }
   .hero-stat-item {
     padding: 26px 20px; text-align: center;
     border-right: 1px solid rgba(255,255,255,.06);
     opacity: 0; animation: fadeUpHero .6s ease 1.2s forwards;
   }
-  .hero-stat-item:last-child { border-right: none; }
+  .hero-stat-item:last-child  { border-right: none; }
   .hero-stat-item:nth-child(2){ animation-delay: 1.35s; }
   .hero-stat-item:nth-child(3){ animation-delay: 1.5s; }
-  .hero-stat-num { font-family: var(--font-s); font-size: clamp(26px, 3vw, 38px); font-weight: 800; color: var(--gold); line-height: 1; margin-bottom: 5px; }
-  .hero-stat-label { font-family: var(--font-s); font-size: 11px; font-weight: 600; color: rgba(168,184,216,.7); letter-spacing: 1.5px; text-transform: uppercase; }
+  .hero-stat-num {
+    font-family: var(--font-s);
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 800; color: var(--gold);
+    line-height: 1; margin-bottom: 5px;
+  }
+  .hero-stat-label {
+    font-family: var(--font-s); font-size: 11px; font-weight: 600;
+    color: rgba(168,184,216,.7); letter-spacing: 1.5px; text-transform: uppercase;
+  }
 
+  /* Scroll cue (right side, desktop only) */
   .hero-scroll-cue {
     position: absolute; bottom: 96px; right: var(--px);
     display: flex; flex-direction: column; align-items: center; gap: 8px;
     z-index: 2; opacity: 0; animation: fadeInHero .8s ease 1.8s forwards;
   }
-  .hero-scroll-cue span { font-family: var(--font-s); font-size: 9px; font-weight: 700; color: rgba(168,184,216,.4); letter-spacing: 2.5px; text-transform: uppercase; writing-mode: vertical-rl; }
-  .hero-scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(245,166,35,.6), transparent); animation: scrollPulse 2s ease-in-out infinite; }
-  @keyframes scrollPulse { 0%,100%{transform:scaleY(1);opacity:.7;} 50%{transform:scaleY(.5);opacity:.3;} }
+  .hero-scroll-cue span {
+    font-family: var(--font-s); font-size: 9px; font-weight: 700;
+    color: rgba(168,184,216,.4); letter-spacing: 2.5px; text-transform: uppercase;
+    writing-mode: vertical-rl;
+  }
+  .hero-scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, rgba(245,166,35,.6), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%,100% { transform:scaleY(1);   opacity:.7; }
+    50%      { transform:scaleY(.5); opacity:.3; }
+  }
 
-  @keyframes fadeUpHero { from{opacity:0;transform:translateY(26px);} to{opacity:1;transform:none;} }
-  @keyframes fadeInHero { from{opacity:0;} to{opacity:1;} }
+  /* Entrance keyframes */
+  @keyframes fadeUpHero {
+    from { opacity:0; transform:translateY(26px); }
+    to   { opacity:1; transform:none; }
+  }
+  @keyframes fadeInHero {
+    from { opacity:0; }
+    to   { opacity:1; }
+  }
 
+  /* ── MOBILE ── */
   @media(max-width:768px) {
     .hero-main { padding: 120px 5% 52px; }
     .hero-hl { letter-spacing: -.5px; }
@@ -182,272 +250,13 @@
     .hero-hl { font-size:44px; letter-spacing:-.5px; }
     .hero-btns { flex-direction:column; align-items:flex-start; }
     .hero-btns .btn { width:100%; justify-content:center; }
-  }
-
-  /* ═══════════════════════════════════════════════════════
-     CSS CHARACTER — Fixed Bottom Right
-     Pure CSS + SVG. No image file needed.
-     Indian male, navy shirt #1E2761, gold tie #F5A623
-  ═══════════════════════════════════════════════════════ */
-  #site-character {
-    position: fixed;
-    bottom: 100px; /* above WhatsApp button */
-    right: 24px;
-    width: 90px;
-    height: 160px;
-    z-index: 8000;
-    pointer-events: none;
-    /* Show on desktop, hide on small mobile */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    transition: transform .4s ease;
-  }
-  @media(max-width:480px){ #site-character{ display:none; } }
-
-  /* ── HEAD ── */
-  .char-head {
-    position: relative;
-    width: 44px; height: 44px;
-    background: #C68642; /* medium brown skin */
-    border-radius: 50%;
-    margin-bottom: -4px;
-    z-index: 3;
-    flex-shrink: 0;
-  }
-  /* Hair */
-  .char-head::before {
-    content: '';
-    position: absolute;
-    top: -3px; left: 4px; right: 4px;
-    height: 22px;
-    background: #1a1008;
-    border-radius: 50% 50% 0 0;
-  }
-  /* Face details via box-shadow trick */
-  .char-face {
-    position: absolute;
-    top: 16px; left: 50%;
-    transform: translateX(-50%);
-    width: 28px; height: 16px;
-  }
-  /* Eyes */
-  .char-eye-l, .char-eye-r {
-    position: absolute;
-    width: 5px; height: 5px;
-    background: #1a1008;
-    border-radius: 50%;
-    top: 0;
-  }
-  .char-eye-l { left: 2px; }
-  .char-eye-r { right: 2px; }
-  /* Smile */
-  .char-mouth {
-    position: absolute;
-    bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 14px; height: 7px;
-    border: 2.5px solid #8B4513;
-    border-top: none;
-    border-radius: 0 0 10px 10px;
-  }
-
-  /* ── BODY ── */
-  .char-body {
-    position: relative;
-    width: 54px; height: 62px;
-    background: #1E2761; /* navy shirt */
-    border-radius: 10px 10px 6px 6px;
-    flex-shrink: 0;
-    z-index: 2;
-    overflow: visible;
-  }
-  /* Gold tie */
-  .char-body::before {
-    content: '';
-    position: absolute;
-    top: 4px; left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-top: 36px solid #F5A623;
-    filter: drop-shadow(0 1px 0 #E8920A);
-  }
-  /* Shirt collar lines */
-  .char-body::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 14px; height: 10px;
-    background: #2a3280;
-    border-radius: 0 0 4px 4px;
-  }
-
-  /* ── NECK ── */
-  .char-neck {
-    width: 16px; height: 8px;
-    background: #C68642;
-    margin: 0 auto;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 4;
-  }
-
-  /* ── LEGS ── */
-  .char-legs {
-    display: flex;
-    gap: 6px;
-    margin-top: 0;
-    flex-shrink: 0;
-  }
-  .char-leg {
-    width: 18px; height: 40px;
-    background: #2d2d2d; /* dark charcoal pants */
-    border-radius: 3px 3px 0 0;
-    position: relative;
-  }
-  /* Shoes */
-  .char-leg::after {
-    content: '';
-    position: absolute;
-    bottom: -8px; left: -4px;
-    width: 26px; height: 10px;
-    background: #111;
-    border-radius: 4px 8px 4px 4px;
-  }
-
-  /* ── ARMS — attached to body ── */
-  .char-arm-l, .char-arm-r {
-    position: absolute;
-    width: 14px; height: 44px;
-    background: #1E2761;
-    border-radius: 7px;
-    top: 4px;
-    transform-origin: top center;
-    transition: transform .5s cubic-bezier(.34,1.56,.64,1);
-  }
-  .char-arm-l { left: -16px; transform: rotate(12deg); }
-  .char-arm-r { right: -16px; transform: rotate(-12deg); }
-  /* Hands */
-  .char-arm-l::after, .char-arm-r::after {
-    content: '';
-    position: absolute;
-    bottom: -8px; left: 50%;
-    transform: translateX(-50%);
-    width: 14px; height: 14px;
-    background: #C68642;
-    border-radius: 50%;
-  }
-
-  /* ═══════════════════════════════════════
-     CHARACTER POSE ANIMATIONS
-  ═══════════════════════════════════════ */
-
-  /* WAVE — arm raised, swinging */
-  #site-character.pose-wave .char-arm-l {
-    animation: armWave 1s ease-in-out infinite alternate;
-    transform-origin: top center;
-  }
-  @keyframes armWave {
-    0%  { transform: rotate(-120deg); }
-    100%{ transform: rotate(-80deg); }
-  }
-
-  /* POINT — right arm extends forward/up */
-  #site-character.pose-point .char-arm-r {
-    transform: rotate(-90deg) translateX(-6px);
-    transition: transform .5s cubic-bezier(.34,1.56,.64,1);
-  }
-
-  /* CELEBRATE — both arms up */
-  #site-character.pose-celebrate .char-arm-l {
-    animation: celebL 0.6s ease-in-out infinite alternate;
-  }
-  #site-character.pose-celebrate .char-arm-r {
-    animation: celebR 0.6s ease-in-out infinite alternate;
-  }
-  @keyframes celebL { 0%{transform:rotate(-130deg)} 100%{transform:rotate(-100deg)} }
-  @keyframes celebR { 0%{transform:rotate(130deg)}  100%{transform:rotate(100deg)} }
-  /* Body bounce on celebrate */
-  #site-character.pose-celebrate {
-    animation: bodyBounce .5s ease-in-out infinite alternate;
-  }
-  @keyframes bodyBounce { 0%{transform:translateY(0)} 100%{transform:translateY(-8px)} }
-
-  /* WALK — legs alternate, slight body rock */
-  #site-character.pose-walk .char-leg:first-child {
-    animation: legL .5s ease-in-out infinite alternate;
-    transform-origin: top center;
-  }
-  #site-character.pose-walk .char-leg:last-child {
-    animation: legR .5s ease-in-out infinite alternate;
-    transform-origin: top center;
-  }
-  #site-character.pose-walk .char-arm-l {
-    animation: walkArmL .5s ease-in-out infinite alternate;
-  }
-  #site-character.pose-walk .char-arm-r {
-    animation: walkArmR .5s ease-in-out infinite alternate;
-  }
-  @keyframes legL  { 0%{transform:rotate(-12deg)} 100%{transform:rotate(12deg)} }
-  @keyframes legR  { 0%{transform:rotate(12deg)}  100%{transform:rotate(-12deg)} }
-  @keyframes walkArmL { 0%{transform:rotate(20deg)} 100%{transform:rotate(-20deg)} }
-  @keyframes walkArmR { 0%{transform:rotate(-20deg)} 100%{transform:rotate(20deg)} }
-
-  /* THUMBS UP — right arm out, hand shape */
-  #site-character.pose-thumbs .char-arm-r {
-    transform: rotate(-60deg);
-    transition: transform .5s cubic-bezier(.34,1.56,.64,1);
-  }
-  #site-character.pose-thumbs .char-arm-r::after {
-    /* thumb shape — slightly elongated */
-    width: 12px; height: 18px;
-    border-radius: 6px 6px 3px 3px;
-    bottom: -12px;
-  }
-
-  /* BECKON — both arms slightly out, gentle wave */
-  #site-character.pose-beckon .char-arm-l {
-    animation: beckonL .8s ease-in-out infinite alternate;
-  }
-  #site-character.pose-beckon .char-arm-r {
-    animation: beckonR .8s ease-in-out infinite alternate;
-  }
-  @keyframes beckonL { 0%{transform:rotate(-30deg)} 100%{transform:rotate(-60deg)} }
-  @keyframes beckonR { 0%{transform:rotate(30deg)}  100%{transform:rotate(60deg)} }
-
-  /* BOW — whole character tilts forward */
-  #site-character.pose-bow {
-    animation: bowPose 2s ease-in-out infinite;
-    transform-origin: bottom center;
-  }
-  @keyframes bowPose {
-    0%,60%,100% { transform: rotate(0deg); }
-    20%,40%     { transform: rotate(20deg); }
-  }
-
-  /* Idle — gentle float (default) */
-  #site-character.pose-idle {
-    animation: charIdleFloat 3s ease-in-out infinite;
-  }
-  @keyframes charIdleFloat {
-    0%,100% { transform: translateY(0); }
-    50%     { transform: translateY(-6px); }
-  }
-
-  /* ── Mobile: hide on small screens ── */
-  @media(max-width:768px) {
-    #site-character { right: 12px; bottom: 88px; transform: scale(.85); transform-origin: bottom right; }
+    .hero-stats-inner { grid-template-columns:repeat(3,1fr); }
   }
   </style>
 </head>
 <body>
 
-<!-- PRELOADER -->
+<!-- PRELOADER (homepage only) -->
 <div id="preloader">
   <div class="pre-wrap">
     <img src="assets/logo.png" alt="MAINDSOURCE Logo" class="pre-img" onerror="this.style.display='none'"/>
@@ -465,32 +274,6 @@
 <a id="wa-float" href="https://wa.me/919071329231" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
-
-<!-- ═══════════════════════════════════════
-     CSS CHARACTER — Fixed Bottom Right
-═══════════════════════════════════════ -->
-<div id="site-character" class="pose-wave" aria-hidden="true">
-  <!-- Head -->
-  <div class="char-head">
-    <div class="char-face">
-      <div class="char-eye-l"></div>
-      <div class="char-eye-r"></div>
-      <div class="char-mouth"></div>
-    </div>
-  </div>
-  <!-- Neck -->
-  <div class="char-neck"></div>
-  <!-- Body with arms -->
-  <div class="char-body">
-    <div class="char-arm-l"></div>
-    <div class="char-arm-r"></div>
-  </div>
-  <!-- Legs -->
-  <div class="char-legs">
-    <div class="char-leg"></div>
-    <div class="char-leg"></div>
-  </div>
-</div>
 
 <!-- NAVBAR -->
 <nav id="navbar">
@@ -540,11 +323,11 @@
 ════════════════════════════════════════ -->
 <section id="hero">
 
-  <!-- Three.js canvas — gold 3D particles layer -->
-  <canvas id="hero-three-canvas"></canvas>
-
-  <!-- VIDEO BG — change display:none to display:block when video ready -->
-  <div class="hero-video-bg" style="display:none;">
+  <!-- VIDEO BG — Enable when client provides video file
+       1. Upload to: assets/video/hero-bg.mp4
+       2. Change style="display:none" to style="display:block"
+  -->
+  <div class="hero-video-bg" style="display:block;">
     <video autoplay muted loop playsinline>
       <source src="assets/video/hero-bg.mp4" type="video/mp4"/>
     </video>
@@ -557,7 +340,7 @@
   <div class="hero-stripe"></div>
   <div class="hero-particles" id="heroP"></div>
 
-  <!-- Scroll cue -->
+  <!-- Scroll cue (desktop right side) -->
   <div class="hero-scroll-cue">
     <span>Scroll</span>
     <div class="hero-scroll-line"></div>
@@ -570,6 +353,7 @@
       <div class="hero-badge">
         <div class="hero-badge-dot"></div>
         <span>Bangalore &middot; Ballari &middot; Pan-India</span>
+        <div class="hero-badge-dot"></div>
       </div>
 
       <h1 class="hero-hl">
@@ -579,7 +363,7 @@
       </h1>
 
       <p class="hero-sub-new">
-        India&rsquo;s most trusted tech-enabled manpower partner &mdash; delivering screened, job-ready talent within 72 hours.
+        India's most trusted tech-enabled manpower partner &mdash; delivering screened, job-ready talent within 72 hours.
       </p>
 
       <div class="hero-btns">
@@ -592,12 +376,15 @@
           <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
-
     </div>
-  </div>
+  </div
 
-  <!-- Stats bar pinned to hero bottom -->
-  <div class="hero-divider"></div>
+<!-- ════════ HERO END ════════ -->
+
+
+<!-- Stats bar pinned to bottom -->
+<section>
+<div class="hero-divider"></div>
   <div class="hero-stats-bar">
     <div class="hero-stats-inner">
       <div class="hero-stat-item">
@@ -614,12 +401,10 @@
       </div>
     </div>
   </div>
-
 </section>
-<!-- ════════ HERO END ════════ -->
-
 
 <!-- ════════ DUAL PATH ════════ -->
+</section>
 <section id="dual-path">
   <div class="container">
     <div class="dual-grid">
@@ -715,7 +500,7 @@
     <h2 class="section-title light reveal">Diverse Industry Expertise Across India</h2>
   </div>
   <div class="marquee-wrap">
-    <div class="marquee-row">
+    <div class="marquee-row" id="mRow1">
       <div class="s-chip"><span class="s-chip-icon">&#127981;</span><span class="s-chip-name">Manufacturing</span></div>
       <div class="s-chip"><span class="s-chip-icon">&#128663;</span><span class="s-chip-name">Automobile</span></div>
       <div class="s-chip"><span class="s-chip-icon">&#128717;</span><span class="s-chip-name">Retail</span></div>
@@ -779,7 +564,10 @@
     </div>
     <div class="founders-grid">
       <div class="founder-card reveal">
-        <div class="founder-photo"><div class="founder-initials">SK</div></div>
+        <div class="founder-photo">
+          <!-- Add photo: <img src="assets/img/surya-kiran.jpg" alt="Surya Kiran"/> -->
+          <div class="founder-initials">SK</div>
+        </div>
         <div class="founder-info">
           <h3>Mr. Surya Kiran</h3>
           <div class="founder-role">Founder &amp; Managing Partner</div>
@@ -787,7 +575,10 @@
         </div>
       </div>
       <div class="founder-card reveal">
-        <div class="founder-photo"><div class="founder-initials">P</div></div>
+        <div class="founder-photo">
+          <!-- Add photo: <img src="assets/img/partner.jpg" alt="Co-Founder"/> -->
+          <div class="founder-initials">P</div>
+        </div>
         <div class="founder-info">
           <h3>Partner (Name TBC)</h3>
           <div class="founder-role">Co-Founder &amp; Partner</div>
@@ -868,8 +659,25 @@
           <a href="https://wa.me/919071329231" class="f-soc" aria-label="WhatsApp">&#128172;</a>
         </div>
       </div>
-      <div class="f-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="women.html">Women Empowerment</a></li><li><a href="credentials.html">Credentials</a></li><li><a href="careers.html">Careers</a></li></ul></div>
-      <div class="f-col"><h4>Services</h4><ul><li><a href="services.html">Contractual Staffing</a></li><li><a href="services.html">One-Time Placement</a></li><li><a href="services.html">Payroll Management</a></li><li><a href="services.html">Gig Workforce</a></li><li><a href="services.html">Training &amp; Development</a></li></ul></div>
+      <div class="f-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="women.html">Women Empowerment</a></li>
+          <li><a href="credentials.html">Credentials</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Contractual Staffing</a></li>
+          <li><a href="services.html">One-Time Placement</a></li>
+          <li><a href="services.html">Payroll Management</a></li>
+          <li><a href="services.html">Gig Workforce</a></li>
+          <li><a href="services.html">Training &amp; Development</a></li>
+        </ul>
+      </div>
       <div class="f-col">
         <h4>Contact</h4>
         <div class="f-contact-item"><span class="f-ci">&#128222;</span><div class="f-ct"><strong>Phone</strong>+91 9071329231</div></div>
@@ -886,222 +694,44 @@
 </footer>
 
 <script>
-// ══════════════════════════════════════════════════════
-// 1. THREE.JS — Gold 3D Floating Particles in Hero
-// ══════════════════════════════════════════════════════
-(function() {
-  const canvas = document.getElementById('hero-three-canvas');
-  if (!canvas || typeof THREE === 'undefined') return;
-
-  const hero = document.getElementById('hero');
-  const w = hero.offsetWidth, h = hero.offsetHeight;
-
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setSize(w, h);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearColor(0x000000, 0);
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 1000);
-  camera.position.z = 28;
-
-  // Gold material — very low opacity
-  const mat = new THREE.MeshBasicMaterial({
-    color: 0xF5A623,
-    transparent: true,
-    opacity: 0.15,
-    wireframe: true
-  });
-
-  // Create 55 floating diamond/octahedron shapes
-  const meshes = [];
-  for (let i = 0; i < 55; i++) {
-    // Alternate between octahedron (diamond) and tetrahedron
-    const geo = i % 2 === 0
-      ? new THREE.OctahedronGeometry(Math.random() * 0.6 + 0.2)
-      : new THREE.TetrahedronGeometry(Math.random() * 0.5 + 0.15);
-
-    const mesh = new THREE.Mesh(geo, mat.clone());
-    mesh.position.set(
-      (Math.random() - 0.5) * 50,
-      (Math.random() - 0.5) * 30,
-      (Math.random() - 0.5) * 20
-    );
-    mesh.rotation.set(
-      Math.random() * Math.PI,
-      Math.random() * Math.PI,
-      Math.random() * Math.PI
-    );
-    // Store drift speed per particle
-    mesh.userData = {
-      speedX: (Math.random() - 0.5) * 0.004,
-      speedY: (Math.random() - 0.5) * 0.003,
-      rotX:   (Math.random() - 0.5) * 0.008,
-      rotY:   (Math.random() - 0.5) * 0.008,
-      rotZ:   (Math.random() - 0.5) * 0.006,
-    };
-    scene.add(mesh);
-    meshes.push(mesh);
-  }
-
-  // Pause when tab hidden — battery friendly
-  let paused = false;
-  document.addEventListener('visibilitychange', () => {
-    paused = document.hidden;
-  });
-
-  // Resize handler
-  window.addEventListener('resize', () => {
-    const nw = hero.offsetWidth, nh = hero.offsetHeight;
-    camera.aspect = nw / nh;
-    camera.updateProjectionMatrix();
-    renderer.setSize(nw, nh);
-  });
-
-  // Animation loop
-  function animate() {
-    requestAnimationFrame(animate);
-    if (paused) return;
-    meshes.forEach(m => {
-      m.position.x += m.userData.speedX;
-      m.position.y += m.userData.speedY;
-      m.rotation.x += m.userData.rotX;
-      m.rotation.y += m.userData.rotY;
-      m.rotation.z += m.userData.rotZ;
-      // Wrap around edges
-      if (m.position.x >  26) m.position.x = -26;
-      if (m.position.x < -26) m.position.x =  26;
-      if (m.position.y >  16) m.position.y = -16;
-      if (m.position.y < -16) m.position.y =  16;
-    });
-    renderer.render(scene, camera);
-  }
-  animate();
-})();
-
-// ══════════════════════════════════════════════════════
-// 2. CHARACTER POSE SWITCHER — IntersectionObserver
-// Section → Pose mapping
-// ══════════════════════════════════════════════════════
-(function() {
-  const char = document.getElementById('site-character');
-  if (!char) return;
-
-  // Map section IDs to pose class names
-  const sectionPoseMap = [
-    { id: 'hero',          pose: 'pose-wave'      },
-    { id: 'dual-path',     pose: 'pose-idle'      },
-    { id: 'about-snap',    pose: 'pose-idle'      },
-    { id: 'services-prev', pose: 'pose-point'     },
-    { id: 'impact',        pose: 'pose-celebrate' },
-    { id: 'sectors-strip', pose: 'pose-walk'      },
-    { id: 'why-us',        pose: 'pose-point'     },
-    { id: 'clients',       pose: 'pose-thumbs'    },
-    { id: 'testimonials',  pose: 'pose-thumbs'    },
-    { id: 'cta-banner',    pose: 'pose-beckon'    },
-    { id: 'footer',        pose: 'pose-bow'       },
-  ];
-
-  const allPoses = ['pose-wave','pose-idle','pose-point','pose-celebrate',
-                    'pose-walk','pose-thumbs','pose-beckon','pose-bow'];
-
-  function setPose(pose) {
-    allPoses.forEach(p => char.classList.remove(p));
-    char.classList.add(pose);
-  }
-
-  // Use IntersectionObserver — trigger when section is 30% visible
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const match = sectionPoseMap.find(s => s.id === entry.target.id);
-      if (match) setPose(match.pose);
-    });
-  }, { threshold: 0.3 });
-
-  sectionPoseMap.forEach(({ id }) => {
-    const el = document.getElementById(id);
-    if (el) obs.observe(el);
-  });
-})();
-
-// ══════════════════════════════════════════════════════
-// STANDARD PAGE SCRIPTS (unchanged from original)
-// ══════════════════════════════════════════════════════
-
 // Preloader
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const l = document.getElementById('preloader');
-    if (!l) return;
-    l.style.opacity = '0';
-    l.style.transition = 'opacity .6s ease';
-    setTimeout(() => { l.style.display = 'none'; }, 600);
-  }, 2000);
-});
+window.addEventListener('load',()=>{setTimeout(()=>{const l=document.getElementById('preloader');if(!l)return;l.style.opacity='0';l.style.transition='opacity .6s ease';setTimeout(()=>{l.style.display='none';},600);},2000);});
 
 // Cursor
-const dot = document.getElementById('cursorDot'), ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  if (dot) { dot.style.left = mx + 'px'; dot.style.top = my + 'px'; }
-});
-(function ar() {
-  if (!ring) return;
-  rx += (mx - rx) * .12; ry += (my - ry) * .12;
-  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-  requestAnimationFrame(ar);
-})();
+const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(dot){dot.style.left=mx+'px';dot.style.top=my+'px';}});
+(function ar(){if(!ring)return;rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar);})();
 
 // Scroll progress + navbar
-window.addEventListener('scroll', () => {
-  const s = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-  const p = document.getElementById('scroll-progress'); if (p) p.style.width = s + '%';
-  const nav = document.getElementById('navbar'); if (nav) nav.classList.toggle('scrolled', window.scrollY > 60);
+window.addEventListener('scroll',()=>{
+  const s=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
+  const p=document.getElementById('scroll-progress');if(p)p.style.width=s+'%';
+  const nav=document.getElementById('navbar');if(nav)nav.classList.toggle('scrolled',window.scrollY>60);
 });
 
 // Mobile menu
-const ham = document.getElementById('hamburger'), mm = document.getElementById('mobMenu'), mo = document.getElementById('mobOverlay');
-if (ham) {
-  function tm() { mm.classList.toggle('open'); mo.classList.toggle('open'); }
-  ham.addEventListener('click', tm); mo.addEventListener('click', tm);
-}
+const ham=document.getElementById('hamburger'),mm=document.getElementById('mobMenu'),mo=document.getElementById('mobOverlay');
+if(ham){function tm(){mm.classList.toggle('open');mo.classList.toggle('open');}ham.addEventListener('click',tm);mo.addEventListener('click',tm);}
 
-// Hero particles — 38 gold dots
-(function() {
-  const c = document.getElementById('heroP'); if (!c) return;
-  for (let i = 0; i < 38; i++) {
-    const s = document.createElement('span');
-    const sz = Math.random() * 2.4 + 1;
-    s.style.cssText = 'left:' + Math.random() * 100 + '%;top:' + Math.random() * 100 + '%;animation-duration:' + (Math.random() * 10 + 7) + 's;animation-delay:' + (Math.random() * 8) + 's;width:' + sz + 'px;height:' + sz + 'px;';
+// Hero particles — enhanced (38 particles, varied sizes)
+(function(){
+  const c=document.getElementById('heroP');if(!c)return;
+  for(let i=0;i<38;i++){
+    const s=document.createElement('span');
+    const sz=Math.random()*2.4+1;
+    s.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+7)+'s;animation-delay:'+(Math.random()*8)+'s;width:'+sz+'px;height:'+sz+'px;';
     c.appendChild(s);
   }
 })();
 
 // Reveal on scroll
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-}, { threshold: .14 });
-document.querySelectorAll('.reveal,.reveal-left').forEach(el => obs.observe(el));
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.14});
+document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
 
-// Count-up on impact section
-const cObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      document.querySelectorAll('.impact-num[data-target]').forEach(el => {
-        const t = parseInt(el.dataset.target), d = 2000, step = t / (d / 16); let n = 0;
-        const id = setInterval(() => {
-          n += step;
-          if (n >= t) { el.textContent = t.toLocaleString() + '+'; clearInterval(id); }
-          else { el.textContent = Math.floor(n).toLocaleString() + '+'; }
-        }, 16);
-      });
-      cObs.disconnect();
-    }
-  });
-}, { threshold: .3 });
-const imp = document.getElementById('impact'); if (imp) cObs.observe(imp);
+// Count-up
+const cObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.impact-num[data-target]').forEach(el=>{const t=parseInt(el.dataset.target),d=2000,step=t/(d/16);let n=0;const id=setInterval(()=>{n+=step;if(n>=t){el.textContent=t.toLocaleString()+'+';clearInterval(id);}else{el.textContent=Math.floor(n).toLocaleString()+'+';}},16);});cObs.disconnect();}});},{threshold:.3});
+const imp=document.getElementById('impact');if(imp)cObs.observe(imp);
 </script>
 </body>
 </html>
