@@ -12,80 +12,159 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
 
   <style>
-  /* ============================================================
-     MAINDSOURCE — HOMEPAGE EXTENDED STYLES
-     Covers: Ticker, Hero, Tribute, Carousel, Char Slots, Mobile
-  ============================================================ */
+  /* ======================================================
+     PAGE-LEVEL ADDITIONS — style.css untouched
+  ====================================================== */
 
-  /* ── ANTI-FRAUD TICKER ── */
+  /* ── 1. ANTI-FRAUD TICKER ── */
   #fraud-ticker {
-    width: 100%;
-    background: linear-gradient(90deg, #1a0a00, #2a1500, #1a0a00);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1001; /* above navbar which is 1000 */
+    background: #0A0F2C;
     border-bottom: 1px solid rgba(245,166,35,.25);
+    height: 32px;
+    display: flex;
+    align-items: center;
     overflow: hidden;
-    position: sticky;
-    top: 68px; /* sits just below the navbar */
-    z-index: 998;
-    padding: 9px 0;
-    display: flex;
-    align-items: center;
   }
-  .ticker-track {
-    display: flex;
-    white-space: nowrap;
-    animation: tickerScroll 32s linear infinite;
-    gap: 0;
-  }
-  .ticker-track:hover { animation-play-state: paused; }
-  .ticker-item {
-    font-family: 'Syne', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    color: #ffd080;
-    letter-spacing: 0.4px;
-    padding: 0 48px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  .ticker-badge {
     flex-shrink: 0;
+    background: rgba(245,166,35,.12);
+    border-right: 1px solid rgba(245,166,35,.25);
+    padding: 0 14px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-s);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
   }
   .ticker-dot {
-    width: 5px; height: 5px;
-    background: #F5A623;
+    width: 6px; height: 6px;
+    background: var(--gold);
     border-radius: 50%;
+    animation: tDot 1.4s ease-in-out infinite;
     flex-shrink: 0;
-    animation: bdgP 2s infinite;
   }
+  @keyframes tDot { 0%,100%{opacity:1} 50%{opacity:.25} }
+  .ticker-track {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  .ticker-inner {
+    display: flex;
+    gap: 0;
+    white-space: nowrap;
+    animation: tickerScroll 28s linear infinite;
+  }
+  .ticker-inner:hover { animation-play-state: paused; }
+  .ticker-text {
+    font-family: var(--font-s);
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,.82);
+    letter-spacing: .3px;
+    padding: 0 48px;
+    flex-shrink: 0;
+  }
+  .ticker-text strong { color: var(--gold); }
   @keyframes tickerScroll {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
   }
 
-  /* ── CINEMATIC HERO ── */
+  /* Offset navbar + hero to account for ticker height */
+  #navbar { top: 32px; }
+  #hero   { padding-top: 32px; }
+
+  /* ── 2. ROBOT PLACEHOLDER (above WA button) ── */
+  #robot-float {
+    position: fixed;
+    bottom: 92px; /* WA button is at bottom:28px, height:52px → 28+52+12 = 92 */
+    right: 20px;
+    width: 110px;
+    height: 120px;
+    z-index: 8999;
+    pointer-events: none; /* clicking does nothing */
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  #robot-float img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  /* Subtle float animation on placeholder */
+  #robot-float img {
+    animation: robotFloat 3s ease-in-out infinite;
+  }
+  @keyframes robotFloat {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-6px); }
+  }
+  /* Fallback box shown before GIF loads */
+  #robot-float .robot-fallback {
+    width: 100%; height: 100%;
+    background: rgba(10,15,44,.65);
+    border: 1.5px dashed rgba(245,166,35,.35);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  #robot-float .robot-fallback span {
+    font-size: 32px;
+    animation: robotFloat 2.5s ease-in-out infinite;
+  }
+  #robot-float .robot-fallback p {
+    font-family: var(--font-s);
+    font-size: 8px;
+    font-weight: 700;
+    color: rgba(245,166,35,.6);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.4;
+  }
+  @media(max-width:480px) {
+    #robot-float { display: none; }
+  }
+
+  /* ── HERO — video fix + existing styles ── */
   #hero {
-    top: 0;
     min-height: 100vh;
-    height: 100vh;
     background: #0A0F2C;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: space-between;
-    padding: 0 5%;
+    padding-top: 0;
     position: relative;
     overflow: hidden;
   }
   .hero-bg-mesh {
-    position: absolute; inset: 0; pointer-events: none;
+    position: absolute; inset: 0; pointer-events: none; z-index: 1;
     background:
       radial-gradient(ellipse 90% 70% at 50% -10%, rgba(245,166,35,.09) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 90% at 95% 50%,  rgba(30,39,97,.55)   0%, transparent 65%),
-      radial-gradient(ellipse 70% 70% at 5%  90%,  rgba(26,16,64,.75)   0%, transparent 55%);
+      radial-gradient(ellipse 55% 90% at 95% 50%,  rgba(30,39,97,.55) 0%, transparent 65%),
+      radial-gradient(ellipse 70% 70% at 5%  90%,  rgba(26,16,64,.75) 0%, transparent 55%),
+      linear-gradient(160deg, #0A0F2C 0%, #0e1338 45%, #1a1040 100%);
     animation: meshBreath 9s ease-in-out infinite alternate;
   }
   @keyframes meshBreath { 0%{opacity:1} 100%{opacity:.88} }
   .hero-grid-lines {
-    position: absolute; inset: 0; pointer-events: none;
+    position: absolute; inset: 0; pointer-events: none; z-index: 1;
     background-image:
       linear-gradient(rgba(245,166,35,.028) 1px, transparent 1px),
       linear-gradient(90deg, rgba(245,166,35,.028) 1px, transparent 1px);
@@ -94,727 +173,524 @@
   }
   @keyframes gridDrift { from{transform:translateY(0)} to{transform:translateY(72px)} }
   .hero-aurora {
-    position: absolute; border-radius: 50%; pointer-events: none;
+    position: absolute; border-radius: 50%; pointer-events: none; z-index: 1;
     width: 860px; height: 860px;
     background: radial-gradient(circle, rgba(245,166,35,.07) 0%, rgba(245,166,35,.02) 45%, transparent 70%);
     top: -320px; left: 50%; transform: translateX(-50%);
     animation: auroraPulse 7s ease-in-out infinite alternate;
   }
   @keyframes auroraPulse {
-    0%   { transform:translateX(-50%) scale(1);    opacity:.7; }
-    100% { transform:translateX(-50%) scale(1.18); opacity:1; }
+    0%  { transform:translateX(-50%) scale(1);    opacity:.7; }
+    100%{ transform:translateX(-50%) scale(1.18); opacity:1; }
   }
   .hero-stripe {
-    position: absolute; left:0; top:0; bottom:0; width:3px; pointer-events:none;
-    background: linear-gradient(to bottom,
-      transparent 0%, rgba(245,166,35,.55) 30%, rgba(245,166,35,.55) 70%, transparent 100%);
+    position: absolute; left:0; top:0; bottom:0; width:3px; pointer-events:none; z-index:2;
+    background: linear-gradient(to bottom, transparent 0%, rgba(245,166,35,.55) 30%, rgba(245,166,35,.55) 70%, transparent 100%);
   }
-  .hero-particles { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
-  .hero-particles span {
-    position:absolute; background:var(--gold, #F5A623); border-radius:50%;
-    opacity:0; animation:floatP linear infinite;
-  }
-  @keyframes floatP {
-    0%   { opacity:0; transform:translateY(0); }
-    10%  { opacity:.5; }
-    90%  { opacity:.3; }
-    100% { opacity:0; transform:translateY(-120px); }
-  }
+  .hero-particles { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:1; }
+  .hero-particles span { position:absolute; background:var(--gold); border-radius:50%; opacity:0; animation:floatP linear infinite; }
 
-  /* VIDEO — UPDATED: crop top 30%, opacity 0.8 */
+  /* VIDEO — fixed: crop top 30%, 80% opacity */
   .hero-video-bg {
-    position:absolute; top:0; left:0; width:100%; height:100%; inset:0; z-index:0;
+    position:absolute; inset:0; z-index:0; display:none;
   }
   .hero-video-bg video {
     width:100%; height:100%;
     object-fit: cover;
-    object-position: center 30%;   /* ← shifts video up, cropping empty top 30% */
-    opacity: 0.8;                  /* ← 80% opacity as requested */
-    z-index: 0;
+    object-position: center 30%; /* crops top 30% empty space */
+    opacity: 0.8;               /* 80% opacity */
   }
   .hero-video-bg::after {
     content:''; position:absolute; inset:0;
-    background: rgba(10,15,44,.65);
-    z-index: 1;
+    background: rgba(10,15,44,.55); z-index:1;
   }
 
-  /* Hero content */
   .hero-main {
     position: relative; z-index: 2; flex: 1;
     display: flex; align-items: center;
-    padding: 148px var(--px, 5%) 64px;
-    max-width: var(--max, 1280px); margin: 0 auto; width: 100%;
+    padding: 148px var(--px) 64px;
+    max-width: var(--max); margin: 0 auto; width: 100%;
+    gap: 40px;
   }
-  .hero-content-wrap { width:100%; max-width:820px; }
+  .hero-content-wrap { width:100%; max-width:640px; flex-shrink: 0; }
+
+  /* Character slot — right side of hero */
+  .hero-char-slot {
+    flex: 1;
+    min-height: 280px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
     background: rgba(245,166,35,.10); border: 1px solid rgba(245,166,35,.24);
     border-radius: 50px; padding: 6px 16px; margin-bottom: 32px;
     opacity: 0; animation: fadeUpHero .7s ease .3s forwards;
   }
-  .hero-badge-dot {
-    width:7px; height:7px; background:#F5A623; border-radius:50%;
-    animation:bdgP 2s infinite; flex-shrink:0;
-  }
+  .hero-badge-dot { width:7px; height:7px; background:var(--gold); border-radius:50%; animation:bdgP 2s infinite; flex-shrink:0; }
   @keyframes bdgP { 0%,100%{opacity:1} 50%{opacity:.3} }
-  .hero-badge span {
-    font-family:'Syne',sans-serif; font-size:11px; font-weight:700;
-    color:#F5A623; letter-spacing:2px; text-transform:uppercase;
-  }
+  .hero-badge span { font-family:var(--font-s); font-size:11px; font-weight:700; color:var(--gold); letter-spacing:2px; text-transform:uppercase; }
   .hero-hl {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(52px, 8vw, 90px);
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.1;
-    letter-spacing: -1.5px;
-    margin-bottom: 24px;
-    z-index: 5;
-    opacity: 0;
-    animation: fadeUpHero .85s ease .5s forwards;
+    font-family: var(--font-d);
+    font-size: clamp(48px, 7.6vw, 96px);
+    font-weight: 800; color: var(--white);
+    line-height: 1.06; letter-spacing: -1.5px; margin-bottom: 28px;
+    opacity: 0; animation: fadeUpHero .85s ease .5s forwards;
   }
-  .hero-hl em {
-    color: #F5A623; font-style: italic;
-    position: relative; display: inline-block;
-  }
+  .hero-hl em { color: var(--gold); font-style: italic; position: relative; display: inline-block; }
   .hero-hl em::after {
     content: ''; position:absolute; left:0; right:0; bottom:-5px;
-    height: 3px; background: #F5A623; border-radius: 2px;
+    height: 3px; background: var(--gold); border-radius: 2px;
     transform: scaleX(0); transform-origin: left;
     animation: lineReveal .65s ease 1.4s forwards;
   }
   @keyframes lineReveal { to { transform:scaleX(1); } }
   .hero-sub-new {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(14px, 1.55vw, 17px);
-    font-weight: 500;
-    color: rgba(168,184,216,.85);
-    line-height: 1.75;
-    max-width: 500px;
-    margin-bottom: 42px;
-    letter-spacing: .15px;
-    opacity: 0;
-    animation: fadeUpHero .7s ease .75s forwards;
+    font-family: var(--font-s); font-size: clamp(14px, 1.55vw, 17px); font-weight: 500;
+    color: rgba(168,184,216,.85); line-height: 1.75; max-width: 500px;
+    margin-bottom: 42px; letter-spacing: .15px;
+    opacity: 0; animation: fadeUpHero .7s ease .75s forwards;
   }
-  .hero-btns {
-    display: flex; gap: 14px; flex-wrap: wrap;
-    opacity: 0; animation: fadeUpHero .7s ease .95s forwards;
-  }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; opacity: 0; animation: fadeUpHero .7s ease .95s forwards; }
   .hero-divider {
-    position:relative; z-index:2;
-    width:100%; height:1px;
-    background: linear-gradient(to right,
-      transparent, rgba(245,166,35,.3) 40%, rgba(245,166,35,.3) 60%, transparent);
+    position:relative; z-index:2; width:100%; height:1px;
+    background: linear-gradient(to right, transparent, rgba(245,166,35,.3) 40%, rgba(245,166,35,.3) 60%, transparent);
   }
   .hero-stats-bar {
     position: relative; z-index: 2;
     background: rgba(255,255,255,.025);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 0 var(--px, 5%);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    padding: 0 var(--px);
   }
+  /* Stats: 3 columns on desktop, 2+1 on mobile */
   .hero-stats-inner {
-    max-width: var(--max, 1280px); margin: 0 auto;
+    max-width: var(--max); margin: 0 auto;
     display: grid; grid-template-columns: repeat(3,1fr);
   }
   .hero-stat-item {
-    padding: 26px 20px; text-align: center;
+    padding: 22px 16px; text-align: center;
     border-right: 1px solid rgba(255,255,255,.06);
     opacity: 0; animation: fadeUpHero .6s ease 1.2s forwards;
   }
-  .hero-stat-item:last-child  { border-right: none; }
+  .hero-stat-item:last-child { border-right: none; }
   .hero-stat-item:nth-child(2){ animation-delay: 1.35s; }
   .hero-stat-item:nth-child(3){ animation-delay: 1.5s; }
-  .hero-stat-num {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(26px, 3vw, 38px);
-    font-weight: 800; color: #F5A623;
-    line-height: 1; margin-bottom: 5px;
-  }
-  .hero-stat-label {
-    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
-    color: rgba(168,184,216,.7); letter-spacing: 1.5px; text-transform: uppercase;
-  }
+  .hero-stat-num { font-family: var(--font-s); font-size: clamp(22px, 2.8vw, 38px); font-weight: 800; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+  .hero-stat-label { font-family: var(--font-s); font-size: 10px; font-weight: 600; color: rgba(168,184,216,.7); letter-spacing: 1.2px; text-transform: uppercase; }
   .hero-scroll-cue {
-    position: absolute; bottom: 96px; right: var(--px, 5%);
+    position: absolute; bottom: 96px; right: var(--px);
     display: flex; flex-direction: column; align-items: center; gap: 8px;
     z-index: 2; opacity: 0; animation: fadeInHero .8s ease 1.8s forwards;
   }
-  .hero-scroll-cue span {
-    font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
-    color: rgba(168,184,216,.4); letter-spacing: 2.5px; text-transform: uppercase;
-    writing-mode: vertical-rl;
-  }
-  .hero-scroll-line {
-    width: 1px; height: 50px;
-    background: linear-gradient(to bottom, rgba(245,166,35,.6), transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-  @keyframes scrollPulse {
-    0%,100% { transform:scaleY(1);   opacity:.7; }
-    50%      { transform:scaleY(.5); opacity:.3; }
-  }
-  @keyframes fadeUpHero {
-    from { opacity:0; transform:translateY(26px); }
-    to   { opacity:1; transform:none; }
-  }
-  @keyframes fadeInHero {
-    from { opacity:0; }
-    to   { opacity:1; }
-  }
+  .hero-scroll-cue span { font-family: var(--font-s); font-size: 9px; font-weight: 700; color: rgba(168,184,216,.4); letter-spacing: 2.5px; text-transform: uppercase; writing-mode: vertical-rl; }
+  .hero-scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(245,166,35,.6), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+  @keyframes scrollPulse { 0%,100%{transform:scaleY(1);opacity:.7;} 50%{transform:scaleY(.5);opacity:.3;} }
+  @keyframes fadeUpHero { from{opacity:0;transform:translateY(26px);} to{opacity:1;transform:none;} }
+  @keyframes fadeInHero { from{opacity:0;} to{opacity:1;} }
 
-  /* ── CHARACTER ANIMATION SLOT SYSTEM ── */
-  /* These are placeholder containers for future Lottie characters.
-     Each has a unique shape/position based on the section's character action.
-     Remove the inner label text when replacing with actual Lottie JSON. */
-  .char-slot {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1.5px dashed rgba(245,166,35,.28);
-    border-radius: 16px;
-    background: rgba(245,166,35,.03);
-    position: relative;
-    flex-shrink: 0;
-    overflow: hidden;
-  }
-  .char-slot::before {
-    content: attr(data-char);
-    font-family: 'Syne', sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    color: rgba(245,166,35,.35);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 8px;
-    line-height: 1.5;
-  }
-  /* Hide char-slot labels in production — just add class .char-live to hide dashed border */
-  .char-slot.char-live { border: none; background: transparent; }
-  .char-slot.char-live::before { display:none; }
-
-  /* Hero character — top right corner of hero, parachute down */
-  .char-slot-hero {
-    position: absolute;
-    top: 120px;
-    right: 5%;
-    width: 200px;
-    height: 260px;
-    z-index: 3;
-    border-radius: 20px;
-  }
-
-  /* Dual path center character — between cards */
-  .dual-char-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  /* Section bottom character slots */
-  .char-slot-bottom {
-    width: 180px;
-    height: 200px;
-    margin: 32px auto 0;
-    display: block;
-  }
-
-  /* Right-side character slots */
-  .char-slot-right {
-    width: 200px;
-    height: 220px;
-    flex-shrink: 0;
-  }
-
-  /* Left-side character slots */
-  .char-slot-left {
-    width: 200px;
-    height: 220px;
-    flex-shrink: 0;
-  }
-
-  /* ── TRIBUTE SECTION ── */
-  #tribute {
-    background: linear-gradient(135deg, #0e1535 0%, #0A0F2C 60%, #1a1040 100%);
-    padding: 96px 0;
+  /* ── 3. MOTHER TRIBUTE SECTION ── */
+  #mother-tribute {
+    padding: var(--sy) 0;
+    background: linear-gradient(135deg, #0A0F2C 0%, #1E2761 100%);
     position: relative;
     overflow: hidden;
   }
-  #tribute::before {
+  #mother-tribute::before {
     content: '';
     position: absolute;
     top: -60px; right: -60px;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(245,166,35,.06) 0%, transparent 70%);
+    width: 320px; height: 320px;
     border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,166,35,.06), transparent);
     pointer-events: none;
   }
   .tribute-grid {
     display: grid;
-    grid-template-columns: 380px 1fr;
-    gap: 72px;
+    grid-template-columns: 340px 1fr;
+    gap: 64px;
     align-items: center;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 5%;
   }
   .tribute-img-wrap {
     position: relative;
   }
-  .tribute-img-frame {
+  .tribute-img-wrap img {
     width: 100%;
-    aspect-ratio: 4/5;
-    border-radius: 24px;
-    overflow: hidden;
-    border: 2px solid rgba(245,166,35,.2);
-    position: relative;
-    background: rgba(245,166,35,.04);
-  }
-  .tribute-img-frame img {
-    width: 100%; height: 100%;
+    aspect-ratio: 3/4;
     object-fit: cover;
+    border-radius: 20px;
     display: block;
-    filter: grayscale(15%) sepia(8%);
-    transition: filter .4s ease;
+    border: 3px solid rgba(245,166,35,.25);
+    box-shadow: 0 20px 56px rgba(0,0,0,.4);
   }
-  .tribute-img-frame img:hover { filter: none; }
-  /* Placeholder if no image yet */
+  /* Placeholder shown before real photo */
   .tribute-img-placeholder {
-    width: 100%; height: 100%;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    background: linear-gradient(135deg, #141B3F, #1E2761);
-    color: rgba(245,166,35,.4);
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-align: center;
-    padding: 20px;
+    width: 100%;
+    aspect-ratio: 3/4;
+    border-radius: 20px;
+    background: linear-gradient(145deg, rgba(30,39,97,.6), rgba(10,15,44,.8));
+    border: 2px dashed rgba(245,166,35,.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 12px;
   }
-  .tribute-img-placeholder .ph-icon {
-    font-size: 48px;
-    opacity: .35;
-  }
-  /* Gold accent corner */
-  .tribute-img-frame::after {
+  .tribute-img-placeholder span { font-size: 48px; opacity: .5; }
+  .tribute-img-placeholder p { font-family: var(--font-s); font-size: 10px; font-weight: 700; color: rgba(245,166,35,.5); letter-spacing: 2px; text-transform: uppercase; text-align: center; }
+  /* Gold corner accent */
+  .tribute-img-wrap::after {
     content: '';
     position: absolute;
-    bottom: 0; left: 0;
-    width: 100%; height: 40%;
-    background: linear-gradient(to top, rgba(245,166,35,.12), transparent);
-    pointer-events: none;
+    bottom: -12px; right: -12px;
+    width: 80px; height: 80px;
+    border-bottom: 3px solid var(--gold);
+    border-right: 3px solid var(--gold);
+    border-radius: 0 0 12px 0;
   }
-  /* Gold left line accent */
-  .tribute-img-wrap::before {
-    content: '';
-    position: absolute;
-    left: -16px; top: 10%; bottom: 10%;
-    width: 3px;
-    background: linear-gradient(to bottom, transparent, #F5A623, transparent);
-    border-radius: 2px;
+  .tribute-content {}
+  .tribute-label {
+    font-family: var(--font-s);
+    font-size: 10px; font-weight: 700;
+    color: var(--gold); letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 8px;
   }
-  /* Name plate */
-  .tribute-nameplate {
-    position: absolute;
-    bottom: -20px; left: 24px;
-    background: linear-gradient(135deg, #F5A623, #E8920A);
-    border-radius: 12px;
-    padding: 12px 20px;
-    box-shadow: 0 8px 24px rgba(245,166,35,.3);
+  .tribute-label::before { content: '❤️'; font-size: 14px; }
+  .tribute-name {
+    font-family: var(--font-d);
+    font-size: clamp(26px, 3.2vw, 38px);
+    font-weight: 700; color: var(--white);
+    line-height: 1.2; margin-bottom: 6px;
   }
-  .tribute-nameplate .tn-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 15px;
-    font-weight: 700;
-    color: #0A0F2C;
-    display: block;
-  }
-  .tribute-nameplate .tn-desc {
-    font-family: 'Syne', sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    color: rgba(10,15,44,.65);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  /* Text side */
-  .tribute-text { padding-top: 20px; }
-  .tribute-eyebrow {
-    font-family: 'Syne', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    color: #F5A623;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .tribute-eyebrow::after {
-    content: '';
-    height: 1px; width: 40px;
-    background: rgba(245,166,35,.4);
-  }
-  .tribute-headline {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(28px, 3.5vw, 42px);
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.25;
-    margin-bottom: 24px;
-  }
-  .tribute-headline em {
-    color: #F5A623;
-    font-style: italic;
+  .tribute-age {
+    font-family: var(--font-s); font-size: 13px; font-weight: 600;
+    color: var(--gold); margin-bottom: 24px; letter-spacing: .5px;
   }
   .tribute-quote {
-    border-left: 3px solid rgba(245,166,35,.5);
-    padding: 16px 20px;
-    margin-bottom: 24px;
-    background: rgba(245,166,35,.04);
+    margin-bottom: 22px;
+    padding: 14px 20px;
+    border-left: 3px solid var(--gold);
+    background: rgba(245,166,35,.05);
     border-radius: 0 10px 10px 0;
   }
   .tribute-quote p {
-    font-family: 'Playfair Display', serif;
-    font-size: 17px;
+    font-family: var(--font-d);
+    font-size: 16px; font-weight: 700;
+    color: var(--white); line-height: 1.6;
     font-style: italic;
-    color: rgba(255,255,255,.85);
-    line-height: 1.75;
-    margin: 0;
   }
   .tribute-body {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    color: rgba(168,184,216,.8);
-    line-height: 1.85;
+    font-size: 14.5px;
+    color: var(--text-muted);
+    line-height: 1.9;
     margin-bottom: 20px;
   }
-  .tribute-pillars {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 28px;
+  .tribute-body + .tribute-body { margin-top: -8px; }
+  .tribute-values {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px;
   }
-  .tribute-pillar {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    background: rgba(245,166,35,.08);
+  .tribute-val {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(245,166,35,.09);
     border: 1px solid rgba(245,166,35,.2);
-    border-radius: 50px;
-    padding: 7px 16px;
-    font-family: 'Syne', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    color: #F5A623;
-    letter-spacing: .5px;
-  }
-  .tribute-pillar::before {
-    content: '✦';
-    font-size: 9px;
+    border-radius: 50px; padding: 5px 14px;
+    font-family: var(--font-s); font-size: 11.5px; font-weight: 700;
+    color: var(--gold);
   }
 
-  /* ── DUAL PATH (updated for center character slot) ── */
-  #dual-path { padding: 80px 0; background: #F8F6F1; }
-  .dual-grid {
+  /* ── CHARACTER ANIMATION SLOT — reusable component ── */
+  .char-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px dashed rgba(30,39,97,.2);
+    border-radius: 16px;
+    background: rgba(30,39,97,.03);
+    font-family: var(--font-s);
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(30,39,97,.25);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+    flex-direction: column;
+    gap: 6px;
+    transition: border-color .3s;
+    overflow: hidden;
+  }
+  .char-slot.dark {
+    border-color: rgba(255,255,255,.07);
+    background: rgba(255,255,255,.02);
+    color: rgba(255,255,255,.15);
+  }
+  .char-slot::before { font-size: 22px; opacity: .35; }
+  /* Size variants */
+  .char-slot-sm { width: 80px; height: 100px; }
+  .char-slot-md { width: 120px; height: 160px; }
+  .char-slot-lg { width: 160px; height: 220px; }
+  .char-slot-xl { width: 200px; height: 260px; }
+
+  /* When actual video/gif is ready: replace char-slot with:
+     <video autoplay muted loop playsinline class="char-anim">
+       <source src="assets/video/char-wave.webm"/>
+     </video>
+     .char-anim { max-height: 260px; width: auto; }
+  */
+
+  /* ── DUAL PATH — character between cards ── */
+  #dual-path { padding: 60px 0; background: var(--hero-start); }
+  .dual-path-inner {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    gap: 32px;
+    gap: 20px;
     align-items: center;
   }
+  .dual-char-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 8px;
+  }
+  .dual-char-label {
+    font-family: var(--font-s); font-size: 9px; font-weight: 700;
+    color: rgba(245,166,35,.4); letter-spacing: 1.5px;
+    text-transform: uppercase; text-align: center; margin-top: 4px;
+  }
 
-  /* ── PLACED COMPANIES CAROUSEL ── */
-  #placed-carousel {
-    padding: 80px 0;
-    background: #0A0F2C;
+  /* ── 4. PLACED COMPANIES CAROUSEL ── */
+  #placed-companies {
+    padding: var(--sy) 0;
+    background: var(--cream-2);
+    overflow: hidden;
+  }
+  .placed-track-wrap {
+    margin-top: 40px;
     overflow: hidden;
     position: relative;
   }
-  #placed-carousel::before,
-  #placed-carousel::after {
+  /* Fade edges */
+  .placed-track-wrap::before,
+  .placed-track-wrap::after {
     content: '';
     position: absolute;
-    top: 0; bottom: 0; width: 120px;
+    top: 0; bottom: 0;
+    width: 80px;
     z-index: 2;
     pointer-events: none;
   }
-  #placed-carousel::before {
-    left: 0;
-    background: linear-gradient(to right, #0A0F2C, transparent);
-  }
-  #placed-carousel::after {
-    right: 0;
-    background: linear-gradient(to left, #0A0F2C, transparent);
-  }
-  .carousel-header {
-    text-align: center;
-    padding: 0 5%;
-    margin-bottom: 52px;
-  }
-  .carousel-track-wrap {
+  .placed-track-wrap::before { left: 0;  background: linear-gradient(to right, var(--cream-2), transparent); }
+  .placed-track-wrap::after  { right: 0; background: linear-gradient(to left,  var(--cream-2), transparent); }
+  .placed-track {
     display: flex;
-    gap: 0;
+    gap: 20px;
+    animation: placedScroll 28s linear infinite;
+    width: max-content;
+  }
+  .placed-track:hover { animation-play-state: paused; }
+  @keyframes placedScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .placed-card {
+    width: 220px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--rl);
     overflow: hidden;
-    width: 100%;
-  }
-  .carousel-row {
-    display: flex;
-    gap: 24px;
-    animation: carouselScroll 28s linear infinite;
-    padding: 12px 12px;
     flex-shrink: 0;
+    transition: var(--ease);
   }
-  .carousel-row:hover { animation-play-state: paused; }
-  @keyframes carouselScroll {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-  .placement-card {
-    background: #141B3F;
-    border: 1px solid rgba(245,166,35,.12);
-    border-radius: 18px;
-    padding: 24px 20px;
-    min-width: 230px;
-    max-width: 230px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    transition: border-color .3s, transform .3s;
-    cursor: default;
-  }
-  .placement-card:hover {
-    border-color: rgba(245,166,35,.4);
+  .placed-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 8px 28px rgba(245,166,35,.12);
     transform: translateY(-4px);
   }
-  .pc-img {
-    width: 100%;
-    height: 110px;
-    background: linear-gradient(135deg, #1E2761, #0A0F2C);
-    border-radius: 12px;
+  .placed-card-img {
+    height: 120px;
+    background: linear-gradient(135deg, var(--navy), #0A0F2C);
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    border: 1px solid rgba(245,166,35,.08);
+    position: relative;
   }
-  .pc-img img {
+  .placed-card-img img {
     width: 100%; height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
+    object-fit: contain;
+    padding: 16px;
+    filter: brightness(0) invert(1);
+    opacity: .7;
   }
-  .pc-img .pc-logo-ph {
-    font-family: 'Syne', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    color: rgba(245,166,35,.3);
-    letter-spacing: 1px;
-    text-align: center;
-    padding: 8px;
-  }
-  .pc-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #fff;
-    margin: 0;
-  }
-  .pc-sector {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    color: #F5A623;
-    letter-spacing: .5px;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    background: rgba(245,166,35,.08);
-    border-radius: 50px;
-    display: inline-block;
-    width: fit-content;
-  }
-  .pc-location {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    color: rgba(168,184,216,.7);
+  /* Placeholder shown before real logo */
+  .placed-logo-placeholder {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
+    opacity: .4;
   }
-  .pc-location::before { content: '📍'; font-size: 10px; }
+  .placed-logo-placeholder span { font-size: 28px; }
+  .placed-logo-placeholder p { font-family: var(--font-s); font-size: 9px; font-weight: 700; color: white; letter-spacing: 1px; text-transform: uppercase; }
+  .placed-card-body { padding: 14px 16px; }
+  .placed-sector-tag {
+    display: inline-block;
+    font-family: var(--font-s); font-size: 9.5px; font-weight: 700;
+    color: var(--gold); background: rgba(245,166,35,.08);
+    border-radius: 50px; padding: 2px 9px; letter-spacing: .8px;
+    margin-bottom: 6px;
+  }
+  .placed-company-name {
+    font-family: var(--font-s); font-size: 14px; font-weight: 700;
+    color: var(--text-dark); margin-bottom: 4px;
+  }
+  .placed-location {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 12px; color: var(--text-gray);
+  }
+  /* Character slot below carousel */
+  .placed-char-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 36px;
+  }
 
-  /* ── IMPACT SECTION — MOBILE 2×2 FIX ── */
-  .impact-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
-  /* Character slot for impact: centered below stats */
+  /* ── ABOUT SNAP — character in lottie area ── */
+  /* Already has lottie-box placeholder, char-slot replaces it gracefully */
+
+  /* ── IMPACT — character above stats grid ── */
   .impact-char-wrap {
     display: flex;
     justify-content: center;
-    margin-top: 40px;
+    margin-bottom: 32px;
   }
 
-  /* ── ABOUT SNAP ── */
-  #about-snap { padding: 96px 0; background: #F8F6F1; }
-  .about-snap-grid {
+  /* ── SERVICES PREV — character right of grid ── */
+  .svc-grid-wrap {
     display: grid;
-    grid-template-columns: 1fr 240px;
-    gap: 60px;
-    align-items: center;
+    grid-template-columns: 1fr auto;
+    gap: 28px;
+    align-items: start;
+    margin-top: 0;
   }
-
-  /* ── SERVICES PREVIEW ── */
-  #services-prev { padding: 96px 0; background: #F8F6F1; }
-  .svc-hd {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 44px;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-  .svc-grid {
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 20px;
-  }
-  /* Services char: upper-right, presenting */
   .svc-char-wrap {
     display: flex;
-    justify-content: flex-end;
+    align-items: flex-start;
+    padding-top: 16px;
+  }
+
+  /* ── SECTORS STRIP — character top-left ── */
+  .sectors-char-wrap {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 var(--px);
     margin-bottom: 16px;
   }
 
-  /* ── WHY US — char bottom center ── */
-  #why-us { padding: 96px 0; background: #fff; }
-  .why-grid {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 24px;
-    margin-top: 44px;
-  }
-
-  /* ── TESTIMONIALS ── */
-  #testimonials {
-    padding: 96px 0;
-    background: linear-gradient(180deg, #0A0F2C 0%, #1E2761 100%);
-  }
-  .testi-grid {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 24px;
-  }
-  /* Testimonial char: appears top-center above cards */
-  .testi-char-wrap {
+  /* ── WHY US — character below grid ── */
+  .why-char-wrap {
     display: flex;
     justify-content: center;
-    margin-bottom: 40px;
+    margin-top: 36px;
   }
 
-  /* ── CTA BANNER ── */
-  #cta-banner {
-    padding: 96px 0;
-    background: linear-gradient(135deg, #F5A623, #E8920A);
-    text-align: center;
+  /* ── TESTIMONIALS — character left of grid ── */
+  .testi-inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    align-items: start;
   }
-  /* CTA char: right side floating, waving */
+  .testi-char-wrap {
+    display: flex;
+    align-items: flex-start;
+    padding-top: 8px;
+  }
+
+  /* ── CTA — character above buttons ── */
   .cta-char-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  /* ── FOOTER character slot ── */
+  .footer-char-wrap {
     position: absolute;
-    right: 5%;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 64px;
+    right: var(--px);
   }
-  #cta-banner .cta-inner { position: relative; }
+  #footer { position: relative; }
 
-  /* ── ROBOT AI GIF (above WhatsApp button) ── */
-  #robot-float {
-    position: fixed;
-    bottom: 82px;          /* sits right above the WA button */
-    right: 20px;
-    width: 72px;           /* ~2× the WA button size */
-    height: 88px;          /* slightly taller for robot body proportion */
-    z-index: 1000;
-    pointer-events: none;  /* not clickable, as requested */
-    border-radius: 12px;
-    overflow: hidden;
-    filter: drop-shadow(0 4px 12px rgba(245,166,35,.35));
-    animation: robotBob 3s ease-in-out infinite;
+  /* ════════════════════
+     RESPONSIVE
+  ════════════════════ */
+  @media(max-width:1100px) {
+    .tribute-grid { grid-template-columns: 260px 1fr; gap: 40px; }
+    .svc-grid-wrap { grid-template-columns: 1fr; }
+    .svc-char-wrap { display: none; }
+    .testi-inner { grid-template-columns: 1fr; }
+    .testi-char-wrap { display: none; }
+    .hero-char-slot { display: none; }
   }
-  #robot-float img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-  }
-  @keyframes robotBob {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-6px); }
-  }
+  @media(max-width:768px) {
+    #fraud-ticker { height: 28px; }
+    #navbar { top: 28px; }
+    #hero { padding-top: 28px; }
+    .ticker-badge { display: none; }
+    .ticker-text { font-size: 10.5px; padding: 0 24px; }
 
-  /* ── MOBILE RESPONSIVE ── */
-  @media (max-width: 900px) {
-    .tribute-grid {
-      grid-template-columns: 1fr;
-      gap: 48px;
+    /* Stats: 2+1 layout on mobile */
+    .hero-stats-inner {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
     }
-    .tribute-img-wrap { max-width: 320px; margin: 0 auto; }
-    .tribute-img-wrap::before { display: none; }
-
-    .dual-grid {
-      grid-template-columns: 1fr;
+    .hero-stat-item:last-child {
+      grid-column: 1 / -1;
+      border-right: none;
+      border-top: 1px solid rgba(255,255,255,.06);
     }
-    .dual-char-center { order: -1; }
+    .hero-stat-item { padding: 16px 10px; }
+    .hero-stat-num { font-size: 20px; }
+    .hero-stat-label { font-size: 9px; letter-spacing: .6px; }
+    .hero-scroll-cue { display: none; }
+    .hero-stripe { display: none; }
 
-    .about-snap-grid {
+    .tribute-grid { grid-template-columns: 1fr; gap: 32px; }
+    .tribute-img-wrap { max-width: 260px; margin: 0 auto; }
+    .tribute-img-wrap::after { display: none; }
+
+    .dual-path-inner {
       grid-template-columns: 1fr;
-    }
-    .svc-grid { grid-template-columns: repeat(2,1fr); }
-    .why-grid { grid-template-columns: 1fr; }
-    .testi-grid { grid-template-columns: 1fr; }
-
-    .char-slot-hero { display: none; } /* hide on mobile to avoid clutter */
-    .cta-char-wrap { display: none; }
-  }
-
-  @media (max-width: 768px) {
-    /* IMPACT: 2×2 GRID ON MOBILE */
-    .impact-grid {
-      grid-template-columns: repeat(2, 1fr) !important;
       gap: 16px;
     }
+    .dual-char-center { display: none; }
 
-    .hero-main { padding: 120px 5% 52px; }
-    .hero-hl { letter-spacing: -.5px; }
-    .hero-sub-new { font-size:14px; max-width:100%; }
-    .hero-stat-item { padding:18px 8px; }
-    .hero-stat-num { font-size:22px; }
-    .hero-stat-label { font-size:9px; letter-spacing:.6px; }
-    .hero-scroll-cue { display:none; }
-    .hero-stripe { display:none; }
+    .sectors-char-wrap { display: none; }
+    .why-char-wrap { display: none; }
+    .placed-char-wrap { display: none; }
+    .cta-char-wrap { display: none; }
+    .footer-char-wrap { display: none; }
+
+    .hero-main { padding: 110px 5% 48px; gap: 0; flex-direction: column; }
+    .hero-hl { font-size: 40px; letter-spacing: -.5px; }
+    .hero-sub-new { font-size: 14px; max-width: 100%; }
+    .hero-btns { flex-direction: column; align-items: flex-start; }
+    .hero-btns .btn { width: 100%; justify-content: center; }
   }
-
-  @media (max-width: 480px) {
-    .hero-hl { font-size:44px; letter-spacing:-.5px; }
-    .hero-btns { flex-direction:column; align-items:flex-start; }
-    .hero-btns .btn { width:100%; justify-content:center; }
-    .hero-stats-inner { grid-template-columns: repeat(3, 1fr); }
-    .svc-grid { grid-template-columns: 1fr; }
-
-    .tribute-headline { font-size: 26px; }
-    .tribute-grid { padding: 0 4%; }
-
-    #robot-float { width: 58px; height: 72px; bottom: 74px; }
+  @media(max-width:480px) {
+    .hero-hl { font-size: 36px; }
+    .impact-char-wrap { display: none; }
   }
   </style>
 </head>
 <body>
 
-<!-- PRELOADER -->
+<!-- ═══ PRELOADER (homepage only) ═══ -->
 <div id="preloader">
   <div class="pre-wrap">
     <img src="assets/logo.png" alt="MAINDSOURCE Logo" class="pre-img" onerror="this.style.display='none'"/>
@@ -828,21 +704,43 @@
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- ══ ROBOT AI FLOAT (above WhatsApp button) ══
-     Replace src with actual robot GIF once ready.
-     pointer-events: none — not clickable by design.
--->
-<div id="robot-float">
-  <img src="assets/img/ai-robot.gif" alt="AI Assistant"
-       onerror="this.parentElement.style.display='none'"/>
+<!-- ═══ 1. ANTI-FRAUD TICKER ═══ -->
+<div id="fraud-ticker" role="marquee" aria-label="Important Notice">
+  <div class="ticker-badge">
+    <div class="ticker-dot"></div>
+    Notice
+  </div>
+  <div class="ticker-track">
+    <div class="ticker-inner">
+      <!-- Duplicate text so loop is seamless -->
+      <span class="ticker-text">&#9888;&#65039;&nbsp;&nbsp;<strong>Important:</strong>&nbsp;MAINDSOURCE never charges any fees, deposits, or commissions from job seekers. Our placement service is completely free. Please disregard and report anyone claiming to collect money on our behalf.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <span class="ticker-text">&#9888;&#65039;&nbsp;&nbsp;<strong>Important:</strong>&nbsp;MAINDSOURCE never charges any fees, deposits, or commissions from job seekers. Our placement service is completely free. Please disregard and report anyone claiming to collect money on our behalf.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    </div>
+  </div>
 </div>
 
-<!-- WhatsApp -->
+<!-- ═══ 2. ROBOT GIF PLACEHOLDER (above WhatsApp) ═══ -->
+<!-- Replace src with your actual GIF once ready -->
+<!-- File path: assets/img/ai-robot.gif -->
+<div id="robot-float" aria-hidden="true">
+  <img
+    src="assets/video/AI Robot Assistant Widget Animation_720p-Picsart-BackgroundRemover.webm"
+    alt="AI Assistant"
+    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+  />
+  <!-- Fallback shown before GIF is uploaded -->
+  <div class="robot-fallback" style="display:none;">
+    <span>&#129302;</span>
+    <p>AI Robot<br>Coming Soon</p>
+  </div>
+</div>
+
+<!-- ═══ WhatsApp ═══ -->
 <a id="wa-float" href="https://wa.me/919071329231" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<!-- NAVBAR -->
+<!-- ═══ NAVBAR ═══ -->
 <nav id="navbar">
   <a href="index.html" class="nav-brand">
     <img src="assets/logo.png" alt="MAINDSOURCE" class="nav-brand-img" onerror="this.style.display='none'"/>
@@ -885,52 +783,30 @@
   <a href="contact.html" class="mob-cta">Start Hiring &#8594;</a>
 </div>
 
-<!-- ══════════════════════════════════════════
-     1. ANTI-FRAUD TICKER — below navbar
-     Scrolls continuously. Pauses on hover.
-══════════════════════════════════════════ -->
-<div id="fraud-ticker" role="marquee" aria-label="Important Notice">
-  <div class="ticker-track" id="tickerTrack">
-    <!-- duplicated 6× so it scrolls seamlessly -->
-    <div class="ticker-item"><div class="ticker-dot"></div>⚠️ Important Notice: MAINDSOURCE LLP does not charge any fees, deposits, or commissions from job seekers at any stage. Please ignore and report anyone who asks for money on our behalf.<div class="ticker-dot"></div></div>
-    <div class="ticker-item"><div class="ticker-dot"></div>Our placement services are 100% FREE for candidates. Any demand for money is fraudulent — contact us immediately at +91 9071329231.<div class="ticker-dot"></div></div>
-    <div class="ticker-item"><div class="ticker-dot"></div>⚠️ Important Notice: MAINDSOURCE LLP does not charge any fees, deposits, or commissions from job seekers at any stage. Please ignore and report anyone who asks for money on our behalf.<div class="ticker-dot"></div></div>
-    <div class="ticker-item"><div class="ticker-dot"></div>Our placement services are 100% FREE for candidates. Any demand for money is fraudulent — contact us immediately at +91 9071329231.<div class="ticker-dot"></div></div>
-    <div class="ticker-item"><div class="ticker-dot"></div>⚠️ Important Notice: MAINDSOURCE LLP does not charge any fees, deposits, or commissions from job seekers at any stage. Please ignore and report anyone who asks for money on our behalf.<div class="ticker-dot"></div></div>
-    <div class="ticker-item"><div class="ticker-dot"></div>Our placement services are 100% FREE for candidates. Any demand for money is fraudulent — contact us immediately at +91 9071329231.<div class="ticker-dot"></div></div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     HERO SECTION
-══════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════
+     CINEMATIC HERO
+════════════════════════════════════════ -->
 <section id="hero">
 
-  <!-- VIDEO BG — Updated: object-position crops top 30%, opacity 0.8 -->
-  <div class="hero-video-bg">
+  <!-- VIDEO BG — change display:none → display:block when video ready -->
+  <div class="hero-video-bg" style="display:none;">
     <video autoplay muted loop playsinline>
       <source src="assets/video/hero-bg.mp4" type="video/mp4"/>
     </video>
   </div>
 
-  <!-- CSS cinematic layers -->
+  <!-- CSS layers -->
   <div class="hero-bg-mesh"></div>
   <div class="hero-grid-lines"></div>
   <div class="hero-aurora"></div>
   <div class="hero-stripe"></div>
   <div class="hero-particles" id="heroP"></div>
 
-  <!-- CHARACTER SLOT: Hero — parachutes down from top-right, waves at visitor -->
-  <!-- Action: Character floats down, lands, waves. ScrollTrigger will sync walk to scroll. -->
-  <div class="char-slot char-slot-hero" data-char="CHARACTER&#10;Parachutes Down&#10;Waves at Visitor&#10;(Lottie — Scroll Driven)"></div>
-
-  <!-- Scroll cue -->
   <div class="hero-scroll-cue">
     <span>Scroll</span>
     <div class="hero-scroll-line"></div>
   </div>
 
-  <!-- Hero content -->
   <div class="hero-main">
     <div class="hero-content-wrap">
       <div class="hero-badge">
@@ -944,7 +820,7 @@
         Right Time.
       </h1>
       <p class="hero-sub-new">
-        India's most trusted tech-enabled manpower partner &mdash; delivering screened, job-ready talent within 72 hours.
+        India&rsquo;s most trusted tech-enabled manpower partner &mdash; delivering screened, job-ready talent within 72 hours.
       </p>
       <div class="hero-btns">
         <a href="contact.html" class="btn btn-gold">
@@ -957,9 +833,19 @@
         </a>
       </div>
     </div>
+
+    <!-- CHARACTER SLOT — right side, hero wave action -->
+    <!-- Replace div.char-slot with <video> tag when animation is ready -->
+    <div class="hero-char-slot">
+      <div class="char-slot dark char-slot-xl" style="border-color:rgba(245,166,35,.12);">
+        <!-- ANIMATION ZONE
+             Action: Wave & greet
+             Replace with: assets/video/char-wave.webm
+             Size: 200×260px -->
+      </div>
+    </div>
   </div>
 
-  <!-- Stats bar pinned to bottom -->
   <div class="hero-divider"></div>
   <div class="hero-stats-bar">
     <div class="hero-stats-inner">
@@ -977,113 +863,93 @@
       </div>
     </div>
   </div>
+
 </section>
 
-<!-- ══════════════════════════════════════════
-     2. DUAL PATH — Employer vs Job Seeker
-     Character centered BETWEEN the two cards,
-     pointing left (employers) and right (seekers)
-══════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════
+     3. MOTHER TRIBUTE — The Heart of the Company
+════════════════════════════════════════ -->
+<section id="mother-tribute">
+  <div class="container">
+    <div class="tribute-grid">
+
+      <!-- Left: Photo -->
+      <div class="tribute-img-wrap reveal">
+        <!-- Replace placeholder with: <img src="assets/img/mother-varamahalakshmi.jpg" alt="Smt. Varamahalakshmi"/> -->
+        <div class="tribute-img-placeholder">
+          <span>&#128105;</span>
+          <p>Photo Placeholder<br>Replace with<br>mother-varamahalakshmi.jpg</p>
+        </div>
+      </div>
+
+      <!-- Right: Tribute text -->
+      <div class="tribute-content">
+        <div class="tribute-label reveal-left">The Woman Behind the Vision</div>
+        <h2 class="tribute-name reveal-left">Smt. Karnataka</h2>
+        <div class="tribute-age reveal-left">Mother of Surya Kiran &nbsp;&middot;&nbsp; 46 Years of Grace &amp; Wisdom</div>
+
+        <div class="tribute-quote reveal-left">
+          <p>&ldquo;She never told me what to become. She showed me how to be &mdash; through her grace, her resilience, and her unwavering belief that a woman&rsquo;s strength can change the world.&rdquo;</p>
+        </div>
+
+        <p class="tribute-body reveal-left">
+          Every company has an origin story. Ours begins not in a boardroom, but in the quiet teachings of a remarkable woman. Smt. Varamahalakshmi instilled in her son the values that form the very foundation of MAINDSOURCE &mdash; integrity in every action, dignity for every person, and the deep conviction that empowering people is the highest form of service.
+        </p>
+        <p class="tribute-body reveal-left">
+          It was her belief &mdash; demonstrated through her own life &mdash; that women are not just participants in society but the driving force behind it. She believed that when a woman stands tall, entire families and communities rise with her. This belief became the guiding principle of how we work: every placement we make, every woman we hire and empower, every family we support through employment is a tribute to her life&rsquo;s philosophy.
+        </p>
+        <p class="tribute-body reveal-left">
+          MAINDSOURCE&rsquo;s commitment to Women Empowerment is not a policy. It is a promise &mdash; born from the teachings of a mother who led by example, who chose compassion over convention, and who believed that the right opportunity in the right hands can transform a life forever.
+        </p>
+
+        <div class="tribute-values reveal-left">
+          <span class="tribute-val">&#10024; Integrity</span>
+          <span class="tribute-val">&#10024; Compassion</span>
+          <span class="tribute-val">&#10024; Women&rsquo;s Strength</span>
+          <span class="tribute-val">&#10024; Dignity of Work</span>
+          <span class="tribute-val">&#10024; Family First</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════ DUAL PATH ════════ -->
 <section id="dual-path">
   <div class="container">
-    <div class="dual-grid">
+    <!-- 3-column on desktop: card | character (points both ways) | card -->
+    <div class="dual-path-inner">
 
-      <!-- Left card — Employers -->
       <div class="path-card reveal">
         <div class="path-icon">&#127970;</div>
         <h3>Looking to Hire?</h3>
         <p>Build your ideal workforce with our tech-enabled recruitment solutions. From blue-collar to white-collar &mdash; we deliver screened, qualified professionals.</p>
-        <a href="services.html" class="path-link">View Employer Services
-          <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
+        <a href="services.html" class="path-link">View Employer Services <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
 
-      <!-- CENTER: Character points both directions -->
-      <!-- Action: One hand points LEFT toward employers, other points RIGHT toward job seekers. Loops. -->
-      <div class="dual-char-center reveal">
-        <div class="char-slot" style="width:140px;height:190px;" data-char="CHARACTER&#10;Points Left&#10;& Right&#10;(Lottie — Loop)"></div>
+      <!-- CHARACTER SLOT — between the two cards, pointing both ways -->
+      <div class="dual-char-center">
+        <div class="char-slot dark char-slot-md" style="border-color:rgba(245,166,35,.1);">
+          <!-- ANIMATION ZONE
+               Action: Point left + right (both paths)
+               Replace with: assets/video/char-point-both.webm -->
+        </div>
+        <div class="dual-char-label">Or</div>
       </div>
 
-      <!-- Right card — Job Seekers -->
       <div class="path-card reveal">
         <div class="path-icon">&#128188;</div>
         <h3>Looking for Work?</h3>
         <p>Your next opportunity is waiting. We connect job seekers across South India with top companies in Bangalore &mdash; free placement service.</p>
-        <a href="jobseekers.html" class="path-link">Find Opportunities
-          <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
+        <a href="jobseekers.html" class="path-link">Find Opportunities <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     3. TRIBUTE TO FOUNDER'S MOTHER
-     Varamahalakshmi — the moral compass &
-     women empowerment inspiration behind
-     MAINDSOURCE LLP
-══════════════════════════════════════════ -->
-<section id="tribute">
-  <div class="tribute-grid">
-
-    <!-- LEFT: Photo with name plate -->
-    <div class="tribute-img-wrap reveal">
-      <div class="tribute-img-frame">
-        <!-- Replace src below with actual photo -->
-        <img src="assets/img/mother-tribute.jpg" alt="Smt. Varamahalakshmi — Mother of Surya Kiran"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
-        <div class="tribute-img-placeholder" style="display:none;">
-          <div class="ph-icon">🙏</div>
-          <div>Photo Placeholder<br>Replace with:<br>assets/img/mother-tribute.jpg</div>
-        </div>
-      </div>
-      <!-- Gold name plate -->
-      <div class="tribute-nameplate">
-        <span class="tn-name">Smt. Varamahalakshmi</span>
-        <span class="tn-desc">The Heart Behind MAINDSOURCE</span>
-      </div>
-    </div>
-
-    <!-- RIGHT: Tribute text -->
-    <div class="tribute-text reveal">
-      <div class="tribute-eyebrow">A Mother's Legacy</div>
-
-      <h2 class="tribute-headline">
-        She Taught Him That <em>Every Woman Deserves</em> a Place at the Table
-      </h2>
-
-      <div class="tribute-quote">
-        <p>"Behind every company that stands for something, there is a person who made the founder believe it was possible."</p>
-      </div>
-
-      <p class="tribute-body">
-        Smt. Varamahalakshmi is more than a mother to Surya Kiran — she is the foundation upon which MAINDSOURCE was built. Her wisdom, quiet strength, and unwavering belief in people taught him that every individual, regardless of background or circumstance, carries immense potential waiting to be recognised.
-      </p>
-
-      <p class="tribute-body">
-        Her deep conviction that women are among the most capable, determined, and resilient members of any workforce became the moral compass of this company. She instilled in Surya not just the drive to succeed in business, but the purpose behind it — to open doors, create opportunities, and champion equality in every placement MAINDSOURCE makes.
-      </p>
-
-      <p class="tribute-body">
-        The Women Empowerment mission at MAINDSOURCE is not a policy. It is a promise — the same promise she made every single day: that hard work, integrity, and belief in others can change lives.
-      </p>
-
-      <div class="tribute-pillars">
-        <span class="tribute-pillar">Equal Opportunity</span>
-        <span class="tribute-pillar">Strength &amp; Character</span>
-        <span class="tribute-pillar">Women's Dignity</span>
-        <span class="tribute-pillar">Leadership by Example</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     ABOUT SNAPSHOT
-     Character: sits, opens book, looks up smiling
-     Position: right side of content (reading pose)
-══════════════════════════════════════════ -->
+<!-- ════════ ABOUT SNAPSHOT ════════ -->
 <section id="about-snap">
   <div class="container">
     <div class="about-snap-grid">
@@ -1097,89 +963,72 @@
           <span class="pill"><span class="pill-dot"></span>Bangalore &middot; Ballari</span>
           <span class="pill"><span class="pill-dot"></span>Pan-India Reach</span>
         </div>
-        <a href="about.html" class="btn btn-gold reveal-left" style="width:fit-content;margin-top:28px;">Learn More
-          <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
+        <a href="about.html" class="btn btn-gold reveal-left" style="width:fit-content;">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
-      <!-- CHARACTER SLOT: sits reading a book, looks up smiling when scrolled into view -->
-      <div style="display:flex;justify-content:center;align-items:center;" class="reveal">
-        <div class="char-slot char-slot-right" data-char="CHARACTER&#10;Sits & Reads Book&#10;Looks Up Smiling&#10;(Lottie — Play Once)"></div>
+      <!-- CHARACTER SLOT replaces lottie-box here — reading/thinking pose -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;" class="reveal">
+        <div class="char-slot char-slot-xl">
+          <!-- ANIMATION ZONE
+               Action: Sit, reading, look up and smile
+               Replace with: assets/video/char-reading.webm -->
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     IMPACT
-     Character: center-bottom, throws arms up celebrating
-══════════════════════════════════════════ -->
+<!-- ════════ IMPACT ════════ -->
 <section id="impact">
   <div class="container">
-    <div class="text-center" style="margin-bottom:44px;">
+    <div class="text-center" style="margin-bottom:28px;">
       <span class="section-label reveal" style="color:rgba(245,166,35,.8);">Our Impact</span>
       <h2 class="section-title light reveal">Proven Results. Trusted Partners.</h2>
       <p class="section-sub light reveal">Numbers that reflect our commitment to connecting talent with opportunity.</p>
     </div>
-    <div class="impact-grid">
-      <div class="impact-card reveal">
-        <span class="impact-icon">&#128101;</span>
-        <div class="impact-num" data-target="8000">0</div>
-        <div class="impact-label">Candidates Interacted</div>
-        <div class="impact-sub">Across 10+ industries</div>
-      </div>
-      <div class="impact-card reveal">
-        <span class="impact-icon">&#129309;</span>
-        <div class="impact-num" data-target="50">0</div>
-        <div class="impact-label">Satisfied Clients</div>
-        <div class="impact-sub">Long-term partnerships</div>
-      </div>
-      <div class="impact-card reveal">
-        <span class="impact-icon">&#127970;</span>
-        <div class="impact-num" data-target="2">0</div>
-        <div class="impact-label">Office Branches</div>
-        <div class="impact-sub">Bangalore &middot; Ballari</div>
-      </div>
-      <div class="impact-card reveal">
-        <span class="impact-icon">&#127942;</span>
-        <div class="impact-num" data-target="1">0</div>
-        <div class="impact-label">Year of Excellence</div>
-        <div class="impact-sub">Est. 2025 | Inc. 2026</div>
+    <!-- CHARACTER SLOT — above stats, celebrating pose -->
+    <div class="impact-char-wrap reveal">
+      <div class="char-slot dark char-slot-md" style="border-color:rgba(245,166,35,.1);">
+        <!-- ANIMATION ZONE
+             Action: Throw arms up, celebrate
+             Replace with: assets/video/char-celebrate.webm -->
       </div>
     </div>
-    <!-- CHARACTER SLOT: celebrates below stats — arms thrown up, confetti -->
-    <div class="impact-char-wrap reveal">
-      <div class="char-slot char-slot-bottom"
-           data-char="CHARACTER&#10;Jumps & Celebrates&#10;Arms Thrown Up&#10;(Lottie — Loop)"></div>
+    <div class="impact-grid">
+      <div class="impact-card reveal"><span class="impact-icon">&#128101;</span><div class="impact-num" data-target="8000">0</div><div class="impact-label">Candidates Interacted</div><div class="impact-sub">Across 10+ industries</div></div>
+      <div class="impact-card reveal"><span class="impact-icon">&#129309;</span><div class="impact-num" data-target="50">0</div><div class="impact-label">Satisfied Clients</div><div class="impact-sub">Long-term partnerships</div></div>
+      <div class="impact-card reveal"><span class="impact-icon">&#127970;</span><div class="impact-num" data-target="2">0</div><div class="impact-label">Office Branches</div><div class="impact-sub">Bangalore &middot; Ballari</div></div>
+      <div class="impact-card reveal"><span class="impact-icon">&#127942;</span><div class="impact-num" data-target="1">0</div><div class="impact-label">Year of Excellence</div><div class="impact-sub">Est. 2025 | Inc. 2026</div></div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     SERVICES PREVIEW
-     Character: upper-right of section, presents/gestures to cards
-══════════════════════════════════════════ -->
+<!-- ════════ SERVICES PREVIEW ════════ -->
 <section id="services-prev">
   <div class="container">
-    <!-- CHARACTER SLOT: stands confidently, sweeps hand across service cards -->
-    <!-- Positioned top-right of the section header -->
-    <div class="svc-char-wrap reveal" style="justify-content:flex-end;">
-      <div class="char-slot char-slot-right"
-           style="width:160px;height:180px;"
-           data-char="CHARACTER&#10;Presents Cards&#10;Sweep Gesture&#10;(Lottie — Play Once)"></div>
-    </div>
     <div class="svc-hd">
       <div>
         <span class="section-label reveal-left">What We Offer</span>
         <h2 class="section-title reveal-left">Comprehensive Workforce Solutions</h2>
-        <p style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#F5A623;letter-spacing:1px;" class="reveal-left">HIRE BETTER &middot; HIRE FASTER &middot; GROW BIGGER</p>
+        <p style="font-family:var(--font-s);font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1px;" class="reveal-left">HIRE BETTER &middot; HIRE FASTER &middot; GROW BIGGER</p>
       </div>
       <a href="services.html" class="btn btn-gold reveal" style="flex-shrink:0;">View All Services</a>
     </div>
-    <div class="svc-grid">
-      <div class="svc-card reveal"><div class="svc-num">01</div><div class="svc-icon">&#129309;</div><h3>Contractual Staffing</h3><p>Flexible contract-based staffing for short-term projects. Rapid deployment of skilled personnel.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
-      <div class="svc-card reveal"><div class="svc-num">02</div><div class="svc-icon">&#127919;</div><h3>One-Time Placement</h3><p>Permanent recruitment for blue-collar and white-collar roles. Perfect cultural fit guaranteed.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
-      <div class="svc-card reveal"><div class="svc-num">03</div><div class="svc-icon">&#128176;</div><h3>Payroll Management</h3><p>End-to-end payroll processing and statutory compliance. We handle complexities so you focus on growth.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
-      <div class="svc-card reveal"><div class="svc-num">04</div><div class="svc-icon">&#127891;</div><h3>Training &amp; Development</h3><p>Skill enhancement and onboarding programs. Talent ready to contribute from day one.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+    <!-- Grid + character on right -->
+    <div class="svc-grid-wrap">
+      <div class="svc-grid">
+        <div class="svc-card reveal"><div class="svc-num">01</div><div class="svc-icon">&#129309;</div><h3>Contractual Staffing</h3><p>Flexible contract-based staffing for short-term projects. Rapid deployment of skilled personnel.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+        <div class="svc-card reveal"><div class="svc-num">02</div><div class="svc-icon">&#127919;</div><h3>One-Time Placement</h3><p>Permanent recruitment for blue-collar and white-collar roles. Perfect cultural fit guaranteed.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+        <div class="svc-card reveal"><div class="svc-num">03</div><div class="svc-icon">&#128176;</div><h3>Payroll Management</h3><p>End-to-end payroll processing and statutory compliance. We handle complexities so you focus on growth.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+        <div class="svc-card reveal"><div class="svc-num">04</div><div class="svc-icon">&#127891;</div><h3>Training &amp; Development</h3><p>Skill enhancement and onboarding programs. Talent ready to contribute from day one.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+      </div>
+      <!-- CHARACTER SLOT — right of service cards, pointing/sweeping -->
+      <div class="svc-char-wrap reveal">
+        <div class="char-slot char-slot-xl">
+          <!-- ANIMATION ZONE
+               Action: Sweep hand across cards, confident stance
+               Replace with: assets/video/char-point.webm -->
+        </div>
+      </div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;">
       <span class="pill"><span class="pill-dot"></span>Gig Workforce</span>
@@ -1190,22 +1039,22 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     SECTORS STRIP
-     Character: walks left to right inside the strip
-══════════════════════════════════════════ -->
+<!-- ════════ SECTORS STRIP ════════ -->
 <section id="sectors-strip">
   <div class="container strip-hd">
     <span class="section-label" style="color:rgba(245,166,35,.8);">Industries We Serve</span>
     <h2 class="section-title light reveal">Diverse Industry Expertise Across India</h2>
   </div>
-  <!-- CHARACTER SLOT: walks L→R along the sectors marquee — positioned above the strip -->
-  <div style="display:flex;justify-content:center;margin-bottom:16px;" class="reveal">
-    <div class="char-slot" style="width:120px;height:130px;"
-         data-char="CHARACTER&#10;Walks L→R&#10;(Lottie — Loop)"></div>
+  <!-- CHARACTER SLOT — top-left, walking left→right with the marquee -->
+  <div class="sectors-char-wrap">
+    <div class="char-slot dark char-slot-sm" style="border-color:rgba(245,166,35,.1);">
+      <!-- ANIMATION ZONE
+           Action: Walk in place / walk left→right
+           Replace with: assets/video/char-walk.webm -->
+    </div>
   </div>
   <div class="marquee-wrap">
-    <div class="marquee-row" id="mRow1">
+    <div class="marquee-row">
       <div class="s-chip"><span class="s-chip-icon">&#127981;</span><span class="s-chip-name">Manufacturing</span></div>
       <div class="s-chip"><span class="s-chip-icon">&#128663;</span><span class="s-chip-name">Automobile</span></div>
       <div class="s-chip"><span class="s-chip-icon">&#128717;</span><span class="s-chip-name">Retail</span></div>
@@ -1243,10 +1092,7 @@
   <p class="strip-tagline container">From <strong>blue-collar operators</strong> to <strong>white-collar professionals</strong> &mdash; we cover it all.</p>
 </section>
 
-<!-- ══════════════════════════════════════════
-     WHY US
-     Character: thumbs up, bottom-center below 3 cards
-══════════════════════════════════════════ -->
+<!-- ════════ WHY US ════════ -->
 <section id="why-us">
   <div class="container">
     <div class="text-center">
@@ -1259,163 +1105,18 @@
       <div class="why-card reveal"><div class="why-icon">&#128105;&#8205;&#128188;</div><h3>Women Empowerment Focus</h3><p>Central pillar of everything we stand for &mdash; every placement and partnership reflects this commitment.</p></div>
       <div class="why-card reveal"><div class="why-icon">&#128205;</div><h3>South India Specialists</h3><p>Deep expertise across Karnataka, Andhra Pradesh and Telangana with growing Pan-India reach.</p></div>
     </div>
-    <!-- CHARACTER SLOT: thumbs-up below Why Us cards — plays once on scroll -->
-    <div style="display:flex;justify-content:center;margin-top:36px;" class="reveal">
-      <div class="char-slot char-slot-bottom" style="width:150px;height:160px;"
-           data-char="CHARACTER&#10;Thumbs Up Pose&#10;(Lottie — Play Once)"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     4. PLACED COMPANIES CAROUSEL
-     Auto-scrolling cards of companies where
-     candidates were successfully placed.
-══════════════════════════════════════════ -->
-<section id="placed-carousel">
-  <div class="carousel-header">
-    <span class="section-label reveal" style="color:rgba(245,166,35,.8);">Successful Placements</span>
-    <h2 class="section-title light reveal">Companies Where Our Candidates Work</h2>
-    <p class="section-sub light reveal">From manufacturing giants to tech companies &mdash; we've placed qualified talent across top employers.</p>
-  </div>
-
-  <div class="carousel-track-wrap">
-    <!-- Row 1 (duplicated to make seamless loop) -->
-    <div class="carousel-row">
-      <!-- Card 1 -->
-      <div class="placement-card">
-        <div class="pc-img">
-          <img src="assets/img/placements/foxconn.jpg" alt="Foxconn"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
-          <div class="pc-logo-ph" style="display:none;">Company Photo<br>Placeholder</div>
-        </div>
-        <p class="pc-name">Foxconn Technology</p>
-        <span class="pc-sector">Electronics Manufacturing</span>
-        <div class="pc-location">Sriperumbudur, Tamil Nadu</div>
-      </div>
-      <!-- Card 2 -->
-      <div class="placement-card">
-        <div class="pc-img">
-          <img src="assets/img/placements/toyota.jpg" alt="Toyota"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
-          <div class="pc-logo-ph" style="display:none;">Company Photo<br>Placeholder</div>
-        </div>
-        <p class="pc-name">Toyota Kirloskar</p>
-        <span class="pc-sector">Automobile</span>
-        <div class="pc-location">Bidadi, Karnataka</div>
-      </div>
-      <!-- Card 3 -->
-      <div class="placement-card">
-        <div class="pc-img">
-          <img src="assets/img/placements/wistron.jpg" alt="Wistron"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
-          <div class="pc-logo-ph" style="display:none;">Company Photo<br>Placeholder</div>
-        </div>
-        <p class="pc-name">Wistron InfoComm</p>
-        <span class="pc-sector">IT Manufacturing</span>
-        <div class="pc-location">Electronic City, Bangalore</div>
-      </div>
-      <!-- Card 4 -->
-      <div class="placement-card">
-        <div class="pc-img">
-          <img src="assets/img/placements/schneider.jpg" alt="Schneider Electric"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
-          <div class="pc-logo-ph" style="display:none;">Company Photo<br>Placeholder</div>
-        </div>
-        <p class="pc-name">Schneider Electric</p>
-        <span class="pc-sector">Electrical &amp; Energy</span>
-        <div class="pc-location">Bangalore, Karnataka</div>
-      </div>
-      <!-- Card 5 -->
-      <div class="placement-card">
-        <div class="pc-img">
-          <img src="assets/img/placements/ola.jpg" alt="Ola Electric"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
-          <div class="pc-logo-ph" style="display:none;">Company Photo<br>Placeholder</div>
-        </div>
-        <p class="pc-name">Ola Electric</p>
-        <span class="pc-sector">EV Manufacturing</span>
-        <div class="pc-location">Krishnagiri, Tamil Nadu</div>
-      </div>
-      <!-- Card 6 -->
-      <div class="placement-card">
-        <div class="pc-img">
-          <img src="assets/img/placements/motherson.jpg" alt="Motherson"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
-          <div class="pc-logo-ph" style="display:none;">Company Photo<br>Placeholder</div>
-        </div>
-        <p class="pc-name">Motherson Group</p>
-        <span class="pc-sector">Auto Components</span>
-        <div class="pc-location">Pune &amp; Bangalore</div>
-      </div>
-      <!-- Duplicate for seamless loop -->
-      <div class="placement-card">
-        <div class="pc-img">
-          <img src="assets/img/placements/foxconn.jpg" alt="Foxconn"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
-          <div class="pc-logo-ph" style="display:none;">Company Photo<br>Placeholder</div>
-        </div>
-        <p class="pc-name">Foxconn Technology</p>
-        <span class="pc-sector">Electronics Manufacturing</span>
-        <div class="pc-location">Sriperumbudur, Tamil Nadu</div>
-      </div>
-      <div class="placement-card">
-        <div class="pc-img">
-          <img src="assets/img/placements/toyota.jpg" alt="Toyota"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
-          <div class="pc-logo-ph" style="display:none;">Company Photo<br>Placeholder</div>
-        </div>
-        <p class="pc-name">Toyota Kirloskar</p>
-        <span class="pc-sector">Automobile</span>
-        <div class="pc-location">Bidadi, Karnataka</div>
-      </div>
-      <div class="placement-card">
-        <div class="pc-img">
-          <img src="assets/img/placements/wistron.jpg" alt="Wistron"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
-          <div class="pc-logo-ph" style="display:none;">Company Photo<br>Placeholder</div>
-        </div>
-        <p class="pc-name">Wistron InfoComm</p>
-        <span class="pc-sector">IT Manufacturing</span>
-        <div class="pc-location">Electronic City, Bangalore</div>
-      </div>
-      <div class="placement-card">
-        <div class="pc-img">
-          <img src="assets/img/placements/schneider.jpg" alt="Schneider Electric"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
-          <div class="pc-logo-ph" style="display:none;">Company Photo<br>Placeholder</div>
-        </div>
-        <p class="pc-name">Schneider Electric</p>
-        <span class="pc-sector">Electrical &amp; Energy</span>
-        <div class="pc-location">Bangalore, Karnataka</div>
-      </div>
-      <div class="placement-card">
-        <div class="pc-img">
-          <img src="assets/img/placements/ola.jpg" alt="Ola Electric"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
-          <div class="pc-logo-ph" style="display:none;">Company Photo<br>Placeholder</div>
-        </div>
-        <p class="pc-name">Ola Electric</p>
-        <span class="pc-sector">EV Manufacturing</span>
-        <div class="pc-location">Krishnagiri, Tamil Nadu</div>
-      </div>
-      <div class="placement-card">
-        <div class="pc-img">
-          <img src="assets/img/placements/motherson.jpg" alt="Motherson"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
-          <div class="pc-logo-ph" style="display:none;">Company Photo<br>Placeholder</div>
-        </div>
-        <p class="pc-name">Motherson Group</p>
-        <span class="pc-sector">Auto Components</span>
-        <div class="pc-location">Pune &amp; Bangalore</div>
+    <!-- CHARACTER SLOT — below grid, thumbs up / confident nod -->
+    <div class="why-char-wrap reveal">
+      <div class="char-slot char-slot-md">
+        <!-- ANIMATION ZONE
+             Action: Confident nod + thumbs up
+             Replace with: assets/video/char-thumbsup.webm -->
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     FOUNDERS
-══════════════════════════════════════════ -->
+<!-- ════════ FOUNDERS ════════ -->
 <section id="founders">
   <div class="container">
     <div class="text-center">
@@ -1426,20 +1127,22 @@
     <div class="founders-grid">
       <div class="founder-card reveal">
         <div class="founder-photo">
+          <!-- Replace: <img src="assets/img/surya-kiran.jpg" alt="Surya Kiran"/> -->
           <div class="founder-initials">SK</div>
         </div>
         <div class="founder-info">
-          <h3>Mr. Surya Kiran</h3>
+          <h3>Surya Kiran</h3>
           <div class="founder-role">Founder &amp; Managing Partner</div>
           <p>Visionary leader driving MAINDSOURCE&rsquo;s mission to connect talent with opportunity across India through tech-enabled solutions.</p>
         </div>
       </div>
       <div class="founder-card reveal">
         <div class="founder-photo">
+          <!-- Replace: <img src="assets/img/partner.jpg" alt="Co-Founder"/> -->
           <div class="founder-initials">P</div>
         </div>
         <div class="founder-info">
-          <h3>Co-Founder (Name TBC)</h3>
+          <h3>Godhavari</h3>
           <div class="founder-role">Co-Founder &amp; Partner</div>
           <p>Instrumental in shaping MAINDSOURCE&rsquo;s Women Empowerment agenda and driving inclusive hiring across all partnerships.</p>
         </div>
@@ -1448,9 +1151,7 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     CLIENTS TRUST WALL
-══════════════════════════════════════════ -->
+<!-- ════════ CLIENTS ════════ -->
 <section id="clients">
   <div class="container">
     <div class="text-center">
@@ -1459,62 +1160,196 @@
       <p class="section-sub reveal">From global giants to growing enterprises &mdash; our clients span every major industry.</p>
     </div>
     <div class="clients-grid">
-      <div class="client-box reveal"><span>Foxconn</span></div>
-      <div class="client-box reveal"><span>Toyota</span></div>
-      <div class="client-box reveal"><span>Tata Electronics</span></div>
-      <div class="client-box reveal"><span>Wistron</span></div>
-      <div class="client-box reveal"><span>Schneider Electric</span></div>
-      <div class="client-box reveal"><span>Motherson</span></div>
-      <div class="client-box reveal"><span>TVS</span></div>
-      <div class="client-box reveal"><span>Volvo</span></div>
-      <div class="client-box reveal"><span>Ola Electric</span></div>
-      <div class="client-box reveal"><span>Otis</span></div>
-      <div class="client-box reveal"><span>Molex</span></div>
-      <div class="client-box reveal"><span>INDO-MIM</span></div>
-      <div class="client-box reveal"><span>CIE Automotive</span></div>
-      <div class="client-box reveal"><span>Avirata Defence</span></div>
-      <div class="client-box reveal"><span>Emmvee Group</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/foxconn-seeklogo.png</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/toyota-seeklogo.png</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/tata-seeklogo.png</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/wistron-seeklogo.png</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/schneider-electric-seeklogo.png</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/motherson-seeklogo.png</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/tvs-seeklogo.png</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/volvo-seeklogo.png</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/ola-seeklogo.png</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/otis-seeklogo.png</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/molex-seeklogo.png</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/indo-mim.png</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/cie-automotive-seeklogo.png</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/Avirata.jpg</span></div>
+      <div class="client-box reveal"><span>assets/clients_photos/Emmvee-group-logo.jpg</span></div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     TESTIMONIALS
-     Character: top-center above cards — listening pose / handshake
-══════════════════════════════════════════ -->
+<!-- ════════ TESTIMONIALS ════════ -->
 <section id="testimonials">
   <div class="container">
-    <div class="text-center" style="margin-bottom:24px;">
+    <div class="text-center" style="margin-bottom:40px;">
       <span class="section-label reveal" style="color:rgba(245,166,35,.8);">What Clients Say</span>
       <h2 class="section-title light reveal">Trusted. Proven. Recommended.</h2>
     </div>
-    <!-- CHARACTER SLOT: two characters doing handshake / single char thumbs up — above cards -->
-    <div class="testi-char-wrap reveal">
-      <div class="char-slot" style="width:200px;height:160px;"
-           data-char="CHARACTER&#10;Two-Char Handshake&#10;or Thumbs Up&#10;(Lottie — Loop)"></div>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card reveal"><div class="testi-q">&ldquo;</div><p class="testi-text">MAINDSOURCE delivered exactly the workforce we needed &mdash; screened, trained, and ready from day one. Their industry understanding is exceptional.</p><div class="testi-person"><div class="testi-avatar">H</div><div><div class="testi-name">HR Manager</div><div class="testi-role">Leading Manufacturing, Bangalore</div></div></div></div>
-      <div class="testi-card reveal"><div class="testi-q">&ldquo;</div><p class="testi-text">Within 72 hours of raising the requirement, we had the right candidates in our facility. Highly reliable partners.</p><div class="testi-person"><div class="testi-avatar">P</div><div><div class="testi-name">Plant Head</div><div class="testi-role">Electronics Manufacturing, Karnataka</div></div></div></div>
-      <div class="testi-card reveal"><div class="testi-q">&ldquo;</div><p class="testi-text">MAINDSOURCE truly understands the blue-collar workforce market in South India. They have been our go-to partner for manpower.</p><div class="testi-person"><div class="testi-avatar">V</div><div><div class="testi-name">Operations Director</div><div class="testi-role">Logistics &amp; Supply Chain</div></div></div></div>
+    <div class="testi-inner">
+      <!-- CHARACTER SLOT — left of testimonials, listening/nodding -->
+      <div class="testi-char-wrap reveal">
+        <div class="char-slot dark char-slot-lg" style="border-color:rgba(245,166,35,.1);">
+          <!-- ANIMATION ZONE
+               Action: Listening, nodding, thumbs up
+               Replace with: assets/video/char-nod.webm -->
+        </div>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card reveal"><div class="testi-q">&ldquo;</div><p class="testi-text">MAINDSOURCE delivered exactly the workforce we needed &mdash; screened, trained, and ready from day one. Their industry understanding is exceptional.</p><div class="testi-person"><div class="testi-avatar">H</div><div><div class="testi-name">HR Manager</div><div class="testi-role">Leading Manufacturing, Bangalore</div></div></div></div>
+        <div class="testi-card reveal"><div class="testi-q">&ldquo;</div><p class="testi-text">Within 72 hours of raising the requirement, we had the right candidates in our facility. Highly reliable partners.</p><div class="testi-person"><div class="testi-avatar">P</div><div><div class="testi-name">Plant Head</div><div class="testi-role">Electronics Manufacturing, Karnataka</div></div></div></div>
+        <div class="testi-card reveal"><div class="testi-q">&ldquo;</div><p class="testi-text">MAINDSOURCE truly understands the blue-collar workforce market in South India. They have been our go-to partner for manpower.</p><div class="testi-person"><div class="testi-avatar">V</div><div><div class="testi-name">Operations Director</div><div class="testi-role">Logistics &amp; Supply Chain</div></div></div></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     CTA BANNER
-     Character: right side, waving forward
-══════════════════════════════════════════ -->
-<section id="cta-banner">
-  <div class="container cta-inner" style="position:relative;">
-    <!-- CHARACTER SLOT: right side of CTA, waves hand forward — "come let's work" -->
-    <div class="cta-char-wrap reveal">
-      <div class="char-slot" style="width:180px;height:220px;"
-           data-char="CHARACTER&#10;Waves Hand Forward&#10;Inviting Gesture&#10;(Lottie — Loop)"></div>
+<!-- ════════════════════════════════════════
+     4. PLACED COMPANIES CAROUSEL
+════════════════════════════════════════ -->
+<section id="placed-companies">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label reveal">Where Our Talent Works</span>
+      <h2 class="section-title reveal">Candidates Placed Across India</h2>
+      <p class="section-sub reveal">We have successfully placed skilled professionals at leading companies across manufacturing, logistics, technology and more.</p>
     </div>
+  </div>
+  <div class="placed-track-wrap">
+    <div class="placed-track">
+      <!-- 6 cards × 2 (duplicate for seamless loop) -->
+
+      <!-- Card 1 -->
+      <div class="placed-card">
+        <div class="placed-card-img">
+          <!-- Replace: <img src="assets/logos/company-1.png" alt="TechMec Industries"/> -->
+          <div class="placed-logo-placeholder"><span>&#127981;</span><p>Logo Here</p></div>
+        </div>
+        <div class="placed-card-body">
+          <div class="placed-sector-tag">Pharma Industry</div>
+          <div class="placed-company-name">Biocon Research Limited</div>
+          <div class="placed-location">&#128205; Bommasandra Industrial Area, Bengaluru, Karnataka - 560099</div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="placed-card">
+        <div class="placed-card-img">
+          <!-- Replace: <img src="assets/logos/company-2.png" alt="Arora Electronics"/> -->
+          <div class="placed-logo-placeholder"><span>&#9889;</span><p>Logo Here</p></div>
+        </div>
+        <div class="placed-card-body">
+          <div class="placed-sector-tag">BPO</div>
+          <div class="placed-company-name">Startek Aegis BPO</div>
+          <div class="placed-location">&#128205; Shivaji Nagar, Bengaluru, Karnataka - 560042</div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="placed-card">
+        <div class="placed-card-img">
+          <!-- Replace: <img src="assets/logos/company-3.png" alt="Greenfield Logistics"/> -->
+          <div class="placed-logo-placeholder"><span>&#128666;</span><p>Logo Here</p></div>
+        </div>
+        <div class="placed-card-body">
+          <div class="placed-sector-tag">Logistics &amp; Supply Chain</div>
+          <div class="placed-company-name">Greenfield Logistics</div>
+          <div class="placed-location">&#128205; Hosur, Tamil Nadu</div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="placed-card">
+        <div class="placed-card-img">
+          <!-- Replace: <img src="assets/logos/company-4.png" alt="Vasavi Textiles"/> -->
+          <div class="placed-logo-placeholder"><span>&#128085;</span><p>Logo Here</p></div>
+        </div>
+        <div class="placed-card-body">
+          <div class="placed-sector-tag">Apparel &amp; Textile</div>
+          <div class="placed-company-name">Vasavi Textiles Ltd</div>
+          <div class="placed-location">&#128205; Raichur, Karnataka</div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="placed-card">
+        <div class="placed-card-img">
+          <!-- Replace: <img src="assets/logos/company-5.png" alt="PrimeCare Health"/> -->
+          <div class="placed-logo-placeholder"><span>&#127973;</span><p>Logo Here</p></div>
+        </div>
+        <div class="placed-card-body">
+          <div class="placed-sector-tag">Healthcare Services</div>
+          <div class="placed-company-name">PrimeCare Health Systems</div>
+          <div class="placed-location">&#128205; Bangalore, Karnataka</div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="placed-card">
+        <div class="placed-card-img">
+          <!-- Replace: <img src="assets/logos/company-6.png" alt="Sterling Auto Parts"/> -->
+          <div class="placed-logo-placeholder"><span>&#128663;</span><p>Logo Here</p></div>
+        </div>
+        <div class="placed-card-body">
+          <div class="placed-sector-tag">Automobile</div>
+          <div class="placed-company-name">Sterling Auto Parts</div>
+          <div class="placed-location">&#128205; Tumkur, Karnataka</div>
+        </div>
+      </div>
+
+      <!-- Duplicate set for seamless loop -->
+      <div class="placed-card">
+        <div class="placed-card-img"><div class="placed-logo-placeholder"><span>&#127981;</span><p>Logo Here</p></div></div>
+        <div class="placed-card-body"><div class="placed-sector-tag">Heavy Manufacturing</div><div class="placed-company-name">TechMec Industries</div><div class="placed-location">&#128205; Ballari, Karnataka</div></div>
+      </div>
+      <div class="placed-card">
+        <div class="placed-card-img"><div class="placed-logo-placeholder"><span>&#9889;</span><p>Logo Here</p></div></div>
+        <div class="placed-card-body"><div class="placed-sector-tag">Electronics</div><div class="placed-company-name">Arora Electronics Pvt Ltd</div><div class="placed-location">&#128205; Electronic City, Bangalore</div></div>
+      </div>
+      <div class="placed-card">
+        <div class="placed-card-img"><div class="placed-logo-placeholder"><span>&#128666;</span><p>Logo Here</p></div></div>
+        <div class="placed-card-body"><div class="placed-sector-tag">Logistics &amp; Supply Chain</div><div class="placed-company-name">Greenfield Logistics</div><div class="placed-location">&#128205; Hosur, Tamil Nadu</div></div>
+      </div>
+      <div class="placed-card">
+        <div class="placed-card-img"><div class="placed-logo-placeholder"><span>&#128085;</span><p>Logo Here</p></div></div>
+        <div class="placed-card-body"><div class="placed-sector-tag">Apparel &amp; Textile</div><div class="placed-company-name">Vasavi Textiles Ltd</div><div class="placed-location">&#128205; Raichur, Karnataka</div></div>
+      </div>
+      <div class="placed-card">
+        <div class="placed-card-img"><div class="placed-logo-placeholder"><span>&#127973;</span><p>Logo Here</p></div></div>
+        <div class="placed-card-body"><div class="placed-sector-tag">Healthcare Services</div><div class="placed-company-name">PrimeCare Health Systems</div><div class="placed-location">&#128205; Bangalore, Karnataka</div></div>
+      </div>
+      <div class="placed-card">
+        <div class="placed-card-img"><div class="placed-logo-placeholder"><span>&#128663;</span><p>Logo Here</p></div></div>
+        <div class="placed-card-body"><div class="placed-sector-tag">Automobile</div><div class="placed-company-name">Sterling Auto Parts</div><div class="placed-location">&#128205; Tumkur, Karnataka</div></div>
+      </div>
+    </div>
+  </div>
+  <!-- CHARACTER SLOT — below carousel, handshake action -->
+  <div class="container">
+    <div class="placed-char-wrap reveal">
+      <div class="char-slot char-slot-md">
+        <!-- ANIMATION ZONE
+             Action: Handshake / happy wave
+             Replace with: assets/video/char-handshake.webm -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CTA ════════ -->
+<section id="cta-banner">
+  <div class="container cta-inner">
     <span class="section-label reveal" style="color:rgba(245,166,35,.8);">Let&rsquo;s Work Together</span>
     <h2 class="section-title light reveal">Ready to Build Your Dream Workforce?</h2>
     <p class="reveal">Join 50+ companies that trust MAINDSOURCE. First batch of candidates delivered within 72 hours.</p>
+    <!-- CHARACTER SLOT — above buttons, beckoning / inviting gesture -->
+    <div class="cta-char-wrap reveal">
+      <div class="char-slot dark char-slot-md" style="border-color:rgba(245,166,35,.1);">
+        <!-- ANIMATION ZONE
+             Action: Beckon with both hands (come here gesture)
+             Replace with: assets/video/char-beckon.webm -->
+      </div>
+    </div>
     <div class="cta-btns reveal">
       <a href="contact.html" class="btn btn-gold">Start Your Hiring Journey &#8594;</a>
       <a href="tel:+919071329231" class="btn btn-outline">&#128222; Call Us Now</a>
@@ -1522,9 +1357,7 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     FOOTER
-══════════════════════════════════════════ -->
+<!-- ════════ FOOTER ════════ -->
 <footer id="footer">
   <div class="container">
     <div class="footer-grid">
@@ -1538,25 +1371,8 @@
           <a href="https://wa.me/919071329231" class="f-soc" aria-label="WhatsApp">&#128172;</a>
         </div>
       </div>
-      <div class="f-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="women.html">Women Empowerment</a></li>
-          <li><a href="credentials.html">Credentials</a></li>
-          <li><a href="careers.html">Careers</a></li>
-        </ul>
-      </div>
-      <div class="f-col">
-        <h4>Services</h4>
-        <ul>
-          <li><a href="services.html">Contractual Staffing</a></li>
-          <li><a href="services.html">One-Time Placement</a></li>
-          <li><a href="services.html">Payroll Management</a></li>
-          <li><a href="services.html">Gig Workforce</a></li>
-          <li><a href="services.html">Training &amp; Development</a></li>
-        </ul>
-      </div>
+      <div class="f-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="women.html">Women Empowerment</a></li><li><a href="credentials.html">Credentials</a></li><li><a href="careers.html">Careers</a></li></ul></div>
+      <div class="f-col"><h4>Services</h4><ul><li><a href="services.html">Contractual Staffing</a></li><li><a href="services.html">One-Time Placement</a></li><li><a href="services.html">Payroll Management</a></li><li><a href="services.html">Gig Workforce</a></li><li><a href="services.html">Training &amp; Development</a></li></ul></div>
       <div class="f-col">
         <h4>Contact</h4>
         <div class="f-contact-item"><span class="f-ci">&#128222;</span><div class="f-ct"><strong>Phone</strong>+91 9071329231</div></div>
@@ -1570,118 +1386,55 @@
       <p class="f-legal">Registered &middot; Compliant &middot; Trustworthy</p>
     </div>
   </div>
+  <!-- CHARACTER SLOT — bottom right of footer, bowing action -->
+  <div class="footer-char-wrap">
+    <div class="char-slot dark char-slot-sm" style="border-color:rgba(255,255,255,.05);">
+      <!-- ANIMATION ZONE
+           Action: Bow / goodbye
+           Replace with: assets/video/char-bow.webm -->
+    </div>
+  </div>
 </footer>
 
-<!-- ══════════════════════════════════════════
-     JAVASCRIPT
-══════════════════════════════════════════ -->
 <script>
-// ── Preloader ──
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const l = document.getElementById('preloader');
-    if (!l) return;
-    l.style.opacity = '0';
-    l.style.transition = 'opacity .6s ease';
-    setTimeout(() => { l.style.display = 'none'; }, 600);
-  }, 2000);
+// Preloader
+window.addEventListener('load',()=>{setTimeout(()=>{const l=document.getElementById('preloader');if(!l)return;l.style.opacity='0';l.style.transition='opacity .6s ease';setTimeout(()=>{l.style.display='none';},600);},2000);});
+
+// Cursor
+const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(dot){dot.style.left=mx+'px';dot.style.top=my+'px';}});
+(function ar(){if(!ring)return;rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar);})();
+
+// Scroll progress + navbar
+window.addEventListener('scroll',()=>{
+  const s=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
+  const p=document.getElementById('scroll-progress');if(p)p.style.width=s+'%';
+  const nav=document.getElementById('navbar');if(nav)nav.classList.toggle('scrolled',window.scrollY>60);
 });
 
-// ── Custom Cursor ──
-const dot = document.getElementById('cursorDot');
-const ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  if (dot) { dot.style.left = mx + 'px'; dot.style.top = my + 'px'; }
-});
-(function ar() {
-  if (!ring) return;
-  rx += (mx - rx) * .12;
-  ry += (my - ry) * .12;
-  ring.style.left = rx + 'px';
-  ring.style.top  = ry + 'px';
-  requestAnimationFrame(ar);
-})();
+// Mobile menu
+const ham=document.getElementById('hamburger'),mm=document.getElementById('mobMenu'),mo=document.getElementById('mobOverlay');
+if(ham){function tm(){mm.classList.toggle('open');mo.classList.toggle('open');}ham.addEventListener('click',tm);mo.addEventListener('click',tm);}
 
-// ── Scroll progress + navbar ──
-window.addEventListener('scroll', () => {
-  const s = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-  const p = document.getElementById('scroll-progress');
-  if (p) p.style.width = s + '%';
-  const nav = document.getElementById('navbar');
-  if (nav) nav.classList.toggle('scrolled', window.scrollY > 60);
-});
-
-// ── Mobile menu ──
-const ham = document.getElementById('hamburger');
-const mm  = document.getElementById('mobMenu');
-const mo  = document.getElementById('mobOverlay');
-if (ham) {
-  function toggleMenu() {
-    mm.classList.toggle('open');
-    mo.classList.toggle('open');
-  }
-  ham.addEventListener('click', toggleMenu);
-  mo.addEventListener('click', toggleMenu);
-}
-
-// ── Hero particles ──
-(function () {
-  const c = document.getElementById('heroP');
-  if (!c) return;
-  for (let i = 0; i < 38; i++) {
-    const s = document.createElement('span');
-    const sz = Math.random() * 2.4 + 1;
-    s.style.cssText =
-      'left:' + Math.random() * 100 + '%;' +
-      'top:' + Math.random() * 100 + '%;' +
-      'animation-duration:' + (Math.random() * 10 + 7) + 's;' +
-      'animation-delay:' + Math.random() * 8 + 's;' +
-      'width:' + sz + 'px;height:' + sz + 'px;';
+// Hero particles
+(function(){
+  const c=document.getElementById('heroP');if(!c)return;
+  for(let i=0;i<38;i++){
+    const s=document.createElement('span');
+    const sz=Math.random()*2.4+1;
+    s.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+7)+'s;animation-delay:'+(Math.random()*8)+'s;width:'+sz+'px;height:'+sz+'px;';
     c.appendChild(s);
   }
 })();
 
-// ── Scroll reveal ──
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      obs.unobserve(e.target);
-    }
-  });
-}, { threshold: .14 });
-document.querySelectorAll('.reveal, .reveal-left').forEach(el => obs.observe(el));
+// Reveal on scroll
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.14});
+document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
 
-// ── Count-up (impact stats) ──
-const cObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      document.querySelectorAll('.impact-num[data-target]').forEach(el => {
-        const t = parseInt(el.dataset.target);
-        const d = 2000;
-        const step = t / (d / 16);
-        let n = 0;
-        const id = setInterval(() => {
-          n += step;
-          if (n >= t) {
-            el.textContent = t.toLocaleString() + '+';
-            clearInterval(id);
-          } else {
-            el.textContent = Math.floor(n).toLocaleString() + '+';
-          }
-        }, 16);
-      });
-      cObs.disconnect();
-    }
-  });
-}, { threshold: .3 });
-const imp = document.getElementById('impact');
-if (imp) cObs.observe(imp);
-
-// ── Ticker: clone content for seamless loop (already duplicated inline, this ensures it) ──
-// The ticker-track already has 6 identical items duplicated in HTML so it scrolls seamlessly.
+// Count-up
+const cObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.impact-num[data-target]').forEach(el=>{const t=parseInt(el.dataset.target),d=2000,step=t/(d/16);let n=0;const id=setInterval(()=>{n+=step;if(n>=t){el.textContent=t.toLocaleString()+'+';clearInterval(id);}else{el.textContent=Math.floor(n).toLocaleString()+'+';}},16);});cObs.disconnect();}});},{threshold:.3});
+const imp=document.getElementById('impact');if(imp)cObs.observe(imp);
 </script>
 </body>
 </html>
