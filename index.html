@@ -10,42 +10,153 @@
   <link rel="stylesheet" href="style.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
-  /* =====================================================
-     CINEMATIC HERO UPGRADE v2.0
-     Scope: #hero only. style.css untouched.
-  ===================================================== */
+  /* ═══════════════════════════════════════════
+     ANTI-FRAUD TICKER — fixed below navbar
+  ═══════════════════════════════════════════ */
+  #fraud-ticker {
+    position: fixed;
+    top: 64px; /* sits just below navbar */
+    left: 0; right: 0;
+    z-index: 990;
+    background: #1a0a00;
+    border-top: 1px solid rgba(245,166,35,.20);
+    border-bottom: 1px solid rgba(245,166,35,.15);
+    overflow: hidden;
+    height: 34px;
+    display: flex;
+    align-items: center;
+  }
+  .ticker-track {
+    display: flex;
+    white-space: nowrap;
+    animation: tickerScroll 38s linear infinite;
+    will-change: transform;
+  }
+  .ticker-track:hover { animation-play-state: paused; }
+  @keyframes tickerScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 48px;
+    font-family: var(--font-s);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: rgba(255,220,100,.90);
+    letter-spacing: .3px;
+  }
+  .ticker-icon { font-size: 13px; flex-shrink: 0; }
+  .ticker-divider {
+    display: inline-block;
+    width: 4px; height: 4px;
+    background: rgba(245,166,35,.4);
+    border-radius: 50%;
+    margin: 0 32px;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  /* Push page body down so ticker doesn't cover content */
+  body { padding-top: 98px; } /* navbar ~64px + ticker 34px */
+  #navbar { top: 0; }
+  /* On mobile navbar is shorter — adjust */
+  @media(max-width:768px) {
+    #fraud-ticker { top: 58px; }
+    body { padding-top: 92px; }
+  }
 
+  /* ═══════════════════════════════════════════
+     ROBOT GIF — fixed above WhatsApp button
+  ═══════════════════════════════════════════ */
+  #ai-robot-widget {
+    position: fixed;
+    bottom: 92px; /* WA is at bottom:28px, height 52px → 28+52+12=92 */
+    right: 20px;
+    width: 110px;
+    height: 110px;
+    z-index: 8500;
+    pointer-events: none; /* no click action */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #ai-robot-widget img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* show placeholder outline until GIF is loaded */
+    background: rgba(10,15,44,.0);
+  }
+  @media(max-width:480px) { #ai-robot-widget { display:none; } }
+
+  /* ═══════════════════════════════════════════
+     CHARACTER ANIMATION ZONES
+     Dashed placeholder boxes — remove border
+     when real character animation is added
+  ═══════════════════════════════════════════ */
+  .char-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px dashed rgba(245,166,35,.22);
+    border-radius: 14px;
+    background: rgba(245,166,35,.025);
+    min-height: 100px;
+    flex-shrink: 0;
+  }
+  .char-zone .cz-label {
+    font-family: var(--font-s);
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(245,166,35,.35);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.6;
+    padding: 8px;
+  }
+  /* Dark bg sections */
+  .char-zone.dark {
+    border-color: rgba(245,166,35,.18);
+    background: rgba(245,166,35,.02);
+  }
+
+  /* ═══════════════════════════════════════════
+     CINEMATIC HERO
+  ═══════════════════════════════════════════ */
   #hero {
-    top: 0; /* remove white gap : this esures the container starts at the absolute 0 point */
     min-height: 100vh;
-    height: 100vh; /* Locking it to exactly the screen height */
     background: #0A0F2C;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: space-between;
-    padding: 0 5%;
+    padding-top: 0;
     position: relative;
     overflow: hidden;
+    margin-top: 0; /* ticker handled by body padding */
   }
-
-  /* Layer 1 — animated gradient mesh */
+  #hero-three-canvas {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  }
   .hero-bg-mesh {
-    position: absolute; inset: 0; pointer-events: none;
+    position: absolute; inset: 0; pointer-events: none; z-index: 1;
     background:
       radial-gradient(ellipse 90% 70% at 50% -10%, rgba(245,166,35,.09) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 90% at 95% 50%,  rgba(30,39,97,.55)   0%, transparent 65%),
-      radial-gradient(ellipse 70% 70% at 5%  90%,  rgba(26,16,64,.75)   0%, transparent 55%),
-    animation; meshBreath: 9s ease-in-out infinite alternate;
+      radial-gradient(ellipse 55% 90% at 95% 50%, rgba(30,39,97,.55) 0%, transparent 65%),
+      radial-gradient(ellipse 70% 70% at 5% 90%, rgba(26,16,64,.75) 0%, transparent 55%),
+      linear-gradient(160deg, #0A0F2C 0%, #0e1338 45%, #1a1040 100%);
+    animation: meshBreath 9s ease-in-out infinite alternate;
   }
-
   @keyframes meshBreath { 0%{opacity:1} 100%{opacity:.88} }
-
-  /* Layer 2 — subtle drifting grid */
   .hero-grid-lines {
-    position: absolute; inset: 0; pointer-events: none;
+    position: absolute; inset: 0; pointer-events: none; z-index: 1;
     background-image:
       linear-gradient(rgba(245,166,35,.028) 1px, transparent 1px),
       linear-gradient(90deg, rgba(245,166,35,.028) 1px, transparent 1px);
@@ -53,10 +164,8 @@
     animation: gridDrift 22s linear infinite;
   }
   @keyframes gridDrift { from{transform:translateY(0)} to{transform:translateY(72px)} }
-
-  /* Layer 3 — gold aurora orb */
   .hero-aurora {
-    position: absolute; border-radius: 50%; pointer-events: none;
+    position: absolute; border-radius: 50%; pointer-events: none; z-index: 1;
     width: 860px; height: 860px;
     background: radial-gradient(circle, rgba(245,166,35,.07) 0%, rgba(245,166,35,.02) 45%, transparent 70%);
     top: -320px; left: 50%; transform: translateX(-50%);
@@ -66,34 +175,29 @@
     0%   { transform:translateX(-50%) scale(1);    opacity:.7; }
     100% { transform:translateX(-50%) scale(1.18); opacity:1; }
   }
-
-  /* Layer 4 — left gold stripe accent */
   .hero-stripe {
-    position: absolute; left:0; top:0; bottom:0; width:3px; pointer-events:none;
-    background: linear-gradient(to bottom,
-      transparent 0%, rgba(245,166,35,.55) 30%, rgba(245,166,35,.55) 70%, transparent 100%);
+    position: absolute; left:0; top:0; bottom:0; width:3px; pointer-events:none; z-index: 2;
+    background: linear-gradient(to bottom, transparent 0%, rgba(245,166,35,.55) 30%, rgba(245,166,35,.55) 70%, transparent 100%);
   }
-
-  /* Layer 5 — particles (defined in style.css, enhanced in JS) */
-  .hero-particles { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+  .hero-particles { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index: 1; }
   .hero-particles span {
     position:absolute; background:var(--gold); border-radius:50%;
     opacity:0; animation:floatP linear infinite;
   }
-
-  /* Video layer — hidden until client provides file */
+  /* ── VIDEO BG — fixed crop & opacity ── */
   .hero-video-bg {
-    position:absolute; top: 0; left: 0; width: 100%; height: 100%; inset:0; z-index:0; display:none;
+    position:absolute; inset:0; z-index:0; display:none;
   }
   .hero-video-bg video {
-    width:100%; height:100%; object-fit:cover; /* keeps aspect ratio*/ opacity: 0.7; /* increased to 70% visibility */ transform: none; object-position: center 20%; /* focuses on the area 30% from the top */ z-index: 0;
+    width:100%; height:100%;
+    object-fit: cover;
+    object-position: center 30%; /* crops top 30% dead space */
+    opacity: 0.8;               /* 80% opacity as requested */
   }
   .hero-video-bg::after {
-    content:''; position:absolute; inset:0; background: rgba(10,15,44,.72);
-    z-index: 1;
+    content:''; position:absolute; inset:0;
+    background:rgba(10,15,44,.55); /* overlay keeps text readable */
   }
-
-  /* Main content area */
   .hero-main {
     position: relative; z-index: 2; flex: 1;
     display: flex; align-items: center;
@@ -101,36 +205,21 @@
     max-width: var(--max); margin: 0 auto; width: 100%;
   }
   .hero-content-wrap { width:100%; max-width:820px; }
-
-  /* Badge */
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
     background: rgba(245,166,35,.10); border: 1px solid rgba(245,166,35,.24);
     border-radius: 50px; padding: 6px 16px; margin-bottom: 32px;
     opacity: 0; animation: fadeUpHero .7s ease .3s forwards;
   }
-  .hero-badge-dot {
-    width:7px; height:7px; background:var(--gold); border-radius:50%;
-    animation:bdgP 2s infinite; flex-shrink:0;
-  }
+  .hero-badge-dot { width:7px; height:7px; background:var(--gold); border-radius:50%; animation:bdgP 2s infinite; flex-shrink:0; }
   @keyframes bdgP { 0%,100%{opacity:1} 50%{opacity:.3} }
-  .hero-badge span {
-    font-family:var(--font-s); font-size:11px; font-weight:700;
-    color:var(--gold); letter-spacing:2px; text-transform:uppercase;
-  }
-
-  /* HEADLINE — the centrepiece */
+  .hero-badge span { font-family:var(--font-s); font-size:11px; font-weight:700; color:var(--gold); letter-spacing:2px; text-transform:uppercase; }
   .hero-hl {
     font-family: var(--font-d);
-    font-size: clamp(52px, 8vw, 90px);
-    font-weight: 800;
-    color: var(--white);
-    line-height: 1.1;
-    letter-spacing: -1.5px;
-    margin-bottom: 24px;
-    z-index: 5; /*keeps it above the video*/
-    opacity: 1 !important; /* restores brightness*/
-    animation: fadeUpHero .85s ease .5s forwards;
+    font-size: clamp(52px, 7.6vw, 96px);
+    font-weight: 800; color: var(--white);
+    line-height: 1.06; letter-spacing: -1.5px; margin-bottom: 28px;
+    opacity: 0; animation: fadeUpHero .85s ease .5s forwards;
   }
   .hero-hl em {
     color: var(--gold); font-style: italic;
@@ -143,99 +232,44 @@
     animation: lineReveal .65s ease 1.4s forwards;
   }
   @keyframes lineReveal { to { transform:scaleX(1); } }
-
-  /* Sub — one punchy sentence */
   .hero-sub-new {
-    font-family: var(--font-s);
-    font-size: clamp(14px, 1.55vw, 17px);
-    font-weight: 500;
-    color: rgba(168,184,216,.85);
-    line-height: 1.75;
-    max-width: 500px;
-    margin-bottom: 42px;
-    letter-spacing: .15px;
-    opacity: 0;
-    animation: fadeUpHero .7s ease .75s forwards;
+    font-family: var(--font-s); font-size: clamp(14px, 1.55vw, 17px); font-weight: 500;
+    color: rgba(168,184,216,.85); line-height: 1.75; max-width: 500px;
+    margin-bottom: 42px; letter-spacing: .15px;
+    opacity: 0; animation: fadeUpHero .7s ease .75s forwards;
   }
-
-  /* Buttons */
-  .hero-btns {
-    display: flex; gap: 14px; flex-wrap: wrap;
-    opacity: 0; animation: fadeUpHero .7s ease .95s forwards;
-  }
-
-  /* Gold divider line between content and stats bar */
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; opacity: 0; animation: fadeUpHero .7s ease .95s forwards; }
   .hero-divider {
-    position:relative; z-index:2;
-    width:100%; height:1px;
-    background: linear-gradient(to right,
-      transparent, rgba(245,166,35,.3) 40%, rgba(245,166,35,.3) 60%, transparent);
+    position:relative; z-index:2; width:100%; height:1px;
+    background: linear-gradient(to right, transparent, rgba(245,166,35,.3) 40%, rgba(245,166,35,.3) 60%, transparent);
   }
-
-  /* Stats bar — full-width bottom strip */
   .hero-stats-bar {
     position: relative; z-index: 2;
     background: rgba(255,255,255,.025);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-top: none;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     padding: 0 var(--px);
   }
-  .hero-stats-inner {
-    max-width: var(--max); margin: 0 auto;
-    display: grid; grid-template-columns: repeat(3,1fr);
-  }
+  .hero-stats-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); }
   .hero-stat-item {
     padding: 26px 20px; text-align: center;
     border-right: 1px solid rgba(255,255,255,.06);
     opacity: 0; animation: fadeUpHero .6s ease 1.2s forwards;
   }
-  .hero-stat-item:last-child  { border-right: none; }
+  .hero-stat-item:last-child { border-right: none; }
   .hero-stat-item:nth-child(2){ animation-delay: 1.35s; }
   .hero-stat-item:nth-child(3){ animation-delay: 1.5s; }
-  .hero-stat-num {
-    font-family: var(--font-s);
-    font-size: clamp(26px, 3vw, 38px);
-    font-weight: 800; color: var(--gold);
-    line-height: 1; margin-bottom: 5px;
-  }
-  .hero-stat-label {
-    font-family: var(--font-s); font-size: 11px; font-weight: 600;
-    color: rgba(168,184,216,.7); letter-spacing: 1.5px; text-transform: uppercase;
-  }
-
-  /* Scroll cue (right side, desktop only) */
+  .hero-stat-num { font-family: var(--font-s); font-size: clamp(26px, 3vw, 38px); font-weight: 800; color: var(--gold); line-height: 1; margin-bottom: 5px; }
+  .hero-stat-label { font-family: var(--font-s); font-size: 11px; font-weight: 600; color: rgba(168,184,216,.7); letter-spacing: 1.5px; text-transform: uppercase; }
   .hero-scroll-cue {
     position: absolute; bottom: 96px; right: var(--px);
     display: flex; flex-direction: column; align-items: center; gap: 8px;
     z-index: 2; opacity: 0; animation: fadeInHero .8s ease 1.8s forwards;
   }
-  .hero-scroll-cue span {
-    font-family: var(--font-s); font-size: 9px; font-weight: 700;
-    color: rgba(168,184,216,.4); letter-spacing: 2.5px; text-transform: uppercase;
-    writing-mode: vertical-rl;
-  }
-  .hero-scroll-line {
-    width: 1px; height: 50px;
-    background: linear-gradient(to bottom, rgba(245,166,35,.6), transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-  @keyframes scrollPulse {
-    0%,100% { transform:scaleY(1);   opacity:.7; }
-    50%      { transform:scaleY(.5); opacity:.3; }
-  }
-
-  /* Entrance keyframes */
-  @keyframes fadeUpHero {
-    from { opacity:0; transform:translateY(26px); }
-    to   { opacity:1; transform:none; }
-  }
-  @keyframes fadeInHero {
-    from { opacity:0; }
-    to   { opacity:1; }
-  }
-
-  /* ── MOBILE ── */
+  .hero-scroll-cue span { font-family: var(--font-s); font-size: 9px; font-weight: 700; color: rgba(168,184,216,.4); letter-spacing: 2.5px; text-transform: uppercase; writing-mode: vertical-rl; }
+  .hero-scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(245,166,35,.6), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+  @keyframes scrollPulse { 0%,100%{transform:scaleY(1);opacity:.7;} 50%{transform:scaleY(.5);opacity:.3;} }
+  @keyframes fadeUpHero { from{opacity:0;transform:translateY(26px);} to{opacity:1;transform:none;} }
+  @keyframes fadeInHero { from{opacity:0;} to{opacity:1;} }
   @media(max-width:768px) {
     .hero-main { padding: 120px 5% 52px; }
     .hero-hl { letter-spacing: -.5px; }
@@ -250,16 +284,324 @@
     .hero-hl { font-size:44px; letter-spacing:-.5px; }
     .hero-btns { flex-direction:column; align-items:flex-start; }
     .hero-btns .btn { width:100%; justify-content:center; }
-    .hero-stats-inner { grid-template-columns:repeat(3,1fr); }
+  }
+
+  /* ═══════════════════════════════════════════
+     MOTHER TRIBUTE SECTION
+  ═══════════════════════════════════════════ */
+  #mother-tribute {
+    padding: 80px 0;
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  #mother-tribute::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+  .tribute-grid {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 64px;
+    align-items: flex-start;
+  }
+  .tribute-img-wrap {
+    position: relative;
+  }
+  .tribute-img-wrap img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(10,15,44,.15);
+    border: 3px solid rgba(245,166,35,.20);
+    display: block;
+  }
+  .tribute-img-badge {
+    position: absolute;
+    bottom: -14px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy);
+    border: 2px solid var(--gold);
+    border-radius: 50px;
+    padding: 8px 22px;
+    font-family: var(--font-s);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+    white-space: nowrap;
+    box-shadow: 0 6px 20px rgba(10,15,44,.20);
+  }
+  .tribute-content {
+    padding-top: 8px;
+  }
+  .tribute-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-s);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .tribute-label::before {
+    content: '';
+    display: inline-block;
+    width: 28px; height: 2px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+  .tribute-content h2 {
+    font-family: var(--font-d);
+    font-size: clamp(26px, 3.2vw, 40px);
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1.25;
+    margin-bottom: 22px;
+  }
+  .tribute-content h2 em {
+    color: var(--navy);
+    font-style: italic;
+  }
+  .tribute-quote {
+    background: rgba(30,39,97,.05);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+  }
+  .tribute-quote p {
+    font-family: var(--font-d);
+    font-size: 16px;
+    font-style: italic;
+    color: var(--navy);
+    line-height: 1.65;
+  }
+  .tribute-body {
+    font-size: 15px;
+    color: var(--text-gray);
+    line-height: 1.9;
+  }
+  .tribute-body p { margin-bottom: 16px; }
+  .tribute-body p:last-child { margin-bottom: 0; }
+  .tribute-signature {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .tribute-sig-line { flex: 1; height: 1px; background: var(--border); }
+  .tribute-sig-text {
+    font-family: var(--font-s);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-gray);
+    letter-spacing: .5px;
+    white-space: nowrap;
+  }
+  @media(max-width:1100px) {
+    .tribute-grid { grid-template-columns: 300px 1fr; gap: 44px; }
+  }
+  @media(max-width:768px) {
+    .tribute-grid { grid-template-columns: 1fr; gap: 48px; }
+    .tribute-img-wrap { max-width: 320px; margin: 0 auto; }
+  }
+
+  /* ═══════════════════════════════════════════
+     DUAL PATH — Character between cards
+  ═══════════════════════════════════════════ */
+  #dual-path { padding: 64px 0; background: var(--hero-start); }
+  .dual-path-inner {
+    display: grid;
+    grid-template-columns: 1fr 100px 1fr;
+    gap: 18px;
+    align-items: center;
+  }
+  .char-zone-dual {
+    min-height: 160px;
+    align-self: center;
+  }
+  @media(max-width:900px) {
+    .dual-path-inner { grid-template-columns: 1fr; }
+    .char-zone-dual { min-height: 72px; }
+  }
+
+  /* ═══════════════════════════════════════════
+     IMPACT GRID — 2×2 on mobile FIX
+  ═══════════════════════════════════════════ */
+  @media(max-width:768px) {
+    .impact-grid {
+      grid-template-columns: 1fr 1fr !important;
+    }
+    .impact-num { font-size: 36px !important; }
+    .impact-label { font-size: 10px !important; }
+    .impact-sub { font-size: 11px !important; }
+    .impact-card { padding: 22px 12px !important; }
+  }
+
+  /* ═══════════════════════════════════════════
+     COMPANIES CAROUSEL — Placed Candidates
+  ═══════════════════════════════════════════ */
+  #placed-carousel { padding: 80px 0; background: var(--cream); overflow: hidden; }
+  .placed-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; flex-wrap: wrap; gap: 16px; }
+  .carousel-track-wrap { overflow: hidden; position: relative; }
+  .carousel-track-wrap::before,
+  .carousel-track-wrap::after {
+    content: '';
+    position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+  }
+  .carousel-track-wrap::before { left: 0; background: linear-gradient(to right, var(--cream), transparent); }
+  .carousel-track-wrap::after  { right: 0; background: linear-gradient(to left, var(--cream), transparent); }
+  .carousel-track {
+    display: flex;
+    gap: 20px;
+    animation: carouselMove 32s linear infinite;
+    width: max-content;
+  }
+  .carousel-track:hover { animation-play-state: paused; }
+  @keyframes carouselMove {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .placed-card {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--rl);
+    overflow: hidden;
+    transition: var(--ease);
+    box-shadow: var(--shadow);
+  }
+  .placed-card:hover { border-color: var(--gold); box-shadow: var(--shadow-h); transform: translateY(-4px); }
+  .placed-card-img {
+    width: 100%; height: 140px;
+    background: linear-gradient(135deg, var(--navy), var(--hero-end));
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .placed-card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: .85;
+  }
+  /* Placeholder when no image */
+  .placed-card-img .img-ph {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .placed-card-img .img-ph span { font-size: 36px; }
+  .placed-card-img .img-ph small {
+    font-family: var(--font-s); font-size: 9px; font-weight: 700;
+    color: rgba(255,255,255,.35); letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .placed-card-sector-tag {
+    position: absolute; top: 10px; right: 10px;
+    background: rgba(245,166,35,.15);
+    border: 1px solid rgba(245,166,35,.30);
+    border-radius: 50px; padding: 2px 10px;
+    font-family: var(--font-s); font-size: 10px; font-weight: 700;
+    color: var(--gold); letter-spacing: .5px;
+  }
+  .placed-card-body { padding: 18px; }
+  .placed-card-name {
+    font-family: var(--font-s); font-size: 14px; font-weight: 700;
+    color: var(--text-dark); margin-bottom: 5px;
+  }
+  .placed-card-meta { display: flex; flex-direction: column; gap: 3px; }
+  .placed-card-loc {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 12px; color: var(--text-gray);
+  }
+  .placed-card-loc svg { width: 11px; height: 11px; flex-shrink: 0; }
+  .placed-workers {
+    display: inline-flex; align-items: center; gap: 4px; margin-top: 8px;
+    font-family: var(--font-s); font-size: 10.5px; font-weight: 700;
+    color: var(--navy); background: rgba(30,39,97,.07); border-radius: 50px;
+    padding: 2px 10px;
+  }
+
+  /* ═══════════════════════════════════════════
+     CSS CHARACTER — Fixed Bottom Right
+  ═══════════════════════════════════════════ */
+  #site-character {
+    position: fixed;
+    bottom: 100px; right: 24px;
+    width: 90px; height: 160px;
+    z-index: 8000; pointer-events: none;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end;
+    transition: transform .4s ease;
+  }
+  @media(max-width:480px){ #site-character{ display:none; } }
+  .char-head {
+    position: relative; width: 44px; height: 44px;
+    background: #C68642; border-radius: 50%;
+    margin-bottom: -4px; z-index: 3; flex-shrink: 0;
+  }
+  .char-head::before {
+    content: ''; position: absolute;
+    top: -3px; left: 4px; right: 4px; height: 22px;
+    background: #1a1008; border-radius: 50% 50% 0 0;
+  }
+  .char-face { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); width: 28px; height: 16px; }
+  .char-eye-l, .char-eye-r { position: absolute; width: 5px; height: 5px; background: #1a1008; border-radius: 50%; top: 0; }
+  .char-eye-l { left: 2px; } .char-eye-r { right: 2px; }
+  .char-mouth { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 14px; height: 7px; border: 2.5px solid #8B4513; border-top: none; border-radius: 0 0 10px 10px; }
+  .char-body { position: relative; width: 54px; height: 62px; background: #1E2761; border-radius: 10px 10px 6px 6px; flex-shrink: 0; z-index: 2; overflow: visible; }
+  .char-body::before { content: ''; position: absolute; top: 4px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 36px solid #F5A623; filter: drop-shadow(0 1px 0 #E8920A); }
+  .char-body::after { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 14px; height: 10px; background: #2a3280; border-radius: 0 0 4px 4px; }
+  .char-neck { width: 16px; height: 8px; background: #C68642; margin: 0 auto; flex-shrink: 0; position: relative; z-index: 4; }
+  .char-legs { display: flex; gap: 6px; margin-top: 0; flex-shrink: 0; }
+  .char-leg { width: 18px; height: 40px; background: #2d2d2d; border-radius: 3px 3px 0 0; position: relative; }
+  .char-leg::after { content: ''; position: absolute; bottom: -8px; left: -4px; width: 26px; height: 10px; background: #111; border-radius: 4px 8px 4px 4px; }
+  .char-arm-l, .char-arm-r { position: absolute; width: 14px; height: 44px; background: #1E2761; border-radius: 7px; top: 4px; transform-origin: top center; transition: transform .5s cubic-bezier(.34,1.56,.64,1); }
+  .char-arm-l { left: -16px; transform: rotate(12deg); }
+  .char-arm-r { right: -16px; transform: rotate(-12deg); }
+  .char-arm-l::after, .char-arm-r::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 14px; height: 14px; background: #C68642; border-radius: 50%; }
+  /* Poses */
+  #site-character.pose-wave .char-arm-l { animation: armWave 1s ease-in-out infinite alternate; }
+  @keyframes armWave { 0%{transform:rotate(-120deg)} 100%{transform:rotate(-80deg)} }
+  #site-character.pose-point .char-arm-r { transform: rotate(-90deg) translateX(-6px); }
+  #site-character.pose-celebrate .char-arm-l { animation: celebL .6s ease-in-out infinite alternate; }
+  #site-character.pose-celebrate .char-arm-r { animation: celebR .6s ease-in-out infinite alternate; }
+  @keyframes celebL { 0%{transform:rotate(-130deg)} 100%{transform:rotate(-100deg)} }
+  @keyframes celebR { 0%{transform:rotate(130deg)}  100%{transform:rotate(100deg)} }
+  #site-character.pose-celebrate { animation: bodyBounce .5s ease-in-out infinite alternate; }
+  @keyframes bodyBounce { 0%{transform:translateY(0)} 100%{transform:translateY(-8px)} }
+  #site-character.pose-walk .char-leg:first-child { animation: legL .5s ease-in-out infinite alternate; transform-origin: top center; }
+  #site-character.pose-walk .char-leg:last-child  { animation: legR .5s ease-in-out infinite alternate; transform-origin: top center; }
+  #site-character.pose-walk .char-arm-l { animation: walkArmL .5s ease-in-out infinite alternate; }
+  #site-character.pose-walk .char-arm-r { animation: walkArmR .5s ease-in-out infinite alternate; }
+  @keyframes legL { 0%{transform:rotate(-12deg)} 100%{transform:rotate(12deg)} }
+  @keyframes legR { 0%{transform:rotate(12deg)}  100%{transform:rotate(-12deg)} }
+  @keyframes walkArmL { 0%{transform:rotate(20deg)} 100%{transform:rotate(-20deg)} }
+  @keyframes walkArmR { 0%{transform:rotate(-20deg)} 100%{transform:rotate(20deg)} }
+  #site-character.pose-thumbs .char-arm-r { transform: rotate(-60deg); }
+  #site-character.pose-thumbs .char-arm-r::after { width:12px; height:18px; border-radius:6px 6px 3px 3px; bottom:-12px; }
+  #site-character.pose-beckon .char-arm-l { animation: beckonL .8s ease-in-out infinite alternate; }
+  #site-character.pose-beckon .char-arm-r { animation: beckonR .8s ease-in-out infinite alternate; }
+  @keyframes beckonL { 0%{transform:rotate(-30deg)} 100%{transform:rotate(-60deg)} }
+  @keyframes beckonR { 0%{transform:rotate(30deg)}  100%{transform:rotate(60deg)} }
+  #site-character.pose-bow { animation: bowPose 2s ease-in-out infinite; transform-origin: bottom center; }
+  @keyframes bowPose { 0%,60%,100%{transform:rotate(0deg)} 20%,40%{transform:rotate(20deg)} }
+  #site-character.pose-idle { animation: charIdleFloat 3s ease-in-out infinite; }
+  @keyframes charIdleFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+  @media(max-width:768px) {
+    #site-character { right: 12px; bottom: 88px; transform: scale(.85); transform-origin: bottom right; }
   }
   </style>
 </head>
 <body>
 
-<!-- PRELOADER (homepage only) -->
+<!-- PRELOADER -->
 <div id="preloader">
   <div class="pre-wrap">
-    <img src="assets/logo.png" alt="MAINDSOURCE Logo" class="pre-img" onerror="this.style.display='none'"/>
+    <img src="assets/img/logo.png" alt="MAINDSOURCE Logo" class="pre-img" onerror="this.style.display='none'"/>
     <div class="pre-text"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
   </div>
   <div class="pre-bar-wrap"><div class="pre-bar"></div></div>
@@ -270,15 +612,64 @@
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- WhatsApp -->
+<!-- ═══════════════════════════════════════
+     ANTI-FRAUD TICKER
+═══════════════════════════════════════ -->
+<div id="fraud-ticker" role="marquee" aria-label="Important Notice">
+  <div class="ticker-track">
+    <!-- Two copies for seamless loop -->
+    <span class="ticker-item">
+      <span class="ticker-icon">&#9888;&#65039;</span>
+      Important Notice: MAINDSOURCE does not charge any fees, deposits, or commissions from job seekers. Our placement service is completely free. Please ignore and report anyone claiming to charge money on our behalf.
+    </span>
+    <span class="ticker-divider"></span>
+    <span class="ticker-item">
+      <span class="ticker-icon">&#128222;</span>
+      For genuine enquiries, contact us only at +91 9071329231 or maindsource@gmail.com
+    </span>
+    <span class="ticker-divider"></span>
+    <!-- Copy 2 -->
+    <span class="ticker-item">
+      <span class="ticker-icon">&#9888;&#65039;</span>
+      Important Notice: MAINDSOURCE does not charge any fees, deposits, or commissions from job seekers. Our placement service is completely free. Please ignore and report anyone claiming to charge money on our behalf.
+    </span>
+    <span class="ticker-divider"></span>
+    <span class="ticker-item">
+      <span class="ticker-icon">&#128222;</span>
+      For genuine enquiries, contact us only at +91 9071329231 or maindsource@gmail.com
+    </span>
+    <span class="ticker-divider"></span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     ROBOT AI GIF — above WhatsApp button
+     Place GIF at: assets/img/ai-robot.gif
+     pointer-events:none = not clickable
+═══════════════════════════════════════ -->
+<div id="ai-robot-widget" aria-hidden="true">
+  <img src="assets/img/ai-robot.gif"
+       alt="AI Assistant"
+       onerror="this.parentElement.style.display='none'"/>
+</div>
+
+<!-- WhatsApp Float -->
 <a id="wa-float" href="https://wa.me/919071329231" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
+<!-- CSS Character -->
+<div id="site-character" class="pose-wave" aria-hidden="true">
+  <div class="char-head"><div class="char-face"><div class="char-eye-l"></div><div class="char-eye-r"></div><div class="char-mouth"></div></div></div>
+  <div class="char-neck"></div>
+  <div class="char-body"><div class="char-arm-l"></div><div class="char-arm-r"></div></div>
+  <div class="char-legs"><div class="char-leg"></div><div class="char-leg"></div></div>
+</div>
+
 <!-- NAVBAR -->
 <nav id="navbar">
   <a href="index.html" class="nav-brand">
-    <img src="assets/logo.png" alt="MAINDSOURCE" class="nav-brand-img" onerror="this.style.display='none'"/>
+    <img src="assets/img/logo.png" alt="MAINDSOURCE" class="nav-brand-img" onerror="this.style.display='none'"/>
     <div class="nav-brand-text"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
   </a>
   <ul class="nav-links">
@@ -309,7 +700,7 @@
   <a href="about.html">About Us</a>
   <a href="services.html">Services</a>
   <a href="sectors.html">Sectors</a>
-  <a href="women.html" class="mob-women">&#9994; Women Empowerment</a>
+  <a href="women.html" style="color:var(--gold);font-weight:700;">&#9994; Women Empowerment</a>
   <a href="jobseekers.html">Job Seekers</a>
   <a href="careers.html">Careers</a>
   <a href="impact.html">Our Impact</a>
@@ -322,109 +713,137 @@
      CINEMATIC HERO
 ════════════════════════════════════════ -->
 <section id="hero">
+  <canvas id="hero-three-canvas"></canvas>
 
-  <!-- VIDEO BG — Enable when client provides video file
-       1. Upload to: assets/video/hero-bg.mp4
-       2. Change style="display:none" to style="display:block"
-  -->
-  <div class="hero-video-bg" style="display:block;">
+  <!-- Video BG: change display:none → display:block when video ready -->
+  <!-- Place video at: assets/video/hero-bg.mp4                       -->
+  <div class="hero-video-bg" style="display:none;">
     <video autoplay muted loop playsinline>
       <source src="assets/video/hero-bg.mp4" type="video/mp4"/>
     </video>
   </div>
 
-  <!-- CSS cinematic layers -->
   <div class="hero-bg-mesh"></div>
   <div class="hero-grid-lines"></div>
   <div class="hero-aurora"></div>
   <div class="hero-stripe"></div>
   <div class="hero-particles" id="heroP"></div>
 
-  <!-- Scroll cue (desktop right side) -->
   <div class="hero-scroll-cue">
     <span>Scroll</span>
     <div class="hero-scroll-line"></div>
   </div>
 
-  <!-- Hero content -->
   <div class="hero-main">
     <div class="hero-content-wrap">
-
       <div class="hero-badge">
         <div class="hero-badge-dot"></div>
         <span>Bangalore &middot; Ballari &middot; Pan-India</span>
-        <div class="hero-badge-dot"></div>
       </div>
-
-      <h1 class="hero-hl">
-        Right Talent.<br>
-        <em>Right Place.</em><br>
-        Right Time.
-      </h1>
-
-      <p class="hero-sub-new">
-        India's most trusted tech-enabled manpower partner &mdash; delivering screened, job-ready talent within 72 hours.
-      </p>
-
+      <h1 class="hero-hl">Right Talent.<br><em>Right Place.</em><br>Right Time.</h1>
+      <p class="hero-sub-new">India&rsquo;s most trusted tech-enabled manpower partner &mdash; delivering screened, job-ready talent within 72 hours.</p>
       <div class="hero-btns">
-        <a href="contact.html" class="btn btn-gold">
-          Request Manpower
-          <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="jobseekers.html" class="btn btn-outline">
-          Find Work
-          <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
+        <a href="contact.html" class="btn btn-gold">Request Manpower <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="jobseekers.html" class="btn btn-outline">Find Work <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
     </div>
-  </div
+  </div>
 
-<!-- ════════ HERO END ════════ -->
-
-
-<!-- Stats bar pinned to bottom -->
-<section>
-<div class="hero-divider"></div>
+  <div class="hero-divider"></div>
   <div class="hero-stats-bar">
     <div class="hero-stats-inner">
-      <div class="hero-stat-item">
-        <div class="hero-stat-num">8,000+</div>
-        <div class="hero-stat-label">Candidates Placed</div>
-      </div>
-      <div class="hero-stat-item">
-        <div class="hero-stat-num">50+</div>
-        <div class="hero-stat-label">Client Companies</div>
-      </div>
-      <div class="hero-stat-item">
-        <div class="hero-stat-num">72 hrs</div>
-        <div class="hero-stat-label">Avg. Delivery Time</div>
-      </div>
+      <div class="hero-stat-item"><div class="hero-stat-num">8,000+</div><div class="hero-stat-label">Candidates Placed</div></div>
+      <div class="hero-stat-item"><div class="hero-stat-num">50+</div><div class="hero-stat-label">Client Companies</div></div>
+      <div class="hero-stat-item"><div class="hero-stat-num">72 hrs</div><div class="hero-stat-label">Avg. Delivery Time</div></div>
     </div>
   </div>
 </section>
 
-<!-- ════════ DUAL PATH ════════ -->
+<!-- ════════════════════════════════════════
+     TRIBUTE — FOUNDER'S MOTHER
+════════════════════════════════════════ -->
+<section id="mother-tribute">
+  <div class="container">
+    <div class="tribute-grid">
+
+      <!-- Left: photo -->
+      <div class="tribute-img-wrap reveal">
+        <!--
+          TO ADD PHOTO: replace the div below with:
+          <img src="assets/img/mother-tribute.jpg" alt="Smt. Varamahalakshmi"/>
+        -->
+        <div style="width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,var(--navy),#2d1060);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:3px solid rgba(245,166,35,.20);box-shadow:0 20px 60px rgba(10,15,44,.15);">
+          <div style="width:80px;height:80px;border-radius:50%;background:rgba(245,166,35,.15);border:2px solid rgba(245,166,35,.3);display:flex;align-items:center;justify-content:center;font-size:36px;">&#128105;</div>
+          <div style="font-family:var(--font-s);font-size:10px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1.5px;text-transform:uppercase;text-align:center;padding:0 20px;">Photo Placeholder<br>assets/img/mother-tribute.jpg</div>
+        </div>
+        <div class="tribute-img-badge">Smt. Varamahalakshmi &middot; 55+</div>
+      </div>
+
+      <!-- Right: tribute text -->
+      <div class="tribute-content">
+        <div class="tribute-label reveal-left">A Tribute</div>
+        <h2 class="section-title reveal-left">The Woman Who<br>Inspired <em>MAINDSOURCE</em></h2>
+
+        <div class="tribute-quote reveal-left">
+          <p>&ldquo;She never told me what to build. She showed me what to stand for.&rdquo;</p>
+        </div>
+
+        <div class="tribute-body">
+          <p class="reveal-left">Behind every purposeful venture is a guiding force. For Surya Kiran, Founder of MAINDSOURCE, that force has always been his mother &mdash; Smt. Varamahalakshmi. A woman of quiet strength, unshakeable values, and a deep belief in the potential of every person she encountered.</p>
+
+          <p class="reveal-left">She taught him early that real leadership is not about authority &mdash; it is about responsibility. That no organisation deserves to call itself successful unless it lifts the people most often overlooked. Her words were not lectures. They were lived examples, shown every single day in how she treated people around her with dignity and care.</p>
+
+          <p class="reveal-left">Her lifelong conviction in the power and capability of women became the moral foundation on which MAINDSOURCE was built. Every time she saw a woman working hard and not being given her due, she spoke up. She acted. And she raised a son who would carry that belief into every corner of his work.</p>
+
+          <p class="reveal-left">The Women Empowerment agenda that sits at the very heart of MAINDSOURCE is not a policy statement or a marketing line. It is a living tribute &mdash; to her values, her vision, and her voice. A promise that the company she believed in would always stand for what she stood for.</p>
+        </div>
+
+        <div class="tribute-signature reveal-left">
+          <div class="tribute-sig-line"></div>
+          <div class="tribute-sig-text">Smt. Varamahalakshmi &mdash; The heart behind MAINDSOURCE</div>
+          <div class="tribute-sig-line"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
+
+<!-- ════════════════════════════════════════
+     DUAL PATH — Hire / Find Work
+     Character zone between the two cards
+════════════════════════════════════════ -->
 <section id="dual-path">
   <div class="container">
-    <div class="dual-grid">
+    <div class="dual-path-inner">
+
       <div class="path-card reveal">
         <div class="path-icon">&#127970;</div>
         <h3>Looking to Hire?</h3>
-        <p>Build your ideal workforce with our tech-enabled recruitment solutions. From blue-collar to white-collar &mdash; we deliver screened, qualified professionals.</p>
+        <p>Build your ideal workforce with our tech-enabled recruitment solutions. From blue-collar to white-collar &mdash; screened, qualified professionals delivered fast.</p>
         <a href="services.html" class="path-link">View Employer Services <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
+
+      <!-- Character zone — between cards — pointing both ways -->
+      <div class="char-zone char-zone-dual dark">
+        <div class="cz-label">Character<br>Animation<br>Zone</div>
+      </div>
+
       <div class="path-card reveal">
         <div class="path-icon">&#128188;</div>
         <h3>Looking for Work?</h3>
-        <p>Your next opportunity is waiting. We connect job seekers across South India with top companies in Bangalore &mdash; free placement service.</p>
+        <p>Your next opportunity is waiting. We connect job seekers across South India with top companies in Bangalore &mdash; completely free placement service.</p>
         <a href="jobseekers.html" class="path-link">Find Opportunities <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- ════════ ABOUT SNAPSHOT ════════ -->
+<!-- ════════════════════════════════════════
+     ABOUT SNAPSHOT
+     Character zone on right (thinking pose)
+════════════════════════════════════════ -->
 <section id="about-snap">
   <div class="container">
     <div class="about-snap-grid">
@@ -438,16 +857,22 @@
           <span class="pill"><span class="pill-dot"></span>Bangalore &middot; Ballari</span>
           <span class="pill"><span class="pill-dot"></span>Pan-India Reach</span>
         </div>
-        <a href="about.html" class="btn btn-gold reveal-left" style="width:fit-content;">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="about.html" class="btn btn-gold reveal-left" style="width:fit-content;margin-top:8px;">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
+      <!-- Character zone right side — reading / thinking pose -->
       <div style="display:flex;justify-content:center;" class="reveal">
-        <div class="lottie-box">Lottie &middot; Reading / Thinking</div>
+        <div class="char-zone" style="width:100%;max-width:340px;min-height:280px;">
+          <div class="cz-label">Character Animation Zone<br>(Thinking / Reading Pose)</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════ IMPACT ════════ -->
+<!-- ════════════════════════════════════════
+     IMPACT — Stats 2×2 on mobile
+     Character zone below stats (celebrate)
+════════════════════════════════════════ -->
 <section id="impact">
   <div class="container">
     <div class="text-center" style="margin-bottom:44px;">
@@ -456,18 +881,24 @@
       <p class="section-sub light reveal">Numbers that reflect our commitment to connecting talent with opportunity.</p>
     </div>
     <div class="impact-grid">
-      <div class="impact-card reveal"><span class="impact-icon">&#128101;</span><div class="impact-num" data-target="8000">0</div><div class="impact-label">Candidates Interacted</div><div class="impact-sub">Across 10+ industries</div></div>
+      <div class="impact-card reveal"><span class="impact-icon">&#128101;</span><div class="impact-num" data-target="8000">0</div><div class="impact-label">Candidates Placed</div><div class="impact-sub">Across 10+ industries</div></div>
       <div class="impact-card reveal"><span class="impact-icon">&#129309;</span><div class="impact-num" data-target="50">0</div><div class="impact-label">Satisfied Clients</div><div class="impact-sub">Long-term partnerships</div></div>
       <div class="impact-card reveal"><span class="impact-icon">&#127970;</span><div class="impact-num" data-target="2">0</div><div class="impact-label">Office Branches</div><div class="impact-sub">Bangalore &middot; Ballari</div></div>
       <div class="impact-card reveal"><span class="impact-icon">&#127942;</span><div class="impact-num" data-target="1">0</div><div class="impact-label">Year of Excellence</div><div class="impact-sub">Est. 2025 | Inc. 2026</div></div>
     </div>
-    <div style="display:flex;justify-content:center;margin-top:44px;" class="reveal">
-      <div class="lottie-box dark" style="min-height:150px;max-width:280px;">Lottie &middot; Celebrate</div>
+    <!-- Character zone below stats — celebrate arms up -->
+    <div style="display:flex;justify-content:center;margin-top:40px;" class="reveal">
+      <div class="char-zone dark" style="width:240px;min-height:140px;">
+        <div class="cz-label">Character Zone<br>(Celebrate Pose)</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ════════ SERVICES PREVIEW ════════ -->
+<!-- ════════════════════════════════════════
+     SERVICES PREVIEW
+     Character zone on right side, pointing
+════════════════════════════════════════ -->
 <section id="services-prev">
   <div class="container">
     <div class="svc-hd">
@@ -476,7 +907,10 @@
         <h2 class="section-title reveal-left">Comprehensive Workforce Solutions</h2>
         <p style="font-family:var(--font-s);font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1px;" class="reveal-left">HIRE BETTER &middot; HIRE FASTER &middot; GROW BIGGER</p>
       </div>
-      <a href="services.html" class="btn btn-gold reveal" style="flex-shrink:0;">View All Services</a>
+      <!-- Character zone top-right, pointing toward services -->
+      <div class="char-zone reveal" style="width:90px;min-height:100px;flex-shrink:0;">
+        <div class="cz-label">Char<br>Zone</div>
+      </div>
     </div>
     <div class="svc-grid">
       <div class="svc-card reveal"><div class="svc-num">01</div><div class="svc-icon">&#129309;</div><h3>Contractual Staffing</h3><p>Flexible contract-based staffing for short-term projects. Rapid deployment of skilled personnel.</p><a href="services.html" class="svc-link">Learn More <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
@@ -490,17 +924,21 @@
       <span class="pill"><span class="pill-dot"></span>CSR Solutions</span>
       <span class="pill"><span class="pill-dot"></span>Workforce Consulting</span>
     </div>
+    <a href="services.html" class="btn btn-gold" style="margin-top:28px;">View All Services &#8594;</a>
   </div>
 </section>
 
-<!-- ════════ SECTORS STRIP ════════ -->
+<!-- ════════════════════════════════════════
+     SECTORS MARQUEE
+     Character zone below strip, walking
+════════════════════════════════════════ -->
 <section id="sectors-strip">
   <div class="container strip-hd">
     <span class="section-label" style="color:rgba(245,166,35,.8);">Industries We Serve</span>
     <h2 class="section-title light reveal">Diverse Industry Expertise Across India</h2>
   </div>
   <div class="marquee-wrap">
-    <div class="marquee-row" id="mRow1">
+    <div class="marquee-row">
       <div class="s-chip"><span class="s-chip-icon">&#127981;</span><span class="s-chip-name">Manufacturing</span></div>
       <div class="s-chip"><span class="s-chip-icon">&#128663;</span><span class="s-chip-name">Automobile</span></div>
       <div class="s-chip"><span class="s-chip-icon">&#128717;</span><span class="s-chip-name">Retail</span></div>
@@ -535,10 +973,19 @@
       <div class="s-chip"><span class="s-chip-icon">&#127978;</span><span class="s-chip-name">Warehousing</span></div>
     </div>
   </div>
+  <!-- Character zone below marquee — walking pose -->
+  <div class="container" style="display:flex;justify-content:flex-end;margin-top:24px;">
+    <div class="char-zone dark" style="width:200px;min-height:100px;">
+      <div class="cz-label">Character Zone<br>(Walking Pose)</div>
+    </div>
+  </div>
   <p class="strip-tagline container">From <strong>blue-collar operators</strong> to <strong>white-collar professionals</strong> &mdash; we cover it all.</p>
 </section>
 
-<!-- ════════ WHY US ════════ -->
+<!-- ════════════════════════════════════════
+     WHY US
+     Character zone below cards, thumbs up
+════════════════════════════════════════ -->
 <section id="why-us">
   <div class="container">
     <div class="text-center">
@@ -547,49 +994,166 @@
       <p class="section-sub reveal">Our unique approach makes us the preferred workforce partner across India.</p>
     </div>
     <div class="why-grid">
-      <div class="why-card reveal"><div class="why-icon">&#128421;&#65039;</div><h3>Tech-Integrated Screening</h3><p>Our proprietary screening methodology ensures perfect candidate-role alignment every single time.</p></div>
+      <div class="why-card reveal"><div class="why-icon">&#128187;</div><h3>Tech-Integrated Screening</h3><p>Our proprietary screening methodology ensures perfect candidate-role alignment every single time.</p></div>
       <div class="why-card reveal"><div class="why-icon">&#128105;&#8205;&#128188;</div><h3>Women Empowerment Focus</h3><p>Central pillar of everything we stand for &mdash; every placement and partnership reflects this commitment.</p></div>
       <div class="why-card reveal"><div class="why-icon">&#128205;</div><h3>South India Specialists</h3><p>Deep expertise across Karnataka, Andhra Pradesh and Telangana with growing Pan-India reach.</p></div>
     </div>
+    <!-- Character zone below cards — pointing / thumbs up -->
+    <div style="display:flex;justify-content:center;margin-top:36px;" class="reveal">
+      <div class="char-zone" style="width:220px;min-height:110px;">
+        <div class="cz-label">Character Zone<br>(Thumbs Up Pose)</div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ════════ FOUNDERS ════════ -->
-<section id="founders">
+<!-- ════════════════════════════════════════
+     PLACED COMPANIES CAROUSEL
+     Shows companies where candidates placed
+════════════════════════════════════════ -->
+<section id="placed-carousel">
   <div class="container">
-    <div class="text-center">
-      <span class="section-label reveal">Leadership</span>
-      <h2 class="section-title reveal">The People Behind MAINDSOURCE</h2>
-      <p class="section-sub reveal">Driven by a passion for connecting human potential with the right opportunity.</p>
+    <div class="placed-header">
+      <div>
+        <span class="section-label reveal-left">Where Our Candidates Work</span>
+        <h2 class="section-title reveal-left">Placed Across Industry Leaders</h2>
+        <p class="section-sub reveal-left">Real companies. Real placements. Real careers built through MAINDSOURCE.</p>
+      </div>
+      <!-- Character zone right side — pointing at companies -->
+      <div class="char-zone reveal" style="width:90px;min-height:110px;flex-shrink:0;">
+        <div class="cz-label">Char<br>Zone</div>
+      </div>
     </div>
-    <div class="founders-grid">
-      <div class="founder-card reveal">
-        <div class="founder-photo">
-          <!-- Add photo: <img src="assets/img/surya-kiran.jpg" alt="Surya Kiran"/> -->
-          <div class="founder-initials">SK</div>
+  </div>
+
+  <div class="carousel-track-wrap">
+    <div class="carousel-track" id="carouselTrack">
+
+      <!-- Card 1 — Foxconn -->
+      <div class="placed-card">
+        <div class="placed-card-img">
+          <!-- Replace with: <img src="assets/img/placed/foxconn.jpg" alt="Foxconn"/> -->
+          <div class="img-ph"><span>&#127981;</span><small>Company Photo</small></div>
+          <div class="placed-card-sector-tag">Electronics</div>
         </div>
-        <div class="founder-info">
-          <h3>Mr. Surya Kiran</h3>
-          <div class="founder-role">Founder &amp; Managing Partner</div>
-          <p>Visionary leader driving MAINDSOURCE&rsquo;s mission to connect talent with opportunity across India through tech-enabled solutions.</p>
-        </div>
-      </div>
-      <div class="founder-card reveal">
-        <div class="founder-photo">
-          <!-- Add photo: <img src="assets/img/partner.jpg" alt="Co-Founder"/> -->
-          <div class="founder-initials">P</div>
-        </div>
-        <div class="founder-info">
-          <h3>Partner (Name TBC)</h3>
-          <div class="founder-role">Co-Founder &amp; Partner</div>
-          <p>Instrumental in shaping MAINDSOURCE&rsquo;s Women Empowerment agenda and driving inclusive hiring across all partnerships.</p>
+        <div class="placed-card-body">
+          <div class="placed-card-name">Foxconn</div>
+          <div class="placed-card-meta">
+            <div class="placed-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Electronic City, Bangalore</div>
+          </div>
+          <div class="placed-workers">&#128101; 120+ Candidates Placed</div>
         </div>
       </div>
+
+      <!-- Card 2 — Toyota -->
+      <div class="placed-card">
+        <div class="placed-card-img">
+          <div class="img-ph"><span>&#128663;</span><small>Company Photo</small></div>
+          <div class="placed-card-sector-tag">Automobile</div>
+        </div>
+        <div class="placed-card-body">
+          <div class="placed-card-name">Toyota Kirloskar</div>
+          <div class="placed-card-meta">
+            <div class="placed-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Bidadi, Bangalore Rural</div>
+          </div>
+          <div class="placed-workers">&#128101; 85+ Candidates Placed</div>
+        </div>
+      </div>
+
+      <!-- Card 3 — Tata Electronics -->
+      <div class="placed-card">
+        <div class="placed-card-img">
+          <div class="img-ph"><span>&#9889;</span><small>Company Photo</small></div>
+          <div class="placed-card-sector-tag">Electronics</div>
+        </div>
+        <div class="placed-card-body">
+          <div class="placed-card-name">Tata Electronics</div>
+          <div class="placed-card-meta">
+            <div class="placed-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Hosur, Tamil Nadu</div>
+          </div>
+          <div class="placed-workers">&#128101; 200+ Candidates Placed</div>
+        </div>
+      </div>
+
+      <!-- Card 4 — Schneider Electric -->
+      <div class="placed-card">
+        <div class="placed-card-img">
+          <div class="img-ph"><span>&#9889;</span><small>Company Photo</small></div>
+          <div class="placed-card-sector-tag">Industrial</div>
+        </div>
+        <div class="placed-card-body">
+          <div class="placed-card-name">Schneider Electric</div>
+          <div class="placed-card-meta">
+            <div class="placed-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Whitefield, Bangalore</div>
+          </div>
+          <div class="placed-workers">&#128101; 60+ Candidates Placed</div>
+        </div>
+      </div>
+
+      <!-- Card 5 — TVS -->
+      <div class="placed-card">
+        <div class="placed-card-img">
+          <div class="img-ph"><span>&#128663;</span><small>Company Photo</small></div>
+          <div class="placed-card-sector-tag">Automobile</div>
+        </div>
+        <div class="placed-card-body">
+          <div class="placed-card-name">TVS Motor Company</div>
+          <div class="placed-card-meta">
+            <div class="placed-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Hosur, Tamil Nadu</div>
+          </div>
+          <div class="placed-workers">&#128101; 95+ Candidates Placed</div>
+        </div>
+      </div>
+
+      <!-- Card 6 — Volvo -->
+      <div class="placed-card">
+        <div class="placed-card-img">
+          <div class="img-ph"><span>&#128666;</span><small>Company Photo</small></div>
+          <div class="placed-card-sector-tag">Heavy Vehicles</div>
+        </div>
+        <div class="placed-card-body">
+          <div class="placed-card-name">Volvo Group India</div>
+          <div class="placed-card-meta">
+            <div class="placed-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Peenya, Bangalore</div>
+          </div>
+          <div class="placed-workers">&#128101; 45+ Candidates Placed</div>
+        </div>
+      </div>
+
+      <!-- Duplicate 6 cards for seamless loop -->
+      <div class="placed-card">
+        <div class="placed-card-img"><div class="img-ph"><span>&#127981;</span><small>Company Photo</small></div><div class="placed-card-sector-tag">Electronics</div></div>
+        <div class="placed-card-body"><div class="placed-card-name">Foxconn</div><div class="placed-card-meta"><div class="placed-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Electronic City, Bangalore</div></div><div class="placed-workers">&#128101; 120+ Candidates Placed</div></div>
+      </div>
+      <div class="placed-card">
+        <div class="placed-card-img"><div class="img-ph"><span>&#128663;</span><small>Company Photo</small></div><div class="placed-card-sector-tag">Automobile</div></div>
+        <div class="placed-card-body"><div class="placed-card-name">Toyota Kirloskar</div><div class="placed-card-meta"><div class="placed-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Bidadi, Bangalore Rural</div></div><div class="placed-workers">&#128101; 85+ Candidates Placed</div></div>
+      </div>
+      <div class="placed-card">
+        <div class="placed-card-img"><div class="img-ph"><span>&#9889;</span><small>Company Photo</small></div><div class="placed-card-sector-tag">Electronics</div></div>
+        <div class="placed-card-body"><div class="placed-card-name">Tata Electronics</div><div class="placed-card-meta"><div class="placed-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Hosur, Tamil Nadu</div></div><div class="placed-workers">&#128101; 200+ Candidates Placed</div></div>
+      </div>
+      <div class="placed-card">
+        <div class="placed-card-img"><div class="img-ph"><span>&#9889;</span><small>Company Photo</small></div><div class="placed-card-sector-tag">Industrial</div></div>
+        <div class="placed-card-body"><div class="placed-card-name">Schneider Electric</div><div class="placed-card-meta"><div class="placed-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Whitefield, Bangalore</div></div><div class="placed-workers">&#128101; 60+ Candidates Placed</div></div>
+      </div>
+      <div class="placed-card">
+        <div class="placed-card-img"><div class="img-ph"><span>&#128663;</span><small>Company Photo</small></div><div class="placed-card-sector-tag">Automobile</div></div>
+        <div class="placed-card-body"><div class="placed-card-name">TVS Motor Company</div><div class="placed-card-meta"><div class="placed-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Hosur, Tamil Nadu</div></div><div class="placed-workers">&#128101; 95+ Candidates Placed</div></div>
+      </div>
+      <div class="placed-card">
+        <div class="placed-card-img"><div class="img-ph"><span>&#128666;</span><small>Company Photo</small></div><div class="placed-card-sector-tag">Heavy Vehicles</div></div>
+        <div class="placed-card-body"><div class="placed-card-name">Volvo Group India</div><div class="placed-card-meta"><div class="placed-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Peenya, Bangalore</div></div><div class="placed-workers">&#128101; 45+ Candidates Placed</div></div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- ════════ CLIENTS ════════ -->
+<!-- ════════════════════════════════════════
+     CLIENTS — Logo grid
+     Character zone below grid
+════════════════════════════════════════ -->
 <section id="clients">
   <div class="container">
     <div class="text-center">
@@ -614,15 +1178,30 @@
       <div class="client-box reveal"><span>Avirata Defence</span></div>
       <div class="client-box reveal"><span>Emmvee Group</span></div>
     </div>
+    <!-- Character zone below logos — clapping / thumbs up -->
+    <div style="display:flex;justify-content:center;margin-top:32px;" class="reveal">
+      <div class="char-zone" style="width:200px;min-height:100px;">
+        <div class="cz-label">Character Zone<br>(Thumbs Up Pose)</div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ════════ TESTIMONIALS ════════ -->
+<!-- ════════════════════════════════════════
+     TESTIMONIALS
+     Character zone top-right listening
+════════════════════════════════════════ -->
 <section id="testimonials">
   <div class="container">
-    <div class="text-center" style="margin-bottom:40px;">
-      <span class="section-label reveal" style="color:rgba(245,166,35,.8);">What Clients Say</span>
-      <h2 class="section-title light reveal">Trusted. Proven. Recommended.</h2>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;flex-wrap:wrap;gap:16px;">
+      <div>
+        <span class="section-label reveal" style="color:rgba(245,166,35,.8);">What Clients Say</span>
+        <h2 class="section-title light reveal">Trusted. Proven. Recommended.</h2>
+      </div>
+      <!-- Character zone — listening/nodding pose -->
+      <div class="char-zone dark reveal" style="width:80px;min-height:90px;flex-shrink:0;">
+        <div class="cz-label" style="font-size:8px;">Char<br>Zone</div>
+      </div>
     </div>
     <div class="testi-grid">
       <div class="testi-card reveal"><div class="testi-q">&ldquo;</div><p class="testi-text">MAINDSOURCE delivered exactly the workforce we needed &mdash; screened, trained, and ready from day one. Their industry understanding is exceptional.</p><div class="testi-person"><div class="testi-avatar">H</div><div><div class="testi-name">HR Manager</div><div class="testi-role">Leading Manufacturing, Bangalore</div></div></div></div>
@@ -632,22 +1211,42 @@
   </div>
 </section>
 
-<!-- ════════ CTA ════════ -->
+<!-- ════════════════════════════════════════
+     CTA BANNER
+     Character zone left side beckoning
+════════════════════════════════════════ -->
 <section id="cta-banner">
-  <div class="container cta-inner">
-    <span class="section-label reveal" style="color:rgba(245,166,35,.8);">Let&rsquo;s Work Together</span>
-    <h2 class="section-title light reveal">Ready to Build Your Dream Workforce?</h2>
-    <p class="reveal">Join 50+ companies that trust MAINDSOURCE. First batch of candidates delivered within 72 hours.</p>
-    <div class="cta-btns reveal">
-      <a href="contact.html" class="btn btn-gold">Start Your Hiring Journey &#8594;</a>
-      <a href="tel:+919071329231" class="btn btn-outline">&#128222; Call Us Now</a>
+  <div class="container">
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center;">
+      <!-- Character zone left — beckoning both hands -->
+      <div class="char-zone dark reveal" style="width:90px;min-height:130px;flex-shrink:0;">
+        <div class="cz-label" style="font-size:8px;">Char<br>Zone<br>(Beckon)</div>
+      </div>
+      <div class="cta-inner">
+        <span class="section-label reveal" style="color:rgba(245,166,35,.8);">Let&rsquo;s Work Together</span>
+        <h2 class="section-title light reveal">Ready to Build Your Dream Workforce?</h2>
+        <p class="reveal">Join 50+ companies that trust MAINDSOURCE. First batch of candidates delivered within 72 hours.</p>
+        <div class="cta-btns reveal">
+          <a href="contact.html" class="btn btn-gold">Start Your Hiring Journey &#8594;</a>
+          <a href="tel:+919071329231" class="btn btn-outline">&#128222; Call Us Now</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ════════ FOOTER ════════ -->
+<!-- ════════════════════════════════════════
+     FOOTER
+     Character zone bottom-left bowing
+════════════════════════════════════════ -->
 <footer id="footer">
   <div class="container">
+    <!-- Character zone above footer content, left side — bowing -->
+    <div style="margin-bottom:32px;">
+      <div class="char-zone dark" style="width:110px;min-height:110px;">
+        <div class="cz-label">Character Zone<br>(Bow Pose)</div>
+      </div>
+    </div>
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="f-logo"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
@@ -659,25 +1258,8 @@
           <a href="https://wa.me/919071329231" class="f-soc" aria-label="WhatsApp">&#128172;</a>
         </div>
       </div>
-      <div class="f-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="women.html">Women Empowerment</a></li>
-          <li><a href="credentials.html">Credentials</a></li>
-          <li><a href="careers.html">Careers</a></li>
-        </ul>
-      </div>
-      <div class="f-col">
-        <h4>Services</h4>
-        <ul>
-          <li><a href="services.html">Contractual Staffing</a></li>
-          <li><a href="services.html">One-Time Placement</a></li>
-          <li><a href="services.html">Payroll Management</a></li>
-          <li><a href="services.html">Gig Workforce</a></li>
-          <li><a href="services.html">Training &amp; Development</a></li>
-        </ul>
-      </div>
+      <div class="f-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="women.html">Women Empowerment</a></li><li><a href="credentials.html">Credentials</a></li><li><a href="careers.html">Careers</a></li></ul></div>
+      <div class="f-col"><h4>Services</h4><ul><li><a href="services.html">Contractual Staffing</a></li><li><a href="services.html">One-Time Placement</a></li><li><a href="services.html">Payroll Management</a></li><li><a href="services.html">Gig Workforce</a></li><li><a href="services.html">Training &amp; Development</a></li></ul></div>
       <div class="f-col">
         <h4>Contact</h4>
         <div class="f-contact-item"><span class="f-ci">&#128222;</span><div class="f-ct"><strong>Phone</strong>+91 9071329231</div></div>
@@ -694,43 +1276,148 @@
 </footer>
 
 <script>
+// ══════════════════════════════════════════════
+// 1. THREE.JS — Gold 3D Particles in Hero
+// ══════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('hero-three-canvas');
+  if (!canvas || typeof THREE === 'undefined') return;
+  const hero = document.getElementById('hero');
+  const w = hero.offsetWidth, h = hero.offsetHeight;
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 1000);
+  camera.position.z = 28;
+  const mat = new THREE.MeshBasicMaterial({ color: 0xF5A623, transparent: true, opacity: 0.15, wireframe: true });
+  const meshes = [];
+  for (let i = 0; i < 55; i++) {
+    const geo = i % 2 === 0
+      ? new THREE.OctahedronGeometry(Math.random() * 0.6 + 0.2)
+      : new THREE.TetrahedronGeometry(Math.random() * 0.5 + 0.15);
+    const mesh = new THREE.Mesh(geo, mat.clone());
+    mesh.position.set((Math.random()-.5)*50, (Math.random()-.5)*30, (Math.random()-.5)*20);
+    mesh.rotation.set(Math.random()*Math.PI, Math.random()*Math.PI, Math.random()*Math.PI);
+    mesh.userData = { speedX:(Math.random()-.5)*.004, speedY:(Math.random()-.5)*.003, rotX:(Math.random()-.5)*.008, rotY:(Math.random()-.5)*.008, rotZ:(Math.random()-.5)*.006 };
+    scene.add(mesh); meshes.push(mesh);
+  }
+  let paused = false;
+  document.addEventListener('visibilitychange', () => { paused = document.hidden; });
+  window.addEventListener('resize', () => {
+    const nw = hero.offsetWidth, nh = hero.offsetHeight;
+    camera.aspect = nw / nh; camera.updateProjectionMatrix(); renderer.setSize(nw, nh);
+  });
+  (function animate() {
+    requestAnimationFrame(animate); if (paused) return;
+    meshes.forEach(m => {
+      m.position.x += m.userData.speedX; m.position.y += m.userData.speedY;
+      m.rotation.x += m.userData.rotX; m.rotation.y += m.userData.rotY; m.rotation.z += m.userData.rotZ;
+      if (m.position.x > 26) m.position.x = -26; if (m.position.x < -26) m.position.x = 26;
+      if (m.position.y > 16) m.position.y = -16; if (m.position.y < -16) m.position.y = 16;
+    });
+    renderer.render(scene, camera);
+  })();
+})();
+
+// ══════════════════════════════════════════════
+// 2. CHARACTER POSE SWITCHER
+// ══════════════════════════════════════════════
+(function() {
+  const char = document.getElementById('site-character');
+  if (!char) return;
+  const sectionPoseMap = [
+    { id:'hero',           pose:'pose-wave'      },
+    { id:'mother-tribute', pose:'pose-idle'      },
+    { id:'dual-path',      pose:'pose-point'     },
+    { id:'about-snap',     pose:'pose-idle'      },
+    { id:'impact',         pose:'pose-celebrate' },
+    { id:'services-prev',  pose:'pose-point'     },
+    { id:'sectors-strip',  pose:'pose-walk'      },
+    { id:'why-us',         pose:'pose-thumbs'    },
+    { id:'placed-carousel',pose:'pose-thumbs'    },
+    { id:'clients',        pose:'pose-thumbs'    },
+    { id:'testimonials',   pose:'pose-idle'      },
+    { id:'cta-banner',     pose:'pose-beckon'    },
+    { id:'footer',         pose:'pose-bow'       },
+  ];
+  const allPoses = ['pose-wave','pose-idle','pose-point','pose-celebrate','pose-walk','pose-thumbs','pose-beckon','pose-bow'];
+  function setPose(pose) { allPoses.forEach(p => char.classList.remove(p)); char.classList.add(pose); }
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const m = sectionPoseMap.find(s => s.id === e.target.id);
+      if (m) setPose(m.pose);
+    });
+  }, { threshold: 0.3 });
+  sectionPoseMap.forEach(({ id }) => { const el = document.getElementById(id); if (el) obs.observe(el); });
+})();
+
+// ══════════════════════════════════════════════
+// STANDARD SCRIPTS
+// ══════════════════════════════════════════════
 // Preloader
-window.addEventListener('load',()=>{setTimeout(()=>{const l=document.getElementById('preloader');if(!l)return;l.style.opacity='0';l.style.transition='opacity .6s ease';setTimeout(()=>{l.style.display='none';},600);},2000);});
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const l = document.getElementById('preloader'); if (!l) return;
+    l.style.opacity = '0'; l.style.transition = 'opacity .6s ease';
+    setTimeout(() => { l.style.display = 'none'; }, 600);
+  }, 2000);
+});
 
 // Cursor
-const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(dot){dot.style.left=mx+'px';dot.style.top=my+'px';}});
-(function ar(){if(!ring)return;rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar);})();
+const dot = document.getElementById('cursorDot'), ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  if (dot) { dot.style.left = mx + 'px'; dot.style.top = my + 'px'; }
+});
+(function ar() {
+  if (!ring) return; rx += (mx-rx)*.12; ry += (my-ry)*.12;
+  ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(ar);
+})();
 
 // Scroll progress + navbar
-window.addEventListener('scroll',()=>{
-  const s=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
-  const p=document.getElementById('scroll-progress');if(p)p.style.width=s+'%';
-  const nav=document.getElementById('navbar');if(nav)nav.classList.toggle('scrolled',window.scrollY>60);
+window.addEventListener('scroll', () => {
+  const s = (window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
+  const p = document.getElementById('scroll-progress'); if (p) p.style.width = s+'%';
+  const nav = document.getElementById('navbar'); if (nav) nav.classList.toggle('scrolled', window.scrollY>60);
 });
 
 // Mobile menu
-const ham=document.getElementById('hamburger'),mm=document.getElementById('mobMenu'),mo=document.getElementById('mobOverlay');
-if(ham){function tm(){mm.classList.toggle('open');mo.classList.toggle('open');}ham.addEventListener('click',tm);mo.addEventListener('click',tm);}
+const ham = document.getElementById('hamburger'), mm = document.getElementById('mobMenu'), mo = document.getElementById('mobOverlay');
+if (ham) { function tm(){mm.classList.toggle('open');mo.classList.toggle('open');}ham.addEventListener('click',tm);mo.addEventListener('click',tm); }
 
-// Hero particles — enhanced (38 particles, varied sizes)
-(function(){
-  const c=document.getElementById('heroP');if(!c)return;
-  for(let i=0;i<38;i++){
-    const s=document.createElement('span');
-    const sz=Math.random()*2.4+1;
+// Hero particles
+(function() {
+  const c = document.getElementById('heroP'); if (!c) return;
+  for (let i=0; i<38; i++) {
+    const s = document.createElement('span');
+    const sz = Math.random()*2.4+1;
     s.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+7)+'s;animation-delay:'+(Math.random()*8)+'s;width:'+sz+'px;height:'+sz+'px;';
     c.appendChild(s);
   }
 })();
 
 // Reveal on scroll
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.14});
-document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); } });
+}, { threshold:.14 });
+document.querySelectorAll('.reveal,.reveal-left').forEach(el => revObs.observe(el));
 
 // Count-up
-const cObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.impact-num[data-target]').forEach(el=>{const t=parseInt(el.dataset.target),d=2000,step=t/(d/16);let n=0;const id=setInterval(()=>{n+=step;if(n>=t){el.textContent=t.toLocaleString()+'+';clearInterval(id);}else{el.textContent=Math.floor(n).toLocaleString()+'+';}},16);});cObs.disconnect();}});},{threshold:.3});
+const cObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.impact-num[data-target]').forEach(el => {
+        const t=parseInt(el.dataset.target), step=t/(2000/16); let n=0;
+        const id=setInterval(()=>{n+=step;if(n>=t){el.textContent=t.toLocaleString()+'+';clearInterval(id);}else{el.textContent=Math.floor(n).toLocaleString()+'+';}},16);
+      });
+      cObs.disconnect();
+    }
+  });
+},{threshold:.3});
 const imp=document.getElementById('impact');if(imp)cObs.observe(imp);
 </script>
 </body>
