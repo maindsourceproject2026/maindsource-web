@@ -36,9 +36,10 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 
 /* Preloader — homepage only */
 #preloader{position:fixed;inset:0;background:var(--hero-start);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;}
-..pre-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;}
-.pre-img{width:72px;height:72px;object-fit:contain;opacity:0;animation:pIn .7s ease .2s forwards;flex-direction: column;}
-.pre-text{font-family:var(--font-d);font-size:20px;font-weight:800;opacity:0;animation:pIn .7s ease .4s forwards;}
+/* Row layout: logo + brand name side-by-side, perfectly centered on vertical axis */
+.pre-wrap{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:12px;}
+.pre-img{width:44px;height:44px;object-fit:contain;opacity:0;animation:pIn .7s ease .2s forwards;}
+.pre-text{font-family:var(--font-d);font-size:24px;font-weight:800;opacity:0;animation:pIn .7s ease .4s forwards;line-height:1;}
 .pre-text .w{color:var(--white);}.pre-text .g{color:var(--gold);}
 .pre-bar-wrap{width:160px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;}
 .pre-bar{height:100%;background:var(--gold);width:0;animation:pBar 1.2s ease .7s forwards;}
@@ -178,8 +179,8 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 .impact-num{
   font-family:var(--font-s);font-size:46px;font-weight:800;color:var(--gold);
   line-height:1;margin-bottom:6px;
-  /* Fixed width prevents layout jump during count-up animation */
-  min-width:100px;display:block;text-align:center;
+  /* width:100% fills the card exactly — never shrinks or grows — zero layout shift */
+  display:block;text-align:center;width:100%;min-height:1.1em;
 }
 .impact-label{font-family:var(--font-s);font-size:11px;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
 .impact-sub{font-size:12px;color:var(--text-muted);}
@@ -246,7 +247,7 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 .founder-card:hover::after{opacity:1;}
 /* Photo area — tall enough for portrait or rectangle */
 .founder-photo{
-  height:220px; width:100%;
+  height:220px;
   background:linear-gradient(135deg,var(--navy),var(--hero-end));
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
@@ -255,8 +256,8 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 /* Use contain so rectangular images are never cropped */
 .founder-photo img{
   width:100%;height:100%;
-  object-fit:cover; /* never crop — show full image */
-  padding:0; /* breathing room for portrait/rectangle images */
+  object-fit:contain; /* never crop — show full image */
+  padding:12px; /* breathing room for portrait/rectangle images */
   filter:none;
 }
 .founder-initials{width:76px;height:76px;border-radius:50%;background:rgba(245,166,35,.2);border:2px solid rgba(245,166,35,.4);display:flex;align-items:center;justify-content:center;font-family:var(--font-s);font-size:28px;font-weight:800;color:var(--gold);}
@@ -452,7 +453,11 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 }
 @media(max-width:768px){
   :root{--sy:60px;}
+  /* Navbar always at top:0 — zero gap on mobile */
+  #navbar{top:0!important;}
   .nav-links,.nav-cta{display:none;}.nav-ham{display:flex;}
+  /* "Find a Job" only lives in the mobile drawer, NOT in the header bar */
+  .nav-cta-jobs{display:none;}
   .dual-grid,.svc-grid,.sfc-full-grid,.svc-full-grid{grid-template-columns:1fr;}
   .svc-hd{flex-direction:column;gap:12px;align-items:flex-start;}
   .why-grid,.phil-grid{grid-template-columns:1fr;}
