@@ -36,8 +36,8 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 
 /* Preloader — homepage only */
 #preloader{position:fixed;inset:0;background:var(--hero-start);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;}
-.pre-wrap{display:flex;align-items:center;gap:12px;}
-.pre-img{width:44px;height:44px;object-fit:contain;opacity:0;animation:pIn .7s ease .2s forwards;flex-direction: column;}
+.pre-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.pre-img{width:72px;height:72px;object-fit:contain;opacity:0;animation:pIn .7s ease .2s forwards;flex-direction: column;}
 .pre-text{font-family:var(--font-d);font-size:24px;font-weight:800;opacity:0;animation:pIn .7s ease .4s forwards;}
 .pre-text .w{color:var(--white);}.pre-text .g{color:var(--gold);}
 .pre-bar-wrap{width:160px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;}
@@ -166,10 +166,21 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 #impact{padding:var(--sy) 0;background:var(--navy);position:relative;overflow:hidden;}
 #impact::before{content:'';position:absolute;top:-80px;right:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.07),transparent);pointer-events:none;}
 .impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
-.impact-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:30px 18px;text-align:center;transition:var(--ease);}
+/* Stable card — fixed min-width prevents shaking during count-up */
+.impact-card{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);
+  border-radius:var(--r);padding:30px 18px;text-align:center;transition:var(--ease);
+  min-width:0; /* allow grid to size it, but keep content stable */
+  box-sizing:border-box;
+}
 .impact-card:hover{background:rgba(255,255,255,.09);transform:translateY(-4px);}
 .impact-icon{font-size:32px;margin-bottom:12px;display:block;}
-.impact-num{font-family:var(--font-s);font-size:46px;font-weight:800;color:var(--gold);line-height:1;margin-bottom:6px;}
+.impact-num{
+  font-family:var(--font-s);font-size:46px;font-weight:800;color:var(--gold);
+  line-height:1;margin-bottom:6px;
+  /* Fixed width prevents layout jump during count-up animation */
+  min-width:100px;display:block;text-align:center;
+}
 .impact-label{font-family:var(--font-s);font-size:11px;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
 .impact-sub{font-size:12px;color:var(--text-muted);}
 
@@ -213,10 +224,41 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 /* Founders */
 #founders{padding:var(--sy) 0;background:var(--cream);}
 .founders-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;max-width:740px;margin:40px auto 0;}
-.founder-card{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:var(--ease);}
-.founder-card:hover{box-shadow:var(--shadow-h);transform:translateY(-4px);}
-.founder-photo{height:190px;background:linear-gradient(135deg,var(--navy),var(--hero-end));display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.founder-photo img{width:100%;height:100%;object-fit:cover;}
+.founder-card{
+  background:var(--white);border:1px solid var(--border);border-radius:var(--rl);
+  overflow:hidden;transition:all .35s cubic-bezier(.4,0,.2,1);
+  position:relative;
+}
+/* Rich Golden Glow + Scale hover */
+.founder-card:hover{
+  box-shadow:
+    0 0 0 2px rgba(245,166,35,.55),
+    0 0 28px rgba(245,166,35,.28),
+    0 20px 48px rgba(10,15,44,.18);
+  transform:translateY(-6px) scale(1.015);
+  border-color:rgba(245,166,35,.6);
+}
+.founder-card::after{
+  content:'';position:absolute;inset:0;border-radius:var(--rl);
+  background:linear-gradient(135deg,rgba(245,166,35,.0) 60%,rgba(245,166,35,.06) 100%);
+  opacity:0;transition:opacity .35s;pointer-events:none;
+}
+.founder-card:hover::after{opacity:1;}
+/* Photo area — tall enough for portrait or rectangle */
+.founder-photo{
+  height:220px;
+  background:linear-gradient(135deg,var(--navy),var(--hero-end));
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  position:relative;
+}
+/* Use contain so rectangular images are never cropped */
+.founder-photo img{
+  width:100%;height:100%;
+  object-fit:contain; /* never crop — show full image */
+  padding:12px; /* breathing room for portrait/rectangle images */
+  filter:none;
+}
 .founder-initials{width:76px;height:76px;border-radius:50%;background:rgba(245,166,35,.2);border:2px solid rgba(245,166,35,.4);display:flex;align-items:center;justify-content:center;font-family:var(--font-s);font-size:28px;font-weight:800;color:var(--gold);}
 .founder-info{padding:20px 22px;}
 .founder-info h3{font-family:var(--font-s);font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:3px;}
@@ -431,7 +473,16 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 @media(max-width:480px){
   .clients-grid{grid-template-columns:repeat(2,1fr);}
   .sectors-grid{grid-template-columns:repeat(2,1fr);}
-  .impact-grid{grid-template-columns:1fr 1fr;}
+  /* Impact 2×2 grid — contained within screen, no overflow */
+  .impact-grid{
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    padding:0 2px; /* tiny inset to avoid edge clipping */
+  }
+  .impact-card{ padding:20px 10px; }
+  .impact-num{ font-size:34px; min-width:0; }
+  .impact-label{ font-size:9px; letter-spacing:.8px; }
+  .impact-sub{ font-size:10.5px; }
   .js-cats{grid-template-columns:1fr 1fr;}
   .add-svc-grid{grid-template-columns:1fr;}
 }
