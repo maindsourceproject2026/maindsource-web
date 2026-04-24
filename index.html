@@ -30,7 +30,7 @@
     display: flex;
     align-items: center;
     overflow: hidden;
-    transition: top 0.3s cubic-bezier(.4,0,.2,1);
+    /* NO transition — RAF loop updates position each frame; transition causes the lag */
   }
   .ticker-badge {
     flex-shrink: 0;
@@ -142,7 +142,14 @@
     line-height: 1.4;
   }
   @media(max-width:480px) {
-    #robot-float { display: none; }
+    /* Robot IS visible on mobile — repositioned to avoid WA overlap */
+    #robot-float {
+      display: flex;          /* override any previous hide */
+      width: 72px;
+      height: 80px;
+      bottom: 88px;           /* sits just above WA button */
+      right: 16px;
+    }
   }
 
   /* ── HERO — video fix + existing styles ── */
@@ -194,25 +201,34 @@
   .hero-particles { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:1; }
   .hero-particles span { position:absolute; background:var(--gold); border-radius:50%; opacity:0; animation:floatP linear infinite; }
 
-  /* VIDEO — fully fixed: absolute behind content, cover, crop top 30%, 80% opacity */
+  /* VIDEO — 80% opacity, clearly visible; overlay reduced for video visibility */
   .hero-video-bg {
     position: absolute;
     inset: 0;
     z-index: 0;
-    background: #0A0F2C; /* Navy fallback if video fails */
+    background: #0A0F2C;
     overflow: hidden;
+    transform: translateZ(0);      /* GPU-composite this layer */
+    -webkit-transform: translateZ(0);
   }
   .hero-video-bg video {
     position: absolute;
     inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    object-position: center 43%; /* crop/hide top 30% */
-    opacity: 1;
+    object-position: center 43%;
+    opacity: 0.80;
+    /* Mobile stutter fixes — forces GPU decode path */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
+  /* Reduced from .52 → .26 so the video is actually visible at 80% opacity */
   .hero-video-bg::after {
     content: ''; position: absolute; inset: 0;
-    background: rgba(10,15,44,.52); z-index: 1; /* overlay on top of video */
+    background: rgba(10,15,44,.26); z-index: 1;
   }
 
   .hero-main {
@@ -321,7 +337,7 @@
     display: grid;
     grid-template-columns: 340px 1fr;
     gap: 64px;
-    align-items: center;
+    align-items: flex-start; /* images TOP-align with the start of text — no awkward gap below */
   }
   .tribute-img-wrap {
     position: relative;
@@ -457,9 +473,9 @@
   /* Inverse layout: text LEFT, image RIGHT */
   .uncle-grid {
     display: grid;
-    grid-template-columns: 1fr 280px; /* text takes more space, image compact */
+    grid-template-columns: 1fr 280px;
     gap: 56px;
-    align-items: center;
+    align-items: flex-start; /* image TOP-aligns with text; no empty space below short image */
   }
   .uncle-img-wrap {
     position: relative;
@@ -589,7 +605,7 @@
   */
 
   /* ── DUAL PATH — character between cards ── */
-  #dual-path { padding: 60px 0; background: var(--hero-start); }
+  #dual-path { padding: 60px 0; background: var(--cream-2); }
   .dual-path-inner {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -604,6 +620,17 @@
     gap: 8px;
     padding: 0 8px;
   }
+  /* Path cards override for light background on homepage */
+  #dual-path .path-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  #dual-path .path-card h3 { color: var(--text-dark); }
+  #dual-path .path-card p  { color: var(--text-gray); }
+  #dual-path .path-card::before { background: var(--gold); }
+  #dual-path .path-card:hover { box-shadow: var(--shadow-h); }
+  #dual-path .dual-char-label { color: rgba(30,39,97,.4); }
   .dual-char-label {
     font-family: var(--font-s); font-size: 9px; font-weight: 700;
     color: rgba(245,166,35,.4); letter-spacing: 1.5px;
@@ -916,8 +943,8 @@
   }
   @media(max-width:768px) {
     #fraud-ticker { height: 28px; }
-    /* NOTE: #navbar top and #hero padding-top are intentionally omitted here —
-       positionTicker() JS handles dynamic positioning on all screen sizes */
+    #navbar { top: 28px; }
+    #hero { padding-top: 28px; }
     .ticker-badge { display: none; }
     .ticker-text { font-size: 10.5px; padding: 0 24px; }
 
@@ -937,9 +964,12 @@
     .hero-scroll-cue { display: none; }
     .hero-stripe { display: none; }
 
-    /* Impact 2x2 — bulletproof for meeting demo */
-    .impact-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
-    .impact-num  { font-size: 32px !important; }
+    /* Impact grid 2x2 on mobile */
+    .impact-grid {
+      grid-template-columns: 1fr 1fr !important;
+      gap: 12px;
+    }
+    .impact-num { font-size: 32px !important; }
     .impact-card { padding: 20px 12px !important; }
 
     .tribute-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -975,6 +1005,290 @@
     .hero-hl { font-size: 36px; }
     .impact-char-wrap { display: none; }
   }
+
+  /* ══════════════════════════════════════════════
+     NEW: "FIND A JOB" NAV BUTTON
+  ══════════════════════════════════════════════ */
+  .nav-cta-jobs {
+    flex-shrink: 0;
+    font-family: var(--font-s); font-size: 13px; font-weight: 700;
+    color: var(--gold) !important;
+    background: transparent;
+    border: 1.5px solid rgba(245,166,35,.55);
+    padding: 9px 20px;
+    border-radius: 50px;
+    white-space: nowrap;
+    transition: var(--ease);
+    margin-right: 8px;
+  }
+  .nav-cta-jobs:hover {
+    background: rgba(245,166,35,.10);
+    border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(245,166,35,.20);
+  }
+  .mob-cta-jobs {
+    background: rgba(245,166,35,.10);
+    border: 1.5px solid rgba(245,166,35,.35);
+    color: var(--gold) !important;
+    padding: 12px 20px;
+    border-radius: 50px;
+    text-align: center;
+    font-weight: 700;
+    font-family: var(--font-s);
+  }
+
+  /* ══════════════════════════════════════════════
+     NEW: CORPORATE TRAINING SECTION
+  ══════════════════════════════════════════════ */
+  #corp-training {
+    padding: var(--sy) 0;
+    background: var(--cream);
+    overflow: hidden;
+    position: relative;
+  }
+  #corp-training::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 320px; height: 320px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,166,35,.06), transparent);
+    pointer-events: none;
+  }
+  .training-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .training-text {}
+  .training-label {
+    font-family: var(--font-s); font-size: 10px; font-weight: 700;
+    color: var(--gold); letter-spacing: 3px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+  }
+  .training-label::before { content: '🎓'; font-size: 14px; }
+  .training-title {
+    font-family: var(--font-d); font-size: clamp(26px,3.4vw,42px);
+    font-weight: 700; color: var(--text-dark); line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .training-sub {
+    font-size: 15px; color: var(--text-gray); line-height: 1.85;
+    max-width: 440px; margin-bottom: 28px;
+  }
+  .training-pillars {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .tp-row {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 16px;
+    transition: var(--ease);
+  }
+  .tp-row:hover { border-color: var(--gold); box-shadow: 0 4px 16px rgba(245,166,35,.09); }
+  .tp-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .tp-body h4 { font-family: var(--font-s); font-size: 13px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
+  .tp-body p { font-size: 12.5px; color: var(--text-gray); line-height: 1.6; }
+  /* 2×2 Image Grid */
+  .training-img-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .timg-wrap {
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, var(--navy), #0c1230);
+    border: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    transition: var(--ease);
+  }
+  .timg-wrap:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(10,15,44,.14); }
+  .timg-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+  /* Placeholder shown until real images are added */
+  .timg-ph {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 8px; width: 100%; height: 100%;
+  }
+  .timg-ph span { font-size: 28px; opacity: .55; }
+  .timg-ph p {
+    font-family: var(--font-s); font-size: 9px; font-weight: 700;
+    color: rgba(255,255,255,.4); letter-spacing: 1px; text-transform: uppercase;
+    text-align: center;
+  }
+  /* Overlay label on each image */
+  .timg-wrap::after {
+    content: attr(data-label);
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 7px 10px;
+    background: linear-gradient(to top, rgba(10,15,44,.78), transparent);
+    font-family: var(--font-s); font-size: 10px; font-weight: 700;
+    color: rgba(255,255,255,.82); letter-spacing: .5px;
+    text-transform: uppercase;
+  }
+  @media(max-width:768px) {
+    .training-layout { grid-template-columns: 1fr; gap: 36px; }
+    .training-img-grid { grid-template-columns: 1fr; } /* 1×4 vertical on mobile */
+  }
+
+  /* ══════════════════════════════════════════════
+     NEW: CORE LEADERSHIP / OUR PILLARS SECTION
+  ══════════════════════════════════════════════ */
+  #core-leadership {
+    padding: var(--sy) 0;
+    background: linear-gradient(135deg, #0A0F2C 0%, #1E2761 60%, #0c1230 100%);
+    position: relative; overflow: hidden;
+  }
+  #core-leadership::before {
+    content: '';
+    position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(245,166,35,.07), transparent);
+    pointer-events: none;
+  }
+  .leadership-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 48px;
+  }
+  /* Squircle card — the premium "rounded square" style */
+  .leader-card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 28px; /* squircle feel */
+    padding: 28px 20px 24px;
+    text-align: center;
+    transition: all .35s cubic-bezier(.4,0,.2,1);
+    position: relative;
+    overflow: hidden;
+  }
+  .leader-card::before {
+    content: '';
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 60%; height: 2px;
+    background: linear-gradient(to right, transparent, rgba(245,166,35,.6), transparent);
+    border-radius: 0 0 4px 4px;
+    transition: width .35s ease;
+  }
+  .leader-card:hover {
+    background: rgba(255,255,255,.08);
+    border-color: rgba(245,166,35,.35);
+    transform: translateY(-8px);
+    box-shadow:
+      0 0 0 1px rgba(245,166,35,.20),
+      0 24px 56px rgba(0,0,0,.35),
+      0 0 24px rgba(245,166,35,.10);
+  }
+  .leader-card:hover::before { width: 80%; }
+  /* 1:1 profile image — squircle shape */
+  .leader-avatar {
+    width: 110px; height: 110px;
+    border-radius: 28px; /* squircle */
+    overflow: hidden;
+    margin: 0 auto 18px;
+    border: 2.5px solid rgba(245,166,35,.30);
+    box-shadow:
+      0 0 0 5px rgba(245,166,35,.08),
+      0 12px 32px rgba(0,0,0,.35);
+    background: linear-gradient(135deg, rgba(30,39,97,.8), rgba(10,15,44,.9));
+    display: flex; align-items: center; justify-content: center;
+    transition: all .35s ease;
+    position: relative;
+  }
+  .leader-card:hover .leader-avatar {
+    border-color: rgba(245,166,35,.65);
+    box-shadow:
+      0 0 0 5px rgba(245,166,35,.14),
+      0 16px 40px rgba(0,0,0,.40);
+    transform: scale(1.04);
+  }
+  .leader-avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top; /* prevent face-crop */
+    display: block;
+  }
+  /* Initials fallback */
+  .leader-initials {
+    font-family: var(--font-s); font-size: 32px; font-weight: 800;
+    color: var(--gold);
+  }
+  .leader-name {
+    font-family: var(--font-s); font-size: 15px; font-weight: 700;
+    color: var(--white); margin-bottom: 4px;
+  }
+  .leader-role {
+    font-family: var(--font-s); font-size: 10.5px; font-weight: 600;
+    color: rgba(245,166,35,.75); letter-spacing: .6px;
+    text-transform: uppercase; line-height: 1.4;
+  }
+  .leader-divider {
+    width: 32px; height: 1.5px;
+    background: rgba(245,166,35,.30);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+  @media(max-width:900px) {
+    .leadership-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  }
+  @media(max-width:480px) {
+    .leadership-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .leader-avatar { width: 80px; height: 80px; border-radius: 20px; }
+    .leader-card { padding: 20px 12px 18px; border-radius: 20px; }
+    .leader-name { font-size: 13px; }
+    .leader-role { font-size: 9.5px; }
+  }
+
+  /* ══════════════════════════════════════════════
+     UPDATED CAROUSEL: COVERFLOW / CENTER FOCUS
+     16:9 cinematic images fill the center
+  ══════════════════════════════════════════════ */
+  /* Override old 4:5 ratio with 16:9 and wider cards */
+  .focus-card { width: 560px; } /* wider card for 16:9 */
+  .fc-image {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* cinematic 16:9 fills majority of card */
+    background: linear-gradient(135deg, var(--navy) 0%, #0c1230 100%);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  .fc-image img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    display: block; transition: transform 0.4s ease;
+  }
+  .focus-card.fc-active .fc-image img { transform: scale(1.03); }
+  /* Info strip: center-aligned text */
+  .fc-info {
+    padding: 16px 20px 18px;
+    background: var(--white);
+    border-top: 2px solid rgba(245,166,35,.15);
+    text-align: center; /* centered per spec */
+  }
+  .fc-company {
+    font-family: var(--font-s); font-size: 15px; font-weight: 700;
+    color: var(--text-dark); margin-bottom: 4px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  /* Side cards offsets need updating for wider 560px cards */
+  .focus-card.fc-prev1 { transform: translateX(-480px) translateZ(-160px) scale(0.80); }
+  .focus-card.fc-next1 { transform: translateX(480px)  translateZ(-160px) scale(0.80); }
+  .focus-card.fc-prev2 { transform: translateX(-760px) translateZ(-280px) scale(0.62); }
+  .focus-card.fc-next2 { transform: translateX(760px)  translateZ(-280px) scale(0.62); }
+  /* Track height for 16:9 at 560px wide ≈ 315px image + 70px info = 385px + padding */
+  .focus-carousel-track { height: 480px; }
+  @media(max-width:640px) {
+    .focus-card { width: 300px; }
+    .focus-carousel-track { height: 280px; }
+    .focus-card.fc-prev1 { transform: translateX(-240px) translateZ(-100px) scale(0.80); opacity: 0.35; }
+    .focus-card.fc-next1 { transform: translateX(240px)  translateZ(-100px) scale(0.80); opacity: 0.35; }
+    .focus-card.fc-prev2,.focus-card.fc-next2 { opacity: 0; pointer-events: none; }
+    .fc-company { font-size: 14px; }
+  }
   </style>
 </head>
 <body>
@@ -1003,7 +1317,7 @@
     class="robot-video"
     onerror="this.style.display='none'; document.getElementById('robot-fallback').style.display='flex';"
   >
-    <source src="assets/video/ai-robot.webm" type="video/webm"/>
+    <source src="assets/video/AI Robot Assistant Widget Animation_720p-Picsart-BackgroundRemover.webm" type="video/webm"/>
   </video>
   <!-- Fallback shown if video fails to load -->
   <div class="robot-fallback" id="robot-fallback" style="display:none;">
@@ -1042,6 +1356,7 @@
     </li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
+  <a href="careers.html" class="nav-cta-jobs">Find a Job &#128188;</a>
   <a href="contact.html" class="nav-cta">Start Hiring &#8594;</a>
   <button class="nav-ham" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
@@ -1057,6 +1372,7 @@
   <a href="impact.html">Our Impact</a>
   <a href="credentials.html">Credentials</a>
   <a href="methodology.html">Methodology</a>
+  <a href="careers.html" class="mob-cta-jobs">Find a Job &#128188;</a>
   <a href="contact.html" class="mob-cta">Start Hiring &#8594;</a>
 </div>
 
@@ -1166,17 +1482,12 @@
     <div class="tribute-grid">
 
       <!-- Left: Photo -->
+      <!-- TO ADD REAL PHOTO: replace div.tribute-img-placeholder with:
+           <img src="assets/mother.jpg" alt="Smt. Kanaka" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:20px;"/> -->
       <div class="tribute-img-wrap reveal">
-        <!-- TO ADD REAL PHOTO: replace this entire div.tribute-img-placeholder with:
-             <img src="assets/mother.jpg" alt="Smt. Kanaka"/> -->
         <div class="tribute-img-placeholder">
-          <img src="assets/mother.jpg" alt="Smt. Kanaka"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-               style="width:100%;height:100%;object-fit:cover;border-radius:16px;border:none;box-shadow:none;outline:none;"/>
-          <div style="display:none;flex-direction:column;align-items:center;gap:10px;">
-            <span style="font-size:52px;opacity:.45;">👩</span>
-            <p style="font-family:var(--font-s);font-size:9px;font-weight:700;color:rgba(245,166,35,.45);letter-spacing:2px;text-transform:uppercase;text-align:center;line-height:1.6;">Smt. Kanaka<br>Photo Placeholder<br><span style="opacity:.6">assets/mother.jpg</span></p>
-          </div>
+          <span style="font-size:52px;opacity:.45;">&#128105;</span>
+          <p style="font-family:var(--font-s);font-size:9px;font-weight:700;color:rgba(245,166,35,.45);letter-spacing:2px;text-transform:uppercase;text-align:center;line-height:1.6;">Smt. Kanaka<br>Photo Placeholder<br><span style="opacity:.6">assets/mother.jpg</span></p>
         </div>
       </div>
 
@@ -1224,45 +1535,45 @@
       <div class="uncle-content reveal-left">
         <div class="uncle-label">The Visionary Who Lit the Path</div>
         <h2 class="uncle-name">Sri. Deepak</h2>
-        <div class="uncle-title">Founder &amp; Director, FutureTech &nbsp;&middot;&nbsp; Brother of Smt. Kanaka &nbsp;&middot;&nbsp; Surya Kiran&rsquo;s Uncle</div>
+        <div class="uncle-title">Founder &amp; Director, Future Tek &nbsp;&middot;&nbsp; Brother of Smt. Kanaka &nbsp;&middot;&nbsp; Surya Kiran&rsquo;s Uncle</div>
 
         <div class="tribute-quote" style="margin-bottom:18px;">
           <p>&ldquo;He didn&rsquo;t just believe in what I was building &mdash; he believed in me before I had anything to show. That kind of trust changes a person forever.&rdquo;</p>
         </div>
 
         <p class="uncle-body">
-          Behind every bold venture is someone who dared to say &ldquo;you can do this&rdquo; before the world agreed. For Surya Kiran, that person is his uncle &mdash; Sri. Deepak, Founder and Director of FutureTech, and the brother of Smt. Kanaka. A builder himself, Sri. Deepak understands what it means to create something from nothing &mdash; and he has guided Surya through that journey with the wisdom of someone who has walked that road.
+          Behind every bold venture is someone who dared to say &ldquo;you can do this&rdquo; before the world agreed. For Surya Kiran, that person is his uncle &mdash; Sri. Deepak, Founder and Director of Future Tek, and the brother of Smt. Kanaka. A builder himself, Sri. Deepak understands what it means to create something from nothing &mdash; and he has guided Surya through that journey with the wisdom of someone who has walked that road.
         </p>
 
         <!-- 4 pillars of mentorship -->
         <div class="uncle-pillars">
           <div class="uncle-pillar">
-            <div class="uncle-pillar-icon">🚀</div>
+            <div class="uncle-pillar-icon">&#128640;</div>
             <div class="uncle-pillar-text">Introduced Surya to the world of recruitment and human capital early on</div>
           </div>
           <div class="uncle-pillar">
-            <div class="uncle-pillar-icon">🛡️</div>
+            <div class="uncle-pillar-icon">&#128737;&#65039;</div>
             <div class="uncle-pillar-text">Steady support and encouragement through every challenge and setback</div>
           </div>
           <div class="uncle-pillar">
-            <div class="uncle-pillar-icon">♟️</div>
-            <div class="uncle-pillar-text">Strategic business perspective shaped by years of founding and leading FutureTech</div>
+            <div class="uncle-pillar-icon">&#9823;&#65039;</div>
+            <div class="uncle-pillar-text">Strategic business perspective shaped by years of founding and leading his own enterprise</div>
           </div>
           <div class="uncle-pillar">
-            <div class="uncle-pillar-icon">🤝</div>
-            <div class="uncle-pillar-text">Opened critical industry connections that gave MAINDSOURCE its first foothold</div>
+            <div class="uncle-pillar-icon">&#129309;</div>
+            <div class="uncle-pillar-text">Opened critical industry connections and doors that gave MAINDSOURCE its first foothold</div>
           </div>
         </div>
 
         <p class="uncle-body">
-          As the founder of FutureTech, Sri. Deepak brings more than encouragement &mdash; he brings the hard-earned clarity of a leader who has built, navigated setbacks, and grown through the reality of running a company. His mentorship to Surya is that same clarity, passed down through the bond of family and the shared belief that honest work, done with purpose, always finds its place.
+          As the founder of Future Tek, Sri. Deepak brings more than encouragement &mdash; he brings the hard-earned clarity of a leader who has built, navigated setbacks, and grown through the reality of running a company. His mentorship to Surya is that same clarity, passed down through the bond of family and the shared belief that honest work, done with purpose, always finds its place.
         </p>
 
         <div class="tribute-values" style="margin-top:16px;">
-          <span class="tribute-val">🧩 Entrepreneurial Spirit</span>
-          <span class="tribute-val">💡 Strategic Vision</span>
-          <span class="tribute-val">🤝 Family &amp; Trust</span>
-          <span class="tribute-val">💪 Resilience</span>
+          <span class="tribute-val">&#129517; Entrepreneurial Spirit</span>
+          <span class="tribute-val">&#128161; Strategic Vision</span>
+          <span class="tribute-val">&#129309; Family &amp; Trust</span>
+          <span class="tribute-val">&#128170; Resilience</span>
         </div>
       </div>
 
@@ -1270,7 +1581,7 @@
       <div class="uncle-img-wrap reveal">
         <!-- Replace with: <img src="assets/deepak.jpg" alt="Sri. Deepak"/> -->
         <div class="uncle-img-placeholder">
-          <span>👔</span>
+          <span>&#128084;</span>
           <p>Sri. Deepak<br>Photo Here<br><span style="font-size:8px;opacity:.6;">assets/deepak.jpg</span></p>
         </div>
       </div>
@@ -1358,7 +1669,7 @@
       </div>
     </div>
     <div class="impact-grid">
-      <div class="impact-card reveal"><span class="impact-icon">&#128101;</span><div class="impact-num" data-target="8000">0</div><div class="impact-label">Candidates Interacted</div><div class="impact-sub">Across 10+ industries</div></div>
+      <div class="impact-card reveal"><span class="impact-icon">&#128101;</span><div class="impact-num" data-target="8000" data-suffix="K+">0</div><div class="impact-label">Candidates Interacted</div><div class="impact-sub">Across 10+ industries</div></div>
       <div class="impact-card reveal"><span class="impact-icon">&#129309;</span><div class="impact-num" data-target="50">0</div><div class="impact-label">Satisfied Clients</div><div class="impact-sub">Long-term partnerships</div></div>
       <div class="impact-card reveal"><span class="impact-icon">&#127970;</span><div class="impact-num" data-target="2">0</div><div class="impact-label">Office Branches</div><div class="impact-sub">Bangalore &middot; Ballari</div></div>
       <div class="impact-card reveal"><span class="impact-icon">&#127942;</span><div class="impact-num" data-target="1">0</div><div class="impact-label">Year of Excellence</div><div class="impact-sub">Est. 2025 | Inc. 2026</div></div>
@@ -1400,6 +1711,101 @@
       <span class="pill"><span class="pill-dot"></span>CSR Solutions</span>
       <span class="pill"><span class="pill-dot"></span>Workforce Consulting</span>
     </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     NEW: CORPORATE TRAINING SECTION
+════════════════════════════════════════ -->
+<section id="corp-training">
+  <div class="container">
+    <div class="training-layout">
+
+      <!-- LEFT: Text content -->
+      <div class="training-text reveal-left">
+        <div class="training-label">Pre-Placement Training</div>
+        <h2 class="training-title">Industry-Ready<br>Talent Pipeline</h2>
+        <p class="training-sub">
+          We don't just find candidates — we build them. Every MAINDSOURCE placement goes through structured, industry-specific pre-deployment training, ensuring they contribute from Day One.
+        </p>
+
+        <div class="training-pillars">
+          <div class="tp-row">
+            <div class="tp-icon">🏭</div>
+            <div class="tp-body">
+              <h4>Industry Induction & Safety</h4>
+              <p>Factory protocols, safety standards, and compliance norms covered before placement.</p>
+            </div>
+          </div>
+          <div class="tp-row">
+            <div class="tp-icon">🛠️</div>
+            <div class="tp-body">
+              <h4>Role-Specific Skill Calibration</h4>
+              <p>Hands-on technical modules tailored to the client's exact production or service environment.</p>
+            </div>
+          </div>
+          <div class="tp-row">
+            <div class="tp-icon">🤝</div>
+            <div class="tp-body">
+              <h4>Soft Skills & Workplace Etiquette</h4>
+              <p>Communication, punctuality, and professional conduct training for long-term retention.</p>
+            </div>
+          </div>
+          <div class="tp-row">
+            <div class="tp-icon">📋</div>
+            <div class="tp-body">
+              <h4>Compliance & Documentation</h4>
+              <p>ESI, PF, and statutory onboarding completed before day of joining — zero paperwork burden for clients.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: 2×2 Image Grid (16:9 each) -->
+      <div class="training-img-grid reveal">
+
+        <!-- Image 1 -->
+        <div class="timg-wrap" data-label="Safety Induction">
+          <!-- Replace: <img src="assets/training/safety-induction.jpg"
+               alt="MAINDSOURCE pre-placement safety induction training Bangalore"/> -->
+          <div class="timg-ph">
+            <span>🦺</span>
+            <p>Safety Training<br><span style="font-size:8px;opacity:.5;">assets/training/safety.jpg</span></p>
+          </div>
+        </div>
+
+        <!-- Image 2 -->
+        <div class="timg-wrap" data-label="Technical Skills">
+          <!-- Replace: <img src="assets/training/skill-training.jpg"
+               alt="MAINDSOURCE technical skill calibration training for manufacturing workers"/> -->
+          <div class="timg-ph">
+            <span>🔧</span>
+            <p>Skill Training<br><span style="font-size:8px;opacity:.5;">assets/training/skills.jpg</span></p>
+          </div>
+        </div>
+
+        <!-- Image 3 -->
+        <div class="timg-wrap" data-label="Soft Skills">
+          <!-- Replace: <img src="assets/training/softskills.jpg"
+               alt="MAINDSOURCE workplace etiquette and soft skills workshop India"/> -->
+          <div class="timg-ph">
+            <span>🎙️</span>
+            <p>Soft Skills<br><span style="font-size:8px;opacity:.5;">assets/training/softskills.jpg</span></p>
+          </div>
+        </div>
+
+        <!-- Image 4 -->
+        <div class="timg-wrap" data-label="Compliance Briefing">
+          <!-- Replace: <img src="assets/training/compliance.jpg"
+               alt="MAINDSOURCE ESI PF compliance documentation briefing candidates Karnataka"/> -->
+          <div class="timg-ph">
+            <span>📋</span>
+            <p>Compliance<br><span style="font-size:8px;opacity:.5;">assets/training/compliance.jpg</span></p>
+          </div>
+        </div>
+
+      </div><!-- /training-img-grid -->
+    </div><!-- /training-layout -->
   </div>
 </section>
 
@@ -1514,6 +1920,72 @@
   </div>
 </section>
 
+<!-- ════════════════════════════════════════
+     NEW: CORE LEADERSHIP / OUR PILLARS
+════════════════════════════════════════ -->
+<section id="core-leadership">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label reveal" style="color:rgba(245,166,35,.8);">The People Behind the Results</span>
+      <h2 class="section-title light reveal">Our Core Leadership</h2>
+      <p class="section-sub light reveal" style="margin:0 auto;">The experienced professionals driving every placement, every partnership, and every promise MAINDSOURCE makes to its clients.</p>
+    </div>
+
+    <div class="leadership-grid">
+
+      <!-- Card 1 — Shilpa -->
+      <div class="leader-card reveal">
+        <div class="leader-avatar">
+          <!-- Replace: <img src="assets/team/shilpa.jpg"
+               alt="Shilpa - Head of Operations MAINDSOURCE Bangalore"/>
+               Generate photo at 600×600px square (1:1 ratio) -->
+          <div class="leader-initials">S</div>
+        </div>
+        <div class="leader-divider"></div>
+        <div class="leader-name">Shilpa</div>
+        <div class="leader-role">Head of Operations</div>
+      </div>
+
+      <!-- Card 2 — Suguna M -->
+      <div class="leader-card reveal">
+        <div class="leader-avatar">
+          <!-- Replace: <img src="assets/team/suguna.jpg"
+               alt="Suguna M - Director of Talent Acquisition MAINDSOURCE"/> -->
+          <div class="leader-initials">SM</div>
+        </div>
+        <div class="leader-divider"></div>
+        <div class="leader-name">Suguna M</div>
+        <div class="leader-role">Director of Talent Acquisition</div>
+      </div>
+
+      <!-- Card 3 — Lead Financial Auditor -->
+      <div class="leader-card reveal">
+        <div class="leader-avatar">
+          <!-- Replace: <img src="assets/team/financial-lead.jpg"
+               alt="Lead Financial Auditor MAINDSOURCE LLP"/> -->
+          <div class="leader-initials">FA</div>
+        </div>
+        <div class="leader-divider"></div>
+        <div class="leader-name">Placeholder Name</div>
+        <div class="leader-role">Lead Financial Auditor</div>
+      </div>
+
+      <!-- Card 4 — Client Success Director -->
+      <div class="leader-card reveal">
+        <div class="leader-avatar">
+          <!-- Replace: <img src="assets/team/client-success.jpg"
+               alt="Client Success Director MAINDSOURCE Staffing India"/> -->
+          <div class="leader-initials">CS</div>
+        </div>
+        <div class="leader-divider"></div>
+        <div class="leader-name">Placeholder Name</div>
+        <div class="leader-role">Client Success Director</div>
+      </div>
+
+    </div><!-- /leadership-grid -->
+  </div>
+</section>
+
 <!-- ════════ CLIENTS ════════ -->
 <section id="clients">
   <div class="container">
@@ -1586,8 +2058,10 @@
       <!-- Card 1 — Biocon -->
       <div class="focus-card" data-index="0">
         <div class="fc-image">
-          <!-- Replace: <img src="assets/placed/biocon-workers.jpg" alt="Biocon Research"/> -->
-          <div class="fc-logo-placeholder"><span>🔬</span><p>Industry Photo Here</p></div>
+          <!-- Replace placeholder with real 16:9 industry photo -->
+          <!-- <img src="assets/placed/biocon-pharma.jpg"
+               alt="MAINDSOURCE placement in Pharma Industry Bangalore - Biocon Research workers"/> -->
+          <div class="fc-logo-placeholder"><span>🔬</span><p>16:9 Industry Photo Here</p></div>
         </div>
         <div class="fc-info">
           <div class="fc-sector">Pharma Industry</div>
@@ -1599,10 +2073,12 @@
       <!-- Card 2 — Startek Aegis -->
       <div class="focus-card" data-index="1">
         <div class="fc-image">
-          <div class="fc-logo-placeholder"><span>🎧</span><p>Industry Photo Here</p></div>
+          <!-- <img src="assets/placed/bpo-startek.jpg"
+               alt="MAINDSOURCE placement in BPO Industry Bangalore - Startek Aegis call centre workers"/> -->
+          <div class="fc-logo-placeholder"><span>🎧</span><p>16:9 Industry Photo Here</p></div>
         </div>
         <div class="fc-info">
-          <div class="fc-sector">BPO</div>
+          <div class="fc-sector">BPO / Customer Service</div>
           <div class="fc-company">...k Aegis BPO (Startek)</div>
           <div class="fc-location">📍 Shivaji Nagar, Bengaluru</div>
         </div>
@@ -1611,7 +2087,9 @@
       <!-- Card 3 — Greenfield Logistics -->
       <div class="focus-card" data-index="2">
         <div class="fc-image">
-          <div class="fc-logo-placeholder"><span>🚚</span><p>Industry Photo Here</p></div>
+          <!-- <img src="assets/placed/logistics-greenfield.jpg"
+               alt="MAINDSOURCE placement in Logistics Supply Chain Hosur Tamil Nadu warehouse workers"/> -->
+          <div class="fc-logo-placeholder"><span>🚚</span><p>16:9 Industry Photo Here</p></div>
         </div>
         <div class="fc-info">
           <div class="fc-sector">Logistics &amp; Supply Chain</div>
@@ -1623,7 +2101,9 @@
       <!-- Card 4 — Vasavi Textiles -->
       <div class="focus-card" data-index="3">
         <div class="fc-image">
-          <div class="fc-logo-placeholder"><span>👔</span><p>Industry Photo Here</p></div>
+          <!-- <img src="assets/placed/textile-vasavi.jpg"
+               alt="MAINDSOURCE placement in Apparel Textile Industry Raichur Karnataka workers"/> -->
+          <div class="fc-logo-placeholder"><span>👔</span><p>16:9 Industry Photo Here</p></div>
         </div>
         <div class="fc-info">
           <div class="fc-sector">Apparel &amp; Textile</div>
@@ -1635,7 +2115,9 @@
       <!-- Card 5 — PrimeCare -->
       <div class="focus-card" data-index="4">
         <div class="fc-image">
-          <div class="fc-logo-placeholder"><span>🏥</span><p>Industry Photo Here</p></div>
+          <!-- <img src="assets/placed/healthcare-primecare.jpg"
+               alt="MAINDSOURCE placement in Healthcare Services Bangalore hospital staff workers"/> -->
+          <div class="fc-logo-placeholder"><span>🏥</span><p>16:9 Industry Photo Here</p></div>
         </div>
         <div class="fc-info">
           <div class="fc-sector">Healthcare Services</div>
@@ -1647,10 +2129,12 @@
       <!-- Card 6 — Sterling Auto -->
       <div class="focus-card" data-index="5">
         <div class="fc-image">
-          <div class="fc-logo-placeholder"><span>🚗</span><p>Industry Photo Here</p></div>
+          <!-- <img src="assets/placed/automobile-sterling.jpg"
+               alt="MAINDSOURCE placement in Automobile Industry Tumkur Karnataka factory workers"/> -->
+          <div class="fc-logo-placeholder"><span>🚗</span><p>16:9 Industry Photo Here</p></div>
         </div>
         <div class="fc-info">
-          <div class="fc-sector">Automobile</div>
+          <div class="fc-sector">Automobile Manufacturing</div>
           <div class="fc-company">...g Auto Parts (Sterling)</div>
           <div class="fc-location">📍 Tumkur, Karnataka</div>
         </div>
@@ -1758,23 +2242,22 @@ window.addEventListener('scroll',()=>{
   const s=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
   const p=document.getElementById('scroll-progress');if(p)p.style.width=s+'%';
   const nav=document.getElementById('navbar');if(nav)nav.classList.toggle('scrolled',window.scrollY>60);
-  // Keep fraud ticker anchored directly under navbar bottom edge
-  positionTicker();
 });
 
-// ── TICKER POSITIONING — stick under navbar bottom ─────────
-function positionTicker(){
+// ── TICKER POSITIONING — RAF loop (zero lag, no transition needed) ─────
+// Uses requestAnimationFrame so the ticker updates EVERY paint frame,
+// making it impossible to see a gap or lag between navbar and ticker.
+(function rafTicker(){
   const nav=document.getElementById('navbar');
   const ticker=document.getElementById('fraud-ticker');
-  if(!nav||!ticker)return;
-  const navBottom=nav.getBoundingClientRect().bottom;
-  ticker.style.top=navBottom+'px';
-}
-// Run on load and resize too
-window.addEventListener('resize',positionTicker);
-document.addEventListener('DOMContentLoaded',positionTicker);
-// Also run after fonts/layout settle
-setTimeout(positionTicker,400);
+  function update(){
+    if(nav&&ticker){
+      ticker.style.top=nav.getBoundingClientRect().bottom+'px';
+    }
+    requestAnimationFrame(update);
+  }
+  update();
+})();
 
 // ── MOBILE MENU ────────────────────────────────────────────
 const ham=document.getElementById('hamburger'),mm=document.getElementById('mobMenu'),mo=document.getElementById('mobOverlay');
@@ -1795,16 +2278,23 @@ if(ham){function tm(){mm.classList.toggle('open');mo.classList.toggle('open');}h
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.14});
 document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
 
-// ── COUNT-UP ANIMATION ─────────────────────────────────────
+// ── COUNT-UP ANIMATION — supports data-suffix (e.g. "K+") ────────────
 const cObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       document.querySelectorAll('.impact-num[data-target]').forEach(el=>{
-        const t=parseInt(el.dataset.target),d=2000,step=t/(d/16);let n=0;
+        const t=parseInt(el.dataset.target);
+        const suffix=el.dataset.suffix||'+'; // use data-suffix if set, else "+"
+        const displayTarget=el.dataset.suffix? Math.round(t/1000) : t; // 8000→8 for "K+"
+        const d=2000,step=displayTarget/(d/16);let n=0;
         const id=setInterval(()=>{
           n+=step;
-          if(n>=t){el.textContent=t.toLocaleString()+'+';clearInterval(id);}
-          else{el.textContent=Math.floor(n).toLocaleString()+'+';}
+          if(n>=displayTarget){
+            el.textContent=displayTarget.toLocaleString()+suffix;
+            clearInterval(id);
+          } else {
+            el.textContent=Math.floor(n).toLocaleString()+suffix;
+          }
         },16);
       });
       cObs.disconnect();
