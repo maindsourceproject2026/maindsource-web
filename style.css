@@ -255,7 +255,7 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 /* Use contain so rectangular images are never cropped */
 .founder-photo img{
   width:100%;height:100%;
-  object-fit:contain; /* never crop — show full image */
+  object-fit:cover; /* never crop — show full image */
   padding:12px; /* breathing room for portrait/rectangle images */
   filter:none;
 }
