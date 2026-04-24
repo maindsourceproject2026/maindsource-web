@@ -112,7 +112,7 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 .lottie-box.sm{min-height:150px;}
 
 /* Page hero (inner pages) */
-.page-hero{min-height:55vh;background:linear-gradient(35deg,var(--hero-start),var(--hero-end));display:flex;align-items:center;padding-top:100px;position:relative;overflow:hidden;}
+.page-hero{min-height:55vh;background:linear-gradient(135deg,var(--hero-start),var(--hero-end));display:flex;align-items:center;padding-top:100px;position:relative;overflow:hidden;}
 .ph-glow{position:absolute;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.07),transparent);top:50%;right:-60px;transform:translateY(-50%);pointer-events:none;}
 .ph-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
 .ph-particles span{position:absolute;width:2px;height:2px;background:var(--gold);border-radius:50%;opacity:0;animation:floatP linear infinite;}
