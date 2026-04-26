@@ -54,7 +54,7 @@
     position: fixed;
     bottom: 92px; right: 20px;
     width: 110px; height: 120px;
-    z-index: 9001;
+    z-index: 9001; /* always above WA button (9000) */
     pointer-events: none;
     display: flex; align-items: flex-end; justify-content: center;
   }
@@ -172,21 +172,11 @@
   @keyframes fadeInHero { from{opacity:0} to{opacity:1} }
 
   /* ══════════════════════════════════════════════════════
-     FIX #1 + FIX #2 — TRIBUTE SECTIONS
-     LAYOUT REVERSAL + BORDER CLIPPING FIX
-
-     Root cause of border clipping:
-       `overflow: hidden` on .tribute-grid/.uncle-grid was
-       used as a float clearfix, but it clips:
-         - The outline (outline-offset: 6px extends outside)
-         - The box-shadow layers (up to 9px outside)
-         - The ::after corner accent (bottom: -12px)
-       Fix: Drop overflow:hidden. Use ::after clearfix only.
-       Add padding to the grid container to give bleed room.
-       Add margin to image wraps so outline/shadow are visible.
+     TRIBUTE SECTIONS — FLOAT-BASED WRAP LAYOUT
+     Text flows beside the image; extra text spans full width
   ══════════════════════════════════════════════════════ */
 
-  /* ── MOTHER TRIBUTE: image LEFT, text RIGHT ── */
+  /* ── MOTHER TRIBUTE: image floats RIGHT ── */
   #mother-tribute {
     padding: var(--sy) 0;
     background: linear-gradient(135deg, #0A0F2C 0%, #1E2761 100%);
@@ -197,24 +187,20 @@
     background:radial-gradient(circle,rgba(245,166,35,.06),transparent);pointer-events:none;
   }
 
-  /* FIX: NO overflow:hidden (was clipping borders). Clearfix via ::after only. */
+  /* Container is block — float clearfix via ::after */
   .tribute-grid {
     display: block;
-    /* padding gives breathing room for outline (6px) + shadow (9px) + corner accent (12px) */
-    padding: 16px 0 28px;
+    overflow: hidden; /* clearfix: shrinks to contain the float */
   }
   .tribute-grid::after {
     content: ''; display: table; clear: both;
   }
 
-  /* FIX #1: float LEFT (was float:right) — photo now on the LEFT */
+  /* Image floats RIGHT — text starts at the top-left and wraps around it */
   .tribute-img-wrap {
-    float: left;
+    float: right;
     width: 340px;
-    /* FIX #2: margins give outline/shadow bleed room on all 4 sides */
-    /* top:16px = outline above; left:0 = container padding handles it; */
-    /* right:52px = gap between image and text; bottom:44px = corner accent + shadow */
-    margin: 16px 52px 44px 0;
+    margin: 4px 0 32px 52px; /* top right bottom left — gap to the LEFT of image */
     position: relative;
     flex-shrink: 0;
   }
@@ -234,17 +220,18 @@
     outline: 1px solid rgba(245,166,35,.28);
     outline-offset: 6px;
   }
-  /* FIX #1: corner accent — bottom-RIGHT for LEFT-floated image */
+  /* Gold corner accent — bottom-LEFT corner for right-floated image */
   .tribute-img-wrap::after {
     content:'';position:absolute;
-    bottom: -12px; right: -12px; /* bottom-right corner */
+    bottom:-12px; left:-12px;
     width:80px; height:80px;
     border-bottom:3px solid var(--gold);
-    border-right:3px solid var(--gold);
-    border-radius:0 0 12px 0;
+    border-left:3px solid var(--gold);
+    border-radius:0 0 0 12px;
   }
 
-  .tribute-content { /* no float — text flows to the RIGHT of the left-floated image */ }
+  /* Text content: no float — flows naturally in the remaining left space */
+  .tribute-content {}
   .tribute-label {
     font-family:var(--font-s);font-size:10px;font-weight:700;
     color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;
@@ -267,7 +254,7 @@
     border-radius:50px;padding:5px 14px;font-family:var(--font-s);font-size:11.5px;font-weight:700;color:var(--gold);
   }
 
-  /* ── UNCLE TRIBUTE: image RIGHT, text LEFT ── */
+  /* ── UNCLE TRIBUTE: image floats LEFT ── */
   #uncle-tribute {
     padding: calc(var(--sy) * .72) 0;
     background: linear-gradient(135deg, #0c1230 0%, #0A0F2C 60%, #1a1040 100%);
@@ -279,22 +266,19 @@
     background:radial-gradient(circle,rgba(245,166,35,.05),transparent);pointer-events:none;
   }
 
-  /* FIX: NO overflow:hidden — clearfix via ::after only */
   .uncle-grid {
     display: block;
-    padding: 16px 0 28px;
+    overflow: hidden; /* clearfix */
   }
   .uncle-grid::after {
     content: ''; display: table; clear: both;
   }
 
-  /* FIX #1: float RIGHT (was float:left) — photo now on the RIGHT */
+  /* Image floats LEFT — text starts at the top-right and wraps around it */
   .uncle-img-wrap {
-    float: right;
+    float: left;
     width: 280px;
-    /* FIX #2: margins give outline/shadow bleed room on all 4 sides */
-    /* top:16px; left:52px = gap between text and image; right:0; bottom:44px = corner accent */
-    margin: 16px 0 44px 52px;
+    margin: 4px 52px 32px 0; /* top right bottom left — gap to the RIGHT of image */
     position: relative;
     flex-shrink: 0;
   }
@@ -313,18 +297,28 @@
     outline: 1px solid rgba(245,166,35,.26);
     outline-offset: 6px;
   }
-  /* FIX #1: corner accent — bottom-LEFT for RIGHT-floated image */
+  /* Gold corner accent — bottom-RIGHT corner for left-floated image */
   .uncle-img-wrap::after {
     content:'';position:absolute;
-    bottom: -12px; left: -12px; /* bottom-left corner */
+    bottom:-12px; right:-12px;
     width:70px; height:70px;
     border-bottom:3px solid var(--gold);
-    border-left:3px solid var(--gold);
-    border-radius:0 0 0 12px;
+    border-right:3px solid var(--gold);
+    border-radius:0 0 12px 0;
   }
 
-  /* Uncle text flows to the LEFT of the right-floated image */
-  .uncle-content { /* no float */ }
+  /* Uncle placeholder (shown when real photo is absent) */
+  .uncle-img-placeholder {
+    width:100%;aspect-ratio:3/4;border-radius:20px;
+    background:linear-gradient(145deg,rgba(30,39,97,.65),rgba(10,15,44,.85));
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+    border:3px solid rgba(245,166,35,.50);outline:1px solid rgba(245,166,35,.22);outline-offset:6px;
+  }
+  .uncle-img-placeholder span { font-size:40px;opacity:.55; }
+  .uncle-img-placeholder p { font-family:var(--font-s);font-size:9px;font-weight:700;color:rgba(245,166,35,.5);letter-spacing:2px;text-transform:uppercase;text-align:center; }
+
+  /* Uncle text content — flows naturally to the right of the float */
+  .uncle-content {}
   .uncle-label {
     font-family:var(--font-s);font-size:10px;font-weight:700;
     color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;
@@ -398,6 +392,7 @@
   .fc-logo-placeholder span { font-size:52px;opacity:.55; }
   .fc-logo-placeholder p { font-family:var(--font-s);font-size:9px;font-weight:700;color:rgba(255,255,255,.45);letter-spacing:1.5px;text-transform:uppercase; }
   .fc-image::after { content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(10,15,44,.72) 100%); }
+  /* Info strip: ALL center-aligned, full company name, ellipsis at END */
   .fc-info { padding:16px 20px 18px;background:var(--white);border-top:2px solid rgba(245,166,35,.15);text-align:center; }
   .fc-sector {
     display:inline-block;font-family:var(--font-s);font-size:9px;font-weight:700;
@@ -406,6 +401,7 @@
   }
   .fc-company {
     font-family:var(--font-s);font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:4px;
+    /* Full name, truncate at END if too long */
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     direction:ltr;text-align:center;
   }
@@ -447,13 +443,8 @@
   #footer { position:relative; }
 
   /* ══════════════════════════════════════════════════
-     FIX #3 — CORPORATE TRAINING
-     Desktop: TEXT LEFT, 1×4 VERTICAL IMAGE STACK RIGHT
-     (was a 2×2 grid — replaced with single-column stack)
-
-     FIX #4 — MOBILE: show real <img> tags
-     (was display:none on .training-img-grid on mobile —
-      the real images were hidden; only emoji placeholders showed)
+     PRE-PLACEMENT TRAINING — FLOAT-BASED WRAP LAYOUT
+     Image grid floats RIGHT, text wraps to the left
   ══════════════════════════════════════════════════ */
   #corp-training {
     padding: var(--sy) 0;
@@ -469,24 +460,24 @@
   /* Block container with clearfix */
   .training-layout {
     display: block;
-    overflow: hidden; /* safe here — no outline/shadow bleeds from training images */
+    overflow: hidden;
   }
   .training-layout::after {
     content: ''; display: table; clear: both;
   }
 
-  /* ── FIX #3: 1×4 VERTICAL STACK floated RIGHT ── */
-  /* Image grid must appear FIRST in DOM so text wraps to its left */
+  /* Image grid floats RIGHT — must be first in DOM for text to wrap left */
   .training-img-grid {
     float: right;
-    width: 42%;            /* ~half the container */
+    width: 45%;
     display: grid;
-    grid-template-columns: 1fr;   /* SINGLE COLUMN — vertical stack */
-    gap: 12px;
-    margin: 0 0 32px 48px; /* left-gap separates image column from text */
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 0 0 32px 48px; /* gap to the LEFT of the floated grid */
   }
 
-  .training-text { /* no float — wraps naturally to the left of the float */ }
+  /* Text content — no float, wraps to the left of the image grid */
+  .training-text { /* no float — flows naturally */ }
   .training-label {
     font-family:var(--font-s);font-size:10px;font-weight:700;color:var(--gold);letter-spacing:3px;
     text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:8px;
@@ -504,33 +495,24 @@
   .tp-body h4 { font-family:var(--font-s);font-size:13px;font-weight:700;color:var(--text-dark);margin-bottom:2px; }
   .tp-body p { font-size:12.5px;color:var(--text-gray);line-height:1.6; }
 
-  /* Training image tiles — 16:9 aspect ratio for each stacked image */
+  /* Training image tiles — slightly taller for prominence */
   .timg-wrap {
-    border-radius:14px;overflow:hidden;
-    aspect-ratio: 16/9;
-    background:linear-gradient(135deg,var(--navy),#0c1230);
-    border:1.5px solid rgba(30,39,97,.12);
-    display:flex;align-items:center;justify-content:center;
-    position:relative;transition:var(--ease);
+    border-radius:16px;overflow:hidden;aspect-ratio:16/9;min-height:130px;
+    background:linear-gradient(135deg,var(--navy),#0c1230);border:1.5px solid var(--border);
+    display:flex;align-items:center;justify-content:center;position:relative;transition:var(--ease);
   }
   .timg-wrap:hover { transform:translateY(-3px);box-shadow:0 14px 36px rgba(10,15,44,.18); }
-  .timg-wrap img {
-    width:100%;height:100%;
-    object-fit:cover;object-position:center;
-    display:block;
-  }
+  .timg-wrap img { width:100%;height:100%;object-fit:cover;display:block; }
   .timg-ph { display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;height:100%; }
   .timg-ph span { font-size:28px;opacity:.55; }
   .timg-ph p { font-family:var(--font-s);font-size:9px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:1px;text-transform:uppercase;text-align:center; }
-  /* Gradient label overlay */
   .timg-wrap::after {
     content:attr(data-label);position:absolute;bottom:0;left:0;right:0;padding:8px 12px;
     background:linear-gradient(to top,rgba(10,15,44,.82),transparent);
     font-family:var(--font-s);font-size:10px;font-weight:700;color:rgba(255,255,255,.85);letter-spacing:.5px;text-transform:uppercase;
-    pointer-events:none;
   }
 
-  /* Mobile interleaved image elements — kept in HTML but hidden on desktop */
+  /* Mobile-only interleaved image elements — hidden on desktop */
   .tp-img-mobile { display: none; }
 
   /* ══════════════════════════════════════════════
@@ -560,6 +542,7 @@
     box-shadow:0 0 0 1px rgba(245,166,35,.20),0 24px 56px rgba(0,0,0,.35),0 0 24px rgba(245,166,35,.10);
   }
   .leader-card:hover::before { width:80%; }
+  /* ── IMAGE FIX: enlarged avatar, no gap between image and border ── */
   .leader-avatar {
     width:140px;height:140px;border-radius:28px;overflow:hidden;
     margin:0 auto 16px;border:2.5px solid rgba(245,166,35,.30);
@@ -571,9 +554,15 @@
     border-color:rgba(245,166,35,.65);
     box-shadow:0 0 0 5px rgba(245,166,35,.14),0 16px 40px rgba(0,0,0,.40);transform:scale(1.04);
   }
+  /* Image fills avatar flush — no padding, object-fit:cover, border-radius inherited */
   .leader-avatar img {
-    width:100%;height:100%;object-fit:cover;object-position:center top;
-    display:block;padding:0;border-radius:inherit;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    padding: 0;             /* no inner padding — flush fill */
+    border-radius: inherit; /* matches parent squircle */
   }
   .leader-initials { font-family:var(--font-s);font-size:38px;font-weight:800;color:var(--gold); }
   .leader-name { font-family:var(--font-s);font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px; }
@@ -598,17 +587,14 @@
     .testi-char-wrap { display:none; }
     .hero-char-slot { display:none; }
     /* Tribute: reduce float widths at mid breakpoint */
-    .tribute-img-wrap { width:260px; }
-    .uncle-img-wrap   { width:220px; }
-    /* Training: reduce float width */
-    .training-img-grid { width:44%;margin-left:32px; }
+    .tribute-img-wrap { width:280px;margin-left:36px; }
+    .uncle-img-wrap   { width:240px;margin-right:36px; }
+    .training-img-grid { width:44%;margin-left:36px; }
   }
 
   @media(max-width:768px) {
     #fraud-ticker { height:28px; }
     #navbar { top:0!important; }
-    /* "Find a Job" hidden in navbar bar on mobile — only in drawer */
-    .nav-cta-jobs { display:none; }
     .ticker-badge { display:none; }
     .ticker-text { font-size:10.5px;padding:0 24px; }
 
@@ -629,40 +615,50 @@
     .impact-num { font-size:32px!important; }
     .impact-card { padding:20px 12px!important; }
 
-    /* ── FIX #2 (mobile): tribute stacked vertically, top margin = border space ── */
-    .tribute-grid { padding:16px 0 20px; }
+    /* ── TRIBUTE: disable float, stack vertically ── */
+    .tribute-grid { display:block;overflow:hidden; }
     .tribute-img-wrap {
       float: none !important;
       width: 240px !important;
-      /* top: 16px gives room for the top outline that was being clipped on mobile */
-      margin: 16px auto 36px !important;
+      margin: 0 auto 28px !important;
     }
     .tribute-img-wrap::after { display:none; }
 
-    .uncle-grid { padding:16px 0 20px; }
+    .uncle-grid { display:block;overflow:hidden; }
     .uncle-img-wrap {
       float: none !important;
       width: 200px !important;
-      margin: 16px auto 32px !important;
+      margin: 0 auto 24px !important;
     }
     .uncle-img-wrap::after { display:none; }
     .uncle-pillars { grid-template-columns:1fr; }
 
-    /* ── FIX #3 + FIX #4 (mobile): Training section ──
-       Show the real image grid (with <img> tags) as a single-column
-       stack ABOVE the text. The .tp-img-mobile elements stay hidden.
-       Previously: training-img-grid was display:none on mobile (bug).
-       Fix: restore display, disable float, full width. */
-    .training-layout { overflow:visible; }  /* allow content to flow naturally */
+    /* ── TRAINING: disable float, show alternating text→image stack ── */
+    .training-layout { display:block;overflow:hidden; }
     .training-img-grid {
       float: none !important;
-      display: grid !important;           /* was display:none — this was the bug */
-      grid-template-columns: 1fr !important;
-      width: 100% !important;
-      margin: 0 0 28px 0 !important;
+      display: none !important; /* desktop 2×2 grid hidden; mobile uses .tp-img-mobile */
+      width: 100%;
+      margin: 0;
     }
-    /* Keep the mobile placeholder elements hidden — real images show now */
-    .tp-img-mobile { display: none !important; }
+    /* Show the mobile interleaved images */
+    .tp-img-mobile { display: block !important; }
+    /* ── FIX: remove top border artifact on mobile training images ── */
+    .tp-img-mobile .timg-wrap {
+      border-top: none !important;  /* kills the rogue line above each image */
+      margin-top: 0 !important;
+      border-radius: 0 0 12px 12px;
+      min-height: 0;
+    }
+    /* Pillar rows: remove side borders for clean mobile look */
+    .tp-row {
+      border-left: none;
+      border-right: none;
+      border-top: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: 0;
+    }
+    .training-pillars { gap: 0; }
 
     .dual-path-inner { grid-template-columns:1fr;gap:16px; }
     .dual-char-center { display:none; }
@@ -683,6 +679,7 @@
     .leader-name { font-size:12px; }
     .leader-role { font-size:9px; }
     .leader-initials { font-size:28px; }
+    /* Carousel */
     .focus-card { width:300px; }
     .focus-carousel-track { height:280px; }
     .focus-card.fc-prev1 { transform:translateX(-240px) translateZ(-100px) scale(0.80);opacity:0.35; }
@@ -784,6 +781,7 @@
 <!-- ════════ HERO ════════ -->
 <section id="hero">
   <div class="hero-video-bg" style="display:block;">
+    <!-- GPU-accelerated, all mobile attributes set for stutter-free playback -->
     <video autoplay muted loop playsinline preload="auto">
       <source src="assets/video/hero-bg.mp4" type="video/mp4"/>
     </video>
@@ -826,21 +824,19 @@
 </section>
 
 <!-- ════════ MOTHER TRIBUTE ════════
-     FIX #1: Image floats LEFT — tribute-img-wrap is FIRST in DOM.
-     Text content (.tribute-content) flows to the RIGHT.
-     FIX #2: .tribute-grid has NO overflow:hidden; padding gives
-     border/outline breathing room so nothing is clipped.
+     Image floats RIGHT — tribute-img-wrap is FIRST in DOM
+     so text content wraps to its left naturally.
 ════════════════════════════════════ -->
 <section id="mother-tribute">
   <div class="container">
     <div class="tribute-grid">
 
-      <!-- FIRST in DOM → floats LEFT → photo on the LEFT side -->
+      <!-- FIRST in DOM = floats right; text below flows left and wraps around -->
       <div class="tribute-img-wrap reveal">
         <img src="assets/mother.jpg" alt="Smt. Kanaka - Mother of MAINDSOURCE Founder Surya Kiran"/>
       </div>
 
-      <!-- Text flows to the RIGHT of the left-floated image -->
+      <!-- Text content: no float — starts at top-left, wraps around the right-floated image -->
       <div class="tribute-content">
         <div class="tribute-label reveal-left">The Woman Behind the Vision</div>
         <h2 class="tribute-name reveal-left">Smt. Kanaka</h2>
@@ -865,36 +861,34 @@
 </section>
 
 <!-- ════════ UNCLE TRIBUTE ════════
-     FIX #1: Image floats RIGHT — uncle-img-wrap is FIRST in DOM.
-     Text content (.uncle-content) flows to the LEFT.
-     FIX #2: .uncle-grid has NO overflow:hidden; padding prevents
-     clipping of the gold outline and box-shadow layers.
+     Image floats LEFT — uncle-img-wrap is FIRST in DOM
+     so text content wraps to its right naturally.
 ════════════════════════════════════ -->
 <section id="uncle-tribute">
   <div class="container">
     <div class="uncle-grid">
 
-      <!-- FIRST in DOM → floats RIGHT → photo on the RIGHT side -->
+      <!-- FIRST in DOM = floats left; text below flows right and wraps around -->
       <div class="uncle-img-wrap reveal">
-        <img src="assets/deepak.jpg" alt="Sri. Deepak - Founder of FutureTech, Mentor of MAINDSOURCE Surya Kiran"/>
+        <img src="assets/deepak.jpg" alt="Sri. Deepak - Founder of Future Tek, Mentor of MAINDSOURCE Surya Kiran"/>
       </div>
 
-      <!-- Text flows to the LEFT of the right-floated image -->
+      <!-- Text content: no float — starts at top-right, wraps around the left-floated image -->
       <div class="uncle-content reveal-left">
         <div class="uncle-label">The Visionary Who Lit the Path</div>
         <h2 class="uncle-name">Sri. Deepak</h2>
-        <div class="uncle-title">Founder &amp; Director, FutureTech &nbsp;&middot;&nbsp; Brother of Smt. Kanaka &nbsp;&middot;&nbsp; Surya Kiran&rsquo;s Uncle</div>
+        <div class="uncle-title">Founder &amp; Director, Future Tek &nbsp;&middot;&nbsp; Brother of Smt. Kanaka &nbsp;&middot;&nbsp; Surya Kiran&rsquo;s Uncle</div>
         <div class="tribute-quote" style="margin-bottom:18px;">
           <p>&ldquo;He didn&rsquo;t just believe in what I was building &mdash; he believed in me before I had anything to show. That kind of trust changes a person forever.&rdquo;</p>
         </div>
-        <p class="uncle-body">Behind every bold venture is someone who dared to say &ldquo;you can do this&rdquo; before the world agreed. For Surya Kiran, that person is his uncle &mdash; Sri. Deepak, Founder and Director of FutureTech, and the brother of Smt. Kanaka. A builder himself, Sri. Deepak understands what it means to create something from nothing &mdash; and he has guided Surya through that journey with the wisdom of someone who has walked that road.</p>
+        <p class="uncle-body">Behind every bold venture is someone who dared to say &ldquo;you can do this&rdquo; before the world agreed. For Surya Kiran, that person is his uncle &mdash; Sri. Deepak, Founder and Director of Future Tek, and the brother of Smt. Kanaka. A builder himself, Sri. Deepak understands what it means to create something from nothing &mdash; and he has guided Surya through that journey with the wisdom of someone who has walked that road.</p>
         <div class="uncle-pillars">
           <div class="uncle-pillar"><div class="uncle-pillar-icon">&#128640;</div><div class="uncle-pillar-text">Introduced Surya to the world of recruitment and human capital early on</div></div>
           <div class="uncle-pillar"><div class="uncle-pillar-icon">&#128737;&#65039;</div><div class="uncle-pillar-text">Steady support and encouragement through every challenge and setback</div></div>
           <div class="uncle-pillar"><div class="uncle-pillar-icon">&#9823;&#65039;</div><div class="uncle-pillar-text">Strategic business perspective shaped by years of founding and leading his own enterprise</div></div>
           <div class="uncle-pillar"><div class="uncle-pillar-icon">&#129309;</div><div class="uncle-pillar-text">Opened critical industry connections and doors that gave MAINDSOURCE its first foothold</div></div>
         </div>
-        <p class="uncle-body">As the founder of FutureTech, Sri. Deepak brings more than encouragement &mdash; he brings the hard-earned clarity of a leader who has built, navigated setbacks, and grown through the reality of running a company. His mentorship to Surya is that same clarity, passed down through the bond of family and the shared belief that honest work, done with purpose, always finds its place.</p>
+        <p class="uncle-body">As the founder of Future Tek, Sri. Deepak brings more than encouragement &mdash; he brings the hard-earned clarity of a leader who has built, navigated setbacks, and grown through the reality of running a company. His mentorship to Surya is that same clarity, passed down through the bond of family and the shared belief that honest work, done with purpose, always finds its place.</p>
         <div class="tribute-values" style="margin-top:16px;">
           <span class="tribute-val">&#129517; Entrepreneurial Spirit</span>
           <span class="tribute-val">&#128161; Strategic Vision</span>
@@ -966,6 +960,7 @@
       <div class="char-slot dark char-slot-md" style="border-color:rgba(245,166,35,.1);"></div>
     </div>
     <div class="impact-grid">
+      <!-- 8000 counter: climbs 0→7999 as digits, then snaps to "8K+" -->
       <div class="impact-card reveal"><span class="impact-icon">&#128101;</span><div class="impact-num" data-target="8000" data-suffix="K+">0</div><div class="impact-label">Candidates Interacted</div><div class="impact-sub">Across 10+ industries</div></div>
       <div class="impact-card reveal"><span class="impact-icon">&#129309;</span><div class="impact-num" data-target="50">0</div><div class="impact-label">Satisfied Clients</div><div class="impact-sub">Long-term partnerships</div></div>
       <div class="impact-card reveal"><span class="impact-icon">&#127970;</span><div class="impact-num" data-target="2">0</div><div class="impact-label">Office Branches</div><div class="impact-sub">Bangalore &middot; Ballari</div></div>
@@ -1006,46 +1001,42 @@
 </section>
 
 <!-- ════════════════════════════════════════
-     CORPORATE TRAINING
-     FIX #3: 1×4 VERTICAL IMAGE STACK on RIGHT, text on LEFT.
-     FIX #4: Real <img> tags now visible on mobile.
-
-     DOM ORDER: .training-img-grid MUST be FIRST so the float
-     works — the text then wraps to the left of it on desktop.
-     On mobile, the grid unfloats and stacks above the text.
+     CORPORATE TRAINING — FLOAT LAYOUT
+     Image grid floats RIGHT — training-img-grid is FIRST in DOM
+     Text wraps to the left; extra text spans full width below.
 ════════════════════════════════════════ -->
 <section id="corp-training">
   <div class="container">
     <div class="training-layout">
 
-      <!-- FIRST in DOM → floats RIGHT on desktop → 1×4 vertical stack of real images -->
+      <!-- FIRST in DOM = floats right; text content wraps to the left -->
       <div class="training-img-grid reveal">
-
         <div class="timg-wrap" data-label="Safety Induction">
-          <img src="assets/industry induction.png" alt="MAINDSOURCE pre-placement safety induction training Bangalore"/>
+          <!-- <img src="assets/training/safety-induction.jpg" alt="MAINDSOURCE pre-placement safety induction training Bangalore"/> -->
+          <div class="timg-ph"><span>🦺</span><p>Safety<br><span style="font-size:8px;opacity:.5;">assets/training/safety.jpg</span></p></div>
         </div>
-
         <div class="timg-wrap" data-label="Technical Skills">
-          <img src="assets/technical skills.png" alt="MAINDSOURCE technical skill calibration training manufacturing workers"/>
+          <!-- <img src="assets/training/skill-training.jpg" alt="MAINDSOURCE technical skill calibration training manufacturing workers"/> -->
+          <div class="timg-ph"><span>🔧</span><p>Skills<br><span style="font-size:8px;opacity:.5;">assets/training/skills.jpg</span></p></div>
         </div>
-
         <div class="timg-wrap" data-label="Soft Skills">
-          <img src="assets/soft skills.png" alt="MAINDSOURCE workplace etiquette soft skills workshop India"/>
+          <!-- <img src="assets/training/softskills.jpg" alt="MAINDSOURCE workplace etiquette soft skills workshop India"/> -->
+          <div class="timg-ph"><span>🎙️</span><p>Soft Skills<br><span style="font-size:8px;opacity:.5;">assets/training/softskills.jpg</span></p></div>
         </div>
-
         <div class="timg-wrap" data-label="Compliance Briefing">
-          <img src="assets/PF & ESI management.png" alt="MAINDSOURCE ESI PF compliance documentation briefing Karnataka"/>
+          <!-- <img src="assets/training/compliance.jpg" alt="MAINDSOURCE ESI PF compliance documentation briefing Karnataka"/> -->
+          <div class="timg-ph"><span>📋</span><p>Compliance<br><span style="font-size:8px;opacity:.5;">assets/training/compliance.jpg</span></p></div>
         </div>
-
       </div>
 
-      <!-- Text wraps to the LEFT of the right-floated image grid -->
+      <!-- Text content: no float — wraps around the right-floated image grid -->
       <div class="training-text reveal-left">
         <div class="training-label">Pre-Placement Training</div>
         <h2 class="training-title">Industry-Ready<br>Talent Pipeline</h2>
         <p class="training-sub">We don't just find candidates — we build them. Every MAINDSOURCE placement goes through structured, industry-specific pre-deployment training, ensuring they contribute from Day One.</p>
 
         <div class="training-pillars">
+
           <div class="tp-row">
             <div class="tp-icon">🏭</div>
             <div class="tp-body">
@@ -1053,6 +1044,13 @@
               <p>Factory protocols, safety standards, and compliance norms covered before placement.</p>
             </div>
           </div>
+          <!-- Mobile only: image appears immediately below its matching pillar -->
+          <div class="tp-img-mobile">
+            <div class="timg-wrap" data-label="Safety Induction">
+              <div class="timg-ph"><span>🦺</span></div>
+            </div>
+          </div>
+
           <div class="tp-row">
             <div class="tp-icon">🛠️</div>
             <div class="tp-body">
@@ -1060,6 +1058,12 @@
               <p>Hands-on technical modules tailored to the client's exact production or service environment.</p>
             </div>
           </div>
+          <div class="tp-img-mobile">
+            <div class="timg-wrap" data-label="Technical Skills">
+              <div class="timg-ph"><span>🔧</span></div>
+            </div>
+          </div>
+
           <div class="tp-row">
             <div class="tp-icon">🤝</div>
             <div class="tp-body">
@@ -1067,6 +1071,12 @@
               <p>Communication, punctuality, and professional conduct training for long-term retention.</p>
             </div>
           </div>
+          <div class="tp-img-mobile">
+            <div class="timg-wrap" data-label="Soft Skills">
+              <div class="timg-ph"><span>🎙️</span></div>
+            </div>
+          </div>
+
           <div class="tp-row">
             <div class="tp-icon">📋</div>
             <div class="tp-body">
@@ -1074,6 +1084,12 @@
               <p>ESI, PF, and statutory onboarding completed before day of joining — zero paperwork burden for clients.</p>
             </div>
           </div>
+          <div class="tp-img-mobile">
+            <div class="timg-wrap" data-label="Compliance Briefing">
+              <div class="timg-ph"><span>📋</span></div>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -1157,6 +1173,7 @@
     <div class="founders-grid">
       <div class="founder-card reveal">
         <div class="founder-photo">
+          <!-- 600×780px recommended (3:4), object-fit:cover keeps face centred -->
           <img src="assets/surya.jpg" alt="Surya Kiran - Founder Managing Partner MAINDSOURCE Bangalore"/>
         </div>
         <div class="founder-info">
@@ -1190,6 +1207,7 @@
     <div class="leadership-grid">
       <div class="leader-card reveal">
         <div class="leader-avatar">
+          <!-- 600×600px square (1:1), object-fit:cover, object-position:center top -->
           <div class="leader-initials">S</div>
         </div>
         <div class="leader-divider"></div>
@@ -1285,6 +1303,7 @@
     <div class="focus-carousel-track" id="fcTrack">
       <div class="focus-card" data-index="0">
         <div class="fc-image">
+          <!-- <img src="assets/placed/biocon-pharma.jpg" alt="MAINDSOURCE placement in Pharma Industry Bangalore"/> -->
           <div class="fc-logo-placeholder"><span>🔬</span><p>16:9 Industry Photo</p></div>
         </div>
         <div class="fc-info">
@@ -1295,6 +1314,7 @@
       </div>
       <div class="focus-card" data-index="1">
         <div class="fc-image">
+          <!-- <img src="assets/placed/bpo-startek.jpg" alt="MAINDSOURCE placement in BPO Industry Bangalore"/> -->
           <div class="fc-logo-placeholder"><span>🎧</span><p>16:9 Industry Photo</p></div>
         </div>
         <div class="fc-info">
@@ -1305,6 +1325,7 @@
       </div>
       <div class="focus-card" data-index="2">
         <div class="fc-image">
+          <!-- <img src="assets/placed/logistics-greenfield.jpg" alt="MAINDSOURCE placement in Logistics Supply Chain Hosur"/> -->
           <div class="fc-logo-placeholder"><span>🚚</span><p>16:9 Industry Photo</p></div>
         </div>
         <div class="fc-info">
@@ -1315,6 +1336,7 @@
       </div>
       <div class="focus-card" data-index="3">
         <div class="fc-image">
+          <!-- <img src="assets/placed/textile-vasavi.jpg" alt="MAINDSOURCE placement in Apparel Textile Industry Raichur Karnataka"/> -->
           <div class="fc-logo-placeholder"><span>👔</span><p>16:9 Industry Photo</p></div>
         </div>
         <div class="fc-info">
@@ -1325,6 +1347,7 @@
       </div>
       <div class="focus-card" data-index="4">
         <div class="fc-image">
+          <!-- <img src="assets/placed/healthcare-primecare.jpg" alt="MAINDSOURCE placement in Healthcare Services Bangalore"/> -->
           <div class="fc-logo-placeholder"><span>🏥</span><p>16:9 Industry Photo</p></div>
         </div>
         <div class="fc-info">
@@ -1335,6 +1358,7 @@
       </div>
       <div class="focus-card" data-index="5">
         <div class="fc-image">
+          <!-- <img src="assets/placed/automobile-sterling.jpg" alt="MAINDSOURCE placement in Automobile Industry Tumkur Karnataka"/> -->
           <div class="fc-logo-placeholder"><span>🚗</span><p>16:9 Industry Photo</p></div>
         </div>
         <div class="fc-info">
@@ -1460,6 +1484,8 @@ const obs=new IntersectionObserver(entries=>{
 document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
 
 // ── COUNT-UP — 8K+ counter behaviour ─────────────────────
+//  • 8000 (data-suffix="K+"): counts 0 → 7999 as actual digits, then snaps to "8K+"
+//  • All others: standard 0 → N+ animation
 const cObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
@@ -1468,21 +1494,27 @@ const cObs=new IntersectionObserver(entries=>{
         const isK=el.dataset.suffix==='K+';
         const DURATION=2000;
         const startTime=performance.now();
+
         (function tick(now){
           const elapsed=now-startTime;
           const progress=Math.min(elapsed/DURATION,1);
+          // Ease-out cubic — decelerates naturally toward the end
           const eased=1-Math.pow(1-progress,3);
+
           if(isK){
+            // Phase 1: show climbing 4-digit number (0 → 7999)
+            // Phase 2: snap to compact "8K+" at 100%
             if(progress<1){
               const current=Math.floor(eased*rawTarget);
               el.textContent=current.toLocaleString()+'+';
             } else {
-              el.textContent='8K+';
+              el.textContent='8K+'; // final snap
             }
           } else {
             const current=Math.floor(eased*rawTarget);
             el.textContent=(progress<1?current:rawTarget).toLocaleString()+'+';
           }
+
           if(progress<1) requestAnimationFrame(tick);
         })(startTime);
       });
