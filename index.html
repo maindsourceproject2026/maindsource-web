@@ -995,10 +995,12 @@
     .impact-num { font-size: 32px !important; }
     .impact-card { padding: 20px 12px !important; }
 
-    /* Tribute mobile — clear floats, center images, equal sizing for both */
+    /* AFTER */
     .tribute-grid,
     .uncle-grid {
       padding: 16px 0 12px;
+      flex-direction: column; /* stacks vertically on mobile for both sections */
+      align-items: center;
     }
     /* Mother image: float:none, centered, same 220px as uncle for visual parity */
     .tribute-img-wrap {
