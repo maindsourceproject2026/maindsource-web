@@ -949,9 +949,8 @@
      RESPONSIVE
   ════════════════════ */
   @media(max-width:1100px) {
-    /* Tribute: reduce float widths at mid breakpoint to avoid cramped text */
-    .tribute-img-wrap { width: 240px; }
-    .uncle-img-wrap   { width: 210px; }
+    .tribute-grid { grid-template-columns: 240px 1fr; }
+    .uncle-grid   { grid-template-columns: 1fr 210px; }
     .svc-grid-wrap { grid-template-columns: 1fr; }
     .svc-char-wrap { display: none; }
     .testi-inner { grid-template-columns: 1fr; }
