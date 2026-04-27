@@ -334,15 +334,14 @@
     pointer-events: none;
   }
 
-  /* display:block + clearfix — NO grid, NO flexbox — pure float layout */
   .tribute-grid {
-    display: block;
-    /* Padding gives breathing room for outline (6px) and box-shadow (9px) rings */
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 52px;
+    align-items: start;
     padding: 16px 0 28px;
   }
-  .tribute-grid::after {
-    content: ''; display: table; clear: both; /* clearfix */
-  }
+  .tribute-grid::after { content: none; }
 
   /* Image floats LEFT — text content flows naturally to the RIGHT and WRAPS BELOW */
   .tribute-img-wrap {
