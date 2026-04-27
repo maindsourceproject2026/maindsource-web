@@ -222,7 +222,7 @@
     width: 100%; height: 100%;
     object-fit: cover;
     object-position: center 43%;
-    opacity: 0.85;
+    opacity: 0.40;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
     will-change: transform;
@@ -406,7 +406,9 @@
   }
 
   /* Text content — no float, sits to the right of the floated image on desktop */
-  .tribute-content {}
+  .tribute-content {
+    overflow: hidden;
+  }
   .tribute-label {
     font-family: var(--font-s);
     font-size: 10px; font-weight: 700;
@@ -496,7 +498,7 @@
   }
   /* Uncle text — no float, flows to left of right-floated image */
   .uncle-content {
-    order: unset; /* reset from old grid */
+    overflow: hidden; /* reset from old grid */
   }
   .uncle-img-wrap img,
   .uncle-img-placeholder {
