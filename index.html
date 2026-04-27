@@ -478,30 +478,27 @@
     pointer-events: none;
   }
 
-  /* display:block + clearfix — NO grid, NO flexbox — pure float layout */
-  .uncle-grid {
-    display: block;
-    padding: 16px 0 28px;
-  }
-  .uncle-grid::after {
-    content: ''; display: table; clear: both; /* clearfix */
-  }
+  /* AFTER */
+/* Flexbox — text (first in DOM) = left column, image (second in DOM) = right column */
+.uncle-grid {
+  display: flex;
+  gap: 52px;
+  align-items: flex-start;
+  padding: 16px 0 28px;
+}
+.uncle-grid::after { content: none; } /* clearfix not needed with flexbox */
 
-  /* Image floats RIGHT — text content flows naturally to the LEFT and WRAPS BELOW */
-  .uncle-img-wrap {
-    float: right;
-    width: 260px;
-    /* left margin = gap between text and image; bottom margin = clears corner accent */
-    margin: 0 0 44px 52px;
-    position: relative;
-    /* Reset any order property from old grid */
-    order: unset;
-  }
-  /* Uncle text — no float, flows to left of right-floated image */
-  .uncle-content {
-    overflow: hidden; /* reset from old grid */
-    display: inline;
-  }
+.uncle-img-wrap {
+  float: none;       /* float removed — flexbox handles positioning */
+  width: 260px;
+  flex-shrink: 0;    /* image column never shrinks below 260px */
+  margin: 0;         /* gap on parent handles spacing */
+  position: relative;
+}
+.uncle-content {
+  flex: 1;           /* text column fills remaining space */
+  min-width: 0;      /* prevents flex blowout on long words */
+}
   .uncle-img-wrap img,
   .uncle-img-placeholder {
     width: 100%;
