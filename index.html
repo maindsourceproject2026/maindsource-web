@@ -473,27 +473,26 @@
     pointer-events: none;
   }
 
-  /* AFTER */
-/* Flexbox — text (first in DOM) = left column, image (second in DOM) = right column */
 .uncle-grid {
-  display: flex;
-  gap: 52px;
-  align-items: flex-start;
-  padding: 16px 0 28px;
-}
-.uncle-grid::after { content: none; } /* clearfix not needed with flexbox */
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 52px;
+    align-items: start;
+    padding: 16px 0 28px;
+  }
+  .uncle-grid::after { content: none; }
 
-.uncle-img-wrap {
-  float: none;       /* float removed — flexbox handles positioning */
-  width: 260px;
-  flex-shrink: 0;    /* image column never shrinks below 260px */
-  margin: 0;         /* gap on parent handles spacing */
-  position: relative;
-}
-.uncle-content {
-  flex: 1;           /* text column fills remaining space */
-  min-width: 0;      /* prevents flex blowout on long words */
-}
+  .uncle-img-wrap {
+    width: 100%;
+    position: relative;
+    margin: 0;
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .uncle-content {
+    grid-column: 1;
+    grid-row: 1;
+  }
   .uncle-img-wrap img,
   .uncle-img-placeholder {
     width: 100%;
