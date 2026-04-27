@@ -407,8 +407,8 @@
 
   /* Text content — no float, sits to the right of the floated image on desktop */
   .tribute-content {
-    overflow: hidden;
-    display: inline;
+  overflow: hidden; /* BFC: sits beside the float as a proper column, never underlapping */
+}
   }
   .tribute-label {
     font-family: var(--font-s);
