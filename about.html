@@ -168,6 +168,20 @@
   @media (max-width: 768px) {
     .cta-char-wrap { display: none !important; }
   }
+    /* ── FOUNDERS PHOTO: fills container corner-to-corner, no padding ── */
+  .founder-photo {
+    height: 280px;
+    background: linear-gradient(135deg, var(--navy), var(--hero-end));
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  .founder-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top; /* keep face in frame */
+    padding: 0;                  /* NO padding — fills every corner */
+    display: block;
+  }
   </style>
 </head>
 <body>
