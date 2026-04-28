@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="About MAINDSOURCE — Our story, philosophy, vision, mission and leadership team."/>
+  <title>About Us — MAINDSOURCE</title>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+
+  <style>
+  /* ================================================================
+     ABOUT PAGE — PAGE-LEVEL ADDITIONS
+     These rules extend style.css without modifying it.
+  ================================================================ */
+
+  /* ── 1. "FIND A JOB" NAV BUTTON — desktop only ── */
+  .nav-cta-jobs {
+    flex-shrink: 0;
+    font-family: var(--font-s);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold) !important;
+    background: transparent;
+    border: 1.5px solid rgba(245,166,35,.55);
+    padding: 9px 20px;
+    border-radius: 50px;
+    white-space: nowrap;
+    transition: var(--ease);
+    margin-right: 6px;
+    text-decoration: none;
+  }
+  .nav-cta-jobs:hover {
+    background: rgba(245,166,35,.10);
+    border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(245,166,35,.22);
+  }
+  /* Hide in the mobile nav bar — shown only in the drawer */
+  @media (max-width: 768px) {
+    .nav-cta-jobs { display: none !important; }
+  }
+
+  /* Mobile drawer "Find a Job" style */
+  .mob-cta-jobs {
+    background: rgba(245,166,35,.10);
+    border: 1.5px solid rgba(245,166,35,.35);
+    color: var(--gold) !important;
+    padding: 12px 20px;
+    border-radius: 50px;
+    text-align: center;
+    font-weight: 700;
+    font-family: var(--font-s);
+    font-size: 15px;
+    text-decoration: none;
+  }
+  .mob-cta-jobs:hover {
+    background: rgba(245,166,35,.18) !important;
+    color: var(--gold) !important;
+    padding-left: 20px; /* override the general hover shift */
+  }
+
+  /* ── 2. MOBILE HERO PADDING FIX ── */
+  /* Ensure page-hero inner content never touches the screen edge on mobile */
+  @media (max-width: 768px) {
+    .page-hero .ph-inner {
+      padding-left: var(--px, 5%);
+      padding-right: var(--px, 5%);
+    }
+    /* Also ensure any direct h1 / p in the hero obeys the padding */
+    .page-hero .ph-inner h1,
+    .page-hero .ph-inner p {
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+  }
+
+  /* ── 3. CHARACTER ANIMATION SLOTS ── */
+  /* Universal char-slot component */
+  .char-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px dashed rgba(30,39,97,.18);
+    border-radius: 16px;
+    background: rgba(30,39,97,.03);
+    font-family: var(--font-s);
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(30,39,97,.22);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .char-slot.dark {
+    border-color: rgba(255,255,255,.07);
+    background: rgba(255,255,255,.02);
+    color: rgba(255,255,255,.15);
+  }
+  /* Size variants */
+  .char-slot-sm { width: 80px;  height: 100px; }
+  .char-slot-md { width: 120px; height: 160px; }
+  .char-slot-lg { width: 160px; height: 220px; }
+  .char-slot-xl { width: 200px; height: 260px; }
+
+  /* Wrapper helpers for positioning */
+  .char-wrap-right  { display: flex; justify-content: flex-end; align-items: flex-start; }
+  .char-wrap-center { display: flex; justify-content: center;    align-items: center;     margin-top: 24px; }
+  .char-wrap-left   { display: flex; justify-content: flex-start; align-items: flex-start; }
+
+  /* ── Hide ALL char-slots on mobile — no overlap with text ── */
+  @media (max-width: 768px) {
+    .char-slot,
+    .char-wrap-right,
+    .char-wrap-center,
+    .char-wrap-left {
+      display: none !important;
+    }
+  }
+
+  /* ── STORY SECTION: position char-slot inside the lottie-box wrapper ── */
+  /* Replaces .lottie-box display when animation is ready */
+  .story-char-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* ── VISION/MISSION: floating char between the two panels ── */
+  .vm-char-center {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 32px;
+  }
+  @media (max-width: 768px) {
+    .vm-char-center { display: none !important; }
+  }
+
+  /* ── JOURNEY: char floats right beside the timeline ── */
+  .journey-layout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: flex-start;
+  }
+  @media (max-width: 900px) {
+    .journey-layout { grid-template-columns: 1fr; }
+    .journey-layout .char-wrap-right { display: none !important; }
+  }
+
+  /* ── LEADERSHIP: char below the founders grid ── */
+  .leadership-char-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+  }
+  @media (max-width: 768px) {
+    .leadership-char-wrap { display: none !important; }
+  }
+
+  /* ── CTA: char above the buttons ── */
+  .cta-char-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 768px) {
+    .cta-char-wrap { display: none !important; }
+  }
+  </style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<a id="wa-float" href="https://wa.me/919071329231" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+
+<!-- ════════════════════════════════════════
+     NAVBAR
+     Fix 1: 'Find a Job' button added before 'Start Hiring' on desktop.
+════════════════════════════════════════ -->
+<nav id="navbar">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/logo.png" alt="MAINDSOURCE" class="nav-brand-img" onerror="this.style.display='none'"/>
+    <div class="nav-brand-text"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="sectors.html">Sectors</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-drop-trigger">More <span class="nav-drop-arrow">&#9660;</span></a>
+      <div class="nav-drop-menu">
+        <a href="women.html" class="drop-featured">
+          <span class="drop-icon">&#9994;</span> Women Empowerment
+        </a>
+        <div class="nav-drop-divider"></div>
+        <a href="jobseekers.html"><span class="drop-icon">&#128188;</span> Job Seekers</a>
+        <a href="careers.html"><span class="drop-icon">&#128640;</span> Careers</a>
+        <a href="impact.html"><span class="drop-icon">&#128202;</span> Our Impact</a>
+        <a href="credentials.html"><span class="drop-icon">&#128203;</span> Credentials</a>
+        <a href="methodology.html"><span class="drop-icon">&#9881;</span> Methodology</a>
+      </div>
+    </li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <!-- FIX 1: 'Find a Job' button — desktop only, hidden on mobile via CSS -->
+  <a href="careers.html" class="nav-cta-jobs">Find a Job &#128188;</a>
+  <a href="contact.html" class="nav-cta">Start Hiring &#8594;</a>
+  <button class="nav-ham" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mob-overlay" id="mobOverlay"></div>
+<div class="mob-menu" id="mobMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About Us</a>
+  <a href="services.html">Services</a>
+  <a href="sectors.html">Sectors</a>
+  <a href="women.html" class="mob-women">&#9994; Women Empowerment</a>
+  <a href="jobseekers.html">Job Seekers</a>
+  <a href="careers.html">Careers</a>
+  <a href="impact.html">Our Impact</a>
+  <a href="credentials.html">Credentials</a>
+  <a href="methodology.html">Methodology</a>
+  <!-- FIX 1: 'Find a Job' in mobile drawer with gold pill styling -->
+  <a href="careers.html" class="mob-cta-jobs">Find a Job &#128188;</a>
+  <a href="contact.html" class="mob-cta">Start Hiring &#8594;</a>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PAGE HERO
+     Fix 2: Mobile padding applied via CSS (.page-hero .ph-inner).
+     Fix 3: Char-slot — hero action: parachutes/floats down, waves at visitor.
+             Hidden on mobile via CSS.
+════════════════════════════════════════ -->
+<section class="page-hero">
+  <div class="ph-particles" id="phpP"></div>
+  <div class="ph-glow"></div>
+  <div class="container ph-inner" style="position:relative;">
+
+    <!-- Character slot — top-right of hero, above the fold -->
+    <div class="char-wrap-right" style="position:absolute;top:0;right:0;z-index:2;">
+      <div class="char-slot dark char-slot-xl">
+        <!-- ACTION: Float/parachute down from top, land, wave at visitor.
+             Replace with: <video autoplay muted loop playsinline>
+               <source src="assets/video/char-wave.webm"/>
+             </video> -->
+      </div>
+    </div>
+
+    <h1 class="hero-headline">Our <em>Legacy</em> of.<br>Connecting People.<br>&amp; Purpose.</h1>
+    <p>Finding. Connecting. Building Success — since 2025, MAINDSOURCE has been redefining how talent meets opportunity across India.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     OUR STORY
+     Fix 3: Char-slot replaces lottie-box placeholder.
+             Action: Sits, reads a book, looks up smiling.
+════════════════════════════════════════ -->
+<section class="section-pad" style="background:var(--cream)">
+  <div class="container">
+    <div class="story-grid">
+      <div>
+        <span class="section-label reveal-left">Our Story</span>
+        <h2 class="section-title reveal-left">Born from a Belief That<br>Right People Change Everything</h2>
+        <div class="story-quote reveal-left"><p>"Connecting human potential with the job seeking them."</p></div>
+        <p class="section-sub reveal-left">MAINDSOURCE was established in 2025 and incorporated in January 2026 with an inspiring ideology — every human has untapped potential waiting to be matched with the right opportunity. We don't fill vacancies. We scout talent that can lead, sustain and thrive.</p>
+        <p style="font-size:15px;color:var(--text-gray);line-height:1.8;margin-top:14px;" class="reveal-left">Built on integrated tech-based solutions, our proprietary screening ensures perfect alignment between candidate capability and employer requirement — every time.</p>
+      </div>
+
+      <!-- Char-slot replaces lottie-box -->
+      <div class="story-char-wrap reveal">
+        <div class="char-slot char-slot-xl">
+          <!-- ACTION: Sits cross-legged reading a book, looks up and smiles.
+               Trigger: Plays once when section enters viewport.
+               Replace with: <video autoplay muted loop playsinline>
+                 <source src="assets/video/char-reading.webm"/>
+               </video> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-bar reveal">
+      <div class="stats-bar-item"><div class="sbi-num">8,000+</div><div class="sbi-label">Candidates Interacted</div></div>
+      <div class="stats-bar-item"><div class="sbi-num">50+</div><div class="sbi-label">Satisfied Clients</div></div>
+      <div class="stats-bar-item"><div class="sbi-num">10+</div><div class="sbi-label">Industries Served</div></div>
+      <div class="stats-bar-item"><div class="sbi-num">2</div><div class="sbi-label">Office Locations</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     PHILOSOPHY
+     Fix 3: Char-slot centered below the 3 cards.
+             Action: Thinking pose / confident nod.
+════════════════════════════════════════ -->
+<section class="section-pad" style="background:var(--cream-2)">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label reveal">Our Foundation</span>
+      <h2 class="section-title reveal">What We Stand For</h2>
+      <p class="section-sub reveal">Three core pillars that define every decision, every placement, every partnership.</p>
+    </div>
+    <div class="phil-grid">
+      <div class="phil-card reveal"><div class="phil-icon">🌱</div><h3>Our Philosophy</h3><p>Being a leader is not just about enriching self — it is about empowering others. We scout talent that has the ability to lead, sustain and thrive beyond just filling a role.</p></div>
+      <div class="phil-card reveal"><div class="phil-icon">⚙️</div><h3>What Makes Us Unique</h3><p>Our ability to filter the right talent for the right job using proprietary tech-driven screening methodology — ensuring perfect candidate-role alignment every time.</p></div>
+      <div class="phil-card reveal"><div class="phil-icon">👩‍💼</div><h3>Main Agenda</h3><p>Women Empowerment is not just a value — it is the central pillar of everything MAINDSOURCE stands for. Every placement and partnership reflects this commitment.</p></div>
+    </div>
+
+    <!-- Char-slot below the 3 philosophy cards -->
+    <div class="char-wrap-center reveal">
+      <div class="char-slot char-slot-md">
+        <!-- ACTION: Thinking pose — taps chin, then gives a confident nod / thumbs up.
+             Trigger: Plays once when section enters viewport.
+             Replace with: <video autoplay muted loop playsinline>
+               <source src="assets/video/char-think.webm"/>
+             </video> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     VISION / MISSION
+     Fix 3: Char-slot above the two cards.
+             Action: Eyes wide open (visionary), then focused (mission).
+════════════════════════════════════════ -->
+<div class="vm-wrap">
+  <div class="container" style="padding-top:56px;padding-bottom:0;">
+    <div class="text-center" style="margin-bottom:32px;">
+      <span class="section-label reveal" style="color:rgba(245,166,35,.8)">Purpose Driven. Future Ready.</span>
+      <h2 class="section-title light reveal">Our Vision &amp; Mission</h2>
+    </div>
+
+    <!-- Char-slot centered between heading and the vm-grid panels -->
+    <div class="vm-char-center reveal">
+      <div class="char-slot dark char-slot-md">
+        <!-- ACTION: Eyes wide open looking into the distance (vision side), then narrows to focused look (mission).
+             Trigger: Plays once on scroll.
+             Replace with: <video autoplay muted loop playsinline>
+               <source src="assets/video/char-vision.webm"/>
+             </video> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="vm-grid">
+    <div class="vm-card vision reveal">
+      <div class="vm-tag"><div class="vm-ti">💡</div>OUR VISION</div>
+      <h3>Cutting-Edge Workforce Solutions for a Changing World</h3>
+      <p>Providing cutting-edge workforce solutions that help clients achieve growth, manage talent shortages, and adapt to changes — powered by our main agenda of Women Empowerment.</p>
+    </div>
+    <div class="vm-card mission reveal">
+      <div class="vm-tag"><div class="vm-ti">🎯</div>OUR MISSION</div>
+      <h3>Qualified Professionals Delivered With Precision</h3>
+      <p>Quickly providing qualified, screened, and trained professionals — temporary, contract, or permanent — ensuring skills precisely match business needs. First batch within 72 hours.</p>
+    </div>
+  </div>
+  <div class="vm-belief">
+    <p>"When the <strong>RIGHT person</strong> is at the <strong>RIGHT place</strong> at the <strong>RIGHT time</strong>... <strong>Magic will follow.</strong>"</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     JOURNEY
+     Fix 3: Char-slot right of the timeline.
+             Action: Walks forward boldly, looks back smiling.
+════════════════════════════════════════ -->
+<section class="section-pad" style="background:var(--cream)">
+  <div class="container">
+    <!-- journey-layout: 2-col grid on desktop (timeline | char), single-col on mobile -->
+    <div class="journey-layout">
+
+      <div style="max-width:680px;">
+        <span class="section-label reveal-left">Our Journey</span>
+        <h2 class="section-title reveal-left">From Vision to Reality</h2>
+        <div class="timeline">
+          <div class="tl-item reveal"><div class="tl-year">2025</div><div class="tl-body"><h4>MAINDSOURCE Established</h4><p>Founded with the vision of creating a tech-enabled manpower platform that scouts leaders — not just fills positions.</p></div></div>
+          <div class="tl-item reveal"><div class="tl-year">Jan 2026</div><div class="tl-body"><h4>Official Incorporation as LLP</h4><p>Formally incorporated as MAINDSOURCE LLP (LLPIN: ACU-2305). Offices in Bangalore Electronic City and Ballari, Karnataka.</p></div></div>
+          <div class="tl-item reveal"><div class="tl-year">2026</div><div class="tl-body"><h4>8,000+ Candidates &amp; 50+ Clients</h4><p>Scaled rapidly across 10+ industries. Partnering with Foxconn, Toyota, Tata Electronics, TVS, Volvo and more.</p></div></div>
+        </div>
+      </div>
+
+      <!-- Char-slot aligned to the right of the timeline -->
+      <div class="char-wrap-right reveal">
+        <div class="char-slot char-slot-lg">
+          <!-- ACTION: Walks forward boldly, turns back and smiles at visitor.
+               Trigger: Loops while section is in viewport.
+               Replace with: <video autoplay muted loop playsinline>
+                 <source src="assets/video/char-walk.webm"/>
+               </video> -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     LEADERSHIP
+     Fix 3: Char-slot below the founder cards.
+             Action: Introduces team, welcoming gesture.
+════════════════════════════════════════ -->
+<section class="section-pad" style="background:var(--cream-2)">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label reveal">Leadership</span>
+      <h2 class="section-title reveal">The People Behind MAINDSOURCE</h2>
+      <p class="section-sub reveal">Driven by a passion for connecting human potential with the right opportunity.</p>
+    </div>
+    <div class="founders-grid">
+      <div class="founder-card reveal">
+        <div class="founder-photo">
+          <!-- Add photo: <img src="assets/img/surya-kiran.jpg" alt="Surya Kiran"/> -->
+          <div class="founder-initials">SK</div>
+        </div>
+        <div class="founder-info"><h3>Mr. Surya Kiran</h3><div class="founder-role">Founder &amp; Managing Partner</div><p>Visionary leader driving MAINDSOURCE's mission to connect talent with opportunity across India through tech-enabled solutions.</p></div>
+      </div>
+      <div class="founder-card reveal">
+        <div class="founder-photo">
+          <!-- Add photo: <img src="assets/img/partner.jpg" alt="Partner"/> -->
+          <div class="founder-initials">P</div>
+        </div>
+        <div class="founder-info"><h3>Partner (Name TBC)</h3><div class="founder-role">Co-Founder &amp; Partner</div><p>Instrumental in shaping MAINDSOURCE's Women Empowerment agenda and driving inclusive hiring across all partnerships.</p></div>
+      </div>
+    </div>
+
+    <!-- Char-slot below leadership cards -->
+    <div class="leadership-char-wrap reveal">
+      <div class="char-slot char-slot-md">
+        <!-- ACTION: Gestures with both hands welcoming / introducing the team.
+             Trigger: Plays once on scroll.
+             Replace with: <video autoplay muted loop playsinline>
+               <source src="assets/video/char-welcome.webm"/>
+             </video> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     CTA
+     Fix 3: Char-slot above the CTA buttons.
+             Action: Beckons with both hands (come, let's work together).
+════════════════════════════════════════ -->
+<section id="cta-banner">
+  <div class="container cta-inner">
+    <span class="section-label reveal" style="color:rgba(245,166,35,.8)">Partner With Us</span>
+    <h2 class="section-title light reveal">Ready to Experience the MAINDSOURCE Difference?</h2>
+    <p class="reveal">Whether you're hiring talent or looking for your next opportunity — let's build something meaningful together.</p>
+
+    <!-- Char-slot above the CTA buttons -->
+    <div class="cta-char-wrap reveal">
+      <div class="char-slot dark char-slot-md" style="border-color:rgba(245,166,35,.12);">
+        <!-- ACTION: Beckons with both hands — "come, let's work together" gesture.
+             Trigger: Loops while in viewport.
+             Replace with: <video autoplay muted loop playsinline>
+               <source src="assets/video/char-beckon.webm"/>
+             </video> -->
+      </div>
+    </div>
+
+    <div class="cta-btns reveal">
+      <a href="contact.html" class="btn btn-gold">Get in Touch →</a>
+      <a href="services.html" class="btn btn-outline">Explore Our Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="f-logo"><span class="w">MAIND</span><span class="g">SOURCE</span></div><p>Tech-enabled manpower supply and staffing solutions across India. Connecting talent with opportunities since 2025.</p><div class="f-socials"><a href="#" class="f-soc">in</a><a href="#" class="f-soc">📸</a><a href="#" class="f-soc">f</a><a href="https://wa.me/919071329231" class="f-soc">💬</a></div></div>
+      <div class="f-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="women.html">Women Empowerment</a></li><li><a href="credentials.html">Credentials</a></li><li><a href="careers.html">Careers</a></li></ul></div>
+      <div class="f-col"><h4>Services</h4><ul><li><a href="services.html">Contractual Staffing</a></li><li><a href="services.html">One-Time Placement</a></li><li><a href="services.html">Payroll Management</a></li><li><a href="services.html">Gig Workforce</a></li></ul></div>
+      <div class="f-col"><h4>Contact</h4><div class="f-contact-item"><span class="f-ci">📞</span><div class="f-ct"><strong>Phone</strong>+91 9071329231</div></div><div class="f-contact-item"><span class="f-ci">✉️</span><div class="f-ct"><strong>Email</strong>maindsource@gmail.com</div></div><div class="f-contact-item"><span class="f-ci">📍</span><div class="f-ct"><strong>Bangalore (Primary)</strong>Electronic City (P), 560100</div></div></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 MAINDSOURCE LLP. All rights reserved. LLPIN: ACU-2305 | GST: 29ACGFM2072C1ZE</p><p class="f-legal">Registered · Compliant · Trustworthy</p></div>
+  </div>
+</footer>
+
+<script>
+/* ── Custom cursor ── */
+const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(dot){dot.style.left=mx+'px';dot.style.top=my+'px';}});
+(function ar(){if(!ring)return;rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar);})();
+
+/* ── Scroll progress + navbar ── */
+window.addEventListener('scroll',()=>{
+  const p=document.getElementById('scroll-progress');
+  if(p)p.style.width=((window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100)+'%';
+  const nav=document.getElementById('navbar');
+  if(nav)nav.classList.toggle('scrolled',window.scrollY>60);
+});
+
+/* ── Mobile menu ── */
+const ham=document.getElementById('hamburger'),mm=document.getElementById('mobMenu'),mo=document.getElementById('mobOverlay');
+if(ham){function tm(){mm.classList.toggle('open');mo.classList.toggle('open');}ham.addEventListener('click',tm);mo.addEventListener('click',tm);}
+
+/* ── Hero particles ── */
+(function(){
+  const c=document.getElementById('phpP');
+  if(!c)return;
+  for(let i=0;i<16;i++){
+    const s=document.createElement('span');
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${Math.random()*8+6}s;animation-delay:${Math.random()*6}s;width:2px;height:2px;`;
+    c.appendChild(s);
+  }
+})();
+
+/* ── Scroll reveal ── */
+const obs=new IntersectionObserver(e=>{
+  e.forEach(el=>{
+    if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);}
+  });
+},{threshold:.14});
+document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
