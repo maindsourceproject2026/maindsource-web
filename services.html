@@ -396,6 +396,138 @@
     }
     .promise-stat-num { font-size: 24px; }
   }
+  /* ── SERVICES PREV — character right of grid ── */
+  .svc-grid-wrap {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 28px;
+    align-items: start;
+    margin-top: 0;
+  }
+  .svc-char-wrap {
+    display: flex;
+    align-items: flex-start;
+    padding-top: 16px;
+  }
+  /* ══════════════════════════════════════════════
+     CORPORATE TRAINING — 2×2 Card-Block Grid
+     Each block is self-contained: text + image.
+     Desktop: full-width header → 2×2 grid.
+     Mobile: single column stack.
+  ══════════════════════════════════════════════ */
+  #corp-training {
+    padding: var(--sy) 0;
+    background: var(--cream);
+    overflow: hidden;
+    position: relative;
+  }
+  #corp-training::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 320px; height: 320px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,166,35,.06), transparent);
+    pointer-events: none;
+  }
+
+  /* Full-width section header */
+  .training-header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 48px;
+  }
+  .training-label {
+    font-family: var(--font-s); font-size: 10px; font-weight: 700;
+    color: var(--gold); letter-spacing: 3px; text-transform: uppercase;
+    display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;
+  }
+  .training-label::before { content: '🎓'; font-size: 14px; }
+  .training-title {
+    font-family: var(--font-d); font-size: clamp(26px,3.4vw,42px);
+    font-weight: 700; color: var(--text-dark); line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .training-sub {
+    font-size: 15px; color: var(--text-gray); line-height: 1.85;
+    margin: 0 auto;
+  }
+
+  /* 2×2 grid of self-contained card blocks */
+  .training-blocks-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  /* Each block: text on top, 16:9 image ALWAYS flush to the bottom — margin-top:auto pushes image down */
+  .training-block {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: var(--ease);
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* fills the grid row height so all cards in a row are equal */
+  }
+  .training-block:hover {
+    box-shadow: var(--shadow-h);
+    transform: translateY(-4px);
+    border-color: rgba(245,166,35,.30);
+  }
+
+  /* Text portion — top of each block */
+  .training-block-text {
+    padding: 22px 24px 18px;
+    flex: 1; /* takes all available space above the image */
+  }
+  .training-block-icon {
+    font-size: 26px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .training-block-title {
+    font-family: var(--font-s); font-size: 15px; font-weight: 700;
+    color: var(--text-dark); margin-bottom: 6px; line-height: 1.3;
+  }
+  .training-block-desc {
+    font-size: 13px; color: var(--text-gray); line-height: 1.7;
+  }
+
+  /* 16:9 image — pinned to bottom of each block via margin-top:auto */
+  .training-block-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, var(--navy), #0c1230);
+    flex-shrink: 0;
+    margin-top: auto; /* KEY FIX: pushes image flush to bottom regardless of text length */
+  }
+  .training-block-img img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .training-block:hover .training-block-img img {
+    transform: scale(1.04);
+  }
+  /* Gradient label overlay */
+  .training-block-img::after {
+    content: attr(data-label);
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 8px 14px;
+    background: linear-gradient(to top, rgba(10,15,44,.80), transparent);
+    font-family: var(--font-s); font-size: 10px; font-weight: 700;
+    color: rgba(255,255,255,.85); letter-spacing: .5px; text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  /* Mobile: single column — each block stacks naturally text then image */
+  @media(max-width:768px) {
+    .training-blocks-grid { grid-template-columns: 1fr; gap: 16px; }
+    .training-header { margin-bottom: 28px; }
+  }
   </style>
 
   <!-- 4. GEO-OPTIMISED JSON-LD SCHEMA — Contractual Staffing, Payroll, Executive Search -->
