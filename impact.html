@@ -9,6 +9,41 @@
   <link rel="stylesheet" href="style.css"/>
 
   <style>
+    /* ══════════════════════════════════════════
+       WOMEN PAGE — PAGE-LEVEL STYLES
+    ══════════════════════════════════════════ */
+
+    /* ── FIX #5: Anti-Fraud Ticker (matches homepage exactly) ── */
+    #fraud-ticker {
+      position: fixed;
+      left: 0; right: 0;
+      z-index: 999;
+      background: #0A0F2C;
+      border-bottom: 2px solid rgba(245,166,35,.30);
+      border-top: 1px solid rgba(245,166,35,.12);
+      height: 32px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .ticker-badge {
+      flex-shrink: 0;
+      background: rgba(245,166,35,.12);
+      border-right: 1px solid rgba(245,166,35,.25);
+      padding: 0 14px; height: 100%;
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--font-s); font-size: 10px; font-weight: 700;
+      color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap;
+    }
+    .ticker-dot { width:6px;height:6px;background:var(--gold);border-radius:50%;animation:tDot 1.4s ease-in-out infinite;flex-shrink:0; }
+    @keyframes tDot { 0%,100%{opacity:1} 50%{opacity:.25} }
+    .ticker-track { flex:1;overflow:hidden;position:relative; }
+    .ticker-inner { display:flex;gap:0;white-space:nowrap;animation:tickerScroll 28s linear infinite; }
+    .ticker-inner:hover { animation-play-state:paused; }
+    .ticker-text { font-family:var(--font-s);font-size:11px;font-weight:600;color:rgba(255,255,255,.82);letter-spacing:.3px;padding:0 48px;flex-shrink:0; }
+    .ticker-text strong { color:var(--gold); }
+    @keyframes tickerScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    
   /* =====================================================
      IMPACT PAGE — ALL STYLES
   ===================================================== */
@@ -623,6 +658,17 @@
   <!-- FIND A JOB — mobile drawer -->
   <a href="careers.html" class="mob-cta-jobs">Find a Job &#128188;</a>
   <a href="contact.html" class="mob-cta">Start Hiring &#8594;</a>
+</div>
+
+<!-- FIX #5: Anti-Fraud Ticker — matches homepage exactly -->
+<div id="fraud-ticker" role="marquee" aria-label="Important Notice">
+  <div class="ticker-badge"><div class="ticker-dot"></div>Notice</div>
+  <div class="ticker-track">
+    <div class="ticker-inner">
+      <span class="ticker-text">&#9888;&#65039;&nbsp;&nbsp;<strong>Important:</strong>&nbsp;MAINDSOURCE never charges any fees, deposits, or commissions from job seekers. Our placement service is completely free. Please disregard and report anyone claiming to collect money on our behalf.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <span class="ticker-text">&#9888;&#65039;&nbsp;&nbsp;<strong>Important:</strong>&nbsp;MAINDSOURCE never charges any fees, deposits, or commissions from job seekers. Our placement service is completely free. Please disregard and report anyone claiming to collect money on our behalf.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    </div>
+  </div>
 </div>
 
 <!-- ════════════════════════════════════
