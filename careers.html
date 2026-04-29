@@ -47,6 +47,8 @@
   .ww-card h4{font-family:var(--font-s);font-size:14px;font-weight:700;color:var(--text-dark);margin-bottom:6px;}
   .ww-card p{font-size:13px;color:var(--text-gray);line-height:1.6;}
 
+  
+
   /* ══════════════════════════════════════
      JOB DRAWER — Desktop: right slide-in
      Mobile: bottom sheet
@@ -785,6 +787,21 @@ document.querySelectorAll('.reveal,.reveal-left').forEach(el=>revObs.observe(el)
 
 // Initial render
 renderJobs(JOBS);
+// ── TICKER POSITIONING — RAF loop (zero lag, no transition needed) ─────
+// Uses requestAnimationFrame so the ticker updates EVERY paint frame,
+// making it impossible to see a gap or lag between navbar and ticker.
+(function rafTicker(){
+  const nav=document.getElementById('navbar');
+  const ticker=document.getElementById('fraud-ticker');
+  function update(){
+    if(nav&&ticker){
+      ticker.style.top=nav.getBoundingClientRect().bottom+'px';
+    }
+    requestAnimationFrame(update);
+  }
+  update();
+})();
+
 </script>
 </body>
 </html>

@@ -715,6 +715,21 @@ const obs=new IntersectionObserver(e=>{
   e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);}});
 },{threshold:.12});
 document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
+// ── TICKER POSITIONING — RAF loop (zero lag, no transition needed) ─────
+// Uses requestAnimationFrame so the ticker updates EVERY paint frame,
+// making it impossible to see a gap or lag between navbar and ticker.
+(function rafTicker(){
+  const nav=document.getElementById('navbar');
+  const ticker=document.getElementById('fraud-ticker');
+  function update(){
+    if(nav&&ticker){
+      ticker.style.top=nav.getBoundingClientRect().bottom+'px';
+    }
+    requestAnimationFrame(update);
+  }
+  update();
+})();
+
 </script>
 </body>
 </html>

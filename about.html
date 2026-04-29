@@ -43,7 +43,7 @@
     .ticker-text { font-family:var(--font-s);font-size:11px;font-weight:600;color:rgba(255,255,255,.82);letter-spacing:.3px;padding:0 48px;flex-shrink:0; }
     .ticker-text strong { color:var(--gold); }
     @keyframes tickerScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-    
+
   /* ================================================================
      ABOUT PAGE — PAGE-LEVEL ADDITIONS
      These rules extend style.css without modifying it.
@@ -855,6 +855,21 @@ window.addEventListener('scroll',()=>{
   const nav=document.getElementById('navbar');
   if(nav)nav.classList.toggle('scrolled',window.scrollY>60);
 });
+
+// ── TICKER POSITIONING — RAF loop (zero lag, no transition needed) ─────
+// Uses requestAnimationFrame so the ticker updates EVERY paint frame,
+// making it impossible to see a gap or lag between navbar and ticker.
+(function rafTicker(){
+  const nav=document.getElementById('navbar');
+  const ticker=document.getElementById('fraud-ticker');
+  function update(){
+    if(nav&&ticker){
+      ticker.style.top=nav.getBoundingClientRect().bottom+'px';
+    }
+    requestAnimationFrame(update);
+  }
+  update();
+})();
 
 /* ── Mobile menu ── */
 const ham=document.getElementById('hamburger'),mm=document.getElementById('mobMenu'),mo=document.getElementById('mobOverlay');

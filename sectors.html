@@ -42,7 +42,7 @@
     .ticker-text { font-family:var(--font-s);font-size:11px;font-weight:600;color:rgba(255,255,255,.82);letter-spacing:.3px;padding:0 48px;flex-shrink:0; }
     .ticker-text strong { color:var(--gold); }
     @keyframes tickerScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-    
+
   /* ======================================================
      SECTORS PAGE — additional CSS
   ====================================================== */
@@ -830,6 +830,21 @@ if(ham){function tm(){mm.classList.toggle('open');mo.classList.toggle('open');}h
 })();
 const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);}});},{threshold:.13});
 document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
+// ── TICKER POSITIONING — RAF loop (zero lag, no transition needed) ─────
+// Uses requestAnimationFrame so the ticker updates EVERY paint frame,
+// making it impossible to see a gap or lag between navbar and ticker.
+(function rafTicker(){
+  const nav=document.getElementById('navbar');
+  const ticker=document.getElementById('fraud-ticker');
+  function update(){
+    if(nav&&ticker){
+      ticker.style.top=nav.getBoundingClientRect().bottom+'px';
+    }
+    requestAnimationFrame(update);
+  }
+  update();
+})();
+
 </script>
 </body>
 </html>
