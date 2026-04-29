@@ -243,6 +243,71 @@
       /* Hero stacks on mobile */
       .women-hero-inner { flex-direction: column; gap: 0; }
     }
+     /* ── 2. ROBOT PLACEHOLDER (above WA button) ── */
+  #robot-float {
+    position: fixed;
+    bottom: 92px; /* WA button is at bottom:28px, height:52px → 28+52+12 = 92 */
+    right: 20px;
+    width: 110px;
+    height: 120px;
+    z-index: 8999;
+    pointer-events: none; /* clicking does nothing */
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  #robot-float img,
+  #robot-float .robot-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  /* Float animation on robot video */
+  #robot-float .robot-video {
+    animation: robotFloat 3s ease-in-out infinite;
+  }
+  @keyframes robotFloat {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-6px); }
+  }
+  /* Fallback box shown before GIF loads */
+  #robot-float .robot-fallback {
+    width: 100%; height: 100%;
+    background: rgba(10,15,44,.65);
+    border: 1.5px dashed rgba(245,166,35,.35);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  #robot-float .robot-fallback span {
+    font-size: 32px;
+    animation: robotFloat 2.5s ease-in-out infinite;
+  }
+  #robot-float .robot-fallback p {
+    font-family: var(--font-s);
+    font-size: 8px;
+    font-weight: 700;
+    color: rgba(245,166,35,.6);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.4;
+  }
+  @media(max-width:480px) {
+    /* Robot visible on mobile — z-index 9001 ensures it sits ABOVE the WA button (z-index:9000) */
+    #robot-float {
+      display: flex;
+      width: 72px;
+      height: 80px;
+      bottom: 88px;    /* WA: bottom:28 + height:52 + gap:8 = 88 */
+      right: 16px;
+      z-index: 9001;   /* above WA float (9000) */
+    }
+  }
   </style>
 </head>
 <body>
@@ -250,6 +315,25 @@
 <div id="scroll-progress"></div>
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ═══ 2. ROBOT FLOAT (above WhatsApp) — WebM video ═══ -->
+<div id="robot-float" aria-hidden="true">
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    class="robot-video"
+    onerror="this.style.display='none'; document.getElementById('robot-fallback').style.display='flex';"
+  >
+    <source src="assets/video/ai-robot.webm" type="video/webm"/>
+  </video>
+  <!-- Fallback shown if video fails to load -->
+  <div class="robot-fallback" id="robot-fallback" style="display:none;">
+    <span>&#129302;</span>
+    <p>AI Robot<br>Coming Soon</p>
+  </div>
+</div>
 
 <!-- ═══ WhatsApp ═══ -->
 <a id="wa-float" href="https://wa.me/919071329231" target="_blank" rel="noopener" aria-label="WhatsApp">
