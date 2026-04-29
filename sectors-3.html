@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="MAINDSOURCE Sectors — Manufacturing, Logistics, Aerospace, FMCG, Retail, Telecom, Healthcare and more."/>
+  <title>Sectors We Serve — MAINDSOURCE</title>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
+  <link rel="stylesheet" href="style.css"/>
+
+  <style>
+  /* ======================================================
+     SECTORS PAGE — additional CSS
+  ====================================================== */
+
+  /* ── FIX 1: "Find a Job" nav button (same as homepage) ── */
+  .nav-cta-jobs {
+    flex-shrink: 0;
+    font-family: var(--font-s); font-size: 13px; font-weight: 700;
+    color: var(--gold) !important;
+    background: transparent;
+    border: 1.5px solid rgba(245,166,35,.55);
+    padding: 9px 20px;
+    border-radius: 50px;
+    white-space: nowrap;
+    transition: var(--ease);
+    margin-right: 8px;
+  }
+  .nav-cta-jobs:hover {
+    background: rgba(245,166,35,.10);
+    border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(245,166,35,.20);
+  }
+  /* Mobile drawer "Find a Job" pill */
+  .mob-menu .mob-cta-jobs {
+    background: rgba(245,166,35,.10);
+    border: 1.5px solid rgba(245,166,35,.35);
+    color: var(--gold) !important;
+    padding: 12px 20px;
+    border-radius: 50px;
+    text-align: center;
+    font-weight: 700;
+    font-family: var(--font-s);
+    font-size: 15px;
+  }
+  .mob-menu .mob-cta-jobs:hover {
+    background: rgba(245,166,35,.18) !important;
+    color: var(--gold) !important;
+    padding-left: 20px;
+  }
+
+  /* ── FIX 2: Mobile hero padding ── */
+  .ph-inner {
+    padding-top: 56px;
+    padding-bottom: 56px;
+    padding-left: var(--px);
+    padding-right: var(--px);
+  }
+  @media(max-width: 768px) {
+    .ph-inner {
+      padding-left: var(--px) !important;
+      padding-right: var(--px) !important;
+      box-sizing: border-box;
+    }
+    .page-hero .container {
+      padding-left: var(--px);
+      padding-right: var(--px);
+    }
+  }
+
+  /* ── FIX 3: Sector card hover bug — full-height sc-body ── */
+  .sector-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .sc-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .sc-body p {
+    flex: 1; /* pushes nothing down, but ensures the bg fills */
+  }
+
+  /* ── FIX 4: Regional coverage — 5 states, 3+2 desktop layout ── */
+  .region-grid-5 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+  }
+  /* Center the bottom 2 cards */
+  .region-grid-5 .region-row-2 {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    max-width: calc(66.66% + 9px); /* 2 of 3 columns + gap */
+    margin: 0 auto;
+    width: 100%;
+  }
+  .region-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 0 0 20px;
+    transition: var(--ease);
+    overflow: hidden;
+  }
+  .region-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(245,166,35,.09);
+    transform: translateY(-3px);
+  }
+  /* Map image placeholder */
+  .region-map {
+    width: 100%;
+    height: 130px;
+    background: linear-gradient(135deg, var(--navy), #0c1230);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+  .region-map img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .region-map-ph {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: .45;
+  }
+  .region-map-ph svg {
+    width: 36px;
+    height: 36px;
+    fill: var(--gold);
+  }
+  .region-map-ph span {
+    font-family: var(--font-s);
+    font-size: 8px;
+    font-weight: 700;
+    color: rgba(245,166,35,.6);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .region-card h4 {
+    font-family: var(--font-s);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+    padding: 0 18px;
+  }
+  .region-card p {
+    font-size: 12.5px;
+    color: var(--text-gray);
+    line-height: 1.6;
+    padding: 0 18px;
+    margin-bottom: 12px;
+  }
+  .region-badge {
+    display: inline-block;
+    margin: 0 18px;
+    font-family: var(--font-s);
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--gold);
+    background: rgba(245,166,35,.08);
+    padding: 3px 10px;
+    border-radius: 50px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid rgba(245,166,35,.2);
+  }
+  @media(max-width: 768px) {
+    .region-grid-5 {
+      grid-template-columns: 1fr;
+    }
+    .region-grid-5 .region-row-2 {
+      grid-column: 1;
+      grid-template-columns: 1fr;
+      max-width: 100%;
+    }
+  }
+
+  /* ── FIX 5: Trusted By — infinite marquee ── */
+  .trusted-marquee-wrap {
+    overflow: hidden;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .trusted-marquee-inner {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+    animation: trustedScroll 32s linear infinite;
+  }
+  .trusted-marquee-inner:hover {
+    animation-play-state: paused;
+  }
+  @keyframes trustedScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .trusted-marquee-inner .client-box {
+    flex-shrink: 0;
+    width: 130px;
+    height: 64px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: var(--r);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--ease);
+  }
+  .trusted-marquee-inner .client-box:hover {
+    background: rgba(255,255,255,.11);
+    border-color: rgba(245,166,35,.35);
+  }
+  .trusted-marquee-inner .client-box img {
+    max-height: 28px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: .55;
+    transition: var(--ease);
+  }
+  .trusted-marquee-inner .client-box:hover img {
+    opacity: .9;
+    filter: none;
+  }
+
+  /* ── FIX 6: Character slot system ── */
+  .char-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px dashed rgba(255,255,255,.12);
+    border-radius: 16px;
+    background: rgba(255,255,255,.02);
+    font-family: var(--font-s);
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(255,255,255,.18);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+    flex-direction: column;
+    gap: 6px;
+    overflow: hidden;
+  }
+  .char-slot.light {
+    border-color: rgba(30,39,97,.15);
+    background: rgba(30,39,97,.03);
+    color: rgba(30,39,97,.22);
+  }
+  .char-slot-sm  { width: 80px;  height: 100px; }
+  .char-slot-md  { width: 120px; height: 160px; }
+  .char-slot-lg  { width: 160px; height: 220px; }
+  .char-slot-xl  { width: 200px; height: 260px; }
+
+  /* Hero char slot — right of hero text */
+  .hero-char-wrap {
+    position: absolute;
+    right: var(--px);
+    bottom: 48px;
+    display: flex;
+    align-items: flex-end;
+  }
+  /* Industries char wrap */
+  .industries-char-wrap {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+  }
+  /* Regional char wrap */
+  .regional-char-wrap {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+  }
+  /* Trusted By char wrap */
+  .trusted-char-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  /* CTA char wrap */
+  .cta-char-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  /* ── MOBILE: hide all char slots ── */
+  @media(max-width: 768px) {
+    .hero-char-wrap,
+    .industries-char-wrap,
+    .regional-char-wrap,
+    .trusted-char-wrap,
+    .cta-char-wrap { display: none !important; }
+    /* Mobile: nav-cta-jobs hidden in bar */
+    .nav-cta-jobs { display: none; }
+  }
+  </style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<a id="wa-float" href="https://wa.me/919071329231" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+
+<!-- NAVBAR — FIX 1: Added "Find a Job" button before "Start Hiring" -->
+<nav id="navbar">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/logo.png" alt="MAINDSOURCE" class="nav-brand-img" onerror="this.style.display='none'"/>
+    <div class="nav-brand-text"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="sectors.html" class="active">Sectors</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-drop-trigger">More <span class="nav-drop-arrow">&#9660;</span></a>
+      <div class="nav-drop-menu">
+        <a href="women.html" class="drop-featured">
+          <span class="drop-icon">&#9994;</span> Women Empowerment
+        </a>
+        <div class="nav-drop-divider"></div>
+        <a href="jobseekers.html"><span class="drop-icon">&#128188;</span> Job Seekers</a>
+        <a href="careers.html"><span class="drop-icon">&#128640;</span> Careers</a>
+        <a href="impact.html"><span class="drop-icon">&#128202;</span> Our Impact</a>
+        <a href="credentials.html"><span class="drop-icon">&#128203;</span> Credentials</a>
+        <a href="methodology.html"><span class="drop-icon">&#9881;</span> Methodology</a>
+      </div>
+    </li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <!-- FIX 1: Find a Job + Start Hiring both present on desktop -->
+  <a href="careers.html" class="nav-cta-jobs">Find a Job &#128188;</a>
+  <a href="contact.html" class="nav-cta">Start Hiring &#8594;</a>
+  <button class="nav-ham" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mob-overlay" id="mobOverlay"></div>
+<div class="mob-menu" id="mobMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About Us</a>
+  <a href="services.html">Services</a>
+  <a href="sectors.html">Sectors</a>
+  <a href="women.html" class="mob-women">&#9994; Women Empowerment</a>
+  <a href="jobseekers.html">Job Seekers</a>
+  <a href="careers.html">Careers</a>
+  <a href="impact.html">Our Impact</a>
+  <a href="credentials.html">Credentials</a>
+  <a href="methodology.html">Methodology</a>
+  <!-- FIX 1: Find a Job in mobile drawer too -->
+  <a href="careers.html" class="mob-cta-jobs">Find a Job &#128188;</a>
+  <a href="contact.html" class="mob-cta">Start Hiring &#8594;</a>
+</div>
+
+<!-- HERO — FIX 2: .ph-inner has padding via CSS; FIX 6: char slot right side -->
+<section class="page-hero" style="position:relative;">
+  <div class="ph-particles" id="phpP"></div>
+  <div class="ph-glow"></div>
+  <div class="container ph-inner">
+    <div style="max-width:600px;">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>/</span>Sectors</div>
+      <h1>Diverse Industry<br><em>Expertise</em> Across<br>Karnataka &amp; Beyond</h1>
+      <p>From manufacturing floors to IT offices — our manpower solutions span 10+ industries across South India and growing Pan-India presence.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;">
+        <span class="pill" style="background:rgba(245,166,35,.12);border-color:rgba(245,166,35,.25);color:var(--gold)"><span class="pill-dot"></span>10+ Industries</span>
+        <span class="pill" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14);color:var(--white)"><span class="pill-dot"></span>8,000+ Candidates</span>
+        <span class="pill" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14);color:var(--white)"><span class="pill-dot"></span>Pan-India Reach</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIX 6: Hero char slot — Welcoming action -->
+  <div class="hero-char-wrap">
+    <div class="char-slot char-slot-xl">
+      <!-- ANIMATION ZONE
+           Action: Welcoming gesture — arms open, warm greeting
+           Replace with: <video autoplay muted loop playsinline src="assets/video/char-welcome.webm"/> -->
+    </div>
+  </div>
+</section>
+
+<!-- SECTORS GRID — FIX 3: sector-card uses flex-column + sc-body flex:1 -->
+<section class="section-pad" style="background:var(--cream)">
+  <div class="container">
+
+    <!-- FIX 6: Industries char slot — Walking/Exploring -->
+    <div class="industries-char-wrap">
+      <div class="char-slot light char-slot-sm">
+        <!-- ANIMATION ZONE
+             Action: Walking left→right, exploring
+             Replace with: assets/video/char-walk.webm -->
+      </div>
+    </div>
+
+    <div class="text-center" style="margin-bottom:44px;">
+      <span class="section-label reveal">Industries We Serve</span>
+      <h2 class="section-title reveal">Where We Place Talent</h2>
+      <p class="section-sub reveal">Deep expertise and an established candidate network across every key industry.</p>
+    </div>
+
+    <div class="sectors-grid">
+
+      <div class="sector-card reveal">
+        <div class="sc-img" style="background:linear-gradient(135deg,#1a2a4a,#2a3a6a)"><span class="sc-emoji">&#127981;</span></div>
+        <div class="sc-body"><div class="sc-tag">Primary Sector</div><h3>Manufacturing</h3><p>Assembly operators, machine technicians, quality inspectors and floor supervisors.</p></div>
+      </div>
+
+      <div class="sector-card reveal">
+        <div class="sc-img" style="background:linear-gradient(135deg,#1a3a2a,#2a5a3a)"><span class="sc-emoji">&#128666;</span></div>
+        <div class="sc-body"><div class="sc-tag">High Demand</div><h3>Logistics</h3><p>Warehouse executives, delivery staff, fleet supervisors and supply chain coordinators.</p></div>
+      </div>
+
+      <div class="sector-card reveal">
+        <div class="sc-img" style="background:linear-gradient(135deg,#0a1a3a,#1a2a5a)"><span class="sc-emoji">&#9992;&#65039;</span></div>
+        <div class="sc-body"><div class="sc-tag">Specialised</div><h3>Aerospace &amp; Defense</h3><p>Precision engineers, aerospace technicians and compliance-focused workforce.</p></div>
+      </div>
+
+      <div class="sector-card reveal">
+        <div class="sc-img" style="background:linear-gradient(135deg,#3a1a0a,#5a2a1a)"><span class="sc-emoji">&#129398;</span></div>
+        <div class="sc-body"><div class="sc-tag">High Volume</div><h3>FMCG</h3><p>Production workers, packaging staff and sales representatives for FMCG operations.</p></div>
+      </div>
+
+      <div class="sector-card reveal">
+        <div class="sc-img" style="background:linear-gradient(135deg,#2a1a3a,#3a2a5a)"><span class="sc-emoji">&#128717;</span></div>
+        <div class="sc-body"><div class="sc-tag">Customer Facing</div><h3>Retail</h3><p>Store associates, customer service executives and inventory managers.</p></div>
+      </div>
+
+      <div class="sector-card reveal">
+        <div class="sc-img" style="background:linear-gradient(135deg,#1a2a1a,#2a4a2a)"><span class="sc-emoji">&#128230;</span></div>
+        <div class="sc-body"><div class="sc-tag">Industrial</div><h3>Packaging</h3><p>Packaging line operators, material handlers and quality checkers.</p></div>
+      </div>
+
+      <div class="sector-card reveal">
+        <div class="sc-img" style="background:linear-gradient(135deg,#0a2a3a,#1a3a5a)"><span class="sc-emoji">&#128225;</span></div>
+        <div class="sc-body"><div class="sc-tag">Growing Fast</div><h3>Telecom</h3><p>Tower technicians, fiber engineers, network field staff and customer support teams.</p></div>
+      </div>
+
+      <div class="sector-card reveal">
+        <div class="sc-img" style="background:linear-gradient(135deg,#2a1a0a,#3a2a1a)"><span class="sc-emoji">&#127978;</span></div>
+        <div class="sc-body"><div class="sc-tag">In Demand</div><h3>Warehousing</h3><p>Warehouse operatives, forklift operators and dispatch supervisors.</p></div>
+      </div>
+
+      <div class="sector-card reveal">
+        <div class="sc-img" style="background:linear-gradient(135deg,#1a1a2a,#2a2a4a)"><span class="sc-emoji">&#128663;</span></div>
+        <div class="sc-body"><div class="sc-tag">Core Sector</div><h3>Automobile</h3><p>Assembly workers, paint shop technicians and production supervisors for auto OEMs.</p></div>
+      </div>
+
+      <div class="sector-card reveal">
+        <div class="sc-img" style="background:linear-gradient(135deg,#0a1a2a,#1a2a4a)"><span class="sc-emoji">&#128187;</span></div>
+        <div class="sc-body"><div class="sc-tag">White Collar</div><h3>IT &amp; ITeS</h3><p>Tech support staff, BPO agents and IT service desk professionals.</p></div>
+      </div>
+
+      <div class="sector-card reveal">
+        <div class="sc-img" style="background:linear-gradient(135deg,#0a2a1a,#1a4a2a)"><span class="sc-emoji">&#127973;</span></div>
+        <div class="sc-body"><div class="sc-tag">Essential</div><h3>Healthcare</h3><p>Healthcare attendants, support staff and medical administrative workforce.</p></div>
+      </div>
+
+      <div class="sector-card reveal">
+        <div class="sc-img" style="background:linear-gradient(135deg,#1a0a2a,#2a1a4a)"><span class="sc-emoji">&#9889;</span></div>
+        <div class="sc-body"><div class="sc-tag">Precision</div><h3>Electronics</h3><p>PCB assembly workers, electronic technicians and testing engineers.</p></div>
+      </div>
+
+    </div>
+
+    <!-- FIX 6: replaced Lottie div with char-slot-lg -->
+    <div style="display:flex;align-items:center;gap:40px;margin-top:52px;flex-wrap:wrap;" class="reveal">
+      <div class="char-slot light char-slot-lg" style="flex-shrink:0;">
+        <!-- ANIMATION ZONE
+             Action: Walking/Exploring — strolling through industry icons
+             Replace with: <video autoplay muted loop playsinline src="assets/video/char-walk-explore.webm"/> -->
+      </div>
+      <div>
+        <span class="section-label">Our Strength</span>
+        <h3 style="font-family:var(--font-d);font-size:clamp(22px,2.8vw,32px);font-weight:700;color:var(--text-dark);margin:10px 0 12px;line-height:1.3">Experienced Across Every Industry Segment</h3>
+        <p style="font-size:15px;color:var(--text-gray);line-height:1.8;max-width:480px">With 8,000+ candidates interacted across 10+ industries, our talent network is deep and our industry understanding is unmatched.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGIONAL COVERAGE — FIX 4: 5 states, 3+2 grid, map placeholders -->
+<section class="section-pad" style="background:var(--cream-2)">
+  <div class="container">
+
+    <!-- FIX 6: Regional char slot — Binoculars/Pointing -->
+    <div class="regional-char-wrap">
+      <div class="char-slot light char-slot-md">
+        <!-- ANIMATION ZONE
+             Action: Looking through binoculars / pointing at map
+             Replace with: assets/video/char-binoculars.webm -->
+      </div>
+    </div>
+
+    <div class="text-center">
+      <span class="section-label reveal">Where We Source From</span>
+      <h2 class="section-title reveal">Regional Coverage &amp; Candidate Networks</h2>
+      <p class="section-sub reveal">Sourcing networks spanning across South India with strong blue-collar workforce supply.</p>
+    </div>
+
+    <!-- 3+2 grid: top 3 cards, then bottom 2 centered -->
+    <div class="region-grid-5">
+
+      <!-- TOP ROW: 3 cards -->
+      <div class="region-card reveal">
+        <div class="region-map">
+          <!-- Replace with: <img src="assets/maps/karnataka.png" alt="Karnataka Map"/> -->
+          <div class="region-map-ph">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span>Karnataka Map</span>
+          </div>
+        </div>
+        <h4>Karnataka</h4>
+        <p>Primary sourcing region. Deep network across Ballari, Raichur, Bidar, Dharwad, Kalaburagi and surrounding districts.</p>
+        <span class="region-badge">&#9733; PRIMARY HUB</span>
+      </div>
+
+      <div class="region-card reveal">
+        <div class="region-map">
+          <div class="region-map-ph">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span>Andhra Pradesh Map</span>
+          </div>
+        </div>
+        <h4>Andhra Pradesh</h4>
+        <p>Active sourcing from Anantapur, Kurnool, Nellore, Guntur and surrounding regions.</p>
+        <span class="region-badge">ESTABLISHED</span>
+      </div>
+
+      <div class="region-card reveal">
+        <div class="region-map">
+          <div class="region-map-ph">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span>Telangana Map</span>
+          </div>
+        </div>
+        <h4>Telangana</h4>
+        <p>Strong network across Hyderabad outskirts, Nizamabad, Warangal and tier-2 cities.</p>
+        <span class="region-badge">FULLY CONTROLLED</span>
+      </div>
+
+      <!-- BOTTOM ROW: 2 cards centered via .region-row-2 -->
+      <div class="region-row-2">
+
+        <div class="region-card reveal">
+          <div class="region-map">
+            <div class="region-map-ph">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              <span>Tamil Nadu Map</span>
+            </div>
+          </div>
+          <h4>Tamil Nadu</h4>
+          <p>Growing network across Chennai, Coimbatore, Hosur, Salem and surrounding industrial corridors.</p>
+          <span class="region-badge">EXPANDING</span>
+        </div>
+
+        <div class="region-card reveal">
+          <div class="region-map">
+            <div class="region-map-ph">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              <span>Uttar Pradesh Map</span>
+            </div>
+          </div>
+          <h4>Uttar Pradesh</h4>
+          <p>Emerging sourcing presence across Noida, Lucknow, Kanpur and the growing industrial belt.</p>
+          <span class="region-badge">EXPANDING</span>
+        </div>
+
+      </div><!-- /region-row-2 -->
+    </div><!-- /region-grid-5 -->
+  </div>
+</section>
+
+<!-- TRUSTED BY — FIX 5: infinite marquee + FIX 6: char slot above -->
+<section class="section-pad" style="background:var(--hero-start);overflow:hidden;">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:32px;">
+      <span class="section-label reveal" style="color:rgba(245,166,35,.8)">Trusted By</span>
+      <h2 class="section-title light reveal">Companies That Trust MAINDSOURCE Across These Sectors</h2>
+      <p class="section-sub light reveal">From global giants to growing enterprises — our clients span every major industry we serve.</p>
+    </div>
+
+    <!-- FIX 6: Thumbs up char slot above marquee -->
+    <div class="trusted-char-wrap">
+      <div class="char-slot char-slot-md">
+        <!-- ANIMATION ZONE
+             Action: Thumbs up — approving, confident
+             Replace with: assets/video/char-thumbsup.webm -->
+      </div>
+    </div>
+  </div>
+
+  <!-- FIX 5: Infinite scrolling marquee — no gaps on loop -->
+  <div class="trusted-marquee-wrap">
+    <div class="trusted-marquee-inner">
+      <!-- Set 1 -->
+      <div class="client-box"><img src="assets/clients_photos/foxconn-seeklogo.png" alt="Foxconn"/></div>
+      <div class="client-box"><img src="assets/clients_photos/toyota-seeklogo.png" alt="Toyota"/></div>
+      <div class="client-box"><img src="assets/clients_photos/tata-seeklogo.png" alt="Tata"/></div>
+      <div class="client-box"><img src="assets/clients_photos/wistron-seeklogo.png" alt="Wistron"/></div>
+      <div class="client-box"><img src="assets/clients_photos/schneider-electric-seeklogo.png" alt="Schneider"/></div>
+      <div class="client-box"><img src="assets/clients_photos/motherson-seeklogo.png" alt="Motherson"/></div>
+      <div class="client-box"><img src="assets/clients_photos/tvs-seeklogo.png" alt="TVS"/></div>
+      <div class="client-box"><img src="assets/clients_photos/volvo-seeklogo.png" alt="Volvo"/></div>
+      <div class="client-box"><img src="assets/clients_photos/ola-seeklogo.png" alt="Ola"/></div>
+      <div class="client-box"><img src="assets/clients_photos/otis-seeklogo.png" alt="Otis"/></div>
+      <div class="client-box"><img src="assets/clients_photos/molex-seeklogo.png" alt="Molex"/></div>
+      <div class="client-box"><img src="assets/clients_photos/indo-mim.png" alt="Indo MIM"/></div>
+      <div class="client-box"><img src="assets/clients_photos/cie-automotive-seeklogo.png" alt="CIE Automotive"/></div>
+      <div class="client-box"><img src="assets/clients_photos/Avirata.jpg" alt="Avirata"/></div>
+      <div class="client-box"><img src="assets/clients_photos/Emmvee-group-logo.jpg" alt="Emmvee"/></div>
+      <!-- Set 2 — exact duplicate for seamless loop -->
+      <div class="client-box"><img src="assets/clients_photos/foxconn-seeklogo.png" alt="Foxconn"/></div>
+      <div class="client-box"><img src="assets/clients_photos/toyota-seeklogo.png" alt="Toyota"/></div>
+      <div class="client-box"><img src="assets/clients_photos/tata-seeklogo.png" alt="Tata"/></div>
+      <div class="client-box"><img src="assets/clients_photos/wistron-seeklogo.png" alt="Wistron"/></div>
+      <div class="client-box"><img src="assets/clients_photos/schneider-electric-seeklogo.png" alt="Schneider"/></div>
+      <div class="client-box"><img src="assets/clients_photos/motherson-seeklogo.png" alt="Motherson"/></div>
+      <div class="client-box"><img src="assets/clients_photos/tvs-seeklogo.png" alt="TVS"/></div>
+      <div class="client-box"><img src="assets/clients_photos/volvo-seeklogo.png" alt="Volvo"/></div>
+      <div class="client-box"><img src="assets/clients_photos/ola-seeklogo.png" alt="Ola"/></div>
+      <div class="client-box"><img src="assets/clients_photos/otis-seeklogo.png" alt="Otis"/></div>
+      <div class="client-box"><img src="assets/clients_photos/molex-seeklogo.png" alt="Molex"/></div>
+      <div class="client-box"><img src="assets/clients_photos/indo-mim.png" alt="Indo MIM"/></div>
+      <div class="client-box"><img src="assets/clients_photos/cie-automotive-seeklogo.png" alt="CIE Automotive"/></div>
+      <div class="client-box"><img src="assets/clients_photos/Avirata.jpg" alt="Avirata"/></div>
+      <div class="client-box"><img src="assets/clients_photos/Emmvee-group-logo.jpg" alt="Emmvee"/></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA — FIX 6: char slot above buttons -->
+<section id="cta-banner">
+  <div class="container cta-inner">
+    <span class="section-label reveal" style="color:rgba(245,166,35,.8)">Your Industry. Our Expertise.</span>
+    <h2 class="section-title light reveal">Don&rsquo;t See Your Industry? We Still Can Help.</h2>
+    <p class="reveal">Our talent networks extend across multiple sectors. Tell us your requirement and we will find the right workforce.</p>
+
+    <!-- FIX 6: Beckoning char slot above CTA buttons -->
+    <div class="cta-char-wrap reveal">
+      <div class="char-slot char-slot-md">
+        <!-- ANIMATION ZONE
+             Action: Beckoning with both hands — "come here" gesture
+             Replace with: assets/video/char-beckon.webm -->
+      </div>
+    </div>
+
+    <div class="cta-btns reveal">
+      <a href="contact.html" class="btn btn-gold">Discuss Your Requirement &#8594;</a>
+      <a href="services.html" class="btn btn-outline">View All Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="f-logo"><span class="w">MAIND</span><span class="g">SOURCE</span></div><p>Tech-enabled manpower supply and staffing solutions across India.</p><div class="f-socials"><a href="#" class="f-soc">in</a><a href="#" class="f-soc">&#128247;</a><a href="#" class="f-soc">f</a><a href="https://wa.me/919071329231" class="f-soc">&#128172;</a></div></div>
+      <div class="f-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="women.html">Women Empowerment</a></li><li><a href="credentials.html">Credentials</a></li><li><a href="careers.html">Careers</a></li></ul></div>
+      <div class="f-col"><h4>Services</h4><ul><li><a href="services.html">Contractual Staffing</a></li><li><a href="services.html">One-Time Placement</a></li><li><a href="services.html">Payroll Management</a></li><li><a href="services.html">Gig Workforce</a></li></ul></div>
+      <div class="f-col"><h4>Contact</h4><div class="f-contact-item"><span class="f-ci">&#128222;</span><div class="f-ct"><strong>Phone</strong>+91 9071329231</div></div><div class="f-contact-item"><span class="f-ci">&#9993;&#65039;</span><div class="f-ct"><strong>Email</strong>maindsource@gmail.com</div></div><div class="f-contact-item"><span class="f-ci">&#128205;</span><div class="f-ct"><strong>Bangalore</strong>Electronic City (P), 560100</div></div></div>
+    </div>
+    <div class="footer-bottom"><p>&#169; 2026 MAINDSOURCE LLP. All rights reserved. LLPIN: ACU-2305 | GST: 29ACGFM2072C1ZE</p><p class="f-legal">Registered &middot; Compliant &middot; Trustworthy</p></div>
+  </div>
+</footer>
+
+<script>
+const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(dot){dot.style.left=mx+'px';dot.style.top=my+'px';}});
+(function ar(){if(!ring)return;rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar);})();
+window.addEventListener('scroll',()=>{
+  const p=document.getElementById('scroll-progress');
+  if(p)p.style.width=((window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100)+'%';
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+},{passive:true});
+const ham=document.getElementById('hamburger'),mm=document.getElementById('mobMenu'),mo=document.getElementById('mobOverlay');
+if(ham){function tm(){mm.classList.toggle('open');mo.classList.toggle('open');}ham.addEventListener('click',tm);mo.addEventListener('click',tm);}
+(function(){
+  const c=document.getElementById('phpP');if(!c)return;
+  for(let i=0;i<14;i++){
+    const s=document.createElement('span');
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${Math.random()*8+6}s;animation-delay:${Math.random()*6}s;width:2px;height:2px;`;
+    c.appendChild(s);
+  }
+})();
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);}});},{threshold:.13});
+document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

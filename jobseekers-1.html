@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="Find work with MAINDSOURCE — Free placement service connecting job seekers with top companies in Bangalore."/>
+  <title>For Job Seekers — MAINDSOURCE</title>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png"/>
+  <link rel="stylesheet" href="style.css"/>
+
+  <style>
+  /* ============================================================
+     JOB SEEKERS PAGE — Local overrides & new components
+     All page-specific CSS lives here; style.css untouched.
+  ============================================================ */
+
+  /* ── 1. FIND A JOB nav button (matches homepage / sectors) ── */
+  .nav-cta-jobs {
+    flex-shrink: 0;
+    font-family: var(--font-s);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold) !important;
+    background: transparent;
+    border: 1.5px solid rgba(245,166,35,.55);
+    padding: 9px 20px;
+    border-radius: 50px;
+    white-space: nowrap;
+    transition: var(--ease);
+    margin-right: 8px;
+  }
+  .nav-cta-jobs:hover {
+    background: rgba(245,166,35,.10);
+    border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(245,166,35,.20);
+  }
+
+  /* ── 2. MOBILE HERO PADDING FIX ── */
+  @media(max-width:768px) {
+    .page-hero .ph-inner {
+      padding: 0 24px;  /* prevents text from touching screen edge */
+    }
+    .nav-cta-jobs { display: none; } /* hidden in bar; only in mobile drawer */
+  }
+
+  /* ── HERO FLEX LAYOUT — text left, char slot right ── */
+  .hero-flex {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+  }
+  .hero-flex-text { flex: 1; min-width: 0; }
+  .hero-flex-char { flex-shrink: 0; }
+
+  /* ── CHAR SLOT — reusable (from homepage design system) ── */
+  .char-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px dashed rgba(30,39,97,.2);
+    border-radius: 16px;
+    background: rgba(30,39,97,.03);
+    font-family: var(--font-s);
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(30,39,97,.25);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+    flex-direction: column;
+    gap: 6px;
+    transition: border-color .3s;
+    overflow: hidden;
+  }
+  .char-slot.dark {
+    border-color: rgba(255,255,255,.07);
+    background: rgba(255,255,255,.02);
+    color: rgba(255,255,255,.15);
+  }
+  .char-slot-sm  { width:  80px; height: 100px; }
+  .char-slot-md  { width: 120px; height: 160px; }
+  .char-slot-lg  { width: 160px; height: 220px; }
+  .char-slot-xl  { width: 200px; height: 260px; }
+
+  /* Fix 4 (mobile): all char-slot wrappers hidden on mobile */
+  @media(max-width:768px) {
+    .hero-flex-char,
+    .why-char-wrap,
+    .steps-char-wrap,
+    .cta-char-wrap  { display: none !important; }
+    .hero-flex      { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* ── 3. HOW IT WORKS — 3 Steps ── */
+  .steps-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 48px;
+    position: relative;
+  }
+  /* Fix 5: horizontal connector line hidden on mobile */
+  .steps-row::before {
+    content: '';
+    position: absolute;
+    top: 36px;
+    left: calc(100%/6);
+    right: calc(100%/6);
+    height: 2px;
+    background: var(--border);
+    z-index: 0;
+  }
+  .step-item {
+    text-align: center;
+    padding: 0 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .step-num {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-s); font-size: 22px; font-weight: 800;
+    color: var(--text-dark);
+    margin: 0 auto 18px;
+    border: 4px solid var(--cream);
+    box-shadow: 0 4px 16px rgba(245,166,35,.25);
+  }
+  .step-item h3 {
+    font-family: var(--font-s); font-size: 16px; font-weight: 700;
+    color: var(--text-dark); margin-bottom: 8px;
+  }
+  .step-item p { font-size: 13.5px; color: var(--text-gray); line-height: 1.7; }
+
+  /* Steps + char slot wrapper */
+  .steps-with-char {
+    display: flex;
+    align-items: flex-end;
+    gap: 32px;
+  }
+  .steps-with-char .steps-row { flex: 1; }
+  .steps-char-wrap { flex-shrink: 0; padding-bottom: 8px; }
+
+  @media(max-width:768px) {
+    .steps-row {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .steps-row::before { display: none; }  /* Fix 5: connector line gone on mobile */
+    .steps-with-char  { flex-direction: column; }
+  }
+
+  /* ── 3. WHY CHOOSE US — 3-column Interactive Card Grid (REDESIGN) ── */
+  .why-section-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 48px;
+    margin-top: 16px;
+  }
+  .why-header-col {
+    flex: 0 0 260px;
+    max-width: 260px;
+  }
+  .why-cards-col { flex: 1; min-width: 0; }
+  /* Char slot beside the section header */
+  .why-char-wrap {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding-top: 8px;
+  }
+
+  /* 3-column card grid */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  /* Individual Why card */
+  .why-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 22px 24px;
+    text-align: center;
+    transition: all 0.35s cubic-bezier(.4,0,.2,1);
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+  }
+  /* Subtle top-border glow line */
+  .why-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+    border-radius: 20px 20px 0 0;
+  }
+  .why-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(245,166,35,.45);
+    box-shadow:
+      0 0 0 1px rgba(245,166,35,.18),
+      0 20px 48px rgba(10,15,44,.14),
+      0 0 24px rgba(245,166,35,.10);
+  }
+  .why-card:hover::before { transform: scaleX(1); }
+
+  /* Large soft-glow icon */
+  .why-icon-wrap {
+    width: 72px; height: 72px;
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 18px;
+    font-size: 32px;
+    position: relative;
+    transition: transform 0.35s ease;
+  }
+  .why-card:hover .why-icon-wrap { transform: scale(1.10); }
+
+  /* Pillar 1 — Zero Fees: green soft glow */
+  .why-icon-zero  { background: rgba(34,197,94,.12); box-shadow: 0 0 24px rgba(34,197,94,.15); }
+  /* Pillar 2 — Direct Access: blue soft glow */
+  .why-icon-direct{ background: rgba(59,130,246,.12); box-shadow: 0 0 24px rgba(59,130,246,.15); }
+  /* Pillar 3 — Skill Growth: gold soft glow */
+  .why-icon-skill { background: rgba(245,166,35,.12); box-shadow: 0 0 24px rgba(245,166,35,.15); }
+
+  .why-card-title {
+    font-family: var(--font-s);
+    font-size: 16px; font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    line-height: 1.25;
+  }
+  .why-card-sub {
+    font-family: var(--font-s);
+    font-size: 10px; font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .why-card-desc {
+    font-size: 13px; color: var(--text-gray);
+    line-height: 1.72;
+  }
+  /* Key proof point badge inside each card */
+  .why-proof {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(245,166,35,.08);
+    border: 1px solid rgba(245,166,35,.18);
+    border-radius: 50px;
+    padding: 4px 12px;
+    font-family: var(--font-s); font-size: 11px; font-weight: 700;
+    color: var(--gold);
+    margin-top: 14px;
+  }
+
+  @media(max-width:900px) {
+    .why-grid { grid-template-columns: 1fr; gap: 14px; }
+    .why-section-inner { flex-direction: column; gap: 28px; }
+    .why-header-col { max-width: 100%; flex: none; }
+  }
+  @media(max-width:768px) {
+    .why-grid { grid-template-columns: 1fr; gap: 12px; }
+    .why-card  { padding: 22px 18px 20px; }
+  }
+
+  /* ── JOB CATEGORIES ── */
+  .cats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 40px;
+  }
+  .cat-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 24px 16px;
+    text-align: center;
+    transition: var(--ease);
+  }
+  .cat-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 4px 14px rgba(245,166,35,.09);
+    transform: translateY(-3px);
+  }
+  .cat-icon  { font-size: 36px; margin-bottom: 10px; }
+  .cat-card h4 { font-family: var(--font-s); font-size: 13px; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+  .cat-card p  { font-size: 12px; color: var(--text-gray); }
+
+  /* ── SOUTH INDIA SPECIALIST STRIP ── */
+  .specialist-strip {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    margin-top: 52px;
+    flex-wrap: wrap;
+  }
+  .specialist-strip .char-slot { flex-shrink: 0; }
+
+  /* ── APPLY CTA BOX ── */
+  .apply-box {
+    background: linear-gradient(135deg, var(--hero-start), var(--hero-end));
+    border-radius: var(--rl);
+    padding: 44px 40px;
+    text-align: center;
+    margin-top: 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .apply-box::before {
+    content: '';
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 500px; height: 220px;
+    background: radial-gradient(ellipse, rgba(245,166,35,.08), transparent);
+    pointer-events: none;
+  }
+  .apply-box h3 {
+    font-family: var(--font-d);
+    font-size: clamp(22px,3vw,34px); font-weight: 700;
+    color: var(--white); margin-bottom: 12px;
+    position: relative; z-index: 1;
+  }
+  .apply-box > p {
+    font-size: 15px; color: var(--text-muted); margin-bottom: 28px;
+    position: relative; z-index: 1;
+  }
+  /* Char slot above buttons in CTA */
+  .cta-char-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+    position: relative; z-index: 1;
+  }
+  .apply-btns {
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    position: relative; z-index: 1;
+  }
+
+  /* Mobile polish */
+  @media(max-width:768px) {
+    .cats-grid    { grid-template-columns: repeat(2,1fr); }
+    .apply-box    { padding: 32px 24px; }
+    .apply-btns   { flex-direction: column; align-items: center; }
+    .apply-btns .btn { width: 100%; max-width: 320px; justify-content: center; }
+  }
+  @media(max-width:480px) {
+    .cats-grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
+    .cat-card  { padding: 18px 12px; }
+    .cat-icon  { font-size: 28px; }
+  }
+  </style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<a id="wa-float" href="https://wa.me/919071329231" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+
+<!-- ════ NAVBAR — Fix 1: "Find a Job" button added ════ -->
+<nav id="navbar">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/logo.png" alt="MAINDSOURCE" class="nav-brand-img" onerror="this.style.display='none'"/>
+    <div class="nav-brand-text"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="sectors.html">Sectors</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-drop-trigger">More <span class="nav-drop-arrow">&#9660;</span></a>
+      <div class="nav-drop-menu">
+        <a href="women.html" class="drop-featured">
+          <span class="drop-icon">&#9994;</span> Women Empowerment
+        </a>
+        <div class="nav-drop-divider"></div>
+        <a href="jobseekers.html" class="active"><span class="drop-icon">&#128188;</span> Job Seekers</a>
+        <a href="careers.html"><span class="drop-icon">&#128640;</span> Careers</a>
+        <a href="impact.html"><span class="drop-icon">&#128202;</span> Our Impact</a>
+        <a href="credentials.html"><span class="drop-icon">&#128203;</span> Credentials</a>
+        <a href="methodology.html"><span class="drop-icon">&#9881;</span> Methodology</a>
+      </div>
+    </li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <!-- Fix 1: "Find a Job" outline button before "Start Hiring" -->
+  <a href="careers.html" class="nav-cta-jobs">Find a Job &#128188;</a>
+  <a href="contact.html" class="nav-cta">Start Hiring &#8594;</a>
+  <button class="nav-ham" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- Fix 1: Mobile overlay + menu — correctly linked to JS toggle -->
+<div class="mob-overlay" id="mobOverlay"></div>
+<div class="mob-menu" id="mobMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About Us</a>
+  <a href="services.html">Services</a>
+  <a href="sectors.html">Sectors</a>
+  <a href="women.html" class="mob-women">&#9994; Women Empowerment</a>
+  <a href="jobseekers.html">Job Seekers</a>
+  <a href="careers.html">Careers</a>
+  <a href="impact.html">Our Impact</a>
+  <a href="credentials.html">Credentials</a>
+  <a href="methodology.html">Methodology</a>
+  <!-- Fix 1: "Find a Job" in mobile drawer with gold branding -->
+  <a href="careers.html" class="mob-cta-jobs">Find a Job &#128188;</a>
+  <a href="contact.html" class="mob-cta">Start Hiring &#8594;</a>
+</div>
+
+
+<!-- ════ HERO — Fix 2: padding fix + char slot right ════ -->
+<section class="page-hero">
+  <div class="ph-particles" id="phpP"></div>
+  <div class="ph-glow"></div>
+  <div class="container ph-inner">
+    <div class="hero-flex">
+
+      <!-- Text content -->
+      <div class="hero-flex-text">
+        <h1>Your Next Job<br>is <em>Waiting</em>.<br>We&rsquo;ll Help You<br>Get There.</h1>
+        <p>Free placement service. No fees. No experience required for many roles. We connect you with top companies in Bangalore and beyond.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
+          <a href="https://wa.me/919071329231?text=Hi%2C%20I%20am%20looking%20for%20a%20job" target="_blank" class="btn btn-gold">&#128241; Apply on WhatsApp &rarr;</a>
+          <a href="tel:+919071329231" class="btn btn-outline">&#128222; Call Us Now</a>
+        </div>
+      </div>
+
+      <!-- Fix 4: CHAR SLOT — Hero (Celebrating / Pointing at CTA) -->
+      <!-- Replace with: <video autoplay muted loop playsinline style="max-height:260px;width:auto;">
+             <source src="assets/video/char-celebrate-point.webm"/>
+           </video> -->
+      <div class="hero-flex-char">
+        <div class="char-slot dark char-slot-xl" style="border-color:rgba(245,166,35,.15);">
+          <!-- ACTION: Celebrating / Pointing at the CTA button with excitement -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ HOW IT WORKS — 3 Steps + Fix 5 connector + Fix 4 char at step 3 ════ -->
+<section class="section-pad" style="background:var(--cream)">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label reveal">Simple Process</span>
+      <h2 class="section-title reveal">How It Works</h2>
+      <p class="section-sub reveal">Three simple steps to your next job opportunity.</p>
+    </div>
+
+    <div class="steps-with-char">
+
+      <!-- Steps grid — connector line hidden on mobile via CSS (Fix 5) -->
+      <div class="steps-row">
+        <div class="step-item reveal">
+          <div class="step-num">1</div>
+          <h3>Register</h3>
+          <p>Contact us on WhatsApp or call. Share your name, location, and what kind of work you are looking for. No complicated forms.</p>
+        </div>
+        <div class="step-item reveal">
+          <div class="step-num">2</div>
+          <h3>Get Matched</h3>
+          <p>Our team matches your profile with available openings. We call you back with suitable opportunities within 24 hours.</p>
+        </div>
+        <div class="step-item reveal">
+          <div class="step-num">3</div>
+          <h3>Start Work</h3>
+          <p>Once selected, we handle all paperwork and onboarding. You show up and start earning. It is that simple.</p>
+        </div>
+      </div>
+
+      <!-- Fix 4: CHAR SLOT — Step 3 (Success / Thumbs Up) -->
+      <!-- Replace with: <video autoplay muted loop playsinline style="max-height:220px;width:auto;">
+               <source src="assets/video/char-thumbsup.webm"/>
+             </video> -->
+      <div class="steps-char-wrap">
+        <div class="char-slot char-slot-lg">
+          <!-- ACTION: Success pose / double thumbs up — "You got the job!" -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ WHY CHOOSE US — Fix 3: 3-column interactive card redesign ════ -->
+<section class="section-pad" style="background:var(--cream-2)">
+  <div class="container">
+
+    <!-- Section header row -->
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-bottom:40px;">
+      <div>
+        <span class="section-label reveal-left">Why Choose Us</span>
+        <h2 class="section-title reveal-left" style="max-width:400px;">The MAINDSOURCE Advantage for Job Seekers</h2>
+        <p class="section-sub reveal-left">We don't just find you a job — we invest in your journey.</p>
+      </div>
+      <!-- Fix 4: CHAR SLOT — Why Choose Us (Explaining / Confident) -->
+      <!-- Replace with: <video autoplay muted loop playsinline style="max-height:160px;width:auto;">
+               <source src="assets/video/char-explain.webm"/>
+             </video> -->
+      <div class="why-char-wrap">
+        <div class="char-slot char-slot-md">
+          <!-- ACTION: Explaining confidently — arms open, speaking to the audience -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Fix 3: 3-column interactive Why card grid -->
+    <div class="why-grid">
+
+      <!-- Pillar 1: Zero Fees -->
+      <div class="why-card reveal">
+        <div class="why-icon-wrap why-icon-zero">&#9989;</div>
+        <div class="why-card-title">Zero Fees.<br>Always.</div>
+        <span class="why-card-sub">100% Free for Candidates</span>
+        <p class="why-card-desc">We are paid by the companies we place you into — never by you. Our placement service is completely free, from your first call to your first day at work. No hidden charges. Ever.</p>
+        <div class="why-proof">&#127881; Over 8,000 free placements done</div>
+      </div>
+
+      <!-- Pillar 2: Direct Access -->
+      <div class="why-card reveal">
+        <div class="why-icon-wrap why-icon-direct">&#128274;</div>
+        <div class="why-card-title">Direct Access to Top HRs.</div>
+        <span class="why-card-sub">Skip the Middleman</span>
+        <p class="why-card-desc">We connect you directly with verified HR managers at Foxconn, Toyota, Tata, Wistron and 50+ more top companies. No random recruiters. No fake promises. Real companies, real jobs.</p>
+        <div class="why-proof">&#127970; 50+ verified company partners</div>
+      </div>
+
+      <!-- Pillar 3: Skill Growth -->
+      <div class="why-card reveal">
+        <div class="why-icon-wrap why-icon-skill">&#127891;</div>
+        <div class="why-card-title">Free Training &amp; Career Guidance.</div>
+        <span class="why-card-sub">Skill Growth Included</span>
+        <p class="why-card-desc">No experience? No problem. We provide free pre-placement training, career counselling, and onboarding support to make sure you're job-ready before you even walk through the door.</p>
+        <div class="why-proof">&#128170; Training provided at no cost</div>
+      </div>
+
+    </div><!-- /why-grid -->
+
+    <!-- Additional benefits strip below the 3 main pillars -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px;">
+
+      <div class="why-card reveal" style="padding:20px 18px;">
+        <div style="font-size:22px;margin-bottom:10px;">&#127960;</div>
+        <strong style="font-family:var(--font-s);font-size:14px;color:var(--text-dark);display:block;margin-bottom:4px;">Accommodation Support</strong>
+        <p style="font-size:12.5px;color:var(--text-gray);line-height:1.6;">Many roles include food &amp; accommodation — making the move to Bangalore easier.</p>
+      </div>
+
+      <div class="why-card reveal" style="padding:20px 18px;">
+        <div style="font-size:22px;margin-bottom:10px;">&#128176;</div>
+        <strong style="font-family:var(--font-s);font-size:14px;color:var(--text-dark);display:block;margin-bottom:4px;">Monthly Salary + PF/ESIC</strong>
+        <p style="font-size:12.5px;color:var(--text-gray);line-height:1.6;">Regular monthly pay with statutory benefits where applicable — ESI, PF, on-time salary.</p>
+      </div>
+
+      <div class="why-card reveal" style="padding:20px 18px;">
+        <div style="font-size:22px;margin-bottom:10px;">&#129309;</div>
+        <strong style="font-family:var(--font-s);font-size:14px;color:var(--text-dark);display:block;margin-bottom:4px;">Support After Joining</strong>
+        <p style="font-size:12.5px;color:var(--text-gray);line-height:1.6;">Our team stays in touch after placement to ensure you are comfortable and fully settled.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════ JOB CATEGORIES ════ -->
+<section class="section-pad" style="background:var(--cream)">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label reveal">Available Roles</span>
+      <h2 class="section-title reveal">Job Categories We Fill</h2>
+      <p class="section-sub reveal">From factory floors to retail stores — we have opportunities across multiple categories.</p>
+    </div>
+
+    <div class="cats-grid">
+      <div class="cat-card reveal"><div class="cat-icon">&#127981;</div><h4>Factory / Production</h4><p>Assembly lines, machine operation, quality checking</p></div>
+      <div class="cat-card reveal"><div class="cat-icon">&#128274;</div><h4>Security Guard</h4><p>Corporate offices, factories, residential complexes</p></div>
+      <div class="cat-card reveal"><div class="cat-icon">&#129529;</div><h4>Housekeeping</h4><p>Offices, hospitals, hotels, commercial spaces</p></div>
+      <div class="cat-card reveal"><div class="cat-icon">&#128663;</div><h4>Driver</h4><p>Corporate vehicles, logistics fleets, delivery</p></div>
+      <div class="cat-card reveal"><div class="cat-icon">&#127959;</div><h4>Construction</h4><p>Civil work, finishing, support labour</p></div>
+      <div class="cat-card reveal"><div class="cat-icon">&#128717;</div><h4>Retail Staff</h4><p>Store assistants, cashiers, stock handlers</p></div>
+      <div class="cat-card reveal"><div class="cat-icon">&#128230;</div><h4>Warehouse / Logistics</h4><p>Packing, dispatch, inventory management</p></div>
+      <div class="cat-card reveal"><div class="cat-icon">&#127869;</div><h4>Hospitality</h4><p>Kitchen helpers, service staff, housekeeping</p></div>
+      <div class="cat-card reveal"><div class="cat-icon">&#128225;</div><h4>Telecom Field</h4><p>Tower technicians, cable laying, field support</p></div>
+    </div>
+
+    <!-- South India specialist strip — char slot replaces old Lottie box -->
+    <div class="specialist-strip reveal">
+      <!-- Char slot: Walking through South India districts -->
+      <!-- Replace with: <video autoplay muted loop playsinline style="max-height:160px;width:auto;">
+               <source src="assets/video/char-walk.webm"/>
+             </video> -->
+      <div class="char-slot char-slot-md" style="flex-shrink:0;">
+        <!-- ACTION: Walking confidently through different regions of South India -->
+      </div>
+      <div>
+        <span class="section-label">We&rsquo;re South India&rsquo;s Specialists</span>
+        <h3 style="font-family:var(--font-d);font-size:clamp(20px,2.8vw,30px);font-weight:700;color:var(--text-dark);margin:10px 0 10px;line-height:1.3">Hiring from Karnataka, Andhra Pradesh &amp; Telangana</h3>
+        <p style="font-size:15px;color:var(--text-gray);line-height:1.8;max-width:480px">We understand local communities and speak your language. Our team personally guides you through the entire process — from registration to your first day at work.</p>
+      </div>
+    </div>
+
+    <!-- ── CAREERS BANNER — check openings, contact if not found ── -->
+    <div style="
+      background: linear-gradient(135deg, rgba(245,166,35,.10) 0%, rgba(245,166,35,.04) 100%);
+      border: 1.5px solid rgba(245,166,35,.28);
+      border-radius: 20px;
+      padding: 32px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-top: 44px;
+    " class="reveal">
+      <div style="flex:1;min-width:220px;">
+        <div style="font-family:var(--font-s);font-size:10px;font-weight:700;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;">&#128204; Live Job Openings</div>
+        <h3 style="font-family:var(--font-d);font-size:clamp(18px,2.4vw,26px);font-weight:700;color:var(--text-dark);margin-bottom:8px;line-height:1.3;">Looking for a Specific Role?</h3>
+        <p style="font-size:14px;color:var(--text-gray);line-height:1.7;max-width:440px;">Browse our <strong style="color:var(--text-dark);">Careers page</strong> for current job openings with real companies. If you don&rsquo;t find what you&rsquo;re looking for, just reach out directly &mdash; we&rsquo;ll find something for you.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;flex-shrink:0;">
+        <a href="careers.html" class="btn btn-gold" style="justify-content:center;">
+          &#128640; View Open Positions &rarr;
+        </a>
+        <a href="https://wa.me/919071329231?text=Hi%2C%20I%20didn%27t%20find%20the%20role%20I%20was%20looking%20for.%20Can%20you%20help%20me%3F" target="_blank" rel="noopener"
+           class="btn btn-outline"
+           style="border-color:rgba(37,211,102,.55);color:#1a9c40;justify-content:center;background:rgba(37,211,102,.06);">
+          &#128172; WhatsApp Us Directly
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom CTA box — Fix 4: char slot above buttons -->
+    <div class="apply-box reveal">
+      <h3>Ready to Start Your Career Journey?</h3>
+      <p>Contact us today. No complicated applications. Just message us on WhatsApp with your name, location and the type of work you want.</p>
+
+      <!-- Fix 4: CHAR SLOT — Bottom CTA (High-five / Welcoming) -->
+      <!-- Replace with: <video autoplay muted loop playsinline style="max-height:160px;width:auto;margin:0 auto;">
+               <source src="assets/video/char-highfive.webm"/>
+             </video> -->
+      <div class="cta-char-wrap">
+        <div class="char-slot dark char-slot-md" style="border-color:rgba(245,166,35,.12);">
+          <!-- ACTION: High-five / welcoming gesture — "We're ready to help you!" -->
+        </div>
+      </div>
+
+      <div class="apply-btns">
+        <a href="https://wa.me/919071329231?text=Hi%2C%20I%20am%20looking%20for%20a%20job" target="_blank" class="btn btn-gold">&#128241; Apply on WhatsApp &rarr;</a>
+        <a href="tel:+919071329231" class="btn btn-outline">&#128222; Call +91 9071329231</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════ FOOTER ════ -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="f-logo"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
+        <p>Tech-enabled manpower supply and staffing solutions across India. Connecting talent with opportunities since 2025.</p>
+        <div class="f-socials">
+          <a href="#" class="f-soc">in</a>
+          <a href="#" class="f-soc">&#128247;</a>
+          <a href="#" class="f-soc">f</a>
+          <a href="https://wa.me/919071329231" class="f-soc">&#128172;</a>
+        </div>
+      </div>
+      <div class="f-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="women.html">Women Empowerment</a></li><li><a href="credentials.html">Credentials</a></li><li><a href="careers.html">Careers</a></li></ul></div>
+      <div class="f-col"><h4>Services</h4><ul><li><a href="services.html">Contractual Staffing</a></li><li><a href="services.html">One-Time Placement</a></li><li><a href="services.html">Payroll Management</a></li><li><a href="services.html">Gig Workforce</a></li></ul></div>
+      <div class="f-col">
+        <h4>Contact</h4>
+        <div class="f-contact-item"><span class="f-ci">&#128222;</span><div class="f-ct"><strong>Phone</strong>+91 9071329231</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#9993;&#65039;</span><div class="f-ct"><strong>Email</strong>maindsource@gmail.com</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#128205;</span><div class="f-ct"><strong>Bangalore</strong>Electronic City (P), 560100, Karnataka</div></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&#169; 2026 MAINDSOURCE LLP. All rights reserved. LLPIN: ACU-2305 | GST: 29ACGFM2072C1ZE</p>
+      <p class="f-legal">Registered &middot; Compliant &middot; Trustworthy</p>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+/* Cursor */
+const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(dot){dot.style.left=mx+'px';dot.style.top=my+'px';}});
+(function ar(){if(!ring)return;rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar);})();
+
+/* Scroll progress + navbar */
+window.addEventListener('scroll',()=>{
+  const p=document.getElementById('scroll-progress');
+  if(p)p.style.width=((window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100)+'%';
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+});
+
+/* Fix 1: Mobile menu — hamburger correctly wired to mobMenu and mobOverlay */
+const ham=document.getElementById('hamburger'),
+      mm=document.getElementById('mobMenu'),
+      mo=document.getElementById('mobOverlay');
+if(ham){
+  function toggleMenu(){mm.classList.toggle('open');mo.classList.toggle('open');}
+  ham.addEventListener('click',toggleMenu);
+  mo.addEventListener('click',toggleMenu);   /* tap overlay to close */
+}
+
+/* Hero particles */
+(function(){
+  const c=document.getElementById('phpP');
+  if(!c)return;
+  for(let i=0;i<14;i++){
+    const s=document.createElement('span');
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${Math.random()*8+6}s;animation-delay:${Math.random()*6}s;width:2px;height:2px;`;
+    c.appendChild(s);
+  }
+})();
+
+/* Reveal on scroll */
+const obs=new IntersectionObserver(e=>{
+  e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);}});
+},{threshold:.13});
+document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

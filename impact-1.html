@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="MAINDSOURCE Impact — 8,000+ candidates placed, 50+ satisfied clients across 10+ industries."/>
+  <title>Our Impact — MAINDSOURCE</title>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png"/>
+  <link rel="stylesheet" href="style.css"/>
+
+  <style>
+  /* =====================================================
+     IMPACT PAGE — ALL STYLES
+  ===================================================== */
+
+  /* ── 1. NAV: Find a Job button ── */
+  .nav-cta-jobs {
+    flex-shrink: 0;
+    font-family: var(--font-s); font-size: 13px; font-weight: 700;
+    color: var(--gold) !important;
+    background: transparent;
+    border: 1.5px solid rgba(245,166,35,.55);
+    padding: 9px 20px; border-radius: 50px;
+    white-space: nowrap; transition: var(--ease); margin-right: 8px;
+  }
+  .nav-cta-jobs:hover {
+    background: rgba(245,166,35,.10); border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(245,166,35,.20);
+  }
+  @media(max-width:768px){ .nav-cta-jobs{ display:none; } }
+  .mob-menu .mob-cta-jobs {
+    background: rgba(245,166,35,.10); border: 1.5px solid rgba(245,166,35,.35);
+    color: var(--gold) !important; padding: 12px 20px; border-radius: 50px;
+    text-align: center; font-weight: 700; font-family: var(--font-s); font-size: 15px;
+  }
+  .mob-menu .mob-cta-jobs:hover {
+    background: rgba(245,166,35,.18) !important; color: var(--gold) !important; padding-left: 20px;
+  }
+
+  /* ── HERO SECTION ── */
+  .impact-hero {
+    background: var(--navy);
+    padding: 120px 0 72px;
+    position: relative; overflow: hidden;
+  }
+  .impact-hero-glow {
+    position: absolute; top: -80px; right: -80px;
+    width: 360px; height: 360px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,166,35,.07), transparent);
+    pointer-events: none;
+  }
+  .impact-hero-glow2 {
+    position: absolute; bottom: -60px; left: -60px;
+    width: 280px; height: 280px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(30,39,97,.55), transparent);
+    pointer-events: none;
+  }
+  .ph-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .ph-particles span {
+    position: absolute; width: 2px; height: 2px;
+    background: var(--gold); border-radius: 50%; opacity: 0;
+    animation: floatP linear infinite;
+  }
+  @keyframes floatP {
+    0%{opacity:0;transform:translateY(0) scale(0)}
+    10%{opacity:.5;transform:scale(1)}
+    90%{opacity:.2}
+    100%{opacity:0;transform:translateY(-100vh) scale(.5)}
+  }
+  .hero-inner-wrap {
+    position: relative; z-index: 2;
+  }
+
+  /* ── 2. STATS — NO SHAKE ── */
+  .impact-hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 52px;
+    position: relative;
+  }
+  /* Char slot beside stats — desktop only */
+  .stats-char-slot {
+    position: absolute;
+    right: -72px; top: 50%;
+    transform: translateY(-50%);
+    width: 60px; height: 80px;
+  }
+  @media(max-width:1300px){ .stats-char-slot{ display:none; } }
+
+  .ihs-card {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: var(--r); padding: 28px 20px;
+    text-align: center; transition: var(--ease);
+    position: relative; overflow: hidden;
+  }
+  .ihs-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: var(--gold); transform: scaleX(0); transition: transform .35s;
+  }
+  .ihs-card:hover { background: rgba(255,255,255,.10); transform: translateY(-4px); }
+  .ihs-card:hover::before { transform: scaleX(1); }
+  .ihs-icon { font-size: 30px; margin-bottom: 12px; display: block; }
+  .ihs-num {
+    font-family: var(--font-s); font-size: 52px; font-weight: 800;
+    color: var(--gold); line-height: 1; margin-bottom: 6px;
+    /* KEY FIX: tabular-nums keeps each digit same width → zero layout shift */
+    font-variant-numeric: tabular-nums;
+    /* Fixed min-width prevents container resizing during count-up */
+    display: block; min-width: 120px; margin-left: auto; margin-right: auto;
+  }
+  .ihs-label {
+    font-family: var(--font-s); font-size: 11px; font-weight: 700;
+    color: rgba(255,255,255,.68); letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .ihs-sub { font-size: 12px; color: var(--text-muted); }
+
+  /* Trust badges */
+  .trust-strip {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    justify-content: center; margin-top: 40px;
+  }
+  .trust-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.10);
+    border-radius: 50px; padding: 8px 18px;
+    font-family: var(--font-s); font-size: 12px; font-weight: 600;
+    color: rgba(255,255,255,.78);
+  }
+  .trust-badge .dot { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+
+  /* ── 3. COMPANIES — "BRAND UNIVERSE" LOGO WALL ──
+     Deep-space background. Logos float in staggered rows
+     at different drift speeds — like a living constellation
+     of brands orbiting MAINDSOURCE.
+  ── */
+  .brand-universe-section {
+    background: #070b18;
+    padding: var(--sy) 0;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Star-field background */
+  .bu-stars {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .bu-stars::before,
+  .bu-stars::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 72% 8%,  rgba(255,255,255,.35) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 44% 55%, rgba(245,166,35,.55) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 42%, rgba(255,255,255,.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 31% 78%, rgba(255,255,255,.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 63% 30%, rgba(245,166,35,.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 8%  65%, rgba(255,255,255,.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 88%, rgba(255,255,255,.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 75%, rgba(245,166,35,.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 22% 44%, rgba(255,255,255,.2) 0%, transparent 100%);
+  }
+  .bu-stars::after {
+    background-image:
+      radial-gradient(1px 1px at 38% 12%, rgba(255,255,255,.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 79% 58%, rgba(255,255,255,.25) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 12% 90%, rgba(245,166,35,.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 58% 35%, rgba(255,255,255,.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 96% 22%, rgba(255,255,255,.28) 0%, transparent 100%),
+      radial-gradient(1px 1px at 47% 70%, rgba(245,166,35,.25) 0%, transparent 100%);
+    animation: starTwinkle 4s ease-in-out infinite alternate;
+  }
+  @keyframes starTwinkle { 0%{opacity:.6} 100%{opacity:1} }
+
+  /* Subtle nebula glow behind logos */
+  .bu-nebula {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse,
+      rgba(245,166,35,.04) 0%,
+      rgba(30,39,97,.08) 40%,
+      transparent 70%);
+    pointer-events: none;
+  }
+
+  .bu-header {
+    position: relative; z-index: 2; text-align: center; margin-bottom: 52px;
+  }
+
+  /* Char slot beside the logo wall — desktop only */
+  .bu-char-wrap {
+    display: flex; justify-content: center;
+    margin-bottom: 28px; position: relative; z-index: 2;
+  }
+  @media(max-width:768px){ .bu-char-wrap{ display:none; } }
+
+  /* Three staggered rows — each drifts at a different speed/direction
+     Row 1: slow left drift
+     Row 2: slow right drift  (creates the "living" depth sensation)
+     Row 3: slowest left drift
+  */
+  .bu-rows-wrap {
+    position: relative; z-index: 2;
+    overflow: hidden;
+    /* Fade edges for cinematic feel */
+    -webkit-mask-image: linear-gradient(to right,
+      transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right,
+      transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+  .bu-row {
+    display: flex; gap: 20px;
+    margin-bottom: 16px;
+    white-space: nowrap;
+  }
+  .bu-row:last-child { margin-bottom: 0; }
+
+  /* Row drift animations */
+  .bu-row-1 .bu-inner { animation: buDriftLeft  38s linear infinite; }
+  .bu-row-2 .bu-inner { animation: buDriftRight 28s linear infinite; }
+  .bu-row-3 .bu-inner { animation: buDriftLeft  46s linear infinite; }
+  .bu-inner { display: inline-flex; gap: 20px; }
+
+  @keyframes buDriftLeft  { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  @keyframes buDriftRight { from{transform:translateX(-50%)} to{transform:translateX(0)} }
+
+  /* Individual logo card */
+  .bu-card {
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    width: 160px; height: 76px;
+    flex-shrink: 0;
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 14px;
+    position: relative; overflow: hidden;
+    transition: all .4s cubic-bezier(.4,0,.2,1);
+    cursor: pointer;
+    /* Float animation — different cards at different phases */
+    animation: buFloat var(--float-dur, 4s) ease-in-out var(--float-delay, 0s) infinite alternate;
+  }
+  @keyframes buFloat {
+    0%   { transform: translateY(0px); }
+    100% { transform: translateY(-7px); }
+  }
+
+  /* Spotlight: gold light pours in from top on hover */
+  .bu-card::before {
+    content: '';
+    position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 120px;
+    background: radial-gradient(circle,
+      rgba(245,166,35,.28) 0%,
+      rgba(245,166,35,.06) 50%,
+      transparent 70%);
+    opacity: 0; transition: opacity .35s ease;
+    pointer-events: none;
+  }
+  /* Thin gold top edge on hover */
+  .bu-card::after {
+    content: '';
+    position: absolute; top: 0; left: 20%; right: 20%; height: 1.5px;
+    background: linear-gradient(to right, transparent, rgba(245,166,35,.7), transparent);
+    transform: scaleX(0); transition: transform .35s ease;
+  }
+  .bu-card:hover {
+    background: rgba(255,255,255,.07);
+    border-color: rgba(245,166,35,.35);
+    box-shadow:
+      0 0 24px rgba(245,166,35,.12),
+      0 8px 28px rgba(0,0,0,.45),
+      inset 0 1px 0 rgba(245,166,35,.12);
+    transform: translateY(-10px) scale(1.04);
+    animation-play-state: paused;
+  }
+  .bu-card:hover::before { opacity: 1; }
+  .bu-card:hover::after  { transform: scaleX(1); }
+
+  .bu-card img {
+    max-height: 30px; width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1); opacity: .55;
+    transition: all .4s ease;
+    pointer-events: none;
+  }
+  .bu-card:hover img { opacity: .95; filter: brightness(1) invert(0); }
+
+  /* company name label under logo */
+  .bu-card-name {
+    position: absolute; bottom: 6px; left: 0; right: 0;
+    text-align: center;
+    font-family: var(--font-s); font-size: 8px; font-weight: 700;
+    color: rgba(255,255,255,.2); letter-spacing: 1px; text-transform: uppercase;
+    transition: color .35s;
+  }
+  .bu-card:hover .bu-card-name { color: rgba(245,166,35,.6); }
+
+  /* ── 4. SECTORS — OBSIDIAN ILLUMINATE TILES ──
+     Dark obsidian cards. On hover, a gold lava-lamp glow
+     erupts from the center and the icon rotates & scales.
+     The card border traces gold like a circuit lighting up.
+  ── */
+  .sectors-section {
+    background: linear-gradient(135deg, #0A0F2C 0%, #0d1235 60%, #070b18 100%);
+    padding: var(--sy) 0;
+    position: relative; overflow: hidden;
+  }
+  .sectors-section::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(245,166,35,.25), transparent);
+  }
+
+  /* Char slot above grid */
+  .sectors-char-wrap {
+    display: flex; justify-content: center;
+    margin: 32px 0 40px;
+  }
+  @media(max-width:768px){ .sectors-char-wrap{ display:none; } }
+
+  /* 3-column grid on desktop */
+  .obsidian-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 0;
+  }
+
+  .obsidian-tile {
+    position: relative;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 18px;
+    padding: 28px 22px 24px;
+    overflow: hidden;
+    cursor: default;
+    transition: transform .4s cubic-bezier(.4,0,.2,1), border-color .4s;
+    isolation: isolate;
+  }
+
+  /* Circuit-trace: border lights up clockwise on hover */
+  .obsidian-tile::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 18px;
+    padding: 1px;
+    background: conic-gradient(
+      from 0deg,
+      rgba(245,166,35,.0) 0%,
+      rgba(245,166,35,.9) 25%,
+      rgba(245,166,35,.0) 50%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity .4s;
+    animation: none;
+    pointer-events: none;
+  }
+
+  /* Gold lava-glow erupts from dead center on hover */
+  .obsidian-tile::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+      rgba(245,166,35,.18) 0%,
+      rgba(245,166,35,.06) 45%,
+      transparent 70%);
+    opacity: 0;
+    transition: transform .55s cubic-bezier(.4,0,.2,1), opacity .55s;
+    pointer-events: none; z-index: 0;
+  }
+
+  .obsidian-tile:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: rgba(245,166,35,.3);
+  }
+  .obsidian-tile:hover::before { opacity: 1; animation: circuitTrace 1.8s linear infinite; }
+  .obsidian-tile:hover::after  { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+
+  @keyframes circuitTrace {
+    from { background: conic-gradient(from 0deg, rgba(245,166,35,.0) 0%, rgba(245,166,35,.9) 25%, rgba(245,166,35,.0) 50%); }
+    to   { background: conic-gradient(from 360deg, rgba(245,166,35,.0) 0%, rgba(245,166,35,.9) 25%, rgba(245,166,35,.0) 50%); }
+  }
+
+  /* Icon container: scales + glows on hover */
+  .ot-icon-wrap {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    background: rgba(245,166,35,.08);
+    border: 1px solid rgba(245,166,35,.14);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; margin-bottom: 14px;
+    position: relative; z-index: 1;
+    transition: transform .4s cubic-bezier(.4,0,.2,1), background .4s, box-shadow .4s;
+  }
+  .obsidian-tile:hover .ot-icon-wrap {
+    transform: scale(1.18) rotate(-4deg);
+    background: rgba(245,166,35,.16);
+    box-shadow: 0 0 20px rgba(245,166,35,.25);
+  }
+
+  .ot-name {
+    font-family: var(--font-s); font-size: 14px; font-weight: 700;
+    color: rgba(255,255,255,.82); margin-bottom: 5px;
+    position: relative; z-index: 1;
+    transition: color .35s;
+  }
+  .obsidian-tile:hover .ot-name { color: var(--gold); }
+
+  .ot-desc {
+    font-size: 12.5px; color: var(--text-muted); line-height: 1.6;
+    position: relative; z-index: 1;
+  }
+
+  /* Category label tag */
+  .ot-tag {
+    display: inline-block; margin-top: 12px;
+    font-family: var(--font-s); font-size: 9.5px; font-weight: 700;
+    color: rgba(245,166,35,.6); letter-spacing: 1px; text-transform: uppercase;
+    background: rgba(245,166,35,.07); border: 1px solid rgba(245,166,35,.14);
+    border-radius: 50px; padding: 2px 10px;
+    position: relative; z-index: 1;
+    transition: background .35s, color .35s;
+  }
+  .obsidian-tile:hover .ot-tag { background: rgba(245,166,35,.14); color: var(--gold); }
+
+  /* Testimonials */
+  .testi-wrap { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 40px; }
+
+  /* ── 5. CHAR SLOTS ── */
+  .char-slot {
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px dashed rgba(255,255,255,.1); border-radius: 16px;
+    background: rgba(255,255,255,.02);
+    font-family: var(--font-s); font-size: 9px; font-weight: 700;
+    color: rgba(255,255,255,.15); letter-spacing: 1.5px; text-transform: uppercase;
+    text-align: center; flex-direction: column; gap: 6px;
+    transition: border-color .3s; overflow: hidden;
+  }
+  .char-slot-sm  { width: 80px;  height: 100px; }
+  .char-slot-md  { width: 120px; height: 160px; }
+  .char-slot-lg  { width: 160px; height: 220px; }
+  @media(max-width:768px){
+    .char-slot{ display:none !important; }
+  }
+
+  /* CTA char wrap */
+  .cta-char-row {
+    display: flex; align-items: center; justify-content: center; gap: 32px;
+    flex-wrap: wrap;
+  }
+  .cta-btns-wrap { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:1100px) {
+    .impact-hero-stats { grid-template-columns: repeat(2,1fr); }
+    .obsidian-grid      { grid-template-columns: repeat(2,1fr); }
+  }
+  @media(max-width:768px) {
+    /* STATS: single column stack on mobile — spec requirement */
+    .impact-hero-stats { grid-template-columns: 1fr; gap: 14px; }
+    .ihs-num           { font-size: 44px; }
+    /* Hero padding so text doesn't touch screen edges */
+    .hero-inner-wrap   { padding: 0 24px; }
+    .obsidian-grid     { grid-template-columns: 1fr; }
+    .testi-wrap        { grid-template-columns: 1fr; }
+    .bu-card           { width: 130px; height: 64px; }
+    .bu-card img       { max-height: 24px; }
+  }
+  @media(max-width:480px) {
+    .obsidian-grid { grid-template-columns: 1fr; }
+  }
+  </style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- WhatsApp -->
+<a id="wa-float" href="https://wa.me/919071329231" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav id="navbar">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/logo.png" alt="MAINDSOURCE" class="nav-brand-img" onerror="this.style.display='none'"/>
+    <div class="nav-brand-text"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="sectors.html">Sectors</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-drop-trigger">More <span class="nav-drop-arrow">&#9660;</span></a>
+      <div class="nav-drop-menu">
+        <a href="women.html" class="drop-featured"><span class="drop-icon">&#9994;</span> Women Empowerment</a>
+        <div class="nav-drop-divider"></div>
+        <a href="jobseekers.html"><span class="drop-icon">&#128188;</span> Job Seekers</a>
+        <a href="careers.html"><span class="drop-icon">&#128640;</span> Careers</a>
+        <a href="impact.html" class="active"><span class="drop-icon">&#128202;</span> Our Impact</a>
+        <a href="credentials.html"><span class="drop-icon">&#128203;</span> Credentials</a>
+        <a href="methodology.html"><span class="drop-icon">&#9881;</span> Methodology</a>
+      </div>
+    </li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <!-- FIND A JOB — desktop navbar -->
+  <a href="careers.html" class="nav-cta-jobs">Find a Job &#128188;</a>
+  <a href="contact.html" class="nav-cta">Start Hiring &#8594;</a>
+  <button class="nav-ham" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mob-overlay" id="mobOverlay"></div>
+<div class="mob-menu" id="mobMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About Us</a>
+  <a href="services.html">Services</a>
+  <a href="sectors.html">Sectors</a>
+  <a href="women.html" class="mob-women">&#9994; Women Empowerment</a>
+  <a href="jobseekers.html">Job Seekers</a>
+  <a href="careers.html">Careers</a>
+  <a href="impact.html">Our Impact</a>
+  <a href="credentials.html">Credentials</a>
+  <a href="methodology.html">Methodology</a>
+  <!-- FIND A JOB — mobile drawer -->
+  <a href="careers.html" class="mob-cta-jobs">Find a Job &#128188;</a>
+  <a href="contact.html" class="mob-cta">Start Hiring &#8594;</a>
+</div>
+
+<!-- ════════════════════════════════════
+     HERO + STATS
+════════════════════════════════════ -->
+<section class="impact-hero">
+  <div class="impact-hero-glow"></div>
+  <div class="impact-hero-glow2"></div>
+  <div class="ph-particles" id="phpP"></div>
+  <div class="container hero-inner-wrap">
+    <div class="text-center" style="margin-bottom:0;">
+      <span class="section-label reveal" style="color:rgba(245,166,35,.8)">Proven Results</span>
+      <h1 class="section-title light reveal" style="font-family:var(--font-d);font-size:clamp(36px,5vw,60px)">
+        Numbers That Tell<br>Our <em style="color:var(--gold);font-style:normal;">Story</em>
+      </h1>
+      <p class="section-sub light reveal" style="margin:0 auto;">
+        Every number represents a life changed, a company helped, and a partnership built on trust.
+      </p>
+    </div>
+
+    <!-- Stats grid with char slot -->
+    <div style="position:relative;">
+      <div class="impact-hero-stats">
+        <div class="ihs-card reveal">
+          <span class="ihs-icon">&#128101;</span>
+          <div class="ihs-num" data-target="8000" data-suffix="K+">0</div>
+          <div class="ihs-label">Candidates Interacted</div>
+          <div class="ihs-sub">Across 10+ industries</div>
+        </div>
+        <div class="ihs-card reveal">
+          <span class="ihs-icon">&#129309;</span>
+          <div class="ihs-num" data-target="50">0</div>
+          <div class="ihs-label">Satisfied Clients</div>
+          <div class="ihs-sub">Long-term corporate partnerships</div>
+        </div>
+        <div class="ihs-card reveal">
+          <span class="ihs-icon">&#127981;</span>
+          <div class="ihs-num" data-target="10">0</div>
+          <div class="ihs-label">Industries Served</div>
+          <div class="ihs-sub">Manufacturing to healthcare</div>
+        </div>
+        <div class="ihs-card reveal">
+          <span class="ihs-icon">&#127970;</span>
+          <div class="ihs-num" data-target="2">0</div>
+          <div class="ihs-label">Office Branches</div>
+          <div class="ihs-sub">Bangalore &middot; Ballari</div>
+        </div>
+      </div>
+
+      <!-- CHAR SLOT: Celebrating/Pointing at growth — desktop only -->
+      <div class="stats-char-slot char-slot char-slot-sm" style="border-color:rgba(245,166,35,.15);">
+        <!-- ACTION: Arms raised celebrating, pointing at the numbers
+             Replace: <video autoplay muted loop playsinline src="assets/video/char-celebrate.webm"></video> -->
+      </div>
+    </div>
+
+    <div class="trust-strip">
+      <div class="trust-badge"><span class="dot"></span>Tech-Integrated Screening</div>
+      <div class="trust-badge"><span class="dot"></span>Blue &amp; White Collar</div>
+      <div class="trust-badge"><span class="dot"></span>Women Empowerment Focused</div>
+      <div class="trust-badge"><span class="dot"></span>Pan-India Reach</div>
+      <div class="trust-badge"><span class="dot"></span>72-Hour Delivery</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     3. BRAND UNIVERSE — PREMIUM LOGO WALL
+     Three staggered rows drift at different
+     speeds. Each logo floats. On hover a gold
+     spotlight illuminates it from above.
+     Feels like a living partner constellation.
+════════════════════════════════════ -->
+<section class="brand-universe-section">
+  <div class="bu-stars"></div>
+  <div class="bu-nebula"></div>
+
+  <div class="container bu-header">
+    <span class="section-label reveal" style="color:rgba(245,166,35,.8);">Trusted By</span>
+    <h2 class="section-title light reveal">Companies That Trust MAINDSOURCE</h2>
+    <p class="section-sub light reveal" style="margin:0 auto;">
+      From global manufacturing giants to high-growth enterprises — our partner universe spans every major sector.
+    </p>
+  </div>
+
+  <!-- CHAR SLOT: Handshake/greeting beside the logo wall — desktop only -->
+  <div class="bu-char-wrap">
+    <div class="char-slot char-slot-sm" style="border-color:rgba(245,166,35,.12);">
+      <!-- ACTION: Warm handshake / greeting wave toward logos
+           Replace: <video autoplay muted loop playsinline src="assets/video/char-handshake.webm"></video> -->
+    </div>
+  </div>
+
+  <!-- Three drifting rows — each set duplicated for seamless infinite loop -->
+  <div class="bu-rows-wrap">
+
+    <!-- ROW 1: drifts LEFT at 38s -->
+    <div class="bu-row bu-row-1">
+      <div class="bu-inner">
+        <div class="bu-card" style="--float-dur:4.2s;--float-delay:0s;">
+          <img src="assets/clients_photos/foxconn-seeklogo.png" alt="Foxconn"/>
+          <span class="bu-card-name">Foxconn</span>
+        </div>
+        <div class="bu-card" style="--float-dur:5.1s;--float-delay:.6s;">
+          <img src="assets/clients_photos/toyota-seeklogo.png" alt="Toyota"/>
+          <span class="bu-card-name">Toyota</span>
+        </div>
+        <div class="bu-card" style="--float-dur:3.8s;--float-delay:1.1s;">
+          <img src="assets/clients_photos/tata-seeklogo.png" alt="Tata"/>
+          <span class="bu-card-name">Tata</span>
+        </div>
+        <div class="bu-card" style="--float-dur:4.6s;--float-delay:.3s;">
+          <img src="assets/clients_photos/wistron-seeklogo.png" alt="Wistron"/>
+          <span class="bu-card-name">Wistron</span>
+        </div>
+        <div class="bu-card" style="--float-dur:5.3s;--float-delay:.9s;">
+          <img src="assets/clients_photos/schneider-electric-seeklogo.png" alt="Schneider Electric"/>
+          <span class="bu-card-name">Schneider</span>
+        </div>
+        <div class="bu-card" style="--float-dur:4.0s;--float-delay:1.5s;">
+          <img src="assets/clients_photos/motherson-seeklogo.png" alt="Motherson"/>
+          <span class="bu-card-name">Motherson</span>
+        </div>
+        <div class="bu-card" style="--float-dur:4.8s;--float-delay:.2s;">
+          <img src="assets/clients_photos/tvs-seeklogo.png" alt="TVS"/>
+          <span class="bu-card-name">TVS</span>
+        </div>
+        <div class="bu-card" style="--float-dur:3.6s;--float-delay:.7s;">
+          <img src="assets/clients_photos/volvo-seeklogo.png" alt="Volvo"/>
+          <span class="bu-card-name">Volvo</span>
+        </div>
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="bu-inner" aria-hidden="true">
+        <div class="bu-card" style="--float-dur:4.2s;--float-delay:0s;"><img src="assets/clients_photos/foxconn-seeklogo.png" alt="Foxconn"/><span class="bu-card-name">Foxconn</span></div>
+        <div class="bu-card" style="--float-dur:5.1s;--float-delay:.6s;"><img src="assets/clients_photos/toyota-seeklogo.png" alt="Toyota"/><span class="bu-card-name">Toyota</span></div>
+        <div class="bu-card" style="--float-dur:3.8s;--float-delay:1.1s;"><img src="assets/clients_photos/tata-seeklogo.png" alt="Tata"/><span class="bu-card-name">Tata</span></div>
+        <div class="bu-card" style="--float-dur:4.6s;--float-delay:.3s;"><img src="assets/clients_photos/wistron-seeklogo.png" alt="Wistron"/><span class="bu-card-name">Wistron</span></div>
+        <div class="bu-card" style="--float-dur:5.3s;--float-delay:.9s;"><img src="assets/clients_photos/schneider-electric-seeklogo.png" alt="Schneider Electric"/><span class="bu-card-name">Schneider</span></div>
+        <div class="bu-card" style="--float-dur:4.0s;--float-delay:1.5s;"><img src="assets/clients_photos/motherson-seeklogo.png" alt="Motherson"/><span class="bu-card-name">Motherson</span></div>
+        <div class="bu-card" style="--float-dur:4.8s;--float-delay:.2s;"><img src="assets/clients_photos/tvs-seeklogo.png" alt="TVS"/><span class="bu-card-name">TVS</span></div>
+        <div class="bu-card" style="--float-dur:3.6s;--float-delay:.7s;"><img src="assets/clients_photos/volvo-seeklogo.png" alt="Volvo"/><span class="bu-card-name">Volvo</span></div>
+      </div>
+    </div>
+
+    <!-- ROW 2: drifts RIGHT at 28s (opposite direction, faster) -->
+    <div class="bu-row bu-row-2">
+      <div class="bu-inner">
+        <div class="bu-card" style="--float-dur:5.5s;--float-delay:.4s;">
+          <img src="assets/clients_photos/ola-seeklogo.png" alt="Ola"/>
+          <span class="bu-card-name">Ola</span>
+        </div>
+        <div class="bu-card" style="--float-dur:4.1s;--float-delay:1.2s;">
+          <img src="assets/clients_photos/otis-seeklogo.png" alt="Otis"/>
+          <span class="bu-card-name">Otis</span>
+        </div>
+        <div class="bu-card" style="--float-dur:3.9s;--float-delay:.8s;">
+          <img src="assets/clients_photos/molex-seeklogo.png" alt="Molex"/>
+          <span class="bu-card-name">Molex</span>
+        </div>
+        <div class="bu-card" style="--float-dur:5.2s;--float-delay:.1s;">
+          <img src="assets/clients_photos/indo-mim.png" alt="Indo MIM"/>
+          <span class="bu-card-name">Indo MIM</span>
+        </div>
+        <div class="bu-card" style="--float-dur:4.4s;--float-delay:1.0s;">
+          <img src="assets/clients_photos/cie-automotive-seeklogo.png" alt="CIE Automotive"/>
+          <span class="bu-card-name">CIE Auto</span>
+        </div>
+        <div class="bu-card" style="--float-dur:3.7s;--float-delay:.5s;">
+          <img src="assets/clients_photos/Avirata.jpg" alt="Avirata"/>
+          <span class="bu-card-name">Avirata</span>
+        </div>
+        <div class="bu-card" style="--float-dur:5.0s;--float-delay:1.3s;">
+          <img src="assets/clients_photos/Emmvee-group-logo.jpg" alt="Emmvee Group"/>
+          <span class="bu-card-name">Emmvee</span>
+        </div>
+        <div class="bu-card" style="--float-dur:4.3s;--float-delay:.6s;">
+          <img src="assets/clients_photos/foxconn-seeklogo.png" alt="Foxconn"/>
+          <span class="bu-card-name">Foxconn</span>
+        </div>
+      </div>
+      <div class="bu-inner" aria-hidden="true">
+        <div class="bu-card" style="--float-dur:5.5s;--float-delay:.4s;"><img src="assets/clients_photos/ola-seeklogo.png" alt="Ola"/><span class="bu-card-name">Ola</span></div>
+        <div class="bu-card" style="--float-dur:4.1s;--float-delay:1.2s;"><img src="assets/clients_photos/otis-seeklogo.png" alt="Otis"/><span class="bu-card-name">Otis</span></div>
+        <div class="bu-card" style="--float-dur:3.9s;--float-delay:.8s;"><img src="assets/clients_photos/molex-seeklogo.png" alt="Molex"/><span class="bu-card-name">Molex</span></div>
+        <div class="bu-card" style="--float-dur:5.2s;--float-delay:.1s;"><img src="assets/clients_photos/indo-mim.png" alt="Indo MIM"/><span class="bu-card-name">Indo MIM</span></div>
+        <div class="bu-card" style="--float-dur:4.4s;--float-delay:1.0s;"><img src="assets/clients_photos/cie-automotive-seeklogo.png" alt="CIE Automotive"/><span class="bu-card-name">CIE Auto</span></div>
+        <div class="bu-card" style="--float-dur:3.7s;--float-delay:.5s;"><img src="assets/clients_photos/Avirata.jpg" alt="Avirata"/><span class="bu-card-name">Avirata</span></div>
+        <div class="bu-card" style="--float-dur:5.0s;--float-delay:1.3s;"><img src="assets/clients_photos/Emmvee-group-logo.jpg" alt="Emmvee Group"/><span class="bu-card-name">Emmvee</span></div>
+        <div class="bu-card" style="--float-dur:4.3s;--float-delay:.6s;"><img src="assets/clients_photos/foxconn-seeklogo.png" alt="Foxconn"/><span class="bu-card-name">Foxconn</span></div>
+      </div>
+    </div>
+
+    <!-- ROW 3: drifts LEFT at 46s (slowest, creates depth) -->
+    <div class="bu-row bu-row-3">
+      <div class="bu-inner">
+        <div class="bu-card" style="--float-dur:4.7s;--float-delay:.9s;">
+          <img src="assets/clients_photos/toyota-seeklogo.png" alt="Toyota"/>
+          <span class="bu-card-name">Toyota</span>
+        </div>
+        <div class="bu-card" style="--float-dur:5.4s;--float-delay:.2s;">
+          <img src="assets/clients_photos/schneider-electric-seeklogo.png" alt="Schneider Electric"/>
+          <span class="bu-card-name">Schneider</span>
+        </div>
+        <div class="bu-card" style="--float-dur:3.5s;--float-delay:1.4s;">
+          <img src="assets/clients_photos/volvo-seeklogo.png" alt="Volvo"/>
+          <span class="bu-card-name">Volvo</span>
+        </div>
+        <div class="bu-card" style="--float-dur:4.9s;--float-delay:.7s;">
+          <img src="assets/clients_photos/tata-seeklogo.png" alt="Tata"/>
+          <span class="bu-card-name">Tata</span>
+        </div>
+        <div class="bu-card" style="--float-dur:5.6s;--float-delay:0s;">
+          <img src="assets/clients_photos/motherson-seeklogo.png" alt="Motherson"/>
+          <span class="bu-card-name">Motherson</span>
+        </div>
+        <div class="bu-card" style="--float-dur:4.2s;--float-delay:1.1s;">
+          <img src="assets/clients_photos/tvs-seeklogo.png" alt="TVS"/>
+          <span class="bu-card-name">TVS</span>
+        </div>
+        <div class="bu-card" style="--float-dur:3.8s;--float-delay:.4s;">
+          <img src="assets/clients_photos/wistron-seeklogo.png" alt="Wistron"/>
+          <span class="bu-card-name">Wistron</span>
+        </div>
+        <div class="bu-card" style="--float-dur:5.1s;--float-delay:.8s;">
+          <img src="assets/clients_photos/ola-seeklogo.png" alt="Ola"/>
+          <span class="bu-card-name">Ola</span>
+        </div>
+      </div>
+      <div class="bu-inner" aria-hidden="true">
+        <div class="bu-card" style="--float-dur:4.7s;--float-delay:.9s;"><img src="assets/clients_photos/toyota-seeklogo.png" alt="Toyota"/><span class="bu-card-name">Toyota</span></div>
+        <div class="bu-card" style="--float-dur:5.4s;--float-delay:.2s;"><img src="assets/clients_photos/schneider-electric-seeklogo.png" alt="Schneider Electric"/><span class="bu-card-name">Schneider</span></div>
+        <div class="bu-card" style="--float-dur:3.5s;--float-delay:1.4s;"><img src="assets/clients_photos/volvo-seeklogo.png" alt="Volvo"/><span class="bu-card-name">Volvo</span></div>
+        <div class="bu-card" style="--float-dur:4.9s;--float-delay:.7s;"><img src="assets/clients_photos/tata-seeklogo.png" alt="Tata"/><span class="bu-card-name">Tata</span></div>
+        <div class="bu-card" style="--float-dur:5.6s;--float-delay:0s;"><img src="assets/clients_photos/motherson-seeklogo.png" alt="Motherson"/><span class="bu-card-name">Motherson</span></div>
+        <div class="bu-card" style="--float-dur:4.2s;--float-delay:1.1s;"><img src="assets/clients_photos/tvs-seeklogo.png" alt="TVS"/><span class="bu-card-name">TVS</span></div>
+        <div class="bu-card" style="--float-dur:3.8s;--float-delay:.4s;"><img src="assets/clients_photos/wistron-seeklogo.png" alt="Wistron"/><span class="bu-card-name">Wistron</span></div>
+        <div class="bu-card" style="--float-dur:5.1s;--float-delay:.8s;"><img src="assets/clients_photos/ola-seeklogo.png" alt="Ola"/><span class="bu-card-name">Ola</span></div>
+      </div>
+    </div>
+
+  </div><!-- /bu-rows-wrap -->
+</section>
+
+<!-- ════════════════════════════════════
+     4. SECTORS — OBSIDIAN ILLUMINATE TILES
+     Dark cards. On hover: circuit-trace border
+     + gold lava-glow erupts from dead center
+     + icon rotates and scales.
+════════════════════════════════════ -->
+<section class="sectors-section">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label reveal" style="color:rgba(245,166,35,.8);">Sector Presence</span>
+      <h2 class="section-title light reveal">Industries Where We&rsquo;ve Made an Impact</h2>
+      <p class="section-sub light reveal" style="margin:0 auto;">
+        Our 8,000+ candidate interactions span these key industry segments across South India and beyond.
+      </p>
+    </div>
+
+    <!-- CHAR SLOT: Exploring/telescope — desktop only -->
+    <div class="sectors-char-wrap">
+      <div class="char-slot char-slot-md" style="border-color:rgba(245,166,35,.12);">
+        <!-- ACTION: Holding telescope, scanning the horizon of industries
+             Replace: <video autoplay muted loop playsinline src="assets/video/char-telescope.webm"></video> -->
+      </div>
+    </div>
+
+    <div class="obsidian-grid">
+
+      <div class="obsidian-tile reveal">
+        <div class="ot-icon-wrap">&#127981;</div>
+        <div class="ot-name">Manufacturing</div>
+        <div class="ot-desc">Assembly, production lines, skilled floor workers for mass-scale facilities.</div>
+        <span class="ot-tag">Core Sector</span>
+      </div>
+
+      <div class="obsidian-tile reveal">
+        <div class="ot-icon-wrap">&#128663;</div>
+        <div class="ot-name">Automobile</div>
+        <div class="ot-desc">OEM suppliers, tier-1 vendors, two-wheeler and four-wheeler plants.</div>
+        <span class="ot-tag">High Volume</span>
+      </div>
+
+      <div class="obsidian-tile reveal">
+        <div class="ot-icon-wrap">&#9889;</div>
+        <div class="ot-name">Electronics &amp; IT</div>
+        <div class="ot-desc">PCB assembly, semiconductor, IT support, data entry and ITeS operations.</div>
+        <span class="ot-tag">Tech-Forward</span>
+      </div>
+
+      <div class="obsidian-tile reveal">
+        <div class="ot-icon-wrap">&#128666;</div>
+        <div class="ot-name">Logistics &amp; Supply Chain</div>
+        <div class="ot-desc">Warehouse operators, last-mile delivery, inventory and dispatch teams.</div>
+        <span class="ot-tag">Rapid Deploy</span>
+      </div>
+
+      <div class="obsidian-tile reveal">
+        <div class="ot-icon-wrap">&#129398;</div>
+        <div class="ot-name">FMCG &amp; Retail</div>
+        <div class="ot-desc">Sales promoters, merchandisers, store staff and field force deployment.</div>
+        <span class="ot-tag">Pan-India</span>
+      </div>
+
+      <div class="obsidian-tile reveal">
+        <div class="ot-icon-wrap">&#9992;&#65039;</div>
+        <div class="ot-name">Aerospace &amp; Defence</div>
+        <div class="ot-desc">Precision engineers, quality inspectors, and compliance-trained technicians.</div>
+        <span class="ot-tag">High Compliance</span>
+      </div>
+
+      <div class="obsidian-tile reveal">
+        <div class="ot-icon-wrap">&#127973;</div>
+        <div class="ot-name">Healthcare</div>
+        <div class="ot-desc">Hospital support staff, medical device technicians and administrative teams.</div>
+        <span class="ot-tag">Certified Talent</span>
+      </div>
+
+      <div class="obsidian-tile reveal">
+        <div class="ot-icon-wrap">&#128085;</div>
+        <div class="ot-name">Apparel &amp; Textile</div>
+        <div class="ot-desc">Tailors, quality checkers, embroidery operators and production managers.</div>
+        <span class="ot-tag">Women Focused</span>
+      </div>
+
+      <div class="obsidian-tile reveal">
+        <div class="ot-icon-wrap">&#128230;</div>
+        <div class="ot-name">Packaging &amp; Warehousing</div>
+        <div class="ot-desc">Packing operators, material handlers, forklift drivers, and QC staff.</div>
+        <span class="ot-tag">Bulk Staffing</span>
+      </div>
+
+      <div class="obsidian-tile reveal">
+        <div class="ot-icon-wrap">&#127911;</div>
+        <div class="ot-name">BPO &amp; KPO</div>
+        <div class="ot-desc">Customer support executives, back-office processors and team leads.</div>
+        <span class="ot-tag">Voice &amp; Non-Voice</span>
+      </div>
+
+      <div class="obsidian-tile reveal">
+        <div class="ot-icon-wrap">&#128225;</div>
+        <div class="ot-name">Telecom</div>
+        <div class="ot-desc">Field engineers, tower technicians, customer care and installation teams.</div>
+        <span class="ot-tag">Field Force</span>
+      </div>
+
+      <div class="obsidian-tile reveal">
+        <div class="ot-icon-wrap">&#9881;&#65039;</div>
+        <div class="ot-name">Rubber &amp; Industrial</div>
+        <div class="ot-desc">Press operators, mould setters, vulcanisation and quality assurance staff.</div>
+        <span class="ot-tag">Specialised</span>
+      </div>
+
+    </div><!-- /obsidian-grid -->
+  </div>
+</section>
+
+<!-- ════════ TESTIMONIALS ════════ -->
+<section class="section-pad" style="background:var(--navy)">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:40px;">
+      <span class="section-label reveal" style="color:rgba(245,166,35,.8)">What Clients Say</span>
+      <h2 class="section-title light reveal">Trusted by HR Leaders Across India</h2>
+    </div>
+    <div class="testi-wrap">
+      <div class="testi-card reveal">
+        <div class="testi-q">&ldquo;</div>
+        <p class="testi-text">MAINDSOURCE delivered exactly what we needed — screened, trained professionals ready from day one. Exceptional industry understanding.</p>
+        <div class="testi-person"><div class="testi-avatar">H</div><div><div class="testi-name">HR Manager</div><div class="testi-role">Leading Manufacturing Co., Bangalore</div></div></div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-q">&ldquo;</div>
+        <p class="testi-text">Within 72 hours of sharing our requirement, we had the right candidates on site. The fastest and most reliable manpower partner we've worked with.</p>
+        <div class="testi-person"><div class="testi-avatar">P</div><div><div class="testi-name">Plant Head</div><div class="testi-role">Electronics Manufacturing, Karnataka</div></div></div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-q">&ldquo;</div>
+        <p class="testi-text">What sets MAINDSOURCE apart is their deep understanding of the South India labour market. They consistently deliver quality candidates.</p>
+        <div class="testi-person"><div class="testi-avatar">V</div><div><div class="testi-name">Operations Director</div><div class="testi-role">Logistics &amp; Supply Chain</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CTA ════════ -->
+<section id="cta-banner">
+  <div class="container cta-inner">
+    <span class="section-label reveal" style="color:rgba(245,166,35,.8)">Join Our Client Network</span>
+    <h2 class="section-title light reveal">Ready to See These Results for Your Business?</h2>
+    <p class="reveal">Join 50+ companies that trust MAINDSOURCE for their workforce needs. Let&rsquo;s build something great together.</p>
+
+    <!-- CTA row: char slot + buttons side by side -->
+    <div class="cta-char-row reveal">
+      <!-- CHAR SLOT: Beckoning with both hands — desktop only -->
+      <div class="char-slot char-slot-sm" style="border-color:rgba(245,166,35,.12);flex-shrink:0;">
+        <!-- ACTION: Beckoning "come here" gesture with both hands
+             Replace: <video autoplay muted loop playsinline src="assets/video/char-beckon.webm"></video> -->
+      </div>
+      <div class="cta-btns-wrap">
+        <a href="contact.html" class="btn btn-gold">Start Hiring &#8594;</a>
+        <a href="tel:+919071329231" class="btn btn-outline">&#128222; Call Us Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FOOTER ════════ -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="f-logo"><span class="w">MAIND</span><span class="g">SOURCE</span></div>
+        <p>Tech-enabled manpower supply and staffing solutions across India.</p>
+        <div class="f-socials">
+          <a href="#" class="f-soc" aria-label="LinkedIn">in</a>
+          <a href="#" class="f-soc" aria-label="Instagram">&#128247;</a>
+          <a href="#" class="f-soc" aria-label="Facebook">f</a>
+          <a href="https://wa.me/919071329231" class="f-soc" aria-label="WhatsApp">&#128172;</a>
+        </div>
+      </div>
+      <div class="f-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="women.html">Women Empowerment</a></li><li><a href="credentials.html">Credentials</a></li><li><a href="careers.html">Careers</a></li></ul></div>
+      <div class="f-col"><h4>Services</h4><ul><li><a href="services.html">Contractual Staffing</a></li><li><a href="services.html">One-Time Placement</a></li><li><a href="services.html">Payroll Management</a></li><li><a href="services.html">Gig Workforce</a></li></ul></div>
+      <div class="f-col">
+        <h4>Contact</h4>
+        <div class="f-contact-item"><span class="f-ci">&#128222;</span><div class="f-ct"><strong>Phone</strong>+91 9071329231</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#9993;&#65039;</span><div class="f-ct"><strong>Email</strong>maindsource@gmail.com</div></div>
+        <div class="f-contact-item"><span class="f-ci">&#128205;</span><div class="f-ct"><strong>Bangalore</strong>Electronic City (P), 560100</div></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&#169; 2026 MAINDSOURCE LLP. All rights reserved. LLPIN: ACU-2305 | GST: 29ACGFM2072C1ZE</p>
+      <p class="f-legal">Registered &middot; Compliant &middot; Trustworthy</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── CURSOR ──────────────────────────────────────────
+const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(dot){dot.style.left=mx+'px';dot.style.top=my+'px';}});
+(function ar(){if(!ring)return;rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar);})();
+
+// ── SCROLL PROGRESS + NAVBAR ────────────────────────
+window.addEventListener('scroll',()=>{
+  const p=document.getElementById('scroll-progress');
+  if(p) p.style.width=((window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100)+'%';
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+},{passive:true});
+
+// ── MOBILE MENU ────────────────────────────────────
+const ham=document.getElementById('hamburger'),mm=document.getElementById('mobMenu'),mo=document.getElementById('mobOverlay');
+if(ham){function tm(){mm.classList.toggle('open');mo.classList.toggle('open');}ham.addEventListener('click',tm);mo.addEventListener('click',tm);}
+
+// ── PARTICLES ──────────────────────────────────────
+(function(){
+  const c=document.getElementById('phpP');if(!c)return;
+  for(let i=0;i<14;i++){
+    const s=document.createElement('span');
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${Math.random()*8+6}s;animation-delay:${Math.random()*6}s;width:2px;height:2px;`;
+    c.appendChild(s);
+  }
+})();
+
+// ── REVEAL ON SCROLL ───────────────────────────────
+const obs=new IntersectionObserver(e=>{
+  e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);}});
+},{threshold:.13});
+document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
+
+// ── SMART COUNT-UP — ZERO LAYOUT SHIFT ────────────
+// Uses requestAnimationFrame for smooth easing.
+// tabular-nums CSS + pre-set min-width = zero shake.
+// 8000 with data-suffix="K+" counts 0→7999 then snaps to "8K+"
+const cObs=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting) return;
+    document.querySelectorAll('.ihs-num[data-target]').forEach(el=>{
+      const rawTarget = parseInt(el.dataset.target);
+      const isK = el.dataset.suffix === 'K+';
+      const DURATION = 2200;
+      const startTime = performance.now();
+      (function tick(now){
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / DURATION, 1);
+        // Ease-out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        if(isK){
+          if(progress < 1){
+            el.textContent = Math.floor(eased * rawTarget).toLocaleString() + '+';
+          } else {
+            el.textContent = '8K+';
+          }
+        } else {
+          const cur = Math.floor(eased * rawTarget);
+          el.textContent = (progress < 1 ? cur : rawTarget).toLocaleString() + '+';
+        }
+        if(progress < 1) requestAnimationFrame(tick);
+      })(startTime);
+    });
+    cObs.disconnect();
+  });
+},{threshold:.3});
+const statsEl = document.querySelector('.impact-hero-stats');
+if(statsEl) cObs.observe(statsEl);
+
+// ── Pause logo-wall rows on hover ──────────────────
+document.querySelectorAll('.bu-row').forEach(row=>{
+  const inners = row.querySelectorAll('.bu-inner');
+  row.addEventListener('mouseenter',()=>inners.forEach(i=>i.style.animationPlayState='paused'));
+  row.addEventListener('mouseleave',()=>inners.forEach(i=>i.style.animationPlayState='running'));
+});
+</script>
+</body>
+</html>
