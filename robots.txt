@@ -1,0 +1,12 @@
+# robots.txt — MAINDSOURCE
+# https://www.maindsource.com
+
+# Allow all search engine crawlers
+User-agent: *
+Allow: /
+
+# Block 404 from being indexed
+Disallow: /404.html
+
+# Sitemap location — Google, Bing and others pick this up automatically
+Sitemap: https://www.maindsource.com/sitemap.xml
