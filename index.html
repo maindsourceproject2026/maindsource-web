@@ -441,48 +441,51 @@
   .char-slot-lg { width:160px; height:220px; }
   .char-slot-xl { width:200px; height:260px; }
 
-/* ── DUAL PATH ── */
 #dual-path { padding: 52px 0; background: var(--cream-2); }
 
 .dual-path-inner {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
+  align-items: center;
   gap: 20px;
-  align-items: stretch;   /* both cards grow to same height — tallest wins */
 }
 
 #dual-path .path-card {
+  width: 340px;
+  min-height: 200px;
+  flex-shrink: 0;
   background: var(--white);
   border: 1px solid var(--border);
+  border-radius: var(--rl);
+  padding: 28px 24px;
   box-shadow: var(--shadow);
-  /* NO fixed height — grid stretch handles equal sizing */
+  position: relative;
+  overflow: hidden;
+}
+#dual-path .path-card::before { background: var(--gold); }
+#dual-path .path-card h3 { color: var(--text-dark); }
+#dual-path .path-card p  { color: var(--text-gray); }
+#dual-path .path-card:hover { box-shadow: var(--shadow-h); }
+
+.dual-char-center {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;  /* icon+text top, link pinned bottom */
-  padding: 24px 26px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 0 12px;
 }
-#dual-path .path-card h3 { color: var(--text-dark); }
-#dual-path .path-card p  { color: var(--text-gray); flex: 1; margin: 8px 0 16px; }
-#dual-path .path-card::before { background: var(--gold); }
-#dual-path .path-card:hover   { box-shadow: var(--shadow-h); }
-#dual-path .path-card.path-chosen {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 2px rgba(245,166,35,.40), var(--shadow-h);
-  transform: translateY(-3px);
-}
-
-/* OR centre column — centres itself vertically between the two cards */
-.dual-char-center {
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 8px; padding: 0 8px;
-  align-self: center;   /* don't stretch — just centre the OR label */
-}
-#dual-path .dual-char-label { color: rgba(30,39,97,.4); }
 .dual-char-label {
   font-family: var(--font-s); font-size: 9px; font-weight: 700;
-  color: rgba(245,166,35,.4); letter-spacing: 1.5px;
-  text-transform: uppercase; text-align: center; margin-top: 4px;
+  color: rgba(30,39,97,.4); letter-spacing: 1.5px;
+  text-transform: uppercase; text-align: center;
+}
+
+/* Mobile */
+@media(max-width:768px) {
+  .dual-path-inner { flex-direction: column; align-items: stretch; }
+  #dual-path .path-card { width: 100%; }
+  .dual-char-center { display: none; }
 }
   /* ── 3D FOCUS CAROUSEL ── */
   #placed-companies { padding:var(--sy) 0 calc(var(--sy) * 1.2); background:var(--cream-2); overflow:hidden; }
