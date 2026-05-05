@@ -441,30 +441,66 @@
   .char-slot-lg { width:160px; height:220px; }
   .char-slot-xl { width:200px; height:260px; }
 
-/* ── DUAL PATH REFINED ── */
+/* ── DUAL PATH FIXED ALIGNMENT ── */
 #dual-path { 
-    padding: 60px 0; 
+    padding: 60px 0 !important; 
     background: var(--cream-2); 
-    display: flex;
-    justify-content: center;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 
 .dual-path-inner { 
-    display: grid; 
-    /* Fixed widths: Cards are 350px, Center is 100px */
-    grid-template-columns: 350px 100px 350px; 
-    gap: 0; 
-    align-items: center; /* Prevents cards from stretching to full section height */
-    justify-content: center;
+    display: grid !important; 
+    /* Fixed widths for both containers */
+    grid-template-columns: 350px 100px 350px !important; 
+    gap: 0 !important; 
+    /* This is the magic line: it prevents boxes from stretching vertically */
+    align-items: center !important; 
+    justify-content: center !important;
+    width: auto !important;
 }
 
-/* Center Character/Divider Area */
+/* Path Card - Force Uniform Size */
+#dual-path .path-card { 
+    background: var(--white); 
+    border: 1px solid var(--border); 
+    box-shadow: var(--shadow); 
+    padding: 30px !important;
+    border-radius: 8px;
+    position: relative;
+    
+    /* FIX: Force exact height so both boxes are identical */
+    height: 180px !important; 
+    max-height: 180px !important;
+    overflow: hidden; /* Prevents text from pushing the box taller */
+    
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    transition: all 0.3s ease;
+}
+
+#dual-path .path-card h3 { 
+    color: var(--text-dark); 
+    margin: 0 0 8px 0 !important;
+    font-size: 1.15rem !important;
+    line-height: 1.2 !important;
+}
+
+#dual-path .path-card p { 
+    color: var(--text-gray); 
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+}
+
+/* Center Character Label */
 .dual-char-center { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center; 
-    gap: 8px; 
+    display: flex !important; 
+    flex-direction: column !important; 
+    align-items: center !important; 
+    justify-content: center !important; 
 }
 
 .dual-char-label { 
@@ -476,50 +512,15 @@
     text-transform: uppercase; 
 }
 
-/* Path Card - Controlled Sizing */
-#dual-path .path-card { 
-    background: var(--white); 
-    border: 1px solid var(--border); 
-    box-shadow: var(--shadow); 
-    padding: 30px;
-    border-radius: 8px;
-    position: relative;
-    /* Controlled Height: Adjust this value to make them shorter/taller */
-    min-height: 200px; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-#dual-path .path-card h3 { 
-    color: var(--text-dark); 
-    margin: 0 0 10px 0;
-    font-size: 1.2rem;
-}
-
-#dual-path .path-card p { 
-    color: var(--text-gray); 
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin: 0;
-}
-
 /* Vertical Gold Accent */
 #dual-path .path-card::before { 
     content: "";
     position: absolute;
     left: 0;
-    top: 20%;
-    height: 60%; /* Accent line doesn't run full height for a cleaner look */
+    top: 25%;
+    height: 50%; 
     width: 4px;
     background: var(--gold); 
-    border-radius: 0 4px 4px 0;
-}
-
-#dual-path .path-card:hover { 
-    box-shadow: var(--shadow-h); 
-    transform: translateY(-3px);
 }
 
 /* Mobile Responsiveness */
