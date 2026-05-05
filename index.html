@@ -441,13 +441,17 @@
   .char-slot-lg { width:160px; height:220px; }
   .char-slot-xl { width:200px; height:260px; }
 
-#dual-path { padding: 52px 0; background: var(--cream-2); }
+#dual-path { 
+  padding: 52px 0; 
+  background: var(--cream-2); 
+}
 
 .dual-path-inner {
   display: flex;
   align-items: center;
-  justify-content: center;   /* ← THIS was missing */
-  gap: 20px;
+  justify-content: center;
+  gap: 24px;
+  padding: 0 40px;           /* desktop left/right padding */
 }
 
 #dual-path .path-card {
@@ -463,29 +467,55 @@
   overflow: hidden;
 }
 #dual-path .path-card::before { background: var(--gold); }
-#dual-path .path-card h3 { color: var(--text-dark); }
-#dual-path .path-card p  { color: var(--text-gray); }
-#dual-path .path-card:hover { box-shadow: var(--shadow-h); }
+#dual-path .path-card h3     { color: var(--text-dark); }
+#dual-path .path-card p      { color: var(--text-gray); }
+#dual-path .path-card:hover  { box-shadow: var(--shadow-h); }
 
+/* OR column — hide the empty char-slot, show only the OR pill */
 .dual-char-center {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   flex-shrink: 0;
-  padding: 0 12px;
+  padding: 0 8px;
 }
+.dual-char-center .char-slot { display: none; }  /* hides the empty animation box */
+
 .dual-char-label {
-  font-family: var(--font-s); font-size: 9px; font-weight: 700;
-  color: rgba(30,39,97,.4); letter-spacing: 1.5px;
-  text-transform: uppercase; text-align: center;
+  font-family: var(--font-s);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--white);
+  background: var(--navy);
+  border: 2px solid rgba(245,166,35,.35);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* ── MOBILE ── */
 @media(max-width:768px) {
-  .dual-path-inner { flex-direction: column; align-items: stretch; justify-content: flex-start; }
-  #dual-path .path-card { width: 100%; }
-  .dual-char-center { display: none; }
+  .dual-path-inner {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 0 16px;         /* mobile left/right padding */
+    gap: 0;                  /* gap handled per-item below */
+  }
+  #dual-path .path-card {
+    width: 100%;
+  }
+  /* OR pill gets top + bottom margin when stacked */
+  .dual-char-center {
+    padding: 16px 0;         /* top/bottom breathing room on mobile */
+  }
 }
   /* ── 3D FOCUS CAROUSEL ── */
   #placed-companies { padding:var(--sy) 0 calc(var(--sy) * 1.2); background:var(--cream-2); overflow:hidden; }
