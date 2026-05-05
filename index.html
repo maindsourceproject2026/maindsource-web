@@ -446,6 +446,7 @@
 .dual-path-inner {
   display: flex;
   align-items: center;
+  justify-content: center;   /* ← THIS was missing */
   gap: 20px;
 }
 
@@ -481,9 +482,8 @@
   text-transform: uppercase; text-align: center;
 }
 
-/* Mobile */
 @media(max-width:768px) {
-  .dual-path-inner { flex-direction: column; align-items: stretch; }
+  .dual-path-inner { flex-direction: column; align-items: stretch; justify-content: flex-start; }
   #dual-path .path-card { width: 100%; }
   .dual-char-center { display: none; }
 }
