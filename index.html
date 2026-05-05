@@ -441,18 +441,90 @@
   .char-slot-lg { width:160px; height:220px; }
   .char-slot-xl { width:200px; height:260px; }
 
-  /* ── DUAL PATH ── */
-  #dual-path { padding:60px 0; background:var(--cream-2); }
-  .dual-path-inner { display:grid; grid-template-columns:1fr auto 1fr; gap:20px; align-items:center; }
-  .dual-char-center { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:0 8px; }
-  #dual-path .path-card { background:var(--white); border:1px solid var(--border); box-shadow:var(--shadow); }
-  #dual-path .path-card h3 { color:var(--text-dark); }
-  #dual-path .path-card p  { color:var(--text-gray); }
-  #dual-path .path-card::before { background:var(--gold); }
-  #dual-path .path-card:hover { box-shadow:var(--shadow-h); }
-  #dual-path .dual-char-label { color:rgba(30,39,97,.4); }
-  .dual-char-label { font-family:var(--font-s); font-size:9px; font-weight:700; color:rgba(245,166,35,.4); letter-spacing:1.5px; text-transform:uppercase; text-align:center; margin-top:4px; }
+/* ── UPDATED DUAL PATH ── */
+#dual-path { 
+    padding: 80px 0; 
+    background: var(--cream-2); 
+}
 
+.dual-path-inner { 
+    display: grid; 
+    grid-template-columns: 1fr 120px 1fr; /* Defined center width for better symmetry */
+    gap: 30px; 
+    align-items: stretch; 
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Center Divider Logic */
+.dual-char-center { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    position: relative;
+}
+
+.dual-char-center::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    z-index: 1;
+}
+
+.dual-char-label { 
+    font-family: var(--font-s); 
+    font-size: 10px; 
+    font-weight: 800; 
+    color: var(--gold); /* Made more vibrant than the 0.4 opacity version */
+    letter-spacing: 2px; 
+    text-transform: uppercase; 
+    background: var(--cream-2); /* Masks the line behind text */
+    padding: 10px 0;
+    z-index: 2;
+}
+
+/* Path Card Styling */
+#dual-path .path-card { 
+    background: var(--white); 
+    border: 1px solid var(--border); 
+    padding: 40px;
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow); 
+}
+
+#dual-path .path-card:hover { 
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-h); 
+    border-color: var(--gold);
+}
+
+#dual-path .path-card::before { 
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--gold); 
+    border-radius: 12px 0 0 12px;
+}
+
+#dual-path .path-card h3 { color: var(--text-dark); margin-bottom: 15px; }
+#dual-path .path-card p { color: var(--text-gray); line-height: 1.6; }
+
+/* Responsive Fix for Mobile */
+@media (max-width: 768px) {
+    .dual-path-inner { 
+        grid-template-columns: 1fr; 
+    }
+    .dual-char-center { padding: 20px 0; }
+    .dual-char-center::before { width: 100%; height: 2px; }
+}
   /* ── 3D FOCUS CAROUSEL ── */
   #placed-companies { padding:var(--sy) 0 calc(var(--sy) * 1.2); background:var(--cream-2); overflow:hidden; }
   .focus-carousel-wrap { position:relative; margin-top:48px; padding:20px 0 40px; perspective:1200px; perspective-origin:center center; }
