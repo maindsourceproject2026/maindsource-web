@@ -1541,6 +1541,18 @@
     .focus-card.fc-prev2,.focus-card.fc-next2 { opacity: 0; pointer-events: none; }
     .fc-company { font-size: 14px; }
   }
+  /* ── FOUNDERS PHOTO: corner-to-corner, no padding ── */
+    .founder-photo {
+      height: 280px;
+      background: linear-gradient(135deg, var(--navy), var(--hero-end));
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+    .founder-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      padding: 0; display: block;
+    }
   </style>
 </head>
 <body>
@@ -2197,13 +2209,12 @@
     -->
     <div class="leadership-flex">
 
-      <!-- TOP ROW: 2 cards centered -->
+      <!-- TOP ROW: 2 senior leaders, centered -->
       <div class="leadership-row leadership-row-top">
 
         <div class="leader-card reveal">
           <div class="leader-avatar">
-            <!-- <img src="assets/team/shilpa.jpg" alt="Shilpa — Head of Operations, MAINDSOURCE manpower agency Bangalore"/> -->
-            <div class="leader-initials">S</div>
+            <img src="assets/Picsart_26-04-27_17-06-15-099.jpg" alt="Shilpa — Head of Operations at MAINDSOURCE staffing agency Bangalore"/>
           </div>
           <div class="leader-divider"></div>
           <div class="leader-name">Shilpa</div>
@@ -2212,57 +2223,52 @@
 
         <div class="leader-card reveal">
           <div class="leader-avatar">
-            <!-- <img src="assets/team/suguna.jpg" alt="Suguna M — Head of Talent Acquisition, MAINDSOURCE recruitment agency Bangalore"/> -->
-            <div class="leader-initials">SM</div>
+            <img src="assets/suguna m.jpg" alt="Suguna M — Head of Talent Acquisition at MAINDSOURCE recruitment Bangalore"/>
           </div>
           <div class="leader-divider"></div>
           <div class="leader-name">Suguna M</div>
-          <div class="leader-role">Director of Talent Acquisition</div>
+          <div class="leader-role">Head of Talent Acquisition</div>
         </div>
 
       </div><!-- /leadership-row-top -->
 
-      <!-- BOTTOM ROW: 4 cards centered -->
+      <!-- BOTTOM ROW: 4 team members, centered -->
       <div class="leadership-row leadership-row-bottom">
 
         <div class="leader-card reveal">
           <div class="leader-avatar">
-            <!-- <img src="assets/team/financial-lead.jpg" alt="Lead Financial Auditor MAINDSOURCE LLP"/> -->
-            <div class="leader-initials">FA</div>
+            <img src="assets/Nagachari.jpg" alt="Nagachari M — Head of Strategic Partnerships at MAINDSOURCE LLP"/>
           </div>
           <div class="leader-divider"></div>
-          <div class="leader-name">Placeholder Name</div>
-          <div class="leader-role">Lead Financial Auditor</div>
+          <div class="leader-name">Nagachari M</div>
+          <div class="leader-role">Head of Strategic Partnerships</div>
         </div>
 
         <div class="leader-card reveal">
           <div class="leader-avatar">
-            <!-- <img src="assets/team/client-success.jpg" alt="Client Success Director MAINDSOURCE India"/> -->
-            <div class="leader-initials">CS</div>
+            <img src="assets/Picsart_26-04-27_17-06-57-697.jpg" alt="Muddu Basava K CA — Head of Audit and Compliances at MAINDSOURCE LLP Bangalore"/>
           </div>
           <div class="leader-divider"></div>
-          <div class="leader-name">Placeholder Name</div>
-          <div class="leader-role">Client Success Director</div>
+          <div class="leader-name">Muddu Basava K, CA</div>
+          <div class="leader-role">Head of Audit &amp; Compliances</div>
         </div>
 
         <div class="leader-card reveal">
           <div class="leader-avatar">
-            <!-- <img src="assets/team/placeholder-5.jpg" alt="MAINDSOURCE Team Member"/> -->
-            <div class="leader-initials">TM</div>
+            <img src="assets/manjula s r.jpg" alt="Manjula S R — Head of Financial Operations at MAINDSOURCE staffing company"/>
           </div>
           <div class="leader-divider"></div>
-          <div class="leader-name">Placeholder Name</div>
-          <div class="leader-role">Recruitment Lead</div>
+          <div class="leader-name">Manjula S R</div>
+          <div class="leader-role">Head of Financial Operations</div>
         </div>
 
         <div class="leader-card reveal">
           <div class="leader-avatar">
-            <!-- <img src="assets/team/placeholder-6.jpg" alt="MAINDSOURCE Team Member"/> -->
-            <div class="leader-initials">TM</div>
+            <img src="assets/file_0000000008fc720bbc92ae5ed389859b.png" alt="Teja Prasad K U — Chief Technical Architect at MAINDSOURCE tech-enabled staffing Bangalore"/>
           </div>
           <div class="leader-divider"></div>
-          <div class="leader-name">Placeholder Name</div>
-          <div class="leader-role">Operations Manager</div>
+          <div class="leader-name">Teja Prasad K U</div>
+          <div class="leader-role">Chief Technical Architect</div>
         </div>
 
       </div><!-- /leadership-row-bottom -->
