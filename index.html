@@ -441,89 +441,98 @@
   .char-slot-lg { width:160px; height:220px; }
   .char-slot-xl { width:200px; height:260px; }
 
-/* ── UPDATED DUAL PATH ── */
+/* ── DUAL PATH REFINED ── */
 #dual-path { 
-    padding: 80px 0; 
+    padding: 60px 0; 
     background: var(--cream-2); 
+    display: flex;
+    justify-content: center;
 }
 
 .dual-path-inner { 
     display: grid; 
-    grid-template-columns: 1fr 120px 1fr; /* Defined center width for better symmetry */
-    gap: 30px; 
-    align-items: stretch; 
-    max-width: 1100px;
-    margin: 0 auto;
+    /* Fixed widths: Cards are 350px, Center is 100px */
+    grid-template-columns: 350px 100px 350px; 
+    gap: 0; 
+    align-items: center; /* Prevents cards from stretching to full section height */
+    justify-content: center;
 }
 
-/* Center Divider Logic */
+/* Center Character/Divider Area */
 .dual-char-center { 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
     justify-content: center; 
-    position: relative;
-}
-
-.dual-char-center::before {
-    content: '';
-    position: absolute;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-    z-index: 1;
+    gap: 8px; 
 }
 
 .dual-char-label { 
     font-family: var(--font-s); 
-    font-size: 10px; 
-    font-weight: 800; 
-    color: var(--gold); /* Made more vibrant than the 0.4 opacity version */
-    letter-spacing: 2px; 
+    font-size: 11px; 
+    font-weight: 700; 
+    color: rgba(30, 39, 97, 0.4); 
+    letter-spacing: 1.5px; 
     text-transform: uppercase; 
-    background: var(--cream-2); /* Masks the line behind text */
-    padding: 10px 0;
-    z-index: 2;
 }
 
-/* Path Card Styling */
+/* Path Card - Controlled Sizing */
 #dual-path .path-card { 
     background: var(--white); 
     border: 1px solid var(--border); 
-    padding: 40px;
-    border-radius: 12px;
-    position: relative;
-    transition: all 0.3s ease;
     box-shadow: var(--shadow); 
+    padding: 30px;
+    border-radius: 8px;
+    position: relative;
+    /* Controlled Height: Adjust this value to make them shorter/taller */
+    min-height: 200px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+#dual-path .path-card h3 { 
+    color: var(--text-dark); 
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+}
+
+#dual-path .path-card p { 
+    color: var(--text-gray); 
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Vertical Gold Accent */
+#dual-path .path-card::before { 
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 20%;
+    height: 60%; /* Accent line doesn't run full height for a cleaner look */
+    width: 4px;
+    background: var(--gold); 
+    border-radius: 0 4px 4px 0;
 }
 
 #dual-path .path-card:hover { 
-    transform: translateY(-5px);
     box-shadow: var(--shadow-h); 
-    border-color: var(--gold);
+    transform: translateY(-3px);
 }
 
-#dual-path .path-card::before { 
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: var(--gold); 
-    border-radius: 12px 0 0 12px;
-}
-
-#dual-path .path-card h3 { color: var(--text-dark); margin-bottom: 15px; }
-#dual-path .path-card p { color: var(--text-gray); line-height: 1.6; }
-
-/* Responsive Fix for Mobile */
-@media (max-width: 768px) {
+/* Mobile Responsiveness */
+@media (max-width: 850px) {
     .dual-path-inner { 
         grid-template-columns: 1fr; 
+        width: 90%;
+        gap: 20px;
     }
-    .dual-char-center { padding: 20px 0; }
-    .dual-char-center::before { width: 100%; height: 2px; }
+    #dual-path .path-card {
+        min-height: auto;
+        width: 100%;
+    }
 }
   /* ── 3D FOCUS CAROUSEL ── */
   #placed-companies { padding:var(--sy) 0 calc(var(--sy) * 1.2); background:var(--cream-2); overflow:hidden; }
