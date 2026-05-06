@@ -266,6 +266,31 @@ button{border:none;outline:none;cursor:none;font-family:var(--font-s);}
 .founder-role{font-family:var(--font-s);font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.5px;text-transform:uppercase;margin-bottom:9px;}
 .founder-info p{font-size:13px;color:var(--text-gray);line-height:1.6;}
 
+  /* ──────────────────────────────────────────
+     FIX 4 — FOUNDER NAME: "Maneesh alias Surya Kiran B"
+  ────────────────────────────────────────── */
+  .founder-primary-name {
+    /* Premium gold gradient for the main name */
+    font-family: var(--font-s);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-dark);
+    letter-spacing: .3px;
+    display: inline-block;
+    margin-right: 3px;
+    margin-bottom: 3px;
+  }
+  .founder-alias-name {
+    /* Subtle, refined alias line */
+    font-family: var(--font-s);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-gray);
+    letter-spacing: 1px;
+    display: inline-block;
+    vertical-align: text-bottom;
+  }
+
 /* Clients */
 #clients{padding:var(--sy) 0;background:var(--cream-2);}
 .clients-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:36px;}
