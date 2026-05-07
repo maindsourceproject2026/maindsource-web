@@ -231,6 +231,22 @@
     font-size: 14px; color: var(--text-gray); line-height: 1.75;
   }
   .pulse-header-note a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  /* --- MOBILE HEADER ALIGNMENT FIX --- */
+@media (max-width: 768px) {
+    .pulse-header {
+        /* Change from space-between to center for mobile */
+        justify-content: center !important; 
+        text-align: center;
+        flex-direction: column; /* Stacks elements vertically */
+        align-items: center !important;
+        gap: 20px;
+    }
+
+    .pulse-header-note {
+        max-width: 100% !important; /* Allows the note to use full width */
+        margin: 0 auto;
+    }
+}
 
   /* THE GRID — 3 columns, each card fixed 200px height */
   .pulse-grid {
