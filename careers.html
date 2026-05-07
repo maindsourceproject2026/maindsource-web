@@ -304,6 +304,15 @@
   .ticker-text { font-family:var(--font-s);font-size:11px;font-weight:600;color:rgba(255,255,255,.82);letter-spacing:.3px;padding:0 48px;flex-shrink:0; }
   .ticker-text strong { color:var(--gold); }
   @keyframes tickerScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  /* ── MOBILE NAV — z-index 9999 above everything ── */
+  .mob-menu  { z-index: 9999 !important; }
+  .mob-overlay { z-index: 9998 !important; }
+  /* Active "Sectors" link in gold */
+    .mob-menu a.mob-active {
+    color: var(--gold) !important;
+    padding-left: 6px;
+    border-left: 2px solid var(--gold);
+  }
   </style>
 </head>
 <body>
