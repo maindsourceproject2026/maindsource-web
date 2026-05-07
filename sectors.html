@@ -81,7 +81,11 @@
   .mob-menu  { z-index: 9999 !important; }
   .mob-overlay { z-index: 9998 !important; }
   /* Active "Sectors" link in gold */
-  .mob-menu a.mob-active { color: #D4AF37 !important; font-weight: 800 !important; }
+    .mob-menu a.mob-active {
+    color: var(--gold) !important;
+    padding-left: 6px;
+    border-left: 2px solid var(--gold);
+  }
 
   /* ── FIND A JOB nav button ── */
   .nav-cta-jobs {
