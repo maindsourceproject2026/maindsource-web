@@ -410,7 +410,7 @@
 
   /* Individual state card */
   .state-card {
-    padding: 20px;
+    padding: 30px;
     position: relative;
     width: 220px;
     height: 340px;
@@ -424,9 +424,9 @@
     box-shadow: 0 12px 40px rgba(0,0,0,.55);
   }
   .state-map-img {
-    max-width: 80%;
-    max-height: 80%;
-    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain !important;
     filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.2)); /* Faint Gold Glow */
     transition: all 0.5s ease;
     animation: statePingPong 6s ease-in-out infinite; /* Task 12 Fix */
@@ -483,12 +483,7 @@
     padding: 24px 20px;
     z-index: 2;
   }
-  /* 1. Target only the first state card's image to reduce size */
-.state-card:first-child .state-map-img {
-    max-width: 65% !important; /* Reduced from 90% to 65% */
-    max-height: 65% !important;
-}
-  /* 3. Hover Effect for Premium Feel */
+   /* 3. Hover Effect for Premium Feel */
 .state-card:hover .state-map-img {
     filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6)); /* Intense Gold Glow on hover */
     transform: scale(1.1);
@@ -1037,7 +1032,7 @@
       <div class="sc-bg"></div>
       <div class="sc-overlay"></div>
       <div class="sc-shimmer"></div>
-      <div class="state-card:first-child .state-map-img"><img src="assets/maps/kar.png" alt="MAINDSOURCE in Karnataka"/></div>
+      <div class="state-map-img"><img src="assets/maps/kar.png" alt="MAINDSOURCE in Karnataka"/></div>
       <div class="sc-content">
         <span class="sc-state-code">KA</span>
         <div class="sc-state-name">Karnataka</div>
