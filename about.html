@@ -98,6 +98,12 @@
   .mob-overlay { z-index: 1100 !important; }
   .mob-menu    { z-index: 1200 !important; }
 
+  /* ── TASK 2: Active "Services" in mobile drawer ── */
+  .mob-menu a.active {
+    color: var(--gold) !important;
+    padding-left: 6px;
+    border-left: 2px solid var(--gold);
+  }
   /* ──────────────────────────────────────────
      ANTI-FRAUD TICKER
      Positioned by JS RAF (sits below navbar).
@@ -569,7 +575,7 @@
 <div class="mob-overlay" id="mobOverlay"></div>
 <div class="mob-menu" id="mobMenu">
   <a href="index.html">Home</a>
-  <a href="about.html">About Us</a>
+  <a href="about.html"> class="active">About Us</a> 
   <a href="services.html">Services</a>
   <a href="sectors.html">Sectors</a>
   <a href="women.html" class="mob-women">&#9994; Women Empowerment</a>
