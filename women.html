@@ -498,7 +498,7 @@
      50/50 · Left: high-impact text · Right: AI image
   ═══════════════════════════════════════════════════ */
   #why-we-lead {
-    padding: 0;
+    padding: 60px 0;
     background: var(--cream);
     overflow: hidden;
   }
@@ -509,7 +509,7 @@
     align-items: stretch;
   }
   .split-left {
-    padding: 80px 60px 80px var(--px);
+    padding: 80px 8% 80px var(--px);
     display: flex; flex-direction: column; justify-content: center;
     background: var(--cream);
     max-width: 680px;
@@ -694,6 +694,20 @@
   #robot-float .robot-fallback span { font-size:32px;animation:robotFloat 2.5s ease-in-out infinite; }
   #robot-float .robot-fallback p { font-family:var(--font-s);font-size:8px;font-weight:700;color:rgba(245,166,35,.6);letter-spacing:1px;text-transform:uppercase;text-align:center;line-height:1.4; }
   @media(max-width:480px) { #robot-float { width:72px;height:80px;bottom:88px;right:16px; } }
+  /* Mobile Padding & Layout Fix */
+@media (max-width: 991px) {
+    .split-screen {
+        grid-template-columns: 1fr; /* Stacks the image below the text */
+    }
+    .split-left {
+        padding: 60px var(--px); /* Uses your global side padding variable */
+        max-width: 100%;
+        margin: 0;
+    }
+    .split-right {
+        height: 400px; /* Gives the image a fixed height on mobile */
+    }
+}
   </style>
 </head>
 <body>
