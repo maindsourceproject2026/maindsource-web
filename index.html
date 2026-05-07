@@ -657,14 +657,15 @@
     max-width: 100%;
   }
 
-  /* ══════════════════════════════════════════════
-     TASK 5 — Mobile Navigation Z-Index Correction
-     Mobile menu must render above the anti-fraud
-     ticker (z:999) and the navbar (z:1000) so all
-     links remain visible and clickable.
-  ══════════════════════════════════════════════ */
-  .mob-overlay { z-index: 1002 !important; }
-  .mob-menu    { z-index: 1003 !important; }
+  /* ── MOBILE NAV — z-index 9999 above everything ── */
+  .mob-menu  { z-index: 9999 !important; }
+  .mob-overlay { z-index: 9998 !important; }
+  /* Active "Sectors" link in gold */
+    .mob-menu a.mob-active {
+    color: var(--gold) !important;
+    padding-left: 6px;
+    border-left: 2px solid var(--gold);
+  }
 
   /* ════════════════════════════════════════
      RESPONSIVE
@@ -818,7 +819,7 @@
 </nav>
 <div class="mob-overlay" id="mobOverlay"></div>
 <div class="mob-menu" id="mobMenu">
-  <a href="index.html">Home</a>
+  <a href="index.html" class="mob-active">Home</a>
   <a href="about.html">About Us</a>
   <a href="services.html">Services</a>
   <a href="sectors.html">Sectors</a>

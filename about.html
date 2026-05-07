@@ -90,16 +90,11 @@
      Organised by section. style.css is not modified.
   ═══════════════════════════════════════════════════════════════════ */
 
-  /* ──────────────────────────────────────────
-     FIX 1 — Z-INDEX HIERARCHY
-     Ticker: 999  |  Navbar: 1000  |  Mob-overlay: 1100  |  Mob-menu: 1200
-     When the drawer opens it sits ABOVE everything, including the ticker.
-  ────────────────────────────────────────── */
-  .mob-overlay { z-index: 1100 !important; }
-  .mob-menu    { z-index: 1200 !important; }
-
-  /* ── TASK 2: Active "Services" in mobile drawer ── */
-  .mob-menu a.active {
+  /* ── MOBILE NAV — z-index 9999 above everything ── */
+  .mob-menu  { z-index: 9999 !important; }
+  .mob-overlay { z-index: 9998 !important; }
+  /* Active "Sectors" link in gold */
+    .mob-menu a.mob-active {
     color: var(--gold) !important;
     padding-left: 6px;
     border-left: 2px solid var(--gold);
@@ -575,7 +570,7 @@
 <div class="mob-overlay" id="mobOverlay"></div>
 <div class="mob-menu" id="mobMenu">
   <a href="index.html">Home</a>
-  <a href="about.html"> class="active">About Us</a>
+  <a href="about.html" class="mob-active">About Us</a>
   <a href="services.html">Services</a>
   <a href="sectors.html">Sectors</a>
   <a href="women.html" class="mob-women">&#9994; Women Empowerment</a>

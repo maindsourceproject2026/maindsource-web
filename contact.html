@@ -202,6 +202,16 @@
     @media(max-width:768px){.nav-cta-jobs{display:none!important;}}
     .mob-cta-jobs{background:rgba(245,166,35,.10);border:1.5px solid rgba(245,166,35,.35);color:var(--gold)!important;padding:12px 20px;border-radius:50px;text-align:center;font-weight:700;font-family:var(--font-s);font-size:15px;text-decoration:none;}
     .mob-cta-jobs:hover{background:rgba(245,166,35,.18)!important;color:var(--gold)!important;padding-left:20px;}
+
+    /* ── MOBILE NAV — z-index 9999 above everything ── */
+  .mob-menu  { z-index: 9999 !important; }
+  .mob-overlay { z-index: 9998 !important; }
+  /* Active "Sectors" link in gold */
+    .mob-menu a.mob-active {
+    color: var(--gold) !important;
+    padding-left: 6px;
+    border-left: 2px solid var(--gold);
+  }  
   </style>
 </head>
 <body>

@@ -588,6 +588,15 @@
       z-index: 9001;
     }
   }
+  /* ── MOBILE NAV — z-index 9999 above everything ── */
+  .mob-menu  { z-index: 9999 !important; }
+  .mob-overlay { z-index: 9998 !important; }
+  /* Active "Sectors" link in gold */
+    .mob-menu a.mob-active {
+    color: var(--gold) !important;
+    padding-left: 6px;
+    border-left: 2px solid var(--gold);
+  }
   </style>
 </head>
 <body>
@@ -652,7 +661,7 @@
   <a href="services.html">Services</a>
   <a href="sectors.html">Sectors</a>
   <a href="women.html" class="mob-women">&#9994; Women Empowerment</a>
-  <a href="jobseekers.html">Job Seekers</a>
+  <a href="jobseekers.html class="mob-active">Job Seekers</a>
   <a href="careers.html">Careers</a>
   <a href="impact.html">Our Impact</a>
   <a href="credentials.html">Credentials</a>

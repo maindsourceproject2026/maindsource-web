@@ -120,6 +120,15 @@
     @media(max-width:768px){ .nav-cta-jobs{ display:none; } }
     .mob-menu .mob-cta-jobs { background:rgba(245,166,35,.10);border:1.5px solid rgba(245,166,35,.35);color:var(--gold)!important;padding:12px 20px;border-radius:50px;text-align:center;font-weight:700;font-family:var(--font-s);font-size:15px; }
     .mob-menu .mob-cta-jobs:hover { background:rgba(245,166,35,.18)!important;color:var(--gold)!important;padding-left:20px; }
+    /* ── MOBILE NAV — z-index 9999 above everything ── */
+  .mob-menu  { z-index: 9999 !important; }
+  .mob-overlay { z-index: 9998 !important; }
+  /* Active "Sectors" link in gold */
+    .mob-menu a.mob-active {
+    color: var(--gold) !important;
+    padding-left: 6px;
+    border-left: 2px solid var(--gold);
+  }
 
     .impact-hero { background:var(--navy);padding:120px 0 72px;position:relative;overflow:hidden; }
     .impact-hero-glow { position:absolute;top:-80px;right:-80px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.07),transparent);pointer-events:none; }
@@ -271,7 +280,7 @@
   <a href="women.html" class="mob-women">&#9994; Women Empowerment</a>
   <a href="jobseekers.html">Job Seekers</a>
   <a href="careers.html">Careers</a>
-  <a href="impact.html">Our Impact</a>
+  <a href="impact.html" class="mob-active">Our Impact</a>
   <a href="credentials.html">Credentials</a>
   <a href="methodology.html">Methodology</a>
   <a href="careers.html" class="mob-cta-jobs">Find a Job &#128188;</a>

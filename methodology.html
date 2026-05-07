@@ -578,6 +578,15 @@
     @media(max-width:480px) {
       #robot-float { display: flex; width: 72px; height: 80px; bottom: 88px; right: 16px; z-index: 9001; }
     }
+    /* ── MOBILE NAV — z-index 9999 above everything ── */
+  .mob-menu  { z-index: 9999 !important; }
+  .mob-overlay { z-index: 9998 !important; }
+  /* Active "Sectors" link in gold */
+    .mob-menu a.mob-active {
+    color: var(--gold) !important;
+    padding-left: 6px;
+    border-left: 2px solid var(--gold);
+  }
   </style>
 </head>
 <body>
@@ -647,7 +656,7 @@
   <a href="careers.html">Careers</a>
   <a href="impact.html">Our Impact</a>
   <a href="credentials.html">Credentials</a>
-  <a href="methodology.html">Methodology</a>
+  <a href="methodology.html" class="mob-active">Methodology</a>
   <a href="careers.html" class="mob-cta-jobs">Find a Job &#128188;</a>
   <a href="contact.html" class="mob-cta">Start Hiring &#8594;</a>
 </div>
