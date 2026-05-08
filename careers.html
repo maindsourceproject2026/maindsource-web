@@ -105,52 +105,15 @@
   </script>
 
   <style>
-
-  /* ── SEARCH + FILTER BAR ── */
-  .search-filter-bar {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 20px 24px;
-    display: grid;
-    grid-template-columns: 1fr auto auto auto auto;
-    gap: 12px;
-    align-items: center;
-    box-shadow: 0 8px 32px rgba(10,15,44,.10);
-    margin-bottom: 28px;
-  }
-  .search-box {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  .search-box svg { position: absolute; left: 14px; opacity: .4; flex-shrink: 0; width: 17px; height: 17px; }
-  .search-box input {
-    width: 100%; border: 1.5px solid var(--border); border-radius: 10px;
-    padding: 11px 14px 11px 42px;
-    font-family: var(--font-b); font-size: 14px; color: var(--text-body);
-    background: var(--cream); outline: none; transition: border .2s;
-  }
-  .search-box input:focus { border-color: var(--gold); background: var(--white); }
-  .sf-select {
-    font-family: var(--font-s); font-size: 12px; font-weight: 600;
-    color: var(--text-dark); background: var(--cream);
-    border: 1.5px solid var(--border); border-radius: 10px;
-    padding: 11px 32px 11px 14px;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B7280'/%3E%3C/svg%3E");
-    background-repeat: no-repeat; background-position: right 10px center;
-    transition: border .2s; white-space: nowrap;
-  }
-  .sf-select:focus { border-color: var(--gold); outline: none; }
-  .sf-reset {
-    font-family: var(--font-s); font-size: 12px; font-weight: 700;
-    color: var(--text-gray); background: transparent;
-    border: 1.5px solid var(--border); border-radius: 10px;
-    padding: 11px 16px; transition: var(--ease);
-    white-space: nowrap;
-  }
-  .sf-reset:hover { border-color: var(--gold); color: var(--gold); }
+  /* ── Keep all original styles ── */
+  .jobs-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
+  .filter-btn{font-family:var(--font-s);font-size:12px;font-weight:700;padding:7px 16px;border-radius:50px;border:1.5px solid var(--border);background:transparent;color:var(--text-gray);transition:var(--ease);}
+  .filter-btn:hover,.filter-btn.active{background:var(--navy);color:var(--white);border-color:var(--navy);}
+  .filter-row{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:32px;align-items:flex-end;}
+  .filter-group{display:flex;flex-direction:column;gap:6px;}
+  .filter-group label{font-family:var(--font-s);font-size:10px;font-weight:700;color:var(--text-gray);letter-spacing:1.5px;text-transform:uppercase;}
+  .filter-select{font-family:var(--font-s);font-size:12px;font-weight:600;color:var(--text-dark);background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:8px 32px 8px 12px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B7280'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;cursor:pointer;transition:var(--ease);}
+  .filter-select:focus{border-color:var(--gold);outline:none;}
 
   .job-grid{display:flex;flex-direction:column;gap:12px;}
   .job-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:22px 24px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;transition:var(--ease);cursor:pointer;}
@@ -429,32 +392,16 @@
   </div>
 </div>
 
-<!-- ════ HERO — 160px top padding ════ -->
-<section class="careers-hero">
-  <div class="hero-inner-grid">
-    <div class="hero-text">
-      <div class="hero-tag"><span></span>Now Hiring Across All States</div>
-      <h1>Find Your Next Job<br>with India's <em>#1</em><br>Recruitment Company</h1>
-      <p>MAINDSOURCE — India's most trusted industrial outsourcing and recruitment company. Browse live job openings across Manufacturing, Logistics, BPO and more. Zero fees. Zero middlemen.</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <a href="https://wa.me/919071329231?text=Hi%2C%20I%20am%20looking%20for%20a%20job%20through%20MAINDSOURCE" target="_blank" class="btn btn-gold">&#128241; Send Resume on WhatsApp</a>
-        <a href="mailto:maindsource@gmail.com" class="btn btn-outline">&#9993;&#65039; Email Your Resume</a>
-      </div>
-    </div>
-    <!-- Live counters -->
-    <div class="hero-counters">
-      <div class="hc-item">
-        <div class="hc-num" id="liveTotal">—</div>
-        <div class="hc-lbl">Live Jobs</div>
-      </div>
-      <div class="hc-item">
-        <div class="hc-num">50+</div>
-        <div class="hc-lbl">Companies</div>
-      </div>
-      <div class="hc-item">
-        <div class="hc-num">72h</div>
-        <div class="hc-lbl">Avg. Placement</div>
-      </div>
+<!-- HERO — 10. H1 contains primary keyword -->
+<section class="page-hero">
+  <div class="ph-particles" id="phpP"></div>
+  <div class="ph-glow"></div>
+  <div class="container ph-inner">
+    <h1>Build Your Career<br>With <em>MAINDSOURCE</em> — Jobs in Bangalore &amp; Karnataka</h1>
+    <p>Jobs in Manufacturing, Logistics, BPO, Staffing &amp; more across Bangalore, Ballari and Karnataka. Browse 20 open positions below.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
+      <a href="https://wa.me/919071329231?text=Hi%2C%20I%20am%20looking%20for%20a%20job%20through%20MAINDSOURCE" target="_blank" class="btn btn-gold">&#128241; Send Resume on WhatsApp</a>
+      <a href="mailto:chief@maindsource.com" class="btn btn-outline">&#9993;&#65039; Email Us</a>
     </div>
   </div>
 </section>
