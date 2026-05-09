@@ -223,6 +223,14 @@
     #robot-float .robot-fallback span { font-size:32px;animation:robotFloat 2.5s ease-in-out infinite; }
     #robot-float .robot-fallback p { font-family:var(--font-s);font-size:8px;font-weight:700;color:rgba(245,166,35,.6);letter-spacing:1px;text-transform:uppercase;text-align:center;line-height:1.4; }
     @media(max-width:480px){ #robot-float{ display:flex;width:72px;height:80px;bottom:88px;right:16px;z-index:9001; } }
+      /* ── MOBILE NAV: above ticker ── */
+  .mob-menu    { z-index: 9999 !important; }
+  .mob-overlay { z-index: 9998 !important; }
+  .mob-menu a.mob-active {
+    color: #F5A623 !important;
+    padding-left: 8px;
+    border-left: 3px solid #F5A623;
+  }
   </style>
 </head>
 <body>
