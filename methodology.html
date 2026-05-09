@@ -174,17 +174,32 @@
   .mob-cta-jobs:hover { background:rgba(245,166,35,.18)!important;padding-left:20px; }
 
   /* ═══════════════════════════════════════════
-     FIX 1 — HERO: 160px top on both breakpoints
+     FIX 1 — HERO: 160px top + safe horizontal padding
+     Text must never touch the left or right screen edge.
   ═══════════════════════════════════════════ */
   .page-hero {
     padding-top: 160px !important;
     padding-bottom: 72px;
   }
-  /* Remove the old .ph-inner padding that causes double gap */
-  .page-hero .ph-inner { padding: 0 !important; }
+  /* Restore horizontal padding — use container's --px variable with a 24px floor */
+  .page-hero .ph-inner {
+    padding-left:  max(24px, var(--px, 5%)) !important;
+    padding-right: max(24px, var(--px, 5%)) !important;
+    padding-top:    0 !important;
+    padding-bottom: 0 !important;
+  }
   /* Full-width hero text — no char slot to align with */
   .hero-flex { display: block; }
   .hero-flex-char { display: none !important; }
+
+  /* Mobile: same 160px top + tight side breathing room */
+  @media(max-width:768px){
+    .page-hero { padding-top: 160px !important; padding-bottom: 52px; }
+    .page-hero .ph-inner {
+      padding-left:  20px !important;
+      padding-right: 20px !important;
+    }
+  }
 
   /* National authority badge */
   .hero-authority-badge {
@@ -336,33 +351,55 @@
   .tl-point   { display:flex;align-items:flex-start;gap:9px;font-size:13px;color:rgba(168,184,216,.7); }
   .tl-dot     { width:5px;height:5px;border-radius:50%;background:#F5A623;flex-shrink:0;margin-top:8px;opacity:.8; }
 
-  /* ── FIX 2: MOBILE — numbered circles pinned TOP-LEFT of each card ── */
+  /* ── FIX 2: MOBILE — badge pinned to TOP-LEFT CORNER of its card ──
+     The badge is positioned absolute inside .tl-left/.tl-right wrapper,
+     and .tl-card gets padding-top to clear the badge visually.
+     All 5 steps get consistent top-left badge placement.
+  ── */
   @media(max-width:768px){
     .timeline-track::before { display:none; }
 
+    /* Each step: single column, relative so badge can be abs-positioned */
     .timeline-step {
-      /* Switch to flex column — badge → card */
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 0;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
+      position: relative;
     }
-    /* Badge: fixed top-left row, never inside the card */
-    .tl-badge {
-      width: 48px; height: 48px; font-size: 16px;
-      margin: 0 0 12px 0;  /* left-aligned, no auto */
-      animation: tlPulse 3.2s ease-in-out infinite;
-    }
-    /* Cards: full width, no side padding */
+
+    /* Hide empty spacer columns */
+    .tl-empty { display: none; }
+
+    /* Left / right wrappers: full width, no padding, relative so badge anchors inside */
     .tl-left, .tl-right {
       justify-content: flex-start;
       padding: 0;
       width: 100%;
+      position: relative; /* badge is absolute inside this wrapper */
     }
-    .tl-card { max-width: 100%; width: 100%; }
-    /* Hide empty spacer columns */
-    .tl-empty { display: none; }
+
+    /* Card: full width, extra top padding to reveal badge sitting in corner */
+    .tl-card {
+      max-width: 100%;
+      width: 100%;
+      padding-top: 56px; /* creates the visual space for the badge inside the card */
+      position: relative; /* ensures badge absolute is contained within the card */
+    }
+
+    /* Badge: absolute → TOP-LEFT of the card container, 16px inset */
+    .tl-badge {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      width: 38px;
+      height: 38px;
+      font-size: 14px;
+      margin: 0;           /* reset any margin from desktop */
+      z-index: 3;
+      animation: tlPulse 3.2s ease-in-out infinite;
+    }
   }
 
   /* ══════════════════════════════════════════
