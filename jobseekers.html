@@ -50,15 +50,9 @@
   @keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   @media(max-width:768px){.ticker-inner{animation-duration:14s;}.ticker-badge{display:none;}}
 
-  /* ── MOBILE NAV — z-index 9999 above everything ── */
-  .mob-menu  { z-index: 9999 !important; }
-  .mob-overlay { z-index: 9998 !important; }
-  /* Active "Sectors" link in gold */
-    .mob-menu a.mob-active {
-    color: var(--gold) !important;
-    padding-left: 6px;
-    border-left: 2px solid var(--gold);
-  }
+  .mob-menu{z-index:9999!important;}.mob-overlay{z-index:9998!important;}
+  .mob-menu a.mob-active{color:var(--gold)!important;font-weight:800!important;border-left:3px solid var(--gold);padding-left:10px;}
+
   .nav-cta-jobs{flex-shrink:0;font-family:var(--font-s);font-size:13px;font-weight:700;color:var(--gold)!important;background:transparent;border:1.5px solid rgba(245,166,35,.55);padding:9px 20px;border-radius:50px;white-space:nowrap;transition:var(--ease);margin-right:8px;}
   .nav-cta-jobs:hover{background:rgba(245,166,35,.10);border-color:var(--gold);}
   @media(max-width:768px){.nav-cta-jobs{display:none;}}
