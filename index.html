@@ -753,6 +753,318 @@
     .hero-hl { font-size:36px; }
     .impact-char-wrap { display:none; }
   }
+  /* ═══════════════════════════════════════════════
+     STATE MAP SECTION
+     Fixed map boxes · object-fit:contain · Ping-Pong mobile
+  ═══════════════════════════════════════════════ */
+  .regional-section {
+    padding: 96px 0;
+    background: linear-gradient(160deg, #060810 0%, #0a0d1e 60%, #070918 100%);
+    overflow: hidden;
+    position: relative;
+  }
+  .regional-section::before {
+    content: '';
+    position: absolute; width: 550px; height: 550px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,166,35,.05), transparent 70%);
+    top: -120px; left: -80px; pointer-events: none;
+  }
+
+  /* 5-card horizontal row on desktop */
+  .states-track-wrap {
+    margin-top: 56px;
+    overflow: hidden; /* clip for desktop */
+    position: relative;
+  }
+  .states-track {
+    display: flex;
+    gap: 20px;
+    padding: 8px 0 16px;
+  }
+
+  /* Individual state card */
+  .state-card {
+    flex: 0 0 220px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.03);
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(.2,0,.1,1), box-shadow 0.4s ease, border-color 0.4s ease;
+    will-change: transform;
+    cursor: default;
+  }
+  .state-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(245,166,35,.5);
+    box-shadow: 0 0 0 1px rgba(245,166,35,.3), 0 24px 52px rgba(0,0,0,.55), 0 0 28px rgba(245,166,35,.1);
+  }
+
+  /* ── MAP BOX — fixed height, always centered, never overflows ── */
+  .state-map-box {
+    width: 100%;
+    height: 160px; /* fixed — horizontal AND vertical maps stay inside */
+    background: rgba(255,255,255,.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .state-map-box img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* key fix — respects both orientations */
+    display: block;
+    filter: brightness(0) invert(1) opacity(.55);
+    transition: filter 0.4s ease, transform 0.4s ease;
+    will-change: transform, filter;
+  }
+  .state-card:hover .state-map-box img {
+    filter: drop-shadow(0 0 14px rgba(245,166,35,.55)) brightness(.9) sepia(.3) saturate(3);
+    transform: scale(1.06);
+  }
+  /* Map placeholder (when no image) */
+  .state-map-ph {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    opacity: .35;
+  }
+  .state-map-ph-icon { font-size: 40px; }
+  .state-map-ph-txt {
+    font-family: var(--font-s); font-size: 8px; font-weight: 700;
+    color: rgba(245,166,35,.6); letter-spacing: 1.5px; text-transform: uppercase;
+  }
+
+  /* Card info area */
+  .state-info { padding: 20px 18px 22px; }
+  .state-code {
+    font-family: var(--font-s); font-size: 9px; font-weight: 800;
+    color: var(--gold); letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 6px; display: block;
+  }
+  .state-name {
+    font-family: var(--font-d); font-size: 20px; font-weight: 800;
+    color: #fff; line-height: 1.1; margin-bottom: 8px;
+  }
+  .state-desc {
+    font-size: 11.5px; color: rgba(168,184,216,.72); line-height: 1.55; margin-bottom: 12px;
+  }
+  .state-badge {
+    display: inline-block; font-family: var(--font-s); font-size: 9px; font-weight: 700;
+    color: var(--gold); background: rgba(245,166,35,.10);
+    border: 1px solid rgba(245,166,35,.25);
+    border-radius: 50px; padding: 3px 10px; letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  /* Desktop: fan-style stagger rotation */
+  @media(min-width: 901px) {
+    .states-track {
+      justify-content: center;
+      perspective: 1100px;
+      gap: 0;
+    }
+    .state-card { margin: 0 -14px; } /* overlap for fan */
+    .state-card:nth-child(1){ transform: rotate(-7deg) translateY(16px); z-index:1; }
+    .state-card:nth-child(2){ transform: rotate(-3.5deg) translateY(7px); z-index:2; }
+    .state-card:nth-child(3){ transform: rotate(0deg)    translateY(0);   z-index:3; }
+    .state-card:nth-child(4){ transform: rotate(3.5deg)  translateY(7px); z-index:2; }
+    .state-card:nth-child(5){ transform: rotate(7deg)    translateY(16px); z-index:1; }
+    .state-card:hover {
+      transform: rotate(0deg) translateY(-12px) scale(1.03) !important;
+      z-index: 10 !important;
+    }
+  }
+
+  /* Mobile: ping-pong auto-scroll (no JS — pure CSS) */
+  @media(max-width:900px) {
+    .states-track-wrap {
+      overflow: hidden;
+    }
+    .states-track {
+      /* width = 5 cards × 180px + 4 gaps × 14px = 956px */
+      width: max-content;
+      gap: 14px;
+      padding: 8px 20px 16px;
+      /* Ping-pong: scroll right then back left */
+      will-change: transform;
+      animation: pingPong 14s ease-in-out infinite;
+    }
+    @keyframes pingPong {
+      0%   { transform: translateX(0); }
+      45%  { transform: translateX(calc(-100% + 100vw - 40px)); }
+      50%  { transform: translateX(calc(-100% + 100vw - 40px)); }
+      95%  { transform: translateX(0); }
+      100% { transform: translateX(0); }
+    }
+    .state-card {
+      flex: 0 0 180px;
+      margin: 0 !important;
+      transform: none !important;
+    }
+    .state-card:hover { transform: translateY(-8px) !important; }
+    .state-map-box { height: 130px; }
+    .state-name { font-size: 18px; }
+  }
+/* ═══════════════════════════════════════════════
+     STATE MAP SECTION
+     Fixed map boxes · object-fit:contain · Ping-Pong mobile
+  ═══════════════════════════════════════════════ */
+  .regional-section {
+    padding: 96px 0;
+    background: linear-gradient(160deg, #060810 0%, #0a0d1e 60%, #070918 100%);
+    overflow: hidden;
+    position: relative;
+  }
+  .regional-section::before {
+    content: '';
+    position: absolute; width: 550px; height: 550px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,166,35,.05), transparent 70%);
+    top: -120px; left: -80px; pointer-events: none;
+  }
+
+  /* 5-card horizontal row on desktop */
+  .states-track-wrap {
+    margin-top: 56px;
+    overflow: hidden; /* clip for desktop */
+    position: relative;
+  }
+  .states-track {
+    display: flex;
+    gap: 20px;
+    padding: 8px 0 16px;
+  }
+
+  /* Individual state card */
+  .state-card {
+    flex: 0 0 220px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.03);
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(.2,0,.1,1), box-shadow 0.4s ease, border-color 0.4s ease;
+    will-change: transform;
+    cursor: default;
+  }
+  .state-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(245,166,35,.5);
+    box-shadow: 0 0 0 1px rgba(245,166,35,.3), 0 24px 52px rgba(0,0,0,.55), 0 0 28px rgba(245,166,35,.1);
+  }
+
+  /* ── MAP BOX — fixed height, always centered, never overflows ── */
+  .state-map-box {
+    width: 100%;
+    height: 160px; /* fixed — horizontal AND vertical maps stay inside */
+    background: rgba(255,255,255,.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .state-map-box img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* key fix — respects both orientations */
+    display: block;
+    filter: brightness(0) invert(1) opacity(.55);
+    transition: filter 0.4s ease, transform 0.4s ease;
+    will-change: transform, filter;
+  }
+  .state-card:hover .state-map-box img {
+    filter: drop-shadow(0 0 14px rgba(245,166,35,.55)) brightness(.9) sepia(.3) saturate(3);
+    transform: scale(1.06);
+  }
+  /* Map placeholder (when no image) */
+  .state-map-ph {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    opacity: .35;
+  }
+  .state-map-ph-icon { font-size: 40px; }
+  .state-map-ph-txt {
+    font-family: var(--font-s); font-size: 8px; font-weight: 700;
+    color: rgba(245,166,35,.6); letter-spacing: 1.5px; text-transform: uppercase;
+  }
+
+  /* Card info area */
+  .state-info { padding: 20px 18px 22px; }
+  .state-code {
+    font-family: var(--font-s); font-size: 9px; font-weight: 800;
+    color: var(--gold); letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 6px; display: block;
+  }
+  .state-name {
+    font-family: var(--font-d); font-size: 20px; font-weight: 800;
+    color: #fff; line-height: 1.1; margin-bottom: 8px;
+  }
+  .state-desc {
+    font-size: 11.5px; color: rgba(168,184,216,.72); line-height: 1.55; margin-bottom: 12px;
+  }
+  .state-badge {
+    display: inline-block; font-family: var(--font-s); font-size: 9px; font-weight: 700;
+    color: var(--gold); background: rgba(245,166,35,.10);
+    border: 1px solid rgba(245,166,35,.25);
+    border-radius: 50px; padding: 3px 10px; letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  /* Desktop: fan-style stagger rotation */
+  @media(min-width: 901px) {
+    .states-track {
+      justify-content: center;
+      perspective: 1100px;
+      gap: 0;
+    }
+    .state-card { margin: 0 -14px; } /* overlap for fan */
+    .state-card:nth-child(1){ transform: rotate(-7deg) translateY(16px); z-index:1; }
+    .state-card:nth-child(2){ transform: rotate(-3.5deg) translateY(7px); z-index:2; }
+    .state-card:nth-child(3){ transform: rotate(0deg)    translateY(0);   z-index:3; }
+    .state-card:nth-child(4){ transform: rotate(3.5deg)  translateY(7px); z-index:2; }
+    .state-card:nth-child(5){ transform: rotate(7deg)    translateY(16px); z-index:1; }
+    .state-card:hover {
+      transform: rotate(0deg) translateY(-12px) scale(1.03) !important;
+      z-index: 10 !important;
+    }
+  }
+
+  /* Mobile: ping-pong auto-scroll (no JS — pure CSS) */
+  @media(max-width:900px) {
+    .states-track-wrap {
+      overflow: hidden;
+    }
+    .states-track {
+      /* width = 5 cards × 180px + 4 gaps × 14px = 956px */
+      width: max-content;
+      gap: 14px;
+      padding: 8px 20px 16px;
+      /* Ping-pong: scroll right then back left */
+      will-change: transform;
+      animation: pingPong 14s ease-in-out infinite;
+    }
+    @keyframes pingPong {
+      0%   { transform: translateX(0); }
+      45%  { transform: translateX(calc(-100% + 100vw - 40px)); }
+      50%  { transform: translateX(calc(-100% + 100vw - 40px)); }
+      95%  { transform: translateX(0); }
+      100% { transform: translateX(0); }
+    }
+    .state-card {
+      flex: 0 0 180px;
+      margin: 0 !important;
+      transform: none !important;
+    }
+    .state-card:hover { transform: translateY(-8px) !important; }
+    .state-map-box { height: 130px; }
+    .state-name { font-size: 18px; }
+  }
   </style>
 </head>
 <body>
@@ -1166,6 +1478,98 @@
       <span class="pill"><span class="pill-dot"></span>Workforce Consulting</span>
     </div>
   </div>
+</section>
+
+<!-- ═══ REGIONAL COVERAGE — Fixed map boxes, ping-pong mobile ═══ -->
+<section class="regional-section">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label reveal" style="color:rgba(245,166,35,.8);">Where We Source From</span>
+      <h2 class="section-title light reveal">5-State Candidate Network</h2>
+      <p class="section-sub light reveal" style="margin:0 auto;">Sourcing depth across South and Central India — giving clients access to a consistently strong, pre-vetted talent pipeline.</p>
+    </div>
+  </div>
+
+  <div class="states-track-wrap">
+    <div class="states-track">
+
+      <!-- Tamil Nadu -->
+      <div class="state-card sc-ka">
+        <div class="sc-bg" style="background:linear-gradient(160deg,#081830,#102048,#0a1530);position:absolute;inset:0;"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,8,20,.95) 30%,rgba(4,8,20,.4) 100%);"></div>
+        <div class="state-map-box" style="position:relative;z-index:1;">
+          <img src="assets/maps/tn.png" alt="MAINDSOURCE Tamil Nadu staffing map" onerror="this.style.display='none'"/>
+        </div>
+        <div class="state-info" style="position:relative;z-index:1;">
+          <span class="state-code">TN</span>
+          <div class="state-name">Tamil Nadu</div>
+          <p class="state-desc">Chennai, Coimbatore, Hosur, Salem and industrial corridors expanding rapidly</p>
+          <span class="state-badge">Expanding</span>
+        </div>
+      </div>
+
+      <!-- Andhra Pradesh -->
+      <div class="state-card sc-ap">
+        <div class="sc-bg" style="background:linear-gradient(160deg,#080e22,#0f1a38,#081020);position:absolute;inset:0;"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,8,20,.95) 30%,rgba(4,8,20,.4) 100%);"></div>
+        <div class="state-map-box" style="position:relative;z-index:1;">
+          <img src="assets/maps/ap.png" alt="MAINDSOURCE Andhra Pradesh staffing map" onerror="this.style.display='none'"/>
+        </div>
+        <div class="state-info" style="position:relative;z-index:1;">
+          <span class="state-code">AP</span>
+          <div class="state-name">Andhra Pradesh</div>
+          <p class="state-desc">Anantapur, Kurnool, Nellore, Guntur and surrounding industrial regions.</p>
+          <span class="state-badge">Established</span>
+        </div>
+      </div>
+
+      <!-- Karnataka -->
+      <div class="state-card sc-tg">
+        <div class="sc-bg" style="background:linear-gradient(160deg,#0e0820,#1c1038,#12082a);position:absolute;inset:0;"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,8,20,.95) 30%,rgba(4,8,20,.4) 100%);"></div>
+        <div class="state-map-box" style="position:relative;z-index:1;">
+          <img src="assets/maps/kar.png" alt="MAINDSOURCE Karnataka staffing map" onerror="this.style.display='none'"/>
+        </div>
+        <div class="state-info" style="position:relative;z-index:1;">
+          <span class="state-code">KA</span>
+          <div class="state-name">Karnataka</div>
+          <p class="state-desc">Primary hub. Ballari, Raichur, Bidar, Dharwad, Kalaburagi and all surrounding districts.</p>
+          <span class="state-badge">&#9733; Primary Hub</span>
+        </div>
+      </div>
+
+      <!-- Telangana -->
+      <div class="state-card sc-tn">
+        <div class="sc-bg" style="background:linear-gradient(160deg,#1e0808,#320e0e,#220808);position:absolute;inset:0;"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,8,20,.95) 30%,rgba(4,8,20,.4) 100%);"></div>
+        <div class="state-map-box" style="position:relative;z-index:1;">
+          <img src="assets/maps/tg.png" alt="MAINDSOURCE Telangana staffing map" onerror="this.style.display='none'"/>
+        </div>
+        <div class="state-info" style="position:relative;z-index:1;">
+          <span class="state-code">TG</span>
+          <div class="state-name">Telangana</div>
+          <p class="state-desc">Hyderabad outskirts, Nizamabad, Warangal and tier-2 industrial cities.</p>
+          <span class="state-badge">Fully Active</span>
+        </div>
+      </div>
+
+      <!-- Uttar Pradesh -->
+      <div class="state-card sc-up">
+        <div class="sc-bg" style="background:linear-gradient(160deg,#081508,#122012,#0a1608);position:absolute;inset:0;"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,8,20,.95) 30%,rgba(4,8,20,.4) 100%);"></div>
+        <div class="state-map-box" style="position:relative;z-index:1;">
+          <img src="assets/maps/up.png" alt="MAINDSOURCE Uttar Pradesh staffing map" onerror="this.style.display='none'"/>
+        </div>
+        <div class="state-info" style="position:relative;z-index:1;">
+          <span class="state-code">UP</span>
+          <div class="state-name">Uttar Pradesh</div>
+          <p class="state-desc">Noida, Lucknow, Kanpur and the growing northern industrial belt.</p>
+          <span class="state-badge">Expanding</span>
+        </div>
+      </div>
+
+    </div><!-- /states-track -->
+  </div><!-- /states-track-wrap -->
 </section>
 
 <!-- ════════════════════════════════════════
