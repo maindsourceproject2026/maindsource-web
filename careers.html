@@ -936,7 +936,7 @@ function openModal(id){
   var pc = j.type === 'Full Time' ? 'pill-full' : j.type === 'Contract' ? 'pill-contract' : 'pill-part';
   setHTML('mTags',
     '<span class="mdl-tag">&#128205; ' + esc(j.loc) + '</span>' +
-    '<span class="mdl-tag"><span class="job-pill ' + pc + '" style="font-size:10px;">' + esc(j.type) + '</span></span>' +
+    '<span class=\"job-pill ' + pc + '\" style=\"font-size:10px;padding:4px 14px;\">' + esc(j.type) + '</span>' +
     (j.company ? '<span class="mdl-tag">&#127970; ' + esc(j.company) + '</span>' : '') +
     (j.urgent  ? '<span class="mdl-tag" style="color:#fca5a5;">&#128293; Urgent Hiring</span>' : '')
   );
